@@ -125,6 +125,14 @@ tarjeta, y solo puede haber una pieza activa a la vez.
 Dos planos flotantes en perspectiva —con la sombra del sistema—: el sistema antiguo detrás y
 atenuado, Orezco delante. Al pasar por encima se separan.
 
+### Trampa: `filter` aplana el 3D
+
+**Nunca poner `filter` (ni `opacity` < 1) en un elemento con `transform-style: preserve-3d`.**
+Cualquier filtro fuerza `transform-style: flat` en los hijos, y el cubo pasa a verse como un
+rombo plano. Pasó con un `drop-shadow` inocente en el cubo de la portada, y solo se ve
+renderizando. Si hace falta sombra bajo un objeto 3D, va en un elemento hermano o en un
+pseudoelemento del contenedor, nunca en el que lleva `preserve-3d`.
+
 ### Movimiento
 
 Todo respeta `prefers-reduced-motion: reduce`: los giros se detienen y los relieves de hover
@@ -136,6 +144,15 @@ se anulan.
 - Usa `currentColor`. Las divisiones internas leen `--mark-bg`, que **debe igualar el fondo**
   sobre el que se coloca.
 - **Pendiente**: sustituir por el SVG original si aparece.
+
+## Tokens
+
+Los nombres del `:root` de `index.html` son **los canónicos de la referencia**
+(`--color-ink-black`, `--surface-canvas`, `--radius-cards`…), con alias de trabajo derivados
+de ellos. No renombrar: así el código y el sistema de diseño hablan el mismo idioma.
+
+`tokens.json` guarda los mismos valores en formato DTCG, listo para alimentar Figma,
+Tailwind o Style Dictionary. Si cambia un valor, cambia en los dos sitios.
 
 ## Reglas de contenido
 

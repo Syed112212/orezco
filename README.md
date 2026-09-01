@@ -12,6 +12,7 @@ Web de Orezco, un ERP. Sitio estatico: HTML y CSS planos, sin build ni dependenc
     sitemap.xml     una sola URL
     CNAME           dominio personalizado de GitHub Pages
     DESIGN.md       SSOT visual: color, tipografia, ritmo, componentes
+    tokens.json     los mismos tokens en formato DTCG (Figma, Tailwind, Style Dictionary)
 
 ## Imagen para compartir
 
@@ -22,9 +23,15 @@ regenerarla tras un cambio de marca:
 
 ## Diseno
 
-Direccion "broadsheet editorial en sala verde": titulares monumentales con serifa,
-micro-etiquetas en versalitas y un unico verde (#2bee4b) usado como rotulador.
-Mundo visual unico y deliberado, sin tema oscuro alternativo.
+Direccion "analitica con serifa sobre papel calido", tomada del sistema Steep: lienzo
+blanco, titulares con serifa en peso 400, botones pildora y un unico color -- el melocoton
+#fbe1d1 -- usado una sola vez en toda la pagina.
+
+Tres objetos 3D en CSS puro, sin librerias: el cubo-logo, el cubo de ocho piezas enlazado a
+los modulos, y la pila de migracion.
+
+CUIDADO: nunca poner `filter` ni `opacity` en un elemento con `transform-style: preserve-3d`.
+Aplana el 3D y el cubo se ve como un rombo.
 
 Todo el sistema esta en DESIGN.md. **Leerlo antes de tocar cualquier estilo.**
 

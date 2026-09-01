@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Orezco — ERP</title>
-<meta name="description" content="Orezco es un ERP para pymes: contabilidad, facturación, inventario, compras, ventas, proyectos, personal e informes en un mismo sitio.">
+
+<title>Orezco — ERP para pymes</title>
+<meta name="description" content="Orezco es un ERP para pymes: contabilidad, facturación, inventario, compras, ventas, proyectos, personal e informes en un mismo sitio. En desarrollo.">
 <link rel="canonical" href="https://orezco.com/">
+<meta name="theme-color" content="#ffffff">
+
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/og.png">
-<meta name="theme-color" content="#ffffff">
 
 <meta property="og:site_name" content="Orezco">
 <meta property="og:title" content="Orezco — Un ERP que no se te va de las manos">
@@ -46,7 +48,8 @@
     {"@type":"Question","name":"¿Se puede migrar desde Odoo, SAP o una hoja de cálculo?","acceptedAnswer":{"@type":"Answer","text":"Es el escenario del que partimos. La migración contempla el traspaso de datos con su histórico, un periodo de convivencia con el sistema antiguo en solo lectura, y un punto de retorno definido antes de empezar."}},
     {"@type":"Question","name":"¿Cuánto cuesta?","acceptedAnswer":{"@type":"Answer","text":"Todavía no hay precio publicado. Cuando lo haya estará en la propia página."}},
     {"@type":"Question","name":"¿Qué pasa con nuestros datos durante el cambio?","acceptedAnswer":{"@type":"Answer","text":"El sistema antiguo sigue vivo en solo lectura mientras dura el traspaso. El equipo trabaja antes en un entorno de pruebas con datos reales, no en producción."}},
-    {"@type":"Question","name":"¿Hace falta cambiarlo todo de golpe?","acceptedAnswer":{"@type":"Answer","text":"No. Existe un periodo de convivencia: la empresa tiene que seguir facturando durante la migración, y ese es el punto de partida del diseño."}}
+    {"@type":"Question","name":"¿Hace falta cambiarlo todo de golpe?","acceptedAnswer":{"@type":"Answer","text":"No. Existe un periodo de convivencia: la empresa tiene que seguir facturando durante la migración, y ese es el punto de partida del diseño."}},
+    {"@type":"Question","name":"¿Cómo empieza el proceso?","acceptedAnswer":{"@type":"Answer","text":"Con una llamada de diagnóstico sobre lo que usáis hoy. Si no encajamos, se dice en esa llamada."}}
   ]
 }
 </script>
@@ -54,71 +57,122 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap">
+
 <style>
-/* ============================================================
-   Orezco — analitica con serifa sobre papel calido
-   Sistema en DESIGN.md. Mundo visual unico y deliberado (claro):
-   todos los colores se pintan explicitamente.
-   ============================================================ */
+/* ═══════════════════════════════════════════════════════════
+   OREZCO — analitica con serifa sobre papel calido
+   Sistema completo documentado en DESIGN.md.
+   Mundo visual unico y deliberado (claro): todos los colores se
+   pintan explicitamente, no hay tema oscuro alternativo.
+   ═══════════════════════════════════════════════════════════ */
+
+/* --- 1. Tokens ---------------------------------------------
+   Nombres canonicos de la referencia. No renombrar: asi el codigo
+   y el sistema de diseno hablan el mismo idioma.               */
 :root{
   color-scheme:light;
 
-  /* superficies */
-  --papel:#ffffff;       /* lienzo */
-  --mist:#f2f2f3;        /* tarjeta neutra */
-  --niebla:#fafafb;      /* banda de seccion alterna */
-  --melocoton:#fbe1d1;   /* acento. UNA tarjeta por pagina */
-  --sienna:#5d2a1a;      /* tinta sobre melocoton. En ningun otro sitio */
+  /* colores */
+  --color-ink-black:#17191c;
+  --color-paper-white:#ffffff;
+  --color-mist-gray:#f2f2f3;
+  --color-fog-white:#fafafb;
+  --color-slate-gray:#777b86;
+  --color-ash-gray:#979799;
+  --color-smoke-gray:#a3a6af;
+  --color-blush-peach:#fbe1d1;
+  --color-sienna-brown:#5d2a1a;
 
-  /* texto */
-  --tinta:#17191c;       /* texto principal y relleno de boton */
-  --pizarra:#777b86;     /* apoyo */
-  --ceniza:#979799;      /* etiquetas de categoria */
-  --humo:#a3a6af;        /* marcador de campo */
+  /* superficies */
+  --surface-canvas:var(--color-paper-white);
+  --surface-card-mist:var(--color-mist-gray);
+  --surface-section-fog:var(--color-fog-white);
+  --surface-accent-blush:var(--color-blush-peach);
+  --surface-elevated-white:var(--color-paper-white);
+
+  /* tipografia */
+  --font-signifier:"Source Serif 4",ui-serif,Georgia,"Times New Roman",serif;
+  --font-sohne:"Inter",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --font-weight-regular:400;
+  --font-weight-w430:430;
+  --font-weight-w450:450;
+  --font-weight-w480:480;
+  --font-weight-medium:500;
+
+  /* espaciado y layout */
+  --spacing-unit:4px;
+  --page-max-width:1200px;
+  --section-gap:80px;
+  --card-padding:20px;
+
+  /* radios */
+  --radius-cards:24px;
+  --radius-elevatedcards:20px;
+  --radius-inputs:16px;
+  --radius-buttons:9999px;
+
+  /* sombra: solo la llevan los artefactos flotantes */
+  --shadow-subtle-3:rgba(4,23,43,.05) 0 0 0 1px,
+                    rgba(0,0,0,.1) 0 20px 25px -5px,
+                    rgba(0,0,0,.1) 0 8px 10px -6px;
+
+  /* --- alias de trabajo, derivados de los anteriores --- */
+  --papel:var(--surface-canvas);
+  --mist:var(--surface-card-mist);
+  --niebla:var(--surface-section-fog);
+  --melocoton:var(--surface-accent-blush);
+  --sienna:var(--color-sienna-brown);
+  --tinta:var(--color-ink-black);
+  --pizarra:var(--color-slate-gray);
+  --ceniza:var(--color-ash-gray);
+  --humo:var(--color-smoke-gray);
   --hairline:#ececec;
 
-  /* ritmo */
-  --ancho:1200px;
-  --seccion:80px;
-  --card-pad:20px;
-
-  --r-card:24px;
-  --r-elev:20px;
-  --r-input:16px;
-  --r-pill:9999px;
-
-  --sombra-flotante:rgba(4,23,43,.05) 0 0 0 1px,rgba(0,0,0,.1) 0 20px 25px -5px,rgba(0,0,0,.1) 0 8px 10px -6px;
-
-  --serif:"Source Serif 4",ui-serif,Georgia,"Times New Roman",serif;
-  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --ancho:var(--page-max-width);
+  --seccion:var(--section-gap);
+  --r-card:var(--radius-cards);
+  --r-elev:var(--radius-elevatedcards);
+  --r-input:var(--radius-inputs);
+  --r-pill:var(--radius-buttons);
+  --elevacion:var(--shadow-subtle-3);
+  --serif:var(--font-signifier);
+  --sans:var(--font-sohne);
 }
 
+/* ── 2. Base ─────────────────────────────────────────────── */
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
   margin:0;background:var(--papel);color:var(--tinta);
   font-family:var(--sans);font-size:17px;font-weight:400;line-height:1.35;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
-
-/* la serifa se queda en peso 400 a todos los tamanos. Es la firma del sistema */
-h1,h2{font-family:var(--serif);font-weight:400;color:var(--tinta);margin:0;line-height:1.3}
-h1{font-size:clamp(40px,7.2vw,90px);letter-spacing:-.025em}
-h2{font-size:clamp(32px,5vw,64px);letter-spacing:-.015em}
-h1 em,h2 em{font-style:italic}
-h3{font-family:var(--sans);font-size:20px;font-weight:500;letter-spacing:-.009em;color:var(--tinta);margin:0;line-height:1.35}
 p{margin:0}
+img,svg{max-width:100%}
+
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
+section{padding:var(--seccion) 0}
+.banda{background:var(--niebla)}
+
+/* ── 3. Tipografia ───────────────────────────────────────── */
+/* La serifa se queda en peso 400 a todos los tamanos. Es la firma. */
+h1,h2{font-family:var(--serif);font-weight:400;color:var(--tinta);margin:0;line-height:1.3}
+h1{font-size:clamp(38px,7vw,90px);letter-spacing:-.025em}
+h2{font-size:clamp(30px,4.8vw,64px);letter-spacing:-.015em}
+h1 em,h2 em{font-style:italic}
+h3{font-family:var(--sans);font-size:20px;font-weight:500;letter-spacing:-.009em;margin:0;line-height:1.35}
 
 .etiqueta{font-size:14px;font-weight:400;color:var(--ceniza);margin:0}
 .sub{font-size:18px;font-weight:430;color:var(--pizarra);line-height:1.5}
+.cuerpo{font-size:17px;color:var(--pizarra);line-height:1.5}
+.cuerpo strong{color:var(--tinta);font-weight:480}
 
-/* ---------- botones: pildora, en pareja ---------- */
+/* ── 4. Botones y enlaces ────────────────────────────────── */
+/* Pildora siempre, y en pareja: relleno + fantasma. */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  font-family:var(--sans);font-size:16px;font-weight:400;
-  padding:12px 20px;border-radius:var(--r-pill);
+  font-family:var(--sans);font-size:16px;font-weight:400;line-height:1;
+  padding:14px 22px;border-radius:var(--r-pill);
   text-decoration:none;border:1px solid transparent;cursor:pointer;
   transition:background .16s ease,color .16s ease,border-color .16s ease;
 }
@@ -126,47 +180,90 @@ p{margin:0}
 .btn-lleno:hover,.btn-lleno:focus-visible{background:#000}
 .btn-fantasma{background:transparent;color:var(--tinta);border-color:var(--tinta)}
 .btn-fantasma:hover,.btn-fantasma:focus-visible{background:var(--tinta);color:var(--papel)}
+
+/* Sin subrayado en reposo: la flecha lleva la carga */
 .enlace{color:var(--tinta);font-size:16px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 .enlace:hover,.enlace:focus-visible{text-decoration:underline;text-underline-offset:4px}
 
-/* ---------- navegacion: transparente, sin borde ni sombra ---------- */
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(10px)}
-.nav-in{max-width:var(--ancho);margin:0 auto;padding:20px 24px;display:flex;align-items:center;gap:24px}
+/* ── 5. Navegacion: transparente, sin borde ni sombra ────── */
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.9);backdrop-filter:blur(12px)}
+.nav-in{max-width:var(--ancho);margin:0 auto;padding:18px 24px;display:flex;align-items:center;gap:24px}
 .marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tinta)}
 .marca svg{width:22px;height:22px;color:var(--tinta);--mark-bg:var(--papel)}
 .marca span{font-size:17px;font-weight:500;letter-spacing:-.009em}
 .nav-links{display:flex;gap:24px;align-items:center;margin:0 auto}
-.nav-links a{color:var(--tinta);font-size:16px;font-weight:400;text-decoration:none;padding:2px 0}
+.nav-links a{color:var(--tinta);font-size:16px;text-decoration:none;padding:2px 0}
 .nav-links a:hover,.nav-links a:focus-visible{text-decoration:underline;text-underline-offset:4px}
 
-/* ---------- portada ---------- */
-.hero{padding:clamp(48px,8vw,96px) 0 var(--seccion);text-align:center}
-.hero h1{max-width:22ch;margin:0 auto 24px}
-.hero .sub{max-width:52ch;margin:0 auto 32px}
-.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* ── 6. Portada ──────────────────────────────────────────── */
+.hero{padding:clamp(40px,7vw,88px) 0 var(--seccion);text-align:center}
+.hero h1{max-width:20ch;margin:0 auto 24px}
+.hero .sub{max-width:54ch;margin:0 auto 32px}
+.hero-acciones{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .hero-nota{margin-top:20px;font-size:15px;color:var(--ceniza)}
 
-/* artefacto flotante: el unico elemento con sombra del sistema */
-.artefacto{background:var(--papel);border-radius:var(--r-elev);box-shadow:var(--sombra-flotante)}
+/* Composicion: el cubo al centro, dos fragmentos flotando a los lados */
+.collage{position:relative;margin-top:clamp(32px,5vw,56px);min-height:340px;display:grid;place-items:center}
+.artefacto{
+  background:var(--papel);border-radius:var(--r-elev);
+  box-shadow:var(--elevacion);padding:16px 20px;text-align:left;
+}
+.artefacto .cabecera{font-size:14px;color:var(--ceniza);margin-bottom:10px}
+.artefacto ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.artefacto li{font-size:15px;color:var(--tinta);display:flex;align-items:center;gap:8px}
+.artefacto li::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--mist);flex:none}
+.artefacto li.acento::before{background:var(--melocoton)}
+.flota{position:absolute;width:210px;z-index:2}
+.flota-izq{left:0;top:14%}
+.flota-der{right:0;bottom:10%}
 
-/* ---------- cubo-logo 3D ---------- */
-.logo3d-zona{position:relative;display:grid;place-items:center;min-height:clamp(230px,26vw,300px);perspective:1000px;perspective-origin:50% 44%}
-.logo3d{--l:clamp(120px,15vw,170px);position:relative;width:var(--l);height:var(--l);transform-style:preserve-3d;animation:giroLogo 24s linear infinite}
-@keyframes giroLogo{from{transform:rotateX(-20deg) rotateY(0deg)}to{transform:rotateX(-20deg) rotateY(360deg)}}
-.lcara{position:absolute;inset:0;display:grid;place-items:center;background:var(--papel);border:1px solid rgba(4,23,43,.1);border-radius:2px;backface-visibility:hidden}
+/* ── 7. Cubo-logo 3D ─────────────────────────────────────── */
+.logo3d-zona{position:relative;display:grid;place-items:center;min-height:300px;perspective:1000px;perspective-origin:50% 44%;z-index:1}
+.logo3d{
+  --l:clamp(120px,15vw,180px);
+  position:relative;width:var(--l);height:var(--l);
+  transform-style:preserve-3d;animation:giroLogo 26s linear infinite;
+}
+@keyframes giroLogo{
+  from{transform:rotateX(-20deg) rotateY(0deg)}
+  to  {transform:rotateX(-20deg) rotateY(360deg)}
+}
+.lcara{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:var(--papel);border:1px solid rgba(4,23,43,.1);
+  border-radius:2px;backface-visibility:hidden;
+}
 .lcara svg{width:58%;height:58%;color:var(--tinta);opacity:.9}
 .lcara.f1{transform:translateZ(calc(var(--l)/2))}
 .lcara.f2{transform:rotateY(180deg) translateZ(calc(var(--l)/2))}
-.lcara.f3{transform:rotateY(90deg) translateZ(calc(var(--l)/2));background:var(--mist)}
+.lcara.f3{transform:rotateY(90deg)  translateZ(calc(var(--l)/2));background:var(--mist)}
 .lcara.f4{transform:rotateY(-90deg) translateZ(calc(var(--l)/2));background:var(--mist)}
-.lcara.f5{transform:rotateX(90deg) translateZ(calc(var(--l)/2));background:#fdfdfd}
+.lcara.f5{transform:rotateX(90deg)  translateZ(calc(var(--l)/2));background:#fdfdfd}
 .lcara.f6{transform:rotateX(-90deg) translateZ(calc(var(--l)/2));background:var(--mist)}
 
-/* ---------- cubo de ocho piezas + lista de modulos ---------- */
-.modulos-marco{padding:clamp(24px,4vw,40px);display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center}
+/* ── 8. La unica tarjeta melocoton de la pagina ──────────── */
+.acento-card{background:var(--melocoton);color:var(--sienna);border-radius:var(--r-card);padding:clamp(28px,4vw,44px)}
+.acento-card .cita{font-family:var(--serif);font-size:clamp(24px,3.2vw,36px);line-height:1.3;letter-spacing:-.015em;margin-bottom:20px}
+.acento-card .cita em{font-style:italic}
+.acento-card p{font-size:18px;font-weight:430;line-height:1.5;max-width:62ch}
+
+/* ── 9. Modulos: cubo de ocho piezas + lista ─────────────── */
+.modulos-marco{
+  background:var(--papel);border-radius:var(--r-elev);box-shadow:var(--elevacion);
+  padding:clamp(24px,4vw,40px);
+  display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:clamp(24px,4vw,48px);align-items:center;
+}
 .cubo-zona{position:relative;display:grid;place-items:center;min-height:320px;perspective:1000px;perspective-origin:50% 46%}
-.cubo{position:relative;width:0;height:0;transform-style:preserve-3d;transform:rotateX(-24deg) rotateY(-32deg);animation:giro 36s linear infinite}
-@keyframes giro{from{transform:rotateX(-24deg) rotateY(-32deg)}to{transform:rotateX(-24deg) rotateY(328deg)}}
+.cubo{
+  position:relative;width:0;height:0;transform-style:preserve-3d;
+  transform:rotateX(-24deg) rotateY(-32deg);
+  animation:giro 38s linear infinite;
+}
+@keyframes giro{
+  from{transform:rotateX(-24deg) rotateY(-32deg)}
+  to  {transform:rotateX(-24deg) rotateY(328deg)}
+}
 .pieza{position:absolute;width:80px;height:80px;margin:-40px;transform-style:preserve-3d;transition:opacity .25s ease}
 .cara{position:absolute;inset:0;border:1px solid rgba(4,23,43,.09);background:var(--papel);transition:background .2s ease,border-color .2s ease}
 .cara.sup{background:#fdfdfd}
@@ -174,10 +271,10 @@ p{margin:0}
 .pieza.activa .cara{background:var(--melocoton);border-color:var(--sienna)}
 .pieza.activa .cara.sup{background:#fdeade}
 .pieza.activa .cara.der{background:#f6d5c2}
-.cubo.hay-activa .pieza:not(.activa){opacity:.3}
+.cubo.hay-activa .pieza:not(.activa){opacity:.28}
 .cubo-pie{margin-top:20px;text-align:center;font-size:14px;color:var(--ceniza);min-height:1.4em}
 
-.mods{display:grid;gap:0;perspective:900px}
+.mods{display:grid;perspective:900px}
 .mod{
   display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
   padding:14px 12px;border-radius:var(--r-input);
@@ -190,32 +287,22 @@ p{margin:0}
 .mod h3{font-size:18px;margin-bottom:2px}
 .mod p{font-size:15px;line-height:1.5;color:var(--pizarra)}
 
-/* ---------- secciones ---------- */
-section{padding:var(--seccion) 0}
-.banda{background:var(--niebla)}
-.sec-head{margin-bottom:clamp(32px,4vw,48px);max-width:40ch}
-.sec-head .etiqueta{margin-bottom:16px}
-.sec-head h2{margin-bottom:20px}
+/* ── 10. Proceso: tres pasos, y si son secuencia se numeran ─ */
+.pasos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.paso{background:var(--mist);border-radius:var(--r-card);padding:32px 20px;display:grid;gap:10px;align-content:start}
+.paso .orden{font-family:var(--serif);font-size:40px;line-height:1;color:var(--ceniza)}
+.paso p{font-size:16px;color:var(--pizarra);line-height:1.5}
 
+/* ── 11. Migracion: dos planos flotantes en perspectiva ──── */
 .dos-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:start}
-.dos-col p{color:var(--pizarra);margin-bottom:16px;max-width:52ch;line-height:1.5}
-.dos-col p:last-child{margin-bottom:0}
-.dos-col strong{color:var(--tinta);font-weight:480}
+.dos-col .cuerpo{margin-bottom:16px;max-width:52ch}
+.dos-col .cuerpo:last-child{margin-bottom:0}
 
-/* la unica tarjeta melocoton de la pagina */
-.melocoton-card{background:var(--melocoton);color:var(--sienna);border-radius:var(--r-card);padding:clamp(28px,4vw,40px)}
-.melocoton-card .cita{font-family:var(--serif);font-size:clamp(24px,3.2vw,34px);line-height:1.3;letter-spacing:-.015em;margin-bottom:20px}
-.melocoton-card .cita em{font-style:italic}
-.melocoton-card p{font-size:18px;font-weight:430;color:var(--sienna);line-height:1.5;max-width:60ch}
-
-.neutra{background:var(--mist);border-radius:var(--r-card);padding:32px var(--card-pad)}
-
-/* ---------- migracion: dos planos flotantes en perspectiva ---------- */
-.pila{perspective:1200px;perspective-origin:60% 50%;display:grid;place-items:center;min-height:300px;padding:16px 0}
+.pila{perspective:1200px;perspective-origin:60% 50%;display:grid;place-items:center;min-height:300px;padding:24px 0 0}
 .pila-in{position:relative;width:min(100%,340px);height:220px;transform-style:preserve-3d;transform:rotateX(6deg) rotateY(-19deg)}
 .plano{
   position:absolute;inset:0;border-radius:var(--r-elev);
-  background:var(--papel);box-shadow:var(--sombra-flotante);
+  background:var(--papel);box-shadow:var(--elevacion);
   padding:20px;display:grid;align-content:start;gap:8px;transition:transform .3s ease;
 }
 .plano .tit{font-size:16px;font-weight:500;color:var(--tinta);letter-spacing:-.009em}
@@ -224,27 +311,28 @@ section{padding:var(--seccion) 0}
 .plano .barras i{display:block;height:7px;border-radius:4px;background:var(--mist)}
 .plano .barras i:nth-child(2){width:78%}
 .plano .barras i:nth-child(3){width:54%}
-.plano.viejo{transform:translate3d(-34px,26px,-70px);opacity:.75}
+.plano.viejo{transform:translate3d(-34px,26px,-70px);opacity:.72}
 .plano.nuevo{transform:translate3d(34px,-26px,40px)}
 .plano.nuevo .barras i{background:var(--melocoton)}
 .plano.nuevo .barras i:first-child{background:#f6cdb2}
 .pila:hover .plano.viejo{transform:translate3d(-52px,34px,-96px)}
 .pila:hover .plano.nuevo{transform:translate3d(52px,-34px,66px)}
 
+.neutra{background:var(--mist);border-radius:var(--r-card);padding:32px 20px}
 .lista{list-style:none;margin:0;padding:0}
-.lista li{padding:16px 0;border-bottom:1px solid var(--hairline);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.lista li{padding:16px 0;border-bottom:1px solid rgba(4,23,43,.07);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
 .lista li:first-child{padding-top:0}
 .lista li:last-child{border-bottom:0;padding-bottom:0}
 .lista b{font-size:14px;font-weight:400;color:var(--ceniza);padding-top:3px;white-space:nowrap}
 .lista span{font-size:16px;color:var(--pizarra);line-height:1.5}
 
-/* ---------- publico ---------- */
+/* ── 12. Para quien ──────────────────────────────────────── */
 .publico{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.publico > div{background:var(--mist);border-radius:var(--r-card);padding:32px var(--card-pad);display:grid;gap:10px;align-content:start}
+.publico > div{background:var(--mist);border-radius:var(--r-card);padding:32px 20px;display:grid;gap:10px;align-content:start}
 .publico p{font-size:16px;color:var(--pizarra);line-height:1.5}
 .publico p.etiqueta{font-size:14px;color:var(--ceniza)}
 
-/* ---------- preguntas ---------- */
+/* ── 13. Preguntas ───────────────────────────────────────── */
 .faq{border-top:1px solid var(--hairline)}
 .faq details{border-bottom:1px solid var(--hairline)}
 .faq summary{
@@ -253,18 +341,22 @@ section{padding:var(--seccion) 0}
   font-size:20px;font-weight:450;color:var(--tinta);letter-spacing:-.009em;
 }
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"";flex:none;width:10px;height:10px;border-right:1.5px solid var(--ceniza);border-bottom:1.5px solid var(--ceniza);transform:rotate(45deg);transition:transform .2s ease;margin-right:4px}
+.faq summary::after{
+  content:"";flex:none;width:10px;height:10px;margin-right:4px;
+  border-right:1.5px solid var(--ceniza);border-bottom:1.5px solid var(--ceniza);
+  transform:rotate(45deg);transition:transform .2s ease;
+}
 .faq details[open] summary::after{transform:rotate(-135deg)}
 .faq .resp{padding:0 0 24px;font-size:17px;color:var(--pizarra);max-width:70ch;line-height:1.5}
 
-/* ---------- contacto ---------- */
+/* ── 14. Contacto ────────────────────────────────────────── */
 .cierre{text-align:center}
 .cierre h2{margin:0 auto 20px;max-width:18ch}
 .cierre .sub{max-width:48ch;margin:0 auto 32px}
 .form{display:grid;gap:12px;max-width:520px;margin:0 auto;text-align:left}
 .form[hidden]{display:none}
-.form .pair{display:grid;gap:12px}
-@media(min-width:560px){.form .pair{grid-template-columns:1fr 1fr}}
+.form .par{display:grid;gap:12px}
+@media(min-width:560px){.form .par{grid-template-columns:1fr 1fr}}
 .form label{display:grid;gap:8px;font-size:14px;color:var(--pizarra)}
 .form input,.form textarea{
   font-family:var(--sans);font-size:16px;font-weight:400;color:var(--tinta);
@@ -277,39 +369,53 @@ section{padding:var(--seccion) 0}
 .form .btn{margin-top:4px;justify-self:start}
 .form-alt{margin:16px 0 0;font-size:16px;color:var(--pizarra);text-align:center}
 .form-alt a{color:var(--tinta)}
-.pildora-info{display:inline-block;background:var(--mist);color:var(--pizarra);border-radius:var(--r-pill);padding:12px 20px;font-size:16px}
+.pildora-info{display:inline-block;background:var(--mist);color:var(--pizarra);border-radius:var(--r-pill);padding:14px 22px;font-size:16px}
 
-/* ---------- pie ---------- */
+/* ── 15. Pie ─────────────────────────────────────────────── */
 footer{padding:48px 0 64px;border-top:1px solid var(--hairline)}
-.foot-in{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.foot-in{display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .foot-marca{display:flex;align-items:center;gap:10px}
 .foot-marca svg{width:20px;height:20px;color:var(--tinta);--mark-bg:var(--papel)}
-.foot-marca span{font-size:16px;font-weight:500;color:var(--tinta);letter-spacing:-.009em}
-footer small{font-size:15px;color:var(--pizarra)}
+.foot-marca span{font-size:16px;font-weight:500;letter-spacing:-.009em}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap}
+.foot-links a{font-size:15px;color:var(--pizarra);text-decoration:none}
+.foot-links a:hover,.foot-links a:focus-visible{color:var(--tinta);text-decoration:underline;text-underline-offset:4px}
+footer small{font-size:15px;color:var(--ceniza)}
 
+/* ── 16. Accesibilidad ───────────────────────────────────── */
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta);color:var(--papel);padding:12px 20px;border-radius:0 0 var(--r-input) 0;font-size:16px;text-decoration:none}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--tinta);outline-offset:3px}
 
 @media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
   .logo3d,.cubo{animation:none}
   .mod:hover,.mod:focus-within{transform:none}
   .pila:hover .plano.viejo{transform:translate3d(-34px,26px,-70px)}
   .pila:hover .plano.nuevo{transform:translate3d(34px,-26px,40px)}
 }
+
+/* ── 17. Adaptacion ──────────────────────────────────────── */
+@media(max-width:960px){
+  .flota{position:static;width:100%;max-width:280px;margin:0 auto}
+  .collage{display:grid;gap:20px;min-height:0}
+  .logo3d-zona{min-height:250px;order:-1}
+}
 @media(max-width:900px){
-  .modulos-marco,.dos-col,.publico{grid-template-columns:1fr}
+  .modulos-marco,.dos-col,.publico,.pasos{grid-template-columns:1fr}
   .nav-links{display:none}
 }
 @media(max-width:560px){
-  .nav-in{padding:16px 24px}
+  .nav-in{padding:14px 24px}
   .cubo-zona{min-height:250px}
   .pieza{width:58px;height:58px;margin:-29px}
 }
 </style>
 </head>
+
 <body>
 
+<!-- simbolos reutilizables -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="mark" viewBox="0 0 200 200">
     <polygon points="100,26 166,63 166,137 100,174 34,137 34,63"
@@ -328,13 +434,14 @@ footer small{font-size:15px;color:var(--pizarra)}
   </symbol>
 </svg>
 
-<a class="skip" href="#top">Saltar al contenido</a>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 
 <nav class="nav" aria-label="Principal">
   <div class="nav-in">
-    <a class="marca" href="#top"><svg><use href="#mark"/></svg><span>Orezco</span></a>
+    <a class="marca" href="#contenido"><svg><use href="#mark"/></svg><span>Orezco</span></a>
     <div class="nav-links">
       <a href="#modulos">Módulos</a>
+      <a href="#proceso">Proceso</a>
       <a href="#migracion">Migración</a>
       <a href="#para-quien">Para quién</a>
       <a href="#preguntas">Preguntas</a>
@@ -343,56 +450,75 @@ footer small{font-size:15px;color:var(--pizarra)}
   </div>
 </nav>
 
-<main id="top">
+<main id="contenido">
 
-  <!-- ============ portada ============ -->
+  <!-- ══ Portada ══ -->
   <section class="hero">
     <div class="wrap">
       <h1>Un ERP que no se te <em>va de las manos</em></h1>
       <p class="sub">Contabilidad, facturación, inventario, compras y ventas en un mismo sitio. Sin módulos que nadie recuerda haber instalado.</p>
-      <div class="hero-actions">
+      <div class="hero-acciones">
         <a class="btn btn-lleno" href="#contacto">Pedir una demo</a>
         <a class="btn btn-fantasma" href="#modulos">Ver los módulos</a>
       </div>
       <p class="hero-nota">En desarrollo · Para pymes</p>
 
-      <div class="logo3d-zona" aria-hidden="true">
-        <div class="logo3d">
-          <div class="lcara f1"><svg><use href="#chispa"/></svg></div>
-          <div class="lcara f2"><svg><use href="#chispa"/></svg></div>
-          <div class="lcara f3"><svg><use href="#chispa"/></svg></div>
-          <div class="lcara f4"><svg><use href="#chispa"/></svg></div>
-          <div class="lcara f5"><svg><use href="#chispa"/></svg></div>
-          <div class="lcara f6"><svg><use href="#chispa"/></svg></div>
+      <div class="collage">
+        <div class="artefacto flota flota-izq">
+          <p class="cabecera">Ocho módulos</p>
+          <ul>
+            <li>Contabilidad</li>
+            <li>Facturación</li>
+            <li>Inventario</li>
+            <li class="acento">…y cinco más</li>
+          </ul>
+        </div>
+
+        <div class="logo3d-zona" aria-hidden="true">
+          <div class="logo3d">
+            <div class="lcara f1"><svg><use href="#chispa"/></svg></div>
+            <div class="lcara f2"><svg><use href="#chispa"/></svg></div>
+            <div class="lcara f3"><svg><use href="#chispa"/></svg></div>
+            <div class="lcara f4"><svg><use href="#chispa"/></svg></div>
+            <div class="lcara f5"><svg><use href="#chispa"/></svg></div>
+            <div class="lcara f6"><svg><use href="#chispa"/></svg></div>
+          </div>
+        </div>
+
+        <div class="artefacto flota flota-der">
+          <p class="cabecera">Migración</p>
+          <ul>
+            <li>Datos con histórico</li>
+            <li>Convivencia</li>
+            <li class="acento">Punto de retorno</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ el problema: la unica tarjeta melocoton ============ -->
+  <!-- ══ El problema: la unica tarjeta melocoton ══ -->
   <section style="padding-top:0">
     <div class="wrap">
-      <div class="melocoton-card">
+      <div class="acento-card">
         <p class="cita">Los ERP no fallan el primer año. Fallan al tercero, cuando <em>ya nadie sabe por qué está puesto lo que está puesto.</em></p>
         <p>Un módulo que se instaló para un caso puntual y se quedó. Un campo personalizado que solo entiende quien ya no trabaja aquí. Facturas que llevan meses sin salir y nadie se ha dado cuenta. El sistema sigue funcionando, pero ha dejado de ser fiable — y descubrirlo siempre cuesta más caro que evitarlo.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ modulos ============ -->
+  <!-- ══ Modulos ══ -->
   <section class="banda" id="modulos">
     <div class="wrap">
-      <div class="sec-head">
-        <p class="etiqueta">Módulos</p>
-        <h2>Ocho áreas, <em>un solo sistema</em></h2>
+      <div class="sec-head" style="max-width:40ch;margin-bottom:clamp(32px,4vw,48px)">
+        <p class="etiqueta" style="margin-bottom:16px">Módulos</p>
+        <h2 style="margin-bottom:20px">Ocho áreas, <em>un solo sistema</em></h2>
         <p class="sub">Ocho módulos, ocho vértices de un cubo. Pasa por cualquiera para verlo.</p>
       </div>
 
-      <div class="artefacto modulos-marco">
+      <div class="modulos-marco">
         <div>
-          <div class="cubo-zona" aria-hidden="true">
-            <div class="cubo" id="cubo"></div>
-          </div>
+          <div class="cubo-zona" aria-hidden="true"><div class="cubo" id="cubo"></div></div>
           <p class="cubo-pie" id="cubo-pie">Ocho piezas, un solo cubo</p>
         </div>
 
@@ -410,18 +536,46 @@ footer small{font-size:15px;color:var(--pizarra)}
     </div>
   </section>
 
-  <!-- ============ migracion ============ -->
-  <section id="migracion">
+  <!-- ══ Proceso: aqui la numeracion si es secuencia real ══ -->
+  <section id="proceso">
     <div class="wrap">
-      <div class="sec-head">
-        <p class="etiqueta">Venir de otro ERP</p>
-        <h2>Cambiar sin <em>parar la empresa</em></h2>
+      <div style="max-width:40ch;margin-bottom:clamp(32px,4vw,48px)">
+        <p class="etiqueta" style="margin-bottom:16px">Cómo empieza</p>
+        <h2 style="margin-bottom:20px">Tres pasos antes de <em>tocar nada</em></h2>
+        <p class="sub">Ninguno de los tres implica cambiar de sistema. Sirven para saber si tiene sentido hacerlo.</p>
+      </div>
+      <div class="pasos">
+        <div class="paso">
+          <span class="orden">1</span>
+          <h3>Diagnóstico</h3>
+          <p>Una llamada sobre lo que usáis hoy y qué es lo que peor lleváis. Si no encajamos, se dice en esa llamada y no en la tercera.</p>
+        </div>
+        <div class="paso">
+          <span class="orden">2</span>
+          <h3>Demo sobre vuestro caso</h3>
+          <p>No una presentación genérica: los módulos que os afectan, con ejemplos parecidos a los vuestros.</p>
+        </div>
+        <div class="paso">
+          <span class="orden">3</span>
+          <h3>Plan de migración</h3>
+          <p>Qué datos se traen, cuánto dura la convivencia con el sistema antiguo y cuál es el punto de retorno. Por escrito, antes de empezar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Migracion ══ -->
+  <section class="banda" id="migracion">
+    <div class="wrap">
+      <div style="max-width:40ch;margin-bottom:clamp(32px,4vw,48px)">
+        <p class="etiqueta" style="margin-bottom:16px">Venir de otro ERP</p>
+        <h2 style="margin-bottom:20px">Cambiar sin <em>parar la empresa</em></h2>
         <p class="sub">Nadie cambia de ERP porque le apetezca. Se cambia cuando el que hay cuesta más de mantener que de sustituir.</p>
       </div>
       <div class="dos-col">
         <div>
-          <p>Y aun así da vértigo, porque durante la migración la empresa tiene que seguir facturando.</p>
-          <p>Orezco se plantea desde ese día concreto: el traspaso de datos, el periodo en que <strong>conviven los dos sistemas</strong> y la vuelta atrás si algo sale mal.</p>
+          <p class="cuerpo">Y aun así da vértigo, porque durante la migración la empresa tiene que seguir facturando.</p>
+          <p class="cuerpo">Orezco se plantea desde ese día concreto: el traspaso de datos, el periodo en que <strong>conviven los dos sistemas</strong> y la vuelta atrás si algo sale mal.</p>
 
           <div class="pila" aria-hidden="true">
             <div class="pila-in">
@@ -450,12 +604,12 @@ footer small{font-size:15px;color:var(--pizarra)}
     </div>
   </section>
 
-  <!-- ============ para quien ============ -->
-  <section class="banda" id="para-quien">
+  <!-- ══ Para quien ══ -->
+  <section id="para-quien">
     <div class="wrap">
-      <div class="sec-head">
-        <p class="etiqueta">Para quién es</p>
-        <h2>Y para <em>quién no</em></h2>
+      <div style="max-width:40ch;margin-bottom:clamp(32px,4vw,48px)">
+        <p class="etiqueta" style="margin-bottom:16px">Para quién es</p>
+        <h2 style="margin-bottom:20px">Y para <em>quién no</em></h2>
         <p class="sub">Un ERP no le sirve a todo el mundo. Preferimos decirlo antes que después de la demo.</p>
       </div>
       <div class="publico">
@@ -478,11 +632,11 @@ footer small{font-size:15px;color:var(--pizarra)}
     </div>
   </section>
 
-  <!-- ============ preguntas ============ -->
-  <section id="preguntas">
+  <!-- ══ Preguntas ══ -->
+  <section class="banda" id="preguntas">
     <div class="wrap">
-      <div class="sec-head">
-        <p class="etiqueta">Preguntas</p>
+      <div style="max-width:40ch;margin-bottom:clamp(32px,4vw,48px)">
+        <p class="etiqueta" style="margin-bottom:16px">Preguntas</p>
         <h2>Lo que suelen <em>preguntarnos</em></h2>
       </div>
       <div class="faq">
@@ -506,12 +660,16 @@ footer small{font-size:15px;color:var(--pizarra)}
           <summary>¿Hace falta cambiarlo todo de golpe?</summary>
           <p class="resp">No. Por eso existe el periodo de convivencia. La empresa tiene que seguir facturando durante la migración, y ese es el punto de partida del diseño, no una excepción.</p>
         </details>
+        <details>
+          <summary>¿Cómo empieza el proceso?</summary>
+          <p class="resp">Con una llamada de diagnóstico sobre lo que usáis hoy. De ahí sale una demo centrada en vuestro caso y, si tiene sentido, un plan de migración por escrito antes de tocar nada.</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- ============ contacto ============ -->
-  <section class="cierre banda" id="contacto">
+  <!-- ══ Contacto ══ -->
+  <section class="cierre" id="contacto">
     <div class="wrap">
       <p class="etiqueta" style="margin-bottom:16px">Hablemos</p>
       <h2>¿Te enseñamos <em>cómo funciona?</em></h2>
@@ -520,11 +678,11 @@ footer small{font-size:15px;color:var(--pizarra)}
       <div id="sin-canal"><span class="pildora-info">Canal de contacto disponible en breve</span></div>
 
       <form class="form" id="form-contacto" hidden>
-        <div class="pair">
+        <div class="par">
           <label>Nombre<input type="text" name="nombre" autocomplete="name" required></label>
           <label>Empresa<input type="text" name="empresa" autocomplete="organization"></label>
         </div>
-        <div class="pair">
+        <div class="par">
           <label>Email<input type="email" name="email" autocomplete="email" required></label>
           <label>Qué usáis ahora<input type="text" name="actual" placeholder="Odoo, SAP, hojas de cálculo..."></label>
         </div>
@@ -540,27 +698,39 @@ footer small{font-size:15px;color:var(--pizarra)}
 <footer>
   <div class="wrap foot-in">
     <div class="foot-marca"><svg><use href="#mark"/></svg><span>Orezco</span></div>
-    <small>&copy; <span id="y">2026</span> Orezco</small>
+    <nav class="foot-links" aria-label="Pie">
+      <a href="#modulos">Módulos</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#migracion">Migración</a>
+      <a href="#preguntas">Preguntas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <small>&copy; <span id="anio">2026</span> Orezco</small>
   </div>
 </footer>
 
 <script>
-document.getElementById("y").textContent = new Date().getFullYear();
+/* ── Año del pie ─────────────────────────────────────────── */
+document.getElementById("anio").textContent = new Date().getFullYear();
 
-/* Cubo 3D: ocho piezas en los ocho vertices, una por modulo.
-   Se generan aqui para no repetir 48 caras a mano en el HTML. */
+/* ── Cubo de ocho piezas ─────────────────────────────────────
+   Ocho modulos, ocho vertices. Las piezas se generan aqui para
+   no repetir 48 caras a mano en el HTML.                      */
 (function () {
   var cubo = document.getElementById("cubo");
   if (!cubo) return;
-  var S = 80, HUECO = 12, d = (S + HUECO) / 2, h = S / 2;
+
+  var LADO = 80, HUECO = 12;
+  var d = (LADO + HUECO) / 2, h = LADO / 2;
   var caras = [
-    ["", "translateZ(" + h + "px)"],
-    ["", "rotateY(180deg) translateZ(" + h + "px)"],
+    ["",    "translateZ(" + h + "px)"],
+    ["",    "rotateY(180deg) translateZ(" + h + "px)"],
     ["der", "rotateY(90deg) translateZ(" + h + "px)"],
-    ["", "rotateY(-90deg) translateZ(" + h + "px)"],
+    ["",    "rotateY(-90deg) translateZ(" + h + "px)"],
     ["sup", "rotateX(90deg) translateZ(" + h + "px)"],
-    ["", "rotateX(-90deg) translateZ(" + h + "px)"]
+    ["",    "rotateX(-90deg) translateZ(" + h + "px)"]
   ];
+
   var n = 0;
   for (var sx = -1; sx <= 1; sx += 2)
     for (var sy = -1; sy <= 1; sy += 2)
@@ -569,7 +739,8 @@ document.getElementById("y").textContent = new Date().getFullYear();
         var pieza = document.createElement("div");
         pieza.className = "pieza";
         pieza.setAttribute("data-mod", n);
-        pieza.style.transform = "translate3d(" + (sx*d) + "px," + (sy*d) + "px," + (sz*d) + "px)";
+        pieza.style.transform =
+          "translate3d(" + (sx * d) + "px," + (sy * d) + "px," + (sz * d) + "px)";
         for (var c = 0; c < caras.length; c++) {
           var cara = document.createElement("i");
           cara.className = "cara " + caras[c][0];
@@ -580,29 +751,33 @@ document.getElementById("y").textContent = new Date().getFullYear();
       }
 })();
 
-/* Cada fila de modulo resalta su pieza del cubo. */
+/* ── Enlace tarjeta de modulo ↔ pieza del cubo ───────────────
+   Funciona con raton y con teclado.                           */
 (function () {
   var cubo = document.getElementById("cubo");
   var pie  = document.getElementById("cubo-pie");
   if (!cubo || !pie) return;
+
   var cartas = document.querySelectorAll(".mod[data-cubo]");
-  var base = pie.textContent;
+  var textoBase = pie.textContent;
 
   function limpiar() {
     cubo.classList.remove("hay-activa");
-    var act = cubo.querySelectorAll(".pieza.activa");
-    for (var i = 0; i < act.length; i++) act[i].classList.remove("activa");
-    pie.textContent = base;
+    var activas = cubo.querySelectorAll(".pieza.activa");
+    for (var i = 0; i < activas.length; i++) activas[i].classList.remove("activa");
+    pie.textContent = textoBase;
   }
+
   function marcar(n, carta) {
     limpiar();
     var pieza = cubo.querySelector('.pieza[data-mod="' + n + '"]');
     if (!pieza) return;
     pieza.classList.add("activa");
     cubo.classList.add("hay-activa");
-    var t = carta.querySelector("h3");
-    if (t) pie.textContent = t.textContent;
+    var titulo = carta.querySelector("h3");
+    if (titulo) pie.textContent = titulo.textContent;
   }
+
   for (var k = 0; k < cartas.length; k++) {
     (function (carta) {
       var n = carta.getAttribute("data-cubo");
@@ -614,18 +789,23 @@ document.getElementById("y").textContent = new Date().getFullYear();
   }
 })();
 
-/* Contacto. Unico valor a rellenar; vacio deja la pildora y oculta el formulario. */
+/* ── Contacto ────────────────────────────────────────────────
+   Unico valor que hay que rellenar. Vacio: se muestra la
+   pildora informativa y el formulario queda oculto.           */
 var CONTACTO = "info@orezco.com";
 
 (function () {
   if (!CONTACTO) return;
   var form = document.getElementById("form-contacto");
-  var pill = document.getElementById("sin-canal");
-  var alt  = document.getElementById("enlace-directo");
-  pill.hidden = true;
+  var pildora = document.getElementById("sin-canal");
+  var directo = document.getElementById("enlace-directo");
+  if (!form || !pildora || !directo) return;
+
+  pildora.hidden = true;
   form.hidden = false;
-  alt.href = "mailto:" + CONTACTO;
-  alt.textContent = CONTACTO;
+  directo.href = "mailto:" + CONTACTO;
+  directo.textContent = CONTACTO;
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var d = new FormData(form);
@@ -637,9 +817,10 @@ var CONTACTO = "info@orezco.com";
       "",
       d.get("mensaje") || ""
     ].join(String.fromCharCode(10));
+
     window.location.href = "mailto:" + CONTACTO +
       "?subject=" + encodeURIComponent("Demo de Orezco - " + (d.get("empresa") || d.get("nombre") || "")) +
-      "&body=" + encodeURIComponent(cuerpo);
+      "&body="    + encodeURIComponent(cuerpo);
   });
 })();
 </script>
