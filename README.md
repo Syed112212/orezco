@@ -7,8 +7,18 @@ Web de Orezco, un ERP. Sitio estatico: HTML y CSS planos, sin build ni dependenc
     index.html      landing completa
     404.html        pagina de error, mismo sistema visual
     assets/logo.svg logo monocromo, usa currentColor
+    assets/og.png   imagen 1200x630 para compartir enlaces (generada, ver abajo)
+    robots.txt      permite indexar, apunta al sitemap
+    sitemap.xml     una sola URL
     CNAME           dominio personalizado de GitHub Pages
     DESIGN.md       SSOT visual: color, tipografia, ritmo, componentes
+
+## Imagen para compartir
+
+`assets/og.png` se genera con Chrome headless a partir de una plantilla HTML. Para
+regenerarla tras un cambio de marca:
+
+    chrome --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=10000       --force-device-scale-factor=1 --window-size=1200,630       --screenshot=assets/og.png file:///ruta/og.html
 
 ## Diseno
 

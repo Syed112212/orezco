@@ -4,13 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Orezco — ERP</title>
-<meta name="description" content="Orezco es un ERP: contabilidad, facturación, inventario, compras y ventas en un mismo sitio.">
-<meta name="robots" content="noindex">
+<meta name="description" content="Orezco es un ERP para pymes: contabilidad, facturación, inventario, compras, ventas, proyectos, personal e informes en un mismo sitio.">
+<link rel="canonical" href="https://orezco.com/">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<meta property="og:title" content="Orezco — ERP">
-<meta property="og:description" content="Contabilidad, facturación, inventario, compras y ventas en un mismo sitio.">
+<link rel="apple-touch-icon" href="assets/og.png">
+<meta name="theme-color" content="#fafffa">
+
+<meta property="og:site_name" content="Orezco">
+<meta property="og:title" content="Orezco — Un ERP que no se te va de las manos">
+<meta property="og:description" content="Contabilidad, facturación, inventario, compras y ventas en un mismo sitio. Sin módulos que nadie recuerda haber instalado.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
 <meta property="og:url" content="https://orezco.com/">
+<meta property="og:image" content="https://orezco.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Orezco — Un ERP que no se te va de las manos">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Orezco — Un ERP que no se te va de las manos">
+<meta name="twitter:description" content="Contabilidad, facturación, inventario, compras y ventas en un mismo sitio.">
+<meta name="twitter:image" content="https://orezco.com/assets/og.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Orezco",
+  "applicationCategory": "BusinessApplication",
+  "description": "ERP para pymes: contabilidad, facturación, inventario, compras, ventas, proyectos, personal e informes.",
+  "url": "https://orezco.com/",
+  "inLanguage": "es",
+  "publisher": { "@type": "Organization", "name": "Orezco", "url": "https://orezco.com/" }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@200;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap">
@@ -247,8 +273,26 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
 
 @media(max-width:860px){
   .hero-grid,.thesis-in,.dark-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
+  /* la navegacion pasa a dos filas en vez de desaparecer */
+  .nav-in{flex-wrap:wrap;row-gap:12px}
+  .brand{margin-right:auto}
+  .nav-links{
+    order:3;width:100%;gap:22px;
+    overflow-x:auto;padding-bottom:2px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{white-space:nowrap}
+  .nav .btn{padding:10px 16px;font-size:12px}
 }
+/* salto al contenido, para teclado y lectores de pantalla */
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--prensa);color:var(--hueso);
+  padding:12px 18px;border-radius:0 0 var(--r-boton) 0;
+  font-size:13px;font-weight:600;text-decoration:none;
+}
+.skip:focus{left:0}
 :focus-visible{outline:2px solid var(--verde);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -268,7 +312,9 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
   </symbol>
 </svg>
 
-<nav class="nav">
+<a class="skip" href="#top">Saltar al contenido</a>
+
+<nav class="nav" aria-label="Principal">
   <div class="nav-in">
     <a class="brand" href="#top"><svg><use href="#mark"/></svg><span>Orezco</span></a>
     <div class="nav-links">
