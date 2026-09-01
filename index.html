@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://orezco.com/">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/og.png">
-<meta name="theme-color" content="#fafffa">
+<meta name="theme-color" content="#08090a">
 
 <meta property="og:site_name" content="Orezco">
 <meta property="og:title" content="Orezco — Un ERP que no se te va de las manos">
@@ -37,264 +37,327 @@
   "publisher": { "@type": "Organization", "name": "Orezco", "url": "https://orezco.com/" }
 }
 </script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@200;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap">
 <style>
 /* ============================================================
-   Orezco — broadsheet editorial en sala verde
-   Sistema completo en DESIGN.md. Mundo visual unico y deliberado:
-   todos los colores se pintan explicitamente, sin depender del tema.
+   Orezco — instrumento de precision, medianoche
+   Sistema en DESIGN.md. Mundo visual unico y deliberado (oscuro):
+   todos los colores se pintan explicitamente.
    ============================================================ */
 :root{
-  color-scheme:light;
+  color-scheme:dark;
 
-  /* marca */
-  --verde:#2bee4b;        /* rotulador. Solo CTA, subrayado activo y banda de pie */
-  --musgo:#93b799;        /* apoyo. Sombras y detalle. Nunca CTA */
-  --eco:#c4e4c9;          /* apoyo claro. Bandas y separadores */
+  /* superficies */
+  --void:#08090a;        /* lienzo */
+  --carbon:#0f1011;      /* tarjetas, barras */
+  --obsidian:#161718;    /* paneles elevados */
+  --slate:#23252a;       /* relleno interactivo, bordes */
 
-  /* neutros */
-  --tinta:#000000;        /* texto corrido sobre claro */
-  --prensa:#121613;       /* titulares y superficies oscuras */
-  --pizarra:#232924;      /* superficie secundaria */
-  --gris:#516254;         /* pies de foto, texto auxiliar */
-  --salvia:#c8d2c8;       /* texto claro sobre oscuro */
-  --hueso:#fafffa;        /* lienzo */
+  /* bordes */
+  --graphite:#23252a;    /* hairline base */
+  --smoke:#383b3f;       /* hairline de mas contraste */
+
+  /* texto */
+  --paper:#ffffff;       /* titulares */
+  --bone:#e5e5e6;
+  --mist:#d0d6e0;        /* cuerpo */
+  --fog:#8a8f98;         /* terciario */
+  --ash:#62666d;         /* apagado */
+
+  /* acentos */
+  --lima:#e4f222;        /* UNICA accion cromatica. Una por pantalla */
+  --pulso:#27a644;       /* apoyo, nunca accion */
 
   /* ritmo */
-  --ancho:1400px;
-  --seccion:80px;
-  --elemento:20px;
-  --r-boton:5px;
-  --r-pildora:10px;
-  --r-imagen:14px;
+  --ancho:1200px;
+  --seccion:96px;
+  --card-pad:24px;
+  --gap:8px;
 
-  --display:"Instrument Serif","Newsreader",Georgia,"Times New Roman",serif;
-  --editorial:"Newsreader",Georgia,serif;
-  --ui:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --r-card:12px;
+  --r-btn:6px;
+  --r-pill:9999px;
+  --r-badge:4px;
+
+  --ui:"Inter",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{
   margin:0;
-  background:var(--hueso);
-  color:var(--tinta);
+  background:var(--void);
+  color:var(--mist);
   font-family:var(--ui);
-  font-size:16px;
-  font-weight:400;
-  line-height:1.55;
+  font-size:16px;font-weight:400;line-height:1.5;
+  font-feature-settings:"cv01" on,"ss03" on,"zero" on;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:var(--ancho);margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
 
-/* micro-etiquetas en versalitas: 11px, 600, +0.01em */
+h1,h2,h3{color:var(--paper);margin:0;font-weight:510;letter-spacing:-.022em;line-height:1}
+h1{font-size:clamp(40px,7vw,72px)}
+h2{font-size:clamp(32px,4.6vw,48px)}
+h3{font-size:17px;font-weight:510;letter-spacing:-.011em;line-height:1.4}
+p{margin:0}
+
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:-.013em;color:var(--fog)}
 .label{
-  font-family:var(--ui);
-  font-size:11px;font-weight:600;
-  letter-spacing:.01em;text-transform:uppercase;
-  color:var(--gris);margin:0;
+  font-family:var(--ui);font-size:12px;font-weight:400;line-height:1.4;
+  color:var(--fog);margin:0;
 }
-.label.on-dark{color:var(--musgo)}
-
-/* ---------- navegacion ---------- */
-.nav{
-  position:sticky;top:0;z-index:50;
-  background:var(--hueso);
-  border-bottom:1px solid var(--eco);
+.badge{
+  display:inline-block;background:rgba(255,255,255,.05);color:var(--fog);
+  border-radius:var(--r-badge);padding:2px 6px;
+  font-size:12px;font-weight:400;line-height:1.4;
 }
-.nav-in{
-  max-width:var(--ancho);margin:0 auto;
-  padding:14px clamp(20px,4vw,56px);
-  display:flex;align-items:center;gap:var(--elemento);
-}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--prensa);margin-right:auto}
-.brand svg{width:26px;height:26px;color:var(--prensa);--mark-bg:var(--hueso)}
-.brand span{
-  font-family:var(--ui);font-weight:600;font-size:15px;
-  letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;
-}
-.nav-links{display:flex;gap:26px;align-items:center}
-.nav-links a{
-  font-size:11px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;
-  color:var(--gris);text-decoration:none;padding:5px 0;
-  border-bottom:2px solid transparent;transition:color .16s,border-color .16s;
-}
-.nav-links a:hover,.nav-links a:focus-visible{color:var(--prensa);border-bottom-color:var(--verde)}
 
 /* ---------- botones ---------- */
 .btn{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:var(--ui);font-size:13px;font-weight:600;
-  letter-spacing:.01em;text-transform:uppercase;
-  padding:12px 22px;border-radius:var(--r-boton);
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--gap);
+  font-family:var(--ui);font-size:14px;font-weight:510;letter-spacing:-.011em;
+  padding:10px 16px;border-radius:var(--r-btn);
   text-decoration:none;border:1px solid transparent;cursor:pointer;
-  transition:transform .16s,box-shadow .16s;
+  transition:background .15s ease,border-color .15s ease,color .15s ease;
 }
-.btn-primary{
-  background:var(--verde);color:var(--prensa);
-  box-shadow:0 2px 0 var(--musgo),0 10px 24px -12px rgba(43,238,75,.7);
+.btn-lima{
+  background:var(--lima);color:var(--void);
+  box-shadow:rgba(0,0,0,.01) 0 5px 2px 0,rgba(0,0,0,.04) 0 3px 2px 0,rgba(0,0,0,.07) 0 1px 1px 0,rgba(0,0,0,.08) 0 0 1px 0;
 }
-.btn-primary:hover,.btn-primary:focus-visible{transform:translateY(-1px);box-shadow:0 3px 0 var(--musgo),0 16px 30px -14px rgba(43,238,75,.85)}
-.btn-ghost{background:transparent;color:var(--prensa);border-color:var(--prensa)}
-.btn-ghost:hover,.btn-ghost:focus-visible{background:var(--prensa);color:var(--hueso)}
-.btn-on-dark{background:var(--verde);color:var(--prensa);box-shadow:0 2px 0 rgba(147,183,153,.55)}
+.btn-lima:hover,.btn-lima:focus-visible{background:#eef95c}
+.btn-ghost{background:transparent;border-color:var(--graphite);color:var(--mist);font-weight:400;font-size:13px;padding:8px 12px}
+.btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--smoke);color:var(--paper)}
+.btn-pill{background:var(--paper);color:var(--void);border-radius:var(--r-pill);padding:8px 16px;font-size:13px}
+.btn-pill:hover,.btn-pill:focus-visible{background:var(--bone)}
+
+/* ---------- navegacion ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(8,9,10,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--graphite)}
+.nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:var(--gap)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--paper);margin-right:auto}
+.brand svg{width:20px;height:20px;color:var(--paper);--mark-bg:var(--void)}
+.brand span{font-size:16px;font-weight:510;letter-spacing:-.011em}
+.nav-links{display:flex;gap:var(--gap);align-items:center}
+.nav-links a{
+  color:var(--mist);font-size:13px;font-weight:400;text-decoration:none;
+  padding:8px 12px;border-radius:var(--r-btn);transition:color .15s ease,background .15s ease;
+}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--paper);background:rgba(255,255,255,.04)}
 
 /* ---------- portada ---------- */
-.hero{padding:clamp(56px,9vw,120px) 0 clamp(48px,7vw,96px)}
-.hero .label{margin-bottom:26px;display:flex;align-items:center;gap:12px}
-.hero .label::after{content:"";flex:1;height:1px;background:var(--eco)}
-h1{
-  font-family:var(--display);font-weight:400;
-  font-size:clamp(3.1rem,12vw,11.5rem);
-  line-height:.9;letter-spacing:-.04em;
-  color:var(--prensa);margin:0;text-wrap:balance;
-}
-h1 em{font-style:normal;position:relative;white-space:nowrap}
-h1 em::after{
-  content:"";position:absolute;left:-.03em;right:-.03em;bottom:.16em;
-  height:.30em;background:var(--verde);z-index:-1;
-}
-h1 em{z-index:1}
-.hero-grid{
-  display:grid;gap:var(--seccion);
-  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
-  align-items:end;margin-top:clamp(32px,5vw,56px);
-}
-.hero-lede{
-  font-family:var(--editorial);font-size:clamp(1.18rem,2.3vw,1.55rem);
-  font-weight:300;line-height:1.5;color:var(--tinta);margin:0;max-width:34ch;
-}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.hero-side{display:grid;gap:18px;padding-bottom:6px}
-.hero-side dl{margin:0;display:grid;gap:14px}
-.hero-side .row{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;border-top:1px solid var(--eco);padding-top:12px}
-.hero-side dt{font-size:11px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;color:var(--gris);margin:0}
-.hero-side dd{margin:0;font-size:.95rem;color:var(--prensa)}
+.hero{padding:clamp(64px,10vw,128px) 0 0;position:relative}
+.hero .badge{margin-bottom:24px}
+.hero h1{max-width:16ch;margin-bottom:24px}
+.hero-sub{font-size:16px;color:var(--fog);max-width:52ch;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,5vw,64px);align-items:center}
+.hero-link{color:var(--mist);font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.hero-link:hover,.hero-link:focus-visible{color:var(--paper)}
 
-/* ---------- tesis ---------- */
-.thesis{padding:clamp(48px,7vw,var(--seccion)) 0;border-top:1px solid var(--eco)}
-.thesis-in{display:grid;gap:clamp(28px,5vw,var(--seccion));grid-template-columns:minmax(0,220px) minmax(0,1fr)}
-.thesis p:not(.label){
-  font-family:var(--editorial);font-weight:300;
-  font-size:clamp(1.35rem,3.2vw,2.35rem);
-  line-height:1.32;letter-spacing:-.015em;color:var(--prensa);
-  margin:0 0 22px;max-width:26ch;
+/* suelo atmosferico bajo el cubo — unico gradiente del sistema */
+.suelo{margin-top:clamp(48px,7vw,80px)}
+
+/* ---------- cubo 3D: ocho piezas, una por modulo ---------- */
+.cubo-marco{
+  background:var(--carbon);
+  border-radius:var(--r-card);
+  box-shadow:var(--slate) 0 0 0 1px inset;
+  padding:var(--card-pad);
+  display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:clamp(24px,4vw,48px);align-items:center;
 }
-.thesis p:not(.label):last-child{margin-bottom:0}
-.thesis p.small{
-  font-family:var(--ui);font-size:1rem;font-weight:400;line-height:1.65;
-  color:var(--gris);max-width:56ch;letter-spacing:0;
+.cubo-zona{
+  position:relative;display:grid;place-items:center;min-height:320px;
+  perspective:1000px;perspective-origin:50% 46%;
+}
+/* suelo atmosferico: el unico gradiente del sistema */
+.cubo-zona::after{
+  content:"";position:absolute;left:50%;bottom:18%;translate:-50% 0;
+  width:min(78%,300px);height:120px;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(208,214,224,.13),rgba(208,214,224,0) 70%);
+}
+.cubo{
+  position:relative;width:0;height:0;transform-style:preserve-3d;
+  transform:rotateX(-24deg) rotateY(-32deg);
+  animation:giro 36s linear infinite;
+}
+@keyframes giro{
+  from{transform:rotateX(-24deg) rotateY(-32deg)}
+  to  {transform:rotateX(-24deg) rotateY(328deg)}
+}
+.pieza{position:absolute;width:80px;height:80px;margin:-40px;transform-style:preserve-3d;transition:opacity .25s ease}
+.cara{
+  position:absolute;inset:0;
+  border:1px solid var(--smoke);
+  background:var(--obsidian);
+  transition:background .2s ease,border-color .2s ease;
+}
+.cara.sup{background:#212326}
+.cara.der{background:#0d0e10}
+.pieza.activa .cara{background:rgba(228,242,34,.14);border-color:var(--lima)}
+.pieza.activa .cara.sup{background:rgba(228,242,34,.26)}
+.pieza.activa .cara.der{background:rgba(228,242,34,.08)}
+.cubo.hay-activa .pieza:not(.activa){opacity:.25}
+.cubo-pie{margin-top:20px;text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:-.013em;color:var(--fog);min-height:1.4em}
+
+/* lista de modulos junto al cubo */
+.mods{display:grid;gap:0}
+.mod{
+  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  padding:14px 12px;border-radius:var(--r-btn);
+  border-bottom:1px solid var(--graphite);
+  transition:background .15s ease;
+}
+.mod:last-child{border-bottom:0}
+.mod:hover,.mod:focus-within{background:rgba(255,255,255,.02)}
+.mod .n{font-family:var(--mono);font-size:12px;color:var(--ash);padding-top:3px;letter-spacing:-.013em}
+.mod h3{margin-bottom:2px}
+.mod p{font-size:13px;line-height:1.5;color:var(--fog)}
+
+/* ---------- logo en 3D: el simbolo como cubo real ---------- */
+.logo3d-zona{
+  position:relative;display:grid;place-items:center;
+  min-height:clamp(240px,32vw,340px);perspective:1000px;perspective-origin:50% 44%;
+}
+.logo3d-zona::after{
+  content:"";position:absolute;left:50%;bottom:16%;translate:-50% 0;
+  width:min(70%,260px);height:110px;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(208,214,224,.12),rgba(208,214,224,0) 70%);
+}
+.logo3d{
+  --l:clamp(130px,17vw,190px);
+  position:relative;width:var(--l);height:var(--l);
+  transform-style:preserve-3d;animation:giroLogo 24s linear infinite;
+}
+@keyframes giroLogo{
+  from{transform:rotateX(-20deg) rotateY(0deg)}
+  to  {transform:rotateX(-20deg) rotateY(360deg)}
+}
+.lcara{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:#161718;border:1px solid var(--smoke);border-radius:2px;backface-visibility:hidden;
+}
+.lcara svg{width:58%;height:58%;color:var(--paper);opacity:.92}
+.lcara.f1{transform:translateZ(calc(var(--l)/2))}
+.lcara.f2{transform:rotateY(180deg) translateZ(calc(var(--l)/2))}
+.lcara.f3{transform:rotateY(90deg) translateZ(calc(var(--l)/2));background:#0d0e10}
+.lcara.f4{transform:rotateY(-90deg) translateZ(calc(var(--l)/2));background:#0d0e10}
+.lcara.f5{transform:rotateX(90deg) translateZ(calc(var(--l)/2));background:#212326}
+.lcara.f6{transform:rotateX(-90deg) translateZ(calc(var(--l)/2))}
+
+/* ---------- migracion: dos planos en perspectiva ---------- */
+.pila{
+  perspective:1200px;perspective-origin:60% 50%;
+  display:grid;place-items:center;min-height:300px;padding:16px 0;
+}
+.pila-in{position:relative;width:min(100%,360px);height:230px;transform-style:preserve-3d;transform:rotateX(6deg) rotateY(-19deg)}
+.plano{
+  position:absolute;inset:0;border-radius:var(--r-card);
+  background:var(--carbon);border:1px solid var(--graphite);
+  padding:20px;display:grid;align-content:start;gap:10px;
+  transition:transform .3s ease,border-color .3s ease;
+}
+.plano .tit{font-size:14px;font-weight:510;color:var(--mist);letter-spacing:-.011em}
+.plano .pie{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:-.013em}
+.plano .barras{display:grid;gap:6px;margin-top:6px}
+.plano .barras i{display:block;height:6px;border-radius:2px;background:rgba(255,255,255,.07)}
+.plano .barras i:nth-child(2){width:78%}
+.plano .barras i:nth-child(3){width:54%}
+.plano.viejo{transform:translate3d(-34px,26px,-70px);opacity:.62}
+.plano.nuevo{transform:translate3d(34px,-26px,40px);border-color:var(--smoke)}
+.plano.nuevo .tit{color:var(--paper)}
+.plano.nuevo .barras i{background:rgba(228,242,34,.22)}
+.plano.nuevo .barras i:first-child{background:rgba(228,242,34,.4)}
+.pila:hover .plano.viejo{transform:translate3d(-52px,34px,-96px)}
+.pila:hover .plano.nuevo{transform:translate3d(52px,-34px,66px)}
+
+/* las filas de modulo se levantan un poco en 3D */
+.mods{perspective:900px}
+.mod{transform-style:preserve-3d;transition:background .15s ease,transform .2s ease}
+.mod:hover,.mod:focus-within{transform:translateZ(16px)}
+
+@media(prefers-reduced-motion:reduce){
+  .logo3d{animation:none}
+  .mod:hover,.mod:focus-within{transform:none}
+  .pila:hover .plano.viejo,.pila:hover .plano.nuevo{transform:translate3d(-34px,26px,-70px)}
+  .pila:hover .plano.nuevo{transform:translate3d(34px,-26px,40px)}
 }
 
-/* ---------- modulos ---------- */
-.modules{padding:clamp(48px,7vw,var(--seccion)) 0;border-top:1px solid var(--eco)}
-.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--elemento);flex-wrap:wrap;margin-bottom:clamp(30px,4vw,48px)}
-h2{
-  font-family:var(--display);font-weight:400;
-  font-size:clamp(2.3rem,6.5vw,5.2rem);
-  line-height:.92;letter-spacing:-.04em;color:var(--prensa);margin:0;text-wrap:balance;
-}
-.mod-grid{display:grid;gap:1px;background:var(--eco);border:1px solid var(--eco);border-radius:var(--r-imagen);overflow:hidden}
-@media(min-width:700px){.mod-grid{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:1040px){.mod-grid{grid-template-columns:repeat(4,1fr)}}
-.mod{background:var(--hueso);padding:clamp(22px,3vw,30px);display:grid;gap:10px;align-content:start}
-.mod-n{
-  font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.01em;
-  color:var(--musgo);
-}
-.mod h3{
-  font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,2.4vw,1.95rem);
-  line-height:1;letter-spacing:-.03em;color:var(--prensa);margin:0;
-}
-.mod p{margin:0;font-size:.92rem;line-height:1.6;color:var(--gris)}
+/* ---------- secciones ---------- */
+section{padding:var(--seccion) 0}
+.sec-head{margin-bottom:clamp(32px,5vw,56px);max-width:38ch}
+.sec-head .label{margin-bottom:16px}
+.sec-head h2{margin-bottom:20px}
+.sec-head p.sub{font-size:16px;color:var(--fog);max-width:56ch}
 
-/* ---------- seccion oscura ---------- */
-.dark{
-  background:var(--prensa);color:var(--salvia);
-  padding:clamp(56px,8vw,110px) 0;margin-top:clamp(48px,7vw,var(--seccion));
-  --mark-bg:var(--prensa);
-}
-.dark h2{color:var(--hueso)}
-.dark-grid{display:grid;gap:clamp(30px,5vw,var(--seccion));grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;margin-top:clamp(28px,4vw,44px)}
-.dark p:not(.label){font-size:1.02rem;line-height:1.7;color:var(--salvia);margin:0 0 16px;max-width:52ch}
-.dark p:not(.label):last-child{margin-bottom:0}
-.checks{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--pizarra);border:1px solid var(--pizarra);border-radius:var(--r-imagen);overflow:hidden}
-.checks li{background:var(--prensa);padding:18px 22px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
-.checks b{
-  color:var(--verde);font-family:var(--ui);font-size:11px;font-weight:600;
-  letter-spacing:.01em;text-transform:uppercase;padding-top:3px;
-}
-.checks span{color:var(--salvia);font-size:.95rem;line-height:1.6}
+.dos-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.dos-col p{color:var(--fog);margin-bottom:16px;max-width:52ch}
+.dos-col p:last-child{margin-bottom:0}
+.dos-col strong{color:var(--mist);font-weight:510}
 
-/* ---------- cierre + banda verde ---------- */
-.cta{padding:clamp(56px,8vw,110px) 0 clamp(40px,6vw,70px);text-align:center;border-top:1px solid var(--eco)}
-.cta h2{margin:0 auto 24px;max-width:14ch}
-.cta .hero-lede{margin:0 auto 32px;text-align:center;max-width:44ch}
-.slot{
-  display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;
-  letter-spacing:.06em;text-transform:uppercase;color:var(--gris);
-  border:1px solid var(--eco);border-radius:var(--r-pildora);
-  padding:10px 18px;margin-top:26px;
-}
-.form{display:grid;gap:14px;max-width:520px;margin:30px auto 0;text-align:left}
-.form[hidden]{display:none}   /* .form (0,1,0) anulaba el atributo hidden del UA */
-.form .pair{display:grid;gap:14px}
+.tarjeta{background:var(--carbon);border-radius:var(--r-card);box-shadow:var(--slate) 0 0 0 1px inset;padding:var(--card-pad)}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.lista li{padding:16px 0;border-bottom:1px solid var(--graphite);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.lista li:first-child{padding-top:0}
+.lista li:last-child{border-bottom:0;padding-bottom:0}
+.lista b{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:-.013em;color:var(--pulso);padding-top:2px;white-space:nowrap}
+.lista span{font-size:14px;color:var(--fog);line-height:1.5}
+
+/* ---------- contacto ---------- */
+.cierre{text-align:center;border-top:1px solid var(--graphite)}
+.cierre h2{margin:0 auto 20px;max-width:14ch}
+.cierre .sub{font-size:16px;color:var(--fog);max-width:48ch;margin:0 auto 32px}
+.form{display:grid;gap:12px;max-width:480px;margin:0 auto;text-align:left}
+.form[hidden]{display:none}
+.form .pair{display:grid;gap:12px}
 @media(min-width:560px){.form .pair{grid-template-columns:1fr 1fr}}
-.form label{
-  font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.01em;
-  text-transform:uppercase;color:var(--gris);display:grid;gap:6px;
-}
+.form label{display:grid;gap:6px;font-size:12px;color:var(--fog)}
 .form input,.form textarea{
-  font-family:var(--ui);font-size:.95rem;font-weight:400;letter-spacing:0;
-  text-transform:none;color:var(--prensa);background:transparent;
-  border:0;border-bottom:1px solid var(--eco);border-radius:0;
-  padding:9px 2px;width:100%;
+  font-family:var(--ui);font-size:14px;font-weight:400;color:var(--mist);
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r-btn);padding:12px 14px;width:100%;
 }
-.form textarea{resize:vertical;min-height:84px;line-height:1.55}
-.form input:focus,.form textarea:focus{outline:0;border-bottom-color:var(--verde)}
-.form .btn{justify-content:center;margin-top:6px}
-.form-alt{margin:18px 0 0;font-size:.9rem;color:var(--gris);text-align:center}
-.form-alt a{color:var(--prensa);text-underline-offset:3px}
-.band{background:var(--verde);color:var(--prensa);padding:16px 0;overflow:hidden}
-.band-in{
-  display:flex;gap:44px;white-space:nowrap;
-  font-family:var(--ui);font-size:11px;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  justify-content:center;flex-wrap:wrap;padding:0 20px;
+.form textarea{resize:vertical;min-height:88px;line-height:1.5}
+.form input::placeholder,.form textarea::placeholder{color:var(--ash)}
+.form input:focus,.form textarea:focus{outline:0;border-color:var(--mist)}
+.form .btn{margin-top:4px}
+.form-alt{margin:16px 0 0;font-size:13px;color:var(--fog);text-align:center}
+.form-alt a{color:var(--mist);text-underline-offset:3px}
+.pildora{
+  display:inline-block;background:rgba(255,255,255,.05);color:var(--fog);
+  border-radius:var(--r-pill);padding:8px 16px;font-size:13px;
 }
-footer{background:var(--prensa);color:var(--salvia);padding:clamp(40px,6vw,64px) 0;--mark-bg:var(--prensa)}
-.foot-in{display:flex;gap:var(--elemento);align-items:center;flex-wrap:wrap;justify-content:space-between}
-.foot-brand{display:flex;align-items:center;gap:11px}
-.foot-brand svg{width:24px;height:24px;color:var(--hueso)}
-.foot-brand span{font-size:14px;font-weight:600;letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;color:var(--hueso)}
-footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:uppercase;color:var(--gris)}
 
-@media(max-width:860px){
-  .hero-grid,.thesis-in,.dark-grid{grid-template-columns:1fr}
-  /* la navegacion pasa a dos filas en vez de desaparecer */
-  .nav-in{flex-wrap:wrap;row-gap:12px}
-  .brand{margin-right:auto}
-  .nav-links{
-    order:3;width:100%;gap:22px;
-    overflow-x:auto;padding-bottom:2px;
-    scrollbar-width:none;-webkit-overflow-scrolling:touch;
-  }
-  .nav-links::-webkit-scrollbar{display:none}
-  .nav-links a{white-space:nowrap}
-  .nav .btn{padding:10px 16px;font-size:12px}
-}
-/* salto al contenido, para teclado y lectores de pantalla */
-.skip{
-  position:absolute;left:-9999px;top:0;z-index:100;
-  background:var(--prensa);color:var(--hueso);
-  padding:12px 18px;border-radius:0 0 var(--r-boton) 0;
-  font-size:13px;font-weight:600;text-decoration:none;
-}
+/* ---------- pie ---------- */
+footer{border-top:1px solid var(--graphite);padding:32px 0 48px}
+.foot-in{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.foot-brand{display:flex;align-items:center;gap:10px}
+.foot-brand svg{width:18px;height:18px;color:var(--mist);--mark-bg:var(--void)}
+.foot-brand span{font-size:14px;font-weight:510;color:var(--mist);letter-spacing:-.011em}
+footer small{font-size:12px;color:var(--ash)}
+
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--paper);color:var(--void);padding:10px 16px;border-radius:0 0 var(--r-btn) 0;font-size:13px;font-weight:510;text-decoration:none}
 .skip:focus{left:0}
-:focus-visible{outline:2px solid var(--verde);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+:focus-visible{outline:2px solid var(--lima);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.cubo{animation:none}*{transition:none!important}}
+
+@media(max-width:900px){
+  .cubo-marco{grid-template-columns:1fr}
+  .dos-col{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .nav-in{flex-wrap:wrap;row-gap:8px}
+  .nav-links{order:3;width:100%;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{white-space:nowrap;padding:6px 10px}
+  .cubo-zona{min-height:250px}
+  .pieza{width:58px;height:58px;margin:-29px}
+}
 </style>
 </head>
 <body>
@@ -303,11 +366,16 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
   <symbol id="mark" viewBox="0 0 200 200">
     <polygon points="100,26 166,63 166,137 100,174 34,137 34,63"
              fill="currentColor" stroke="currentColor" stroke-width="26" stroke-linejoin="round"/>
-    <g stroke="var(--mark-bg,#fafffa)" stroke-width="13" stroke-linecap="round" fill="none">
+    <g stroke="var(--mark-bg,#08090a)" stroke-width="13" stroke-linecap="round" fill="none">
       <path d="M100 100 L38 64"/><path d="M100 100 L162 64"/><path d="M100 100 L100 172"/>
     </g>
     <g stroke="currentColor" stroke-width="15" stroke-linecap="round" fill="none">
       <path d="M100 44 L100 156"/><path d="M51.5 72 L148.5 128"/><path d="M51.5 128 L148.5 72"/>
+    </g>
+  </symbol>
+  <symbol id="chispa" viewBox="0 0 200 200">
+    <g stroke="currentColor" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M100 30 L100 170"/><path d="M38.5 65 L161.5 135"/><path d="M38.5 135 L161.5 65"/>
     </g>
   </symbol>
 </svg>
@@ -322,7 +390,7 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
       <a href="#migracion">Migración</a>
       <a href="#contacto">Contacto</a>
     </div>
-    <a class="btn btn-primary" href="#contacto">Pedir una demo</a>
+    <a class="btn btn-pill" href="#contacto">Pedir una demo</a>
   </div>
 </nav>
 
@@ -330,89 +398,122 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
 
   <!-- ============ portada ============ -->
   <section class="hero">
-    <div class="wrap">
-      <p class="label">ERP &middot; Gestión empresarial</p>
-      <h1>Un ERP que no se te va de las <em>manos</em></h1>
-
-      <div class="hero-grid">
-        <div>
-          <p class="hero-lede">Contabilidad, facturación, inventario, compras y ventas en un mismo sitio. Sin módulos que nadie recuerda haber instalado.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#contacto">Pedir una demo</a>
-            <a class="btn btn-ghost" href="#modulos">Ver los módulos</a>
-          </div>
-        </div>
-        <div class="hero-side">
-          <dl>
-            <div class="row"><dt>Qué es</dt><dd>Un ERP completo para pymes</dd></div>
-            <div class="row"><dt>Para quién</dt><dd>Empresas que ya se han quedado pequeñas en su hoja de cálculo</dd></div>
-            <div class="row"><dt>Estado</dt><dd>En desarrollo</dd></div>
-          </dl>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ tesis ============ -->
-  <section class="thesis">
-    <div class="wrap thesis-in">
-      <p class="label">El problema</p>
+    <div class="wrap hero-grid">
       <div>
-        <p>Los ERP no fallan el primer año. Fallan al tercero, cuando ya nadie sabe por qué está puesto lo que está puesto.</p>
-        <p class="small">Un módulo que se instaló para un caso puntual y se quedó. Un campo personalizado que solo entiende quien ya no trabaja aquí. Facturas que llevan meses sin salir y nadie se ha dado cuenta. El sistema sigue funcionando, pero ha dejado de ser fiable — y descubrirlo siempre cuesta más caro que evitarlo.</p>
+        <span class="badge">ERP · En desarrollo</span>
+        <h1>Un ERP que no se te va de las manos</h1>
+        <p class="hero-sub">Contabilidad, facturación, inventario, compras y ventas en un mismo sitio. Sin módulos que nadie recuerda haber instalado.</p>
+        <div class="hero-actions">
+          <a class="btn btn-lima" href="#contacto">Pedir una demo</a>
+          <a class="hero-link" href="#modulos">Ver los módulos &rarr;</a>
+        </div>
+      </div>
+
+      <div class="logo3d-zona" aria-hidden="true">
+        <div class="logo3d">
+          <div class="lcara f1"><svg><use href="#chispa"/></svg></div>
+          <div class="lcara f2"><svg><use href="#chispa"/></svg></div>
+          <div class="lcara f3"><svg><use href="#chispa"/></svg></div>
+          <div class="lcara f4"><svg><use href="#chispa"/></svg></div>
+          <div class="lcara f5"><svg><use href="#chispa"/></svg></div>
+          <div class="lcara f6"><svg><use href="#chispa"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap suelo" style="padding-top:clamp(32px,5vw,56px);padding-bottom:0">
+      <div class="cubo-marco" id="modulos">
+        <div>
+          <div class="cubo-zona" aria-hidden="true">
+            <div class="cubo" id="cubo">
+              <!-- las ocho piezas se insertan aqui -->
+            </div>
+          </div>
+          <p class="cubo-pie" id="cubo-pie">Ocho piezas, un solo cubo</p>
+        </div>
+
+        <div class="mods">
+          <article class="mod" data-cubo="1" tabindex="0"><span class="n">01</span><div><h3>Contabilidad</h3><p>Plan contable, asientos, conciliación bancaria y cierre. El libro mayor como fuente única de verdad.</p></div></article>
+          <article class="mod" data-cubo="2" tabindex="0"><span class="n">02</span><div><h3>Facturación</h3><p>Emisión, rectificativas y seguimiento de cobro, con la trazabilidad que exige la administración.</p></div></article>
+          <article class="mod" data-cubo="3" tabindex="0"><span class="n">03</span><div><h3>Inventario</h3><p>Existencias, lotes y movimientos entre almacenes. Lo que hay, dónde está y desde cuándo.</p></div></article>
+          <article class="mod" data-cubo="4" tabindex="0"><span class="n">04</span><div><h3>Compras</h3><p>Proveedores, pedidos y recepciones. Del presupuesto a la factura sin volver a teclear nada.</p></div></article>
+          <article class="mod" data-cubo="5" tabindex="0"><span class="n">05</span><div><h3>Ventas</h3><p>Presupuestos, pedidos y clientes. El histórico completo de cada cuenta en una sola ficha.</p></div></article>
+          <article class="mod" data-cubo="6" tabindex="0"><span class="n">06</span><div><h3>Proyectos</h3><p>Tareas, imputación de horas y rentabilidad. Saber lo que cuesta un proyecto mientras se hace.</p></div></article>
+          <article class="mod" data-cubo="7" tabindex="0"><span class="n">07</span><div><h3>Personal</h3><p>Plantilla, ausencias y gastos. Lo imprescindible, sin convertirse en un software de RRHH aparte.</p></div></article>
+          <article class="mod" data-cubo="8" tabindex="0"><span class="n">08</span><div><h3>Informes</h3><p>Cuadros de mando sobre datos en vivo. Sin exportar a una hoja de cálculo para poder leerlos.</p></div></article>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ modulos ============ -->
-  <section class="modules" id="modulos">
+  <!-- ============ el problema ============ -->
+  <section>
     <div class="wrap">
       <div class="sec-head">
-        <h2>Lo que trae dentro</h2>
-        <p class="label">Ocho áreas, un solo sistema</p>
+        <p class="label">El problema</p>
+        <h2>Los ERP no fallan el primer año</h2>
+        <p class="sub">Fallan al tercero, cuando ya nadie sabe por qué está puesto lo que está puesto.</p>
       </div>
-
-      <div class="mod-grid">
-        <article class="mod"><p class="mod-n">01</p><h3>Contabilidad</h3><p>Plan contable, asientos, conciliación bancaria y cierre. El libro mayor como fuente única de verdad.</p></article>
-        <article class="mod"><p class="mod-n">02</p><h3>Facturación</h3><p>Emisión, rectificativas y seguimiento de cobro. Con la trazabilidad que exige la administración.</p></article>
-        <article class="mod"><p class="mod-n">03</p><h3>Inventario</h3><p>Existencias, lotes y movimientos entre almacenes. Lo que hay, dónde está y desde cuándo.</p></article>
-        <article class="mod"><p class="mod-n">04</p><h3>Compras</h3><p>Proveedores, pedidos y recepciones. Del presupuesto a la factura sin volver a teclear nada.</p></article>
-        <article class="mod"><p class="mod-n">05</p><h3>Ventas</h3><p>Presupuestos, pedidos y clientes. El histórico completo de cada cuenta en una sola ficha.</p></article>
-        <article class="mod"><p class="mod-n">06</p><h3>Proyectos</h3><p>Tareas, imputación de horas y rentabilidad. Saber lo que cuesta un proyecto mientras se hace.</p></article>
-        <article class="mod"><p class="mod-n">07</p><h3>Personal</h3><p>Plantilla, ausencias y gastos. Lo imprescindible, sin convertirse en un software de RRHH aparte.</p></article>
-        <article class="mod"><p class="mod-n">08</p><h3>Informes</h3><p>Cuadros de mando sobre datos en vivo. Sin exportar a una hoja de cálculo para poder leerlos.</p></article>
+      <div class="dos-col">
+        <div>
+          <p>Un módulo que se instaló para un caso puntual y se quedó. Un campo personalizado que solo entiende quien ya no trabaja aquí.</p>
+          <p>Facturas que llevan meses sin salir y nadie se ha dado cuenta.</p>
+        </div>
+        <div>
+          <p>El sistema sigue funcionando, pero ha dejado de ser fiable. Y descubrirlo <strong>siempre cuesta más caro que evitarlo</strong>.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============ migracion ============ -->
-  <section class="dark" id="migracion">
+  <section id="migracion">
     <div class="wrap">
-      <p class="label on-dark">Venir de otro ERP</p>
-      <h2>Cambiar sin parar la empresa</h2>
-
-      <div class="dark-grid">
+      <div class="sec-head">
+        <p class="label">Venir de otro ERP</p>
+        <h2>Cambiar sin parar la empresa</h2>
+        <p class="sub">Nadie cambia de ERP porque le apetezca. Se cambia cuando el que hay cuesta más de mantener que de sustituir.</p>
+      </div>
+      <div class="dos-col">
         <div>
-          <p>Nadie cambia de ERP porque le apetezca. Se cambia cuando el que hay ya cuesta más de mantener que de sustituir — y aun así da vértigo, porque durante la migración la empresa tiene que seguir facturando.</p>
+          <p>Y aun así da vértigo, porque durante la migración la empresa tiene que seguir facturando.</p>
           <p>Orezco se plantea desde ese día concreto: el traspaso de datos, el periodo en que conviven los dos sistemas y la vuelta atrás si algo sale mal.</p>
+
+          <div class="pila" aria-hidden="true">
+            <div class="pila-in">
+              <div class="plano viejo">
+                <span class="tit">Sistema antiguo</span>
+                <span class="pie">solo lectura</span>
+                <span class="barras"><i></i><i></i><i></i></span>
+              </div>
+              <div class="plano nuevo">
+                <span class="tit">Orezco</span>
+                <span class="pie">en produccion</span>
+                <span class="barras"><i></i><i></i><i></i></span>
+              </div>
+            </div>
+          </div>
         </div>
-        <ul class="checks">
-          <li><b>Datos</b><span>Clientes, proveedores, artículos y saldos se traen con su histórico, no como saldo inicial suelto.</span></li>
-          <li><b>Convivencia</b><span>Un periodo en que el sistema antiguo sigue vivo en solo lectura, para poder consultar y comparar.</span></li>
-          <li><b>Reversión</b><span>Un punto de retorno definido antes de empezar, no improvisado a mitad.</span></li>
-          <li><b>Formación</b><span>El equipo trabaja en un entorno de pruebas con datos reales antes del cambio.</span></li>
-        </ul>
+        <div class="tarjeta">
+          <ul class="lista">
+            <li><b>Datos</b><span>Clientes, proveedores, artículos y saldos se traen con su histórico, no como saldo inicial suelto.</span></li>
+            <li><b>Convivencia</b><span>Un periodo en que el sistema antiguo sigue vivo en solo lectura, para consultar y comparar.</span></li>
+            <li><b>Reversión</b><span>Un punto de retorno definido antes de empezar, no improvisado a mitad.</span></li>
+            <li><b>Formación</b><span>El equipo trabaja en un entorno de pruebas con datos reales antes del cambio.</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ cierre ============ -->
-  <section class="cta" id="contacto">
+  <!-- ============ contacto ============ -->
+  <section class="cierre" id="contacto">
     <div class="wrap">
-      <p class="label" style="text-align:center">Hablemos</p>
+      <p class="label" style="margin-bottom:16px">Hablemos</p>
       <h2>¿Te enseñamos cómo funciona?</h2>
-      <p class="hero-lede">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
-      <div id="sin-canal"><span class="slot">Canal de contacto disponible en breve</span></div>
+      <p class="sub">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
+
+      <div id="sin-canal"><span class="pildora">Canal de contacto disponible en breve</span></div>
 
       <form class="form" id="form-contacto" hidden>
         <div class="pair">
@@ -421,23 +522,16 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
         </div>
         <div class="pair">
           <label>Email<input type="email" name="email" autocomplete="email" required></label>
-          <label>Qu&eacute; us&aacute;is ahora<input type="text" name="actual" placeholder="Odoo, SAP, hojas de c&aacute;lculo..."></label>
+          <label>Qué usáis ahora<input type="text" name="actual" placeholder="Odoo, SAP, hojas de cálculo..."></label>
         </div>
-        <label>Qu&eacute; es lo que peor llev&aacute;is<textarea name="mensaje" rows="3"></textarea></label>
-        <button class="btn btn-primary" type="submit">Enviar</button>
-        <p class="form-alt">O escr&iacute;benos directamente a <a id="enlace-directo" href="#">&nbsp;</a></p>
+        <label>Qué es lo que peor lleváis<textarea name="mensaje" rows="3"></textarea></label>
+        <button class="btn btn-lima" type="submit">Enviar</button>
+        <p class="form-alt">O escríbenos directamente a <a id="enlace-directo" href="#">&nbsp;</a></p>
       </form>
     </div>
   </section>
 
 </main>
-
-<div class="band">
-  <div class="band-in">
-    <span>Contabilidad</span><span>Facturación</span><span>Inventario</span><span>Compras</span>
-    <span>Ventas</span><span>Proyectos</span><span>Personal</span><span>Informes</span>
-  </div>
-</div>
 
 <footer>
   <div class="wrap foot-in">
@@ -449,8 +543,74 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
 <script>
 document.getElementById("y").textContent = new Date().getFullYear();
 
-/* Unico valor a rellenar cuando exista buzon real. Vacio = se muestra la pildora
-   "canal disponible en breve" y el formulario permanece oculto. */
+/* Cubo 3D: ocho piezas en los ocho vertices, una por modulo.
+   Se generan aqui para no repetir 48 caras a mano en el HTML. */
+(function () {
+  var cubo = document.getElementById("cubo");
+  if (!cubo) return;
+  var S = 80, HUECO = 12, d = (S + HUECO) / 2, h = S / 2;
+  var caras = [
+    ["", "translateZ(" + h + "px)"],
+    ["", "rotateY(180deg) translateZ(" + h + "px)"],
+    ["der", "rotateY(90deg) translateZ(" + h + "px)"],
+    ["", "rotateY(-90deg) translateZ(" + h + "px)"],
+    ["sup", "rotateX(90deg) translateZ(" + h + "px)"],
+    ["", "rotateX(-90deg) translateZ(" + h + "px)"]
+  ];
+  var n = 0;
+  for (var sx = -1; sx <= 1; sx += 2)
+    for (var sy = -1; sy <= 1; sy += 2)
+      for (var sz = -1; sz <= 1; sz += 2) {
+        n++;
+        var pieza = document.createElement("div");
+        pieza.className = "pieza";
+        pieza.setAttribute("data-mod", n);
+        pieza.style.transform = "translate3d(" + (sx*d) + "px," + (sy*d) + "px," + (sz*d) + "px)";
+        for (var c = 0; c < caras.length; c++) {
+          var cara = document.createElement("i");
+          cara.className = "cara " + caras[c][0];
+          cara.style.transform = caras[c][1];
+          pieza.appendChild(cara);
+        }
+        cubo.appendChild(pieza);
+      }
+})();
+
+/* Cada tarjeta de modulo resalta su pieza del cubo. */
+(function () {
+  var cubo = document.getElementById("cubo");
+  var pie  = document.getElementById("cubo-pie");
+  if (!cubo || !pie) return;
+  var cartas = document.querySelectorAll(".mod[data-cubo]");
+  var base = pie.textContent;
+
+  function limpiar() {
+    cubo.classList.remove("hay-activa");
+    var act = cubo.querySelectorAll(".pieza.activa");
+    for (var i = 0; i < act.length; i++) act[i].classList.remove("activa");
+    pie.textContent = base;
+  }
+  function marcar(n, carta) {
+    limpiar();
+    var pieza = cubo.querySelector('.pieza[data-mod="' + n + '"]');
+    if (!pieza) return;
+    pieza.classList.add("activa");
+    cubo.classList.add("hay-activa");
+    var t = carta.querySelector("h3");
+    if (t) pie.textContent = t.textContent;
+  }
+  for (var k = 0; k < cartas.length; k++) {
+    (function (carta) {
+      var n = carta.getAttribute("data-cubo");
+      carta.addEventListener("mouseenter", function () { marcar(n, carta); });
+      carta.addEventListener("focusin",    function () { marcar(n, carta); });
+      carta.addEventListener("mouseleave", limpiar);
+      carta.addEventListener("focusout",   limpiar);
+    })(cartas[k]);
+  }
+})();
+
+/* Contacto. Unico valor a rellenar; vacio deja la pildora y oculta el formulario. */
 var CONTACTO = "info@orezco.com";
 
 (function () {
@@ -466,10 +626,10 @@ var CONTACTO = "info@orezco.com";
     e.preventDefault();
     var d = new FormData(form);
     var cuerpo = [
-      "Nombre: "  + (d.get("nombre")  || ""),
-      "Empresa: " + (d.get("empresa") || ""),
-      "Email: "   + (d.get("email")   || ""),
-      "Usan ahora: " + (d.get("actual") || ""),
+      "Nombre: "     + (d.get("nombre")  || ""),
+      "Empresa: "    + (d.get("empresa") || ""),
+      "Email: "      + (d.get("email")   || ""),
+      "Usan ahora: " + (d.get("actual")  || ""),
       "",
       d.get("mensaje") || ""
     ].join(String.fromCharCode(10));

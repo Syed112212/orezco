@@ -3,92 +3,138 @@
 SSOT visual del proyecto. Cualquier cambio de color, tipografía, espaciado o componente
 se decide aquí primero y se sincroniza en el mismo commit que el código.
 
-**Dirección**: *broadsheet editorial en sala verde*. La página se lee como un periódico
-financiero impreso llevado a pantalla: titulares monumentales con serifa, micro-etiquetas
-en versalitas, y un único verde saturado que funciona como rotulador sobre un lienzo por lo
-demás monocromo. Es un mundo visual único y deliberado — no hay tema oscuro alternativo,
-todos los colores se pintan explícitamente.
+**Dirección**: *instrumento de precisión, medianoche*. Lienzo casi negro, tipografía blanca
+con tracking apretado, bordes hairline en lugar de sombras, y **un único acento cromático**
+—lima ácido— que funciona como linterna: pequeño, de alto contraste y reservado a la acción.
+Adaptado del sistema de Linear, que es la referencia que eligió el cliente.
 
-Referencia de partida: `styles.refero.design/style/1a519123-071a-449f-b5df-0def73ed7f35`
+Mundo visual único y deliberado (oscuro). No hay tema claro alternativo: todos los colores
+se pintan explícitamente.
 
 ## Color
 
-| Token | Hex | Nombre | Uso |
-|---|---|---|---|
-| `--verde` | `#2bee4b` | Rotulador | **Único acento vivo.** Relleno de CTA, subrayado de navegación activa, banda de pie |
-| `--musgo` | `#93b799` | Musgo | Apoyo. Sombras del CTA, numeración, detalle. **Nunca como color de acción** |
-| `--eco` | `#c4e4c9` | Eco | Apoyo claro. Separadores y bordes de retícula |
-| `--tinta` | `#000000` | Tinta | Texto corrido sobre claro |
-| `--prensa` | `#121613` | Negro prensa | Titulares, fondo de secciones oscuras y pie. Negro con sesgo verde frío |
-| `--pizarra` | `#232924` | Pizarra | Superficie secundaria dentro de lo oscuro |
-| `--gris` | `#516254` | Gris papel | Pies, texto auxiliar, etiquetas apagadas |
-| `--salvia` | `#c8d2c8` | Salvia | Texto claro sobre superficie oscura |
-| `--hueso` | `#fafffa` | Blanco hueso | Lienzo. Casi blanco con tinte verde, para que lea como papel y no como pantalla |
+### Superficies
 
-**Regla dura**: el verde `#2bee4b` es un rotulador, no un color de relleno. Si aparece en
-más de dos sitios por pantalla, algo está mal.
+| Token | Hex | Uso |
+|---|---|---|
+| `--void` | `#08090a` | Lienzo. El fondo por defecto de todo |
+| `--carbon` | `#0f1011` | Tarjetas y barras. Un escalón por encima del lienzo |
+| `--obsidian` | `#161718` | Paneles elevados, caras del cubo |
+| `--slate` | `#23252a` | Relleno interactivo, borde de tarjeta |
+
+### Bordes
+
+| Token | Hex | Uso |
+|---|---|---|
+| `--graphite` | `#23252a` | Hairline base: divisores, contorno de tarjeta |
+| `--smoke` | `#383b3f` | Hairline de más contraste: separadores, aristas del cubo |
+
+**La elevación se consigue con bordes, no con sombras.** La jerarquía sale de la progresión
+de superficies `#08090a → #0f1011 → #161718 → #23252a` y del contorno. La única sombra real
+del sistema es la del botón lima.
+
+### Texto
+
+| Token | Hex | Uso |
+|---|---|---|
+| `--paper` | `#ffffff` | Titulares, máximo contraste |
+| `--mist` | `#d0d6e0` | Cuerpo, texto de botón |
+| `--fog` | `#8a8f98` | Terciario, descripciones, marcador de campo |
+| `--ash` | `#62666d` | Apagado, metadatos |
+
+Nada de texto cromático en el cuerpo: todo vive en la escala de grises.
+
+### Acentos
+
+| Token | Hex | Uso |
+|---|---|---|
+| `--lima` | `#e4f222` | **Única acción cromática.** Una por pantalla. Nunca decorativa |
+| `--pulso` | `#27a644` | Apoyo: etiquetas de la lista de migración. **Nunca como acción** |
+
+**Regla dura**: el lima es el botón principal y nada más. Si aparece dos veces en la misma
+pantalla, sobra una.
 
 ## Tipografía
 
-La referencia usa TWK Lausanne, PP Mondwest y Editorial New — las tres de pago. Se
-sustituyen por equivalentes de Google Fonts, que es además lo que la propia referencia
-recomienda como fallback:
+| Rol | Familia | Ajustes |
+|---|---|---|
+| Interfaz y titulares | **Inter** | pesos 300 / 400 / 510 / 590. Nunca 700+ |
+| Metadatos técnicos | **JetBrains Mono** | 400, `letter-spacing: -.013em` |
 
-| Rol | Original | En uso | Ajustes |
+- `font-feature-settings: "cv01" on, "ss03" on, "zero" on` en `body`. Estas alternativas de
+  glifo son parte de la identidad — sin ellas la tipografía pierde carácter.
+- **Tracking apretado, no negociable**: `-.022em` de 48px para arriba, `-.011em` a 15–16px.
+- El mono es solo para números de módulo, códigos y metadatos. **Nunca para titulares ni copy.**
+
+### Escala
+
+| Rol | Tamaño | Peso | Interlineado |
 |---|---|---|---|
-| Display | PP Mondwest | **Instrument Serif** 400 | `line-height: .9`, `letter-spacing: -.04em` |
-| Editorial | Editorial New | **Newsreader** 300 | `line-height: 1.32`, `letter-spacing: -.015em` |
-| UI / texto | TWK Lausanne | **Inter** 400/500/600 | micro-etiquetas 11px / 600 / `+.01em` mayúsculas |
-
-- Escala: cuarta justa (1.333) desde 18px base.
-- El titular de portada va en Instrument Serif con interlineado 0.9 y tracking −0.04em.
-  **Ese tracking apretado es lo que hace que el titular lea como tinta impresa** — si se
-  afloja, se pierde la dirección entera.
-- Las micro-etiquetas en versalitas son estructura, no decoración: marcan de qué habla
-  cada sección.
+| Display (portada) | 72px | 510 | 1.0 |
+| Sección | 48px | 510 | 1.0 |
+| Subtítulo de tarjeta | 17px | 510 | 1.4 |
+| Cuerpo | 16px | 400 | 1.5 |
+| Pequeño | 13–15px | 400 | 1.5 |
+| Etiqueta | 12px | 400 | 1.4 |
 
 ## Ritmo y forma
 
 | | |
 |---|---|
-| Ancho máximo | `1400px` |
-| Separación entre secciones | `80px` |
-| Separación entre elementos | `20px` |
-| Radio de botones | `5px` |
-| Radio de píldoras | `10px` |
-| Radio de imágenes y retículas | `14px` |
+| Ancho máximo | `1200px` |
+| Separación entre secciones | `96px` |
+| Relleno de tarjeta | `24px` |
+| Separación entre elementos | `8px` |
+| Base de espaciado | `4px` |
 
-Densidad **espaciosa**. El aire es parte de la dirección, no un descuido.
+**Tres radios y nada más**: tarjetas `12px`, botones e inputs `6px`, píldoras `9999px`.
+Etiquetas `4px`. Nunca por encima de 12px en tarjetas.
 
-## Componentes
+## Los objetos 3D
 
-- **CTA primario**: relleno `--verde`, texto `--prensa`, sombra verde tintada con
-  `--musgo`. Es el único elemento con sombra en toda la página.
-- **Retículas**: se dibujan con `gap: 1px` sobre fondo `--eco`, no con bordes por celda.
-  Así las hairlines no se duplican.
-- **Banda verde**: franja a sangre entre el cierre y el pie. Enumera las áreas del
-  producto en versalitas.
+No hay capturas de producto todavía, así que **el 3D ocupa ese lugar**: es el artefacto
+visual de la página, no un adorno. Todo es CSS `transform-style: preserve-3d`, sin librerías.
+
+### Cubo-logo (portada y 404)
+
+El símbolo de la marca ya es un cubo isométrico, así que en 3D se convierte en un cubo real
+con el destello de seis puntas en cada cara. Gira 360° en 24 s.
+
+- Caras **opacas** (`#161718`, `#0d0e10` en los lados, `#212326` arriba) más
+  `backface-visibility: hidden`. Con caras translúcidas se transparentan los destellos
+  traseros y el cubo se ensucia.
+- Aristas en `--smoke`: el volumen se define con hairlines, igual que el resto del sistema.
+
+### Cubo de ocho piezas (módulos)
+
+Ocho módulos, ocho vértices de un cubo. Al pasar por una fila de módulo se ilumina su pieza
+en lima y las otras siete bajan a opacidad `.25`. El pie del cubo escribe el nombre del
+módulo activo. Funciona igual con teclado (`focusin`).
+
+Es la única excepción a la regla del lima: aquí es señal de estado, no acción, y solo puede
+haber una pieza activa a la vez.
+
+### Pila de migración
+
+Dos planos en perspectiva: el sistema antiguo detrás y atenuado, Orezco delante. Al pasar
+por encima se separan. Representa la convivencia de los dos sistemas durante el traspaso.
+
+### Movimiento
+
+Todo respeta `prefers-reduced-motion: reduce`: los giros se detienen y los relieves de hover
+se anulan.
 
 ## Logo
 
-- `assets/logo.svg` es una **reconstrucción vectorial** del PNG original. Geometría:
-  hexágono de puntas verticales con esquinas muy redondeadas, dividido por una Y invertida
-  (lectura de cubo isométrico), con un destello de 6 puntas centrado.
-- Usa `currentColor`, así que hereda el color del contenedor.
-- Las divisiones internas leen la variable `--mark-bg`, que **debe igualar el fondo** sobre
-  el que se coloca. Está definida en `.nav` (hueso), `.dark` y `footer` (prensa).
+- `assets/logo.svg` es una **reconstrucción vectorial** del PNG original, no el original.
+- Usa `currentColor`. Las divisiones internas leen `--mark-bg`, que **debe igualar el fondo**
+  sobre el que se coloca.
 - **Pendiente**: sustituir por el SVG original si aparece.
-
-### Zona de protección
-
-Margen libre alrededor del símbolo = 25% de su altura.
 
 ## Reglas de contenido
 
-- **Nada inventado.** La página no da cifras de clientes, ni testimonios, ni logotipos de
-  empresas, ni precios. Nada de eso existe todavía y publicarlo sería falso.
-- El estado del producto se dice tal cual: **en desarrollo**.
-- El bloque de contacto lleva un hueco marcado a la vista porque no hay buzón real — la
-  cuenta no tiene plan de correo. Se rellena cuando lo haya.
-- `<meta name="robots" content="noindex">` está puesto a propósito. Quitarlo cuando la
-  copy esté aprobada y haya vía de contacto.
+- **Nada inventado.** Sin cifras de clientes, testimonios, logotipos de empresas ni precios.
+  Nada de eso existe todavía.
+- El estado del producto se dice tal cual: **en desarrollo**, en una etiqueta visible.
+- Sin tira de logos de clientes, aunque la referencia la lleve: no hay clientes que enseñar.
+- La copy actual es propuesta, pendiente de aprobar.
