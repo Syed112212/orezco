@@ -1,0 +1,12 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <mask id="orezco-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+      <path d="M 79.22 26.00 A 24.00 24.00 0 0 1 120.78 26.00 L 153.69 45.00 A 24.00 24.00 0 0 1 174.48 81.00 L 174.48 119.00 A 24.00 24.00 0 0 1 153.69 155.00 L 120.78 174.00 A 24.00 24.00 0 0 1 79.22 174.00 L 46.31 155.00 A 24.00 24.00 0 0 1 25.52 119.00 L 25.52 81.00 A 24.00 24.00 0 0 1 46.31 45.00 Z" fill="#fff"/>
+      <g stroke="#000" stroke-width="13" stroke-linecap="round" fill="none"><path d="M 100.00 100.00 L 30.72 60.00"/><path d="M 100.00 100.00 L 169.28 60.00"/><path d="M 100.00 100.00 L 100.00 180.00"/></g>
+      <g stroke="#000" stroke-width="15" stroke-linecap="round" fill="none"><path d="M 100.00 48.00 L 100.00 152.00"/><path d="M 145.03 74.00 L 54.97 126.00"/><path d="M 54.97 74.00 L 145.03 126.00"/></g>
+    </mask>
+  </defs>
+  <symbol id="mark" viewBox="0 0 200 200">
+    <rect width="200" height="200" fill="currentColor" mask="url(#orezco-mask)"/>
+  </symbol>
+</svg>

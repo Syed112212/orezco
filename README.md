@@ -6,7 +6,8 @@ Web de Orezco, un ERP. Sitio estatico: HTML y CSS planos, sin build ni dependenc
 
     index.html      landing completa
     404.html        pagina de error, mismo sistema visual
-    assets/logo.svg logo monocromo, usa currentColor
+    assets/logo*.svg   logo, generado por scripts/build-logo.py (no editar a mano)
+    scripts/           build-logo.py, check-design.py, og-template.html
     assets/og.png   imagen 1200x630 para compartir enlaces (generada, ver abajo)
     robots.txt      permite indexar, apunta al sitemap
     sitemap.xml     una sola URL
@@ -61,7 +62,7 @@ Script para aplicarlo: `~/.claude/scripts/hostinger-dns-orezco.sh {pages|rollbac
   La API de Hostinger NO gestiona correo (todos los endpoints de email dan 404), asi que
   el buzon hay que crearlo a mano en hPanel. Plan mas barato: Starter Business Email,
   7,08 USD el primer ano y 19,08 despues.
-- **Logo**: `assets/logo.svg` es reconstruccion del PNG original, no el original.
+- ~~Logo~~: hecho. Se genera con `python scripts/build-logo.py`.
 - **Copy**: los textos son propuesta, pendientes de aprobar.
 - **noindex**: puesto a proposito en index.html y 404.html. Quitarlo cuando la copy este
   aprobada y haya via de contacto.

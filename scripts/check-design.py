@@ -23,7 +23,10 @@ except Exception:
     pass
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGINAS = ["index.html", "404.html"]
+# Se verifican tambien las plantillas que producen artefactos de produccion:
+# og-template.html genera assets/og.png, y ya se aplano una vez por un filter
+# sobre preserve-3d que nadie estaba mirando.
+PAGINAS = ["index.html", "404.html", "scripts/og-template.html"]
 
 fallos = []
 avisos = []

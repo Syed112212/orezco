@@ -156,10 +156,42 @@ se anulan.
 
 ## Logo
 
-- `assets/logo.svg` es una **reconstrucción vectorial** del PNG original, no el original.
-- Usa `currentColor`. Las divisiones internas leen `--mark-bg`, que **debe igualar el fondo**
-  sobre el que se coloca.
-- **Pendiente**: sustituir por el SVG original si aparece.
+Se genera con `python scripts/build-logo.py`. **No editar los SVG a mano**: se
+sobrescriben. Si hay que cambiar la geometría, se cambian las constantes del script.
+
+### Construcción
+
+Hexágono de puntas verticales, radio 86 sobre lienzo de 200, esquinas redondeadas con
+arcos reales de radio 24. Dividido por una Y invertida que lo hace leer como cubo
+isométrico, con un destello de seis puntas centrado **alineado con las divisiones**, que
+cruza las tres caras.
+
+Todo se resuelve con **una máscara SVG**: el hexágono es sólido, y las divisiones y el
+destello se restan. Los huecos son **transparentes de verdad**, no del color del fondo.
+
+Eso es lo que arregla el defecto de la versión anterior, que pintaba las divisiones con
+una variable `--mark-bg` y por tanto solo funcionaba sobre el fondo exacto para el que se
+hizo: cargado como `<img>`, sobre una foto o en un bordado salía como un hexágono macizo.
+
+### Variantes
+
+| Fichero | Uso |
+|---|---|
+| `assets/logo.svg` | `currentColor`. Favicon y cualquier contexto que propague color |
+| `assets/logo-tinta.svg` | Tinta fija `#17191c`, para consumidores que no propagan color |
+| `assets/logo-blanco.svg` | Blanco, para fondos oscuros |
+| `assets/mark-inline.svg` | Fragmento con `<mask>` + `<symbol id="mark">` para incrustar en HTML |
+
+En la web va **incrustado**, no como `<img>`, para que herede `currentColor` del contenedor.
+
+### Decisiones descartadas
+
+- **Destello intercalado a 30°** de las divisiones: da nueve líneas y satura.
+- **Destello en sólido**: al no cruzar ningún hueco se funde con el cuerpo y desaparece.
+
+### Zona de protección
+
+Margen libre alrededor del símbolo = 25% de su altura.
 
 ## Tokens
 
