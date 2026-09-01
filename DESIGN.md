@@ -3,12 +3,12 @@
 SSOT visual del proyecto. Cualquier cambio de color, tipografía, espaciado o componente
 se decide aquí primero y se sincroniza en el mismo commit que el código.
 
-**Dirección**: *instrumento de precisión, medianoche*. Lienzo casi negro, tipografía blanca
-con tracking apretado, bordes hairline en lugar de sombras, y **un único acento cromático**
-—lima ácido— que funciona como linterna: pequeño, de alto contraste y reservado a la acción.
-Adaptado del sistema de Linear, que es la referencia que eligió el cliente.
+**Dirección**: *analítica con serifa sobre papel cálido*. Lienzo blanco, titulares con
+serifa en peso 400 a tamaños grandes, tarjetas de esquinas muy redondeadas, botones píldora,
+y **un solo color** —un melocotón cálido— usado una vez por página. Adaptado del sistema de
+Steep, que es la referencia que eligió el cliente.
 
-Mundo visual único y deliberado (oscuro). No hay tema claro alternativo: todos los colores
+Mundo visual único y deliberado (claro). No hay tema oscuro alternativo: todos los colores
 se pintan explícitamente.
 
 ## Color
@@ -17,107 +17,113 @@ se pintan explícitamente.
 
 | Token | Hex | Uso |
 |---|---|---|
-| `--void` | `#08090a` | Lienzo. El fondo por defecto de todo |
-| `--carbon` | `#0f1011` | Tarjetas y barras. Un escalón por encima del lienzo |
-| `--obsidian` | `#161718` | Paneles elevados, caras del cubo |
-| `--slate` | `#23252a` | Relleno interactivo, borde de tarjeta |
-
-### Bordes
-
-| Token | Hex | Uso |
-|---|---|---|
-| `--graphite` | `#23252a` | Hairline base: divisores, contorno de tarjeta |
-| `--smoke` | `#383b3f` | Hairline de más contraste: separadores, aristas del cubo |
-
-**La elevación se consigue con bordes, no con sombras.** La jerarquía sale de la progresión
-de superficies `#08090a → #0f1011 → #161718 → #23252a` y del contorno. La única sombra real
-del sistema es la del botón lima.
+| `--papel` | `#ffffff` | Lienzo. El blanco sobre el que se apoya todo |
+| `--mist` | `#f2f2f3` | Tarjeta neutra: bloques de contenido, listas |
+| `--niebla` | `#fafafb` | Banda de sección alterna. Rompe el blanco sin contraste |
+| `--melocoton` | `#fbe1d1` | **Acento. Una tarjeta por página, ni una más** |
 
 ### Texto
 
 | Token | Hex | Uso |
 |---|---|---|
-| `--paper` | `#ffffff` | Titulares, máximo contraste |
-| `--mist` | `#d0d6e0` | Cuerpo, texto de botón |
-| `--fog` | `#8a8f98` | Terciario, descripciones, marcador de campo |
-| `--ash` | `#62666d` | Apagado, metadatos |
+| `--tinta` | `#17191c` | Texto principal y relleno del botón. La única superficie oscura |
+| `--pizarra` | `#777b86` | Apoyo, texto de párrafo secundario |
+| `--ceniza` | `#979799` | Etiquetas de categoría. Tipográficas, sin fondo ni borde |
+| `--humo` | `#a3a6af` | Marcador de campo (placeholder) |
+| `--sienna` | `#5d2a1a` | **Solo sobre melocotón.** Nunca como texto sobre blanco |
+| `--hairline` | `#ececec` | Divisores y borde de campo |
 
-Nada de texto cromático en el cuerpo: todo vive en la escala de grises.
+**Dos reglas duras**: el melocotón aparece **una vez** en toda la página, y siempre sobre
+blanco —nunca sobre una banda de color—. Y el sienna es la tinta del melocotón: fuera de
+esa tarjeta no se usa.
 
-### Acentos
-
-| Token | Hex | Uso |
-|---|---|---|
-| `--lima` | `#e4f222` | **Única acción cromática.** Una por pantalla. Nunca decorativa |
-| `--pulso` | `#27a644` | Apoyo: etiquetas de la lista de migración. **Nunca como acción** |
-
-**Regla dura**: el lima es el botón principal y nada más. Si aparece dos veces en la misma
-pantalla, sobra una.
+El sistema es intencionadamente **casi acromático**. Meter azul, verde o morado lo rompe.
 
 ## Tipografía
 
-| Rol | Familia | Ajustes |
-|---|---|---|
-| Interfaz y titulares | **Inter** | pesos 300 / 400 / 510 / 590. Nunca 700+ |
-| Metadatos técnicos | **JetBrains Mono** | 400, `letter-spacing: -.013em` |
+La referencia usa Signifier y Sohne, las dos de pago. Se sustituyen por equivalentes de
+Google Fonts, que además son las que la propia referencia recomienda:
 
-- `font-feature-settings: "cv01" on, "ss03" on, "zero" on` en `body`. Estas alternativas de
-  glifo son parte de la identidad — sin ellas la tipografía pierde carácter.
-- **Tracking apretado, no negociable**: `-.022em` de 48px para arriba, `-.011em` a 15–16px.
-- El mono es solo para números de módulo, códigos y metadatos. **Nunca para titulares ni copy.**
+| Rol | Original | En uso | Ajustes |
+|---|---|---|---|
+| Display y titulares | Signifier | **Source Serif 4** 400 | `line-height: 1.3`, `-.025em` a 90px, `-.015em` a 44/64px |
+| Cuerpo, UI, navegación | Sohne | **Inter** 400–500 | `-.009em` a 18–26px, 0 en cuerpo |
+
+- **La serifa se queda en peso 400 a todos los tamaños.** Esa contención es la firma del
+  sistema: nunca negrita, nunca semibold en la serifa.
+- Una frase del titular va en **cursiva** a media oración. Es el gesto editorial de la
+  referencia y se repite en cada `h2`.
+- Inter usa pesos de medio paso —430, 450, 480— para la jerarquía del cuerpo antes de
+  llegar a 500.
 
 ### Escala
 
-| Rol | Tamaño | Peso | Interlineado |
-|---|---|---|---|
-| Display (portada) | 72px | 510 | 1.0 |
-| Sección | 48px | 510 | 1.0 |
-| Subtítulo de tarjeta | 17px | 510 | 1.4 |
-| Cuerpo | 16px | 400 | 1.5 |
-| Pequeño | 13–15px | 400 | 1.5 |
-| Etiqueta | 12px | 400 | 1.4 |
+| Rol | Tamaño | Interlineado |
+|---|---|---|
+| Display (portada) | 90px | 1.3 |
+| Sección | 64px | 1.3 |
+| Subtítulo | 20–22px | 1.35 |
+| Cuerpo | 17px | 1.35 |
+| Apoyo | 18px / peso 430 | 1.5 |
+| Etiqueta | 14–15px | 1.5 |
 
 ## Ritmo y forma
 
 | | |
 |---|---|
 | Ancho máximo | `1200px` |
-| Separación entre secciones | `96px` |
-| Relleno de tarjeta | `24px` |
-| Separación entre elementos | `8px` |
+| Separación entre secciones | `80px` |
+| Relleno de tarjeta | `20px` |
 | Base de espaciado | `4px` |
 
-**Tres radios y nada más**: tarjetas `12px`, botones e inputs `6px`, píldoras `9999px`.
-Etiquetas `4px`. Nunca por encima de 12px en tarjetas.
+**Radios**: tarjetas `24px`, artefactos flotantes `20px`, campos `16px`, botones `9999px`.
+Nada por debajo de 16px en tarjetas, y los botones son siempre píldora completa.
+
+## Sombras
+
+**Solo los artefactos flotantes llevan sombra.** Las tarjetas de contenido —neutras y la de
+melocotón— van planas, sin sombra ni borde.
+
+```
+--sombra-flotante:
+  rgba(4,23,43,.05) 0 0 0 1px,
+  rgba(0,0,0,.1) 0 20px 25px -5px,
+  rgba(0,0,0,.1) 0 8px 10px -6px;
+```
+
+## Botones
+
+Píldora siempre, y **en pareja**: el relleno oscuro (`--tinta` sobre blanco) va acompañado
+del fantasma (borde `--tinta`, fondo transparente) en la misma línea base. Los enlaces de
+texto no van subrayados en reposo —la flecha `→` es la que indica que son enlaces—; el
+subrayado aparece solo al pasar por encima.
 
 ## Los objetos 3D
 
-No hay capturas de producto todavía, así que **el 3D ocupa ese lugar**: es el artefacto
-visual de la página, no un adorno. Todo es CSS `transform-style: preserve-3d`, sin librerías.
+No hay capturas de producto todavía, así que **el 3D ocupa el lugar de los artefactos
+flotantes** de la referencia. Todo es CSS `transform-style: preserve-3d`, sin librerías.
 
 ### Cubo-logo (portada y 404)
 
-El símbolo de la marca ya es un cubo isométrico, así que en 3D se convierte en un cubo real
-con el destello de seis puntas en cada cara. Gira 360° en 24 s.
+El símbolo de la marca ya es un cubo isométrico, así que en 3D es un cubo real con el
+destello de seis puntas en cada cara. Gira 360° en 24 s.
 
-- Caras **opacas** (`#161718`, `#0d0e10` en los lados, `#212326` arriba) más
-  `backface-visibility: hidden`. Con caras translúcidas se transparentan los destellos
-  traseros y el cubo se ensucia.
-- Aristas en `--smoke`: el volumen se define con hairlines, igual que el resto del sistema.
+- Caras en `--papel` y `--mist` con arista `rgba(4,23,43,.1)`, y `backface-visibility:
+  hidden`. Con caras translúcidas se transparentan los destellos traseros.
 
 ### Cubo de ocho piezas (módulos)
 
-Ocho módulos, ocho vértices de un cubo. Al pasar por una fila de módulo se ilumina su pieza
-en lima y las otras siete bajan a opacidad `.25`. El pie del cubo escribe el nombre del
-módulo activo. Funciona igual con teclado (`focusin`).
+Ocho módulos, ocho vértices. Al pasar por una fila se ilumina su pieza en **melocotón con
+borde sienna** y las otras siete bajan a opacidad `.3`. El pie escribe el nombre del módulo.
+Funciona igual con teclado (`focusin`).
 
-Es la única excepción a la regla del lima: aquí es señal de estado, no acción, y solo puede
-haber una pieza activa a la vez.
+Es la excepción a la regla de "un melocotón por página": aquí es señal de estado, no una
+tarjeta, y solo puede haber una pieza activa a la vez.
 
 ### Pila de migración
 
-Dos planos en perspectiva: el sistema antiguo detrás y atenuado, Orezco delante. Al pasar
-por encima se separan. Representa la convivencia de los dos sistemas durante el traspaso.
+Dos planos flotantes en perspectiva —con la sombra del sistema—: el sistema antiguo detrás y
+atenuado, Orezco delante. Al pasar por encima se separan.
 
 ### Movimiento
 
@@ -134,7 +140,6 @@ se anulan.
 ## Reglas de contenido
 
 - **Nada inventado.** Sin cifras de clientes, testimonios, logotipos de empresas ni precios.
-  Nada de eso existe todavía.
-- El estado del producto se dice tal cual: **en desarrollo**, en una etiqueta visible.
-- Sin tira de logos de clientes, aunque la referencia la lleve: no hay clientes que enseñar.
+- El estado del producto se dice tal cual: **en desarrollo**, visible en la portada.
+- La sección "Para quién es" incluye a propósito **un perfil al que no le sirve**.
 - La copy actual es propuesta, pendiente de aprobar.
