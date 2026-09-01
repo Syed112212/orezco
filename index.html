@@ -212,6 +212,25 @@ h2{
   border:1px solid var(--eco);border-radius:var(--r-pildora);
   padding:10px 18px;margin-top:26px;
 }
+.form{display:grid;gap:14px;max-width:520px;margin:30px auto 0;text-align:left}
+.form[hidden]{display:none}   /* .form (0,1,0) anulaba el atributo hidden del UA */
+.form .pair{display:grid;gap:14px}
+@media(min-width:560px){.form .pair{grid-template-columns:1fr 1fr}}
+.form label{
+  font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.01em;
+  text-transform:uppercase;color:var(--gris);display:grid;gap:6px;
+}
+.form input,.form textarea{
+  font-family:var(--ui);font-size:.95rem;font-weight:400;letter-spacing:0;
+  text-transform:none;color:var(--prensa);background:transparent;
+  border:0;border-bottom:1px solid var(--eco);border-radius:0;
+  padding:9px 2px;width:100%;
+}
+.form textarea{resize:vertical;min-height:84px;line-height:1.55}
+.form input:focus,.form textarea:focus{outline:0;border-bottom-color:var(--verde)}
+.form .btn{justify-content:center;margin-top:6px}
+.form-alt{margin:18px 0 0;font-size:.9rem;color:var(--gris);text-align:center}
+.form-alt a{color:var(--prensa);text-underline-offset:3px}
 .band{background:var(--verde);color:var(--prensa);padding:16px 0;overflow:hidden}
 .band-in{
   display:flex;gap:44px;white-space:nowrap;
@@ -347,7 +366,21 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
       <p class="label" style="text-align:center">Hablemos</p>
       <h2>¿Te enseñamos cómo funciona?</h2>
       <p class="hero-lede">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
-      <div><span class="slot">Canal de contacto disponible en breve</span></div>
+      <div id="sin-canal"><span class="slot">Canal de contacto disponible en breve</span></div>
+
+      <form class="form" id="form-contacto" hidden>
+        <div class="pair">
+          <label>Nombre<input type="text" name="nombre" autocomplete="name" required></label>
+          <label>Empresa<input type="text" name="empresa" autocomplete="organization"></label>
+        </div>
+        <div class="pair">
+          <label>Email<input type="email" name="email" autocomplete="email" required></label>
+          <label>Qu&eacute; us&aacute;is ahora<input type="text" name="actual" placeholder="Odoo, SAP, hojas de c&aacute;lculo..."></label>
+        </div>
+        <label>Qu&eacute; es lo que peor llev&aacute;is<textarea name="mensaje" rows="3"></textarea></label>
+        <button class="btn btn-primary" type="submit">Enviar</button>
+        <p class="form-alt">O escr&iacute;benos directamente a <a id="enlace-directo" href="#">&nbsp;</a></p>
+      </form>
     </div>
   </section>
 
@@ -367,6 +400,38 @@ footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:
   </div>
 </footer>
 
-<script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+<script>
+document.getElementById("y").textContent = new Date().getFullYear();
+
+/* Unico valor a rellenar cuando exista buzon real. Vacio = se muestra la pildora
+   "canal disponible en breve" y el formulario permanece oculto. */
+var CONTACTO = "";
+
+(function () {
+  if (!CONTACTO) return;
+  var form = document.getElementById("form-contacto");
+  var pill = document.getElementById("sin-canal");
+  var alt  = document.getElementById("enlace-directo");
+  pill.hidden = true;
+  form.hidden = false;
+  alt.href = "mailto:" + CONTACTO;
+  alt.textContent = CONTACTO;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var d = new FormData(form);
+    var cuerpo = [
+      "Nombre: "  + (d.get("nombre")  || ""),
+      "Empresa: " + (d.get("empresa") || ""),
+      "Email: "   + (d.get("email")   || ""),
+      "Usan ahora: " + (d.get("actual") || ""),
+      "",
+      d.get("mensaje") || ""
+    ].join(String.fromCharCode(10));
+    window.location.href = "mailto:" + CONTACTO +
+      "?subject=" + encodeURIComponent("Demo de Orezco - " + (d.get("empresa") || d.get("nombre") || "")) +
+      "&body=" + encodeURIComponent(cuerpo);
+  });
+})();
+</script>
 </body>
 </html>

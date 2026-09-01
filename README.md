@@ -32,8 +32,18 @@ Script para aplicarlo: `~/.claude/scripts/hostinger-dns-orezco.sh {pages|rollbac
 ## Pendiente
 
 - **DNS**: el dominio sigue apuntando al aparcamiento de Hostinger.
-- **Contacto**: el bloque de cierre tiene un hueco a la vista porque no hay buzon real.
-  Hace falta email o formulario.
+- **Contacto**: el formulario esta construido y probado, pero inactivo. Para activarlo,
+  poner la direccion en la constante `CONTACTO` del script al final de `index.html`:
+
+      var CONTACTO = "hola@orezco.com";
+
+  Vacia -> se muestra la pildora "canal disponible en breve" y el formulario queda oculto.
+  Con valor -> aparece el formulario, que compone un mailto con los campos rellenados, y
+  el enlace directo a esa direccion. No hace falta backend.
+
+  La API de Hostinger NO gestiona correo (todos los endpoints de email dan 404), asi que
+  el buzon hay que crearlo a mano en hPanel. Plan mas barato: Starter Business Email,
+  7,08 USD el primer ano y 19,08 despues.
 - **Logo**: `assets/logo.svg` es reconstruccion del PNG original, no el original.
 - **Copy**: los textos son propuesta, pendientes de aprobar.
 - **noindex**: puesto a proposito en index.html y 404.html. Quitarlo cuando la copy este
