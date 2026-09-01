@@ -38,6 +38,20 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿Está disponible ya?","acceptedAnswer":{"@type":"Answer","text":"No. Orezco está en desarrollo. Si nos escribes, te avisamos cuando haya algo que enseñar y te contamos en qué punto estamos."}},
+    {"@type":"Question","name":"¿Se puede migrar desde Odoo, SAP o una hoja de cálculo?","acceptedAnswer":{"@type":"Answer","text":"Es el escenario del que partimos. La migración contempla el traspaso de datos con su histórico, un periodo de convivencia con el sistema antiguo en solo lectura, y un punto de retorno definido antes de empezar."}},
+    {"@type":"Question","name":"¿Cuánto cuesta?","acceptedAnswer":{"@type":"Answer","text":"Todavía no hay precio publicado. Cuando lo haya estará en la propia página."}},
+    {"@type":"Question","name":"¿Qué pasa con nuestros datos durante el cambio?","acceptedAnswer":{"@type":"Answer","text":"El sistema antiguo sigue vivo en solo lectura mientras dura el traspaso. El equipo trabaja antes en un entorno de pruebas con datos reales, no en producción."}},
+    {"@type":"Question","name":"¿Hace falta cambiarlo todo de golpe?","acceptedAnswer":{"@type":"Answer","text":"No. Existe un periodo de convivencia: la empresa tiene que seguir facturando durante la migración, y ese es el punto de partida del diseño."}}
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap">
@@ -287,6 +301,33 @@ p{margin:0}
   .pila:hover .plano.nuevo{transform:translate3d(34px,-26px,40px)}
 }
 
+/* ---------- para quien es ---------- */
+.publico{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--graphite);
+         border:1px solid var(--graphite);border-radius:var(--r-card);overflow:hidden}
+.publico > div{background:var(--carbon);padding:var(--card-pad);display:grid;gap:10px;align-content:start}
+.publico h3{color:var(--paper)}
+.publico p{font-size:14px;color:var(--fog);line-height:1.55}
+.publico .marca{font-family:var(--mono);font-size:11px;letter-spacing:-.013em;color:var(--ash)}
+
+/* ---------- preguntas ---------- */
+.faq{display:grid;gap:0;border-top:1px solid var(--graphite)}
+.faq details{border-bottom:1px solid var(--graphite)}
+.faq summary{
+  list-style:none;cursor:pointer;padding:20px 0;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  font-size:17px;font-weight:510;color:var(--paper);letter-spacing:-.011em;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";flex:none;width:10px;height:10px;
+  border-right:1.5px solid var(--fog);border-bottom:1.5px solid var(--fog);
+  transform:rotate(45deg);transition:transform .2s ease;margin-right:4px;
+}
+.faq details[open] summary::after{transform:rotate(-135deg)}
+.faq summary:hover{color:var(--paper)}
+.faq .resp{padding:0 0 20px;font-size:15px;color:var(--fog);max-width:70ch;line-height:1.6}
+.faq .resp a{color:var(--mist);text-underline-offset:3px}
+
 /* ---------- secciones ---------- */
 section{padding:var(--seccion) 0}
 .sec-head{margin-bottom:clamp(32px,5vw,56px);max-width:38ch}
@@ -349,6 +390,9 @@ footer small{font-size:12px;color:var(--ash)}
 @media(max-width:900px){
   .cubo-marco{grid-template-columns:1fr}
   .dos-col{grid-template-columns:1fr}
+  .hero-grid{grid-template-columns:1fr}
+  .logo3d-zona{min-height:230px;order:-1}
+  .publico{grid-template-columns:1fr}
 }
 @media(max-width:720px){
   .nav-in{flex-wrap:wrap;row-gap:8px}
@@ -388,6 +432,7 @@ footer small{font-size:12px;color:var(--ash)}
     <div class="nav-links">
       <a href="#modulos">Módulos</a>
       <a href="#migracion">Migración</a>
+      <a href="#preguntas">Preguntas</a>
       <a href="#contacto">Contacto</a>
     </div>
     <a class="btn btn-pill" href="#contacto">Pedir una demo</a>
@@ -502,6 +547,66 @@ footer small{font-size:12px;color:var(--ash)}
             <li><b>Formación</b><span>El equipo trabaja en un entorno de pruebas con datos reales antes del cambio.</span></li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ para quien es ============ -->
+  <section id="para-quien">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Para quién es</p>
+        <h2>Y para quién no</h2>
+        <p class="sub">Un ERP no le sirve a todo el mundo. Preferimos decirlo antes que después de la demo.</p>
+      </div>
+      <div class="publico">
+        <div>
+          <span class="marca">encaja</span>
+          <h3>Pymes que se han quedado sin sitio</h3>
+          <p>Facturáis lo suficiente como para que la hoja de cálculo ya duela, y tenéis almacén, compras o proyectos que llevar además de la contabilidad.</p>
+        </div>
+        <div>
+          <span class="marca">encaja</span>
+          <h3>Quien viene de un ERP degradado</h3>
+          <p>Ya tenéis sistema, pero lleva años acumulando módulos y personalizaciones que nadie sabe explicar. Lo que buscáis es orden, no más funciones.</p>
+        </div>
+        <div>
+          <span class="marca">no encaja</span>
+          <h3>Quien necesita algo muy específico</h3>
+          <p>Si vuestro negocio depende de un proceso muy particular —fabricación compleja, normativa de un sector concreto—, hoy no lo cubrimos. Os lo diremos en la primera llamada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ preguntas ============ -->
+  <section id="preguntas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Preguntas</p>
+        <h2>Lo que suelen preguntarnos</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>¿Está disponible ya?</summary>
+          <p class="resp">No. Orezco está en desarrollo, y lo decimos en la portada a propósito. Si nos escribes, te avisamos cuando haya algo que enseñar y te contamos en qué punto estamos de verdad.</p>
+        </details>
+        <details>
+          <summary>¿Se puede migrar desde Odoo, SAP o una hoja de cálculo?</summary>
+          <p class="resp">Es el escenario del que partimos. La migración está pensada desde el traspaso de datos con su histórico, un periodo de convivencia con el sistema antiguo en solo lectura, y un punto de retorno definido antes de empezar.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto cuesta?</summary>
+          <p class="resp">Todavía no hay precio publicado. Cuando lo haya estará aquí, en esta página. No damos cifras por correo que luego cambien.</p>
+        </details>
+        <details>
+          <summary>¿Qué pasa con nuestros datos durante el cambio?</summary>
+          <p class="resp">El sistema antiguo sigue vivo en solo lectura mientras dura el traspaso, para poder consultar y comparar. Y el equipo trabaja antes en un entorno de pruebas con datos reales, no en producción.</p>
+        </details>
+        <details>
+          <summary>¿Hace falta cambiarlo todo de golpe?</summary>
+          <p class="resp">No. Por eso existe el periodo de convivencia. La empresa tiene que seguir facturando durante la migración, y ese es el punto de partida del diseño, no una excepción.</p>
+        </details>
       </div>
     </div>
   </section>
