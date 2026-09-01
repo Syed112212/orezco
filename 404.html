@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orezco</title>
+<meta name="description" content="Orezco.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Orezco">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orezco.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000;
+    --fg:#fff;
+    --muted:rgba(255,255,255,.45);
+    --logo-bg:#000;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(24px,6vw,64px);
+    -webkit-font-smoothing:antialiased;
+  }
+  main{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:clamp(28px,5vw,44px);
+    text-align:center;
+    animation:rise .9s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .mark{
+    width:clamp(96px,22vw,150px);
+    height:auto;
+    color:var(--fg);
+    display:block;
+  }
+  .wordmark{
+    margin:0;
+    font-size:clamp(2rem,9vw,3.75rem);
+    font-weight:600;
+    letter-spacing:.18em;
+    text-indent:.18em; /* compensa el tracking del ultimo caracter */
+    line-height:1;
+  }
+  .tagline{
+    margin:0;
+    font-size:clamp(.8rem,2.6vw,1rem);
+    font-weight:400;
+    letter-spacing:.32em;
+    text-indent:.32em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .rule{
+    width:clamp(48px,12vw,88px);
+    height:1px;
+    background:rgba(255,255,255,.2);
+    border:0;
+    margin:0;
+  }
+  footer{
+    position:fixed;
+    inset:auto 0 clamp(18px,4vw,30px) 0;
+    text-align:center;
+    font-size:.72rem;
+    letter-spacing:.12em;
+    color:rgba(255,255,255,.28);
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){main{animation:none}}
+</style>
+</head>
+<body>
+  <main>
+    <img class="mark" src="assets/logo.svg" alt="" width="150" height="150">
+    <h1 class="wordmark">OREZCO</h1>
+    <hr class="rule">
+    <p class="tagline">Pr&oacute;ximamente</p>
+  </main>
+  <footer>&copy; <span id="y">2026</span> Orezco</footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
