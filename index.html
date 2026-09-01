@@ -3,94 +3,370 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Orezco</title>
-<meta name="description" content="Orezco.">
+<title>Orezco — ERP</title>
+<meta name="description" content="Orezco es un ERP: contabilidad, facturación, inventario, compras y ventas en un mismo sitio.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<meta property="og:title" content="Orezco">
+<meta property="og:title" content="Orezco — ERP">
+<meta property="og:description" content="Contabilidad, facturación, inventario, compras y ventas en un mismo sitio.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://orezco.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@200;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap">
 <style>
-  :root{
-    --bg:#000;
-    --fg:#fff;
-    --muted:rgba(255,255,255,.45);
-    --logo-bg:#000;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--fg);
-    font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:clamp(24px,6vw,64px);
-    -webkit-font-smoothing:antialiased;
-  }
-  main{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:clamp(28px,5vw,44px);
-    text-align:center;
-    animation:rise .9s cubic-bezier(.2,.7,.3,1) both;
-  }
-  .mark{
-    width:clamp(96px,22vw,150px);
-    height:auto;
-    color:var(--fg);
-    display:block;
-  }
-  .wordmark{
-    margin:0;
-    font-size:clamp(2rem,9vw,3.75rem);
-    font-weight:600;
-    letter-spacing:.18em;
-    text-indent:.18em; /* compensa el tracking del ultimo caracter */
-    line-height:1;
-  }
-  .tagline{
-    margin:0;
-    font-size:clamp(.8rem,2.6vw,1rem);
-    font-weight:400;
-    letter-spacing:.32em;
-    text-indent:.32em;
-    text-transform:uppercase;
-    color:var(--muted);
-  }
-  .rule{
-    width:clamp(48px,12vw,88px);
-    height:1px;
-    background:rgba(255,255,255,.2);
-    border:0;
-    margin:0;
-  }
-  footer{
-    position:fixed;
-    inset:auto 0 clamp(18px,4vw,30px) 0;
-    text-align:center;
-    font-size:.72rem;
-    letter-spacing:.12em;
-    color:rgba(255,255,255,.28);
-  }
-  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){main{animation:none}}
+/* ============================================================
+   Orezco — broadsheet editorial en sala verde
+   Sistema completo en DESIGN.md. Mundo visual unico y deliberado:
+   todos los colores se pintan explicitamente, sin depender del tema.
+   ============================================================ */
+:root{
+  color-scheme:light;
+
+  /* marca */
+  --verde:#2bee4b;        /* rotulador. Solo CTA, subrayado activo y banda de pie */
+  --musgo:#93b799;        /* apoyo. Sombras y detalle. Nunca CTA */
+  --eco:#c4e4c9;          /* apoyo claro. Bandas y separadores */
+
+  /* neutros */
+  --tinta:#000000;        /* texto corrido sobre claro */
+  --prensa:#121613;       /* titulares y superficies oscuras */
+  --pizarra:#232924;      /* superficie secundaria */
+  --gris:#516254;         /* pies de foto, texto auxiliar */
+  --salvia:#c8d2c8;       /* texto claro sobre oscuro */
+  --hueso:#fafffa;        /* lienzo */
+
+  /* ritmo */
+  --ancho:1400px;
+  --seccion:80px;
+  --elemento:20px;
+  --r-boton:5px;
+  --r-pildora:10px;
+  --r-imagen:14px;
+
+  --display:"Instrument Serif","Newsreader",Georgia,"Times New Roman",serif;
+  --editorial:"Newsreader",Georgia,serif;
+  --ui:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--hueso);
+  color:var(--tinta);
+  font-family:var(--ui);
+  font-size:16px;
+  font-weight:400;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+
+/* micro-etiquetas en versalitas: 11px, 600, +0.01em */
+.label{
+  font-family:var(--ui);
+  font-size:11px;font-weight:600;
+  letter-spacing:.01em;text-transform:uppercase;
+  color:var(--gris);margin:0;
+}
+.label.on-dark{color:var(--musgo)}
+
+/* ---------- navegacion ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:var(--hueso);
+  border-bottom:1px solid var(--eco);
+}
+.nav-in{
+  max-width:var(--ancho);margin:0 auto;
+  padding:14px clamp(20px,4vw,56px);
+  display:flex;align-items:center;gap:var(--elemento);
+}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--prensa);margin-right:auto}
+.brand svg{width:26px;height:26px;color:var(--prensa);--mark-bg:var(--hueso)}
+.brand span{
+  font-family:var(--ui);font-weight:600;font-size:15px;
+  letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;
+}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{
+  font-size:11px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;
+  color:var(--gris);text-decoration:none;padding:5px 0;
+  border-bottom:2px solid transparent;transition:color .16s,border-color .16s;
+}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--prensa);border-bottom-color:var(--verde)}
+
+/* ---------- botones ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--ui);font-size:13px;font-weight:600;
+  letter-spacing:.01em;text-transform:uppercase;
+  padding:12px 22px;border-radius:var(--r-boton);
+  text-decoration:none;border:1px solid transparent;cursor:pointer;
+  transition:transform .16s,box-shadow .16s;
+}
+.btn-primary{
+  background:var(--verde);color:var(--prensa);
+  box-shadow:0 2px 0 var(--musgo),0 10px 24px -12px rgba(43,238,75,.7);
+}
+.btn-primary:hover,.btn-primary:focus-visible{transform:translateY(-1px);box-shadow:0 3px 0 var(--musgo),0 16px 30px -14px rgba(43,238,75,.85)}
+.btn-ghost{background:transparent;color:var(--prensa);border-color:var(--prensa)}
+.btn-ghost:hover,.btn-ghost:focus-visible{background:var(--prensa);color:var(--hueso)}
+.btn-on-dark{background:var(--verde);color:var(--prensa);box-shadow:0 2px 0 rgba(147,183,153,.55)}
+
+/* ---------- portada ---------- */
+.hero{padding:clamp(56px,9vw,120px) 0 clamp(48px,7vw,96px)}
+.hero .label{margin-bottom:26px;display:flex;align-items:center;gap:12px}
+.hero .label::after{content:"";flex:1;height:1px;background:var(--eco)}
+h1{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(3.1rem,12vw,11.5rem);
+  line-height:.9;letter-spacing:-.04em;
+  color:var(--prensa);margin:0;text-wrap:balance;
+}
+h1 em{font-style:normal;position:relative;white-space:nowrap}
+h1 em::after{
+  content:"";position:absolute;left:-.04em;right:-.04em;bottom:.1em;
+  height:.28em;background:var(--verde);z-index:-1;
+}
+h1 em{z-index:1}
+.hero-grid{
+  display:grid;gap:var(--seccion);
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+  align-items:end;margin-top:clamp(32px,5vw,56px);
+}
+.hero-lede{
+  font-family:var(--editorial);font-size:clamp(1.18rem,2.3vw,1.55rem);
+  font-weight:300;line-height:1.5;color:var(--tinta);margin:0;max-width:34ch;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-side{display:grid;gap:18px;padding-bottom:6px}
+.hero-side dl{margin:0;display:grid;gap:14px}
+.hero-side .row{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline;border-top:1px solid var(--eco);padding-top:12px}
+.hero-side dt{font-size:11px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;color:var(--gris);margin:0}
+.hero-side dd{margin:0;font-size:.95rem;color:var(--prensa)}
+
+/* ---------- tesis ---------- */
+.thesis{padding:clamp(48px,7vw,var(--seccion)) 0;border-top:1px solid var(--eco)}
+.thesis-in{display:grid;gap:clamp(28px,5vw,var(--seccion));grid-template-columns:minmax(0,220px) minmax(0,1fr)}
+.thesis p{
+  font-family:var(--editorial);font-weight:300;
+  font-size:clamp(1.35rem,3.2vw,2.35rem);
+  line-height:1.32;letter-spacing:-.015em;color:var(--prensa);
+  margin:0 0 22px;max-width:26ch;
+}
+.thesis p:last-child{margin-bottom:0}
+.thesis .small{
+  font-family:var(--ui);font-size:1rem;font-weight:400;line-height:1.65;
+  color:var(--gris);max-width:56ch;letter-spacing:0;
+}
+
+/* ---------- modulos ---------- */
+.modules{padding:clamp(48px,7vw,var(--seccion)) 0;border-top:1px solid var(--eco)}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--elemento);flex-wrap:wrap;margin-bottom:clamp(30px,4vw,48px)}
+h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2.3rem,6.5vw,5.2rem);
+  line-height:.92;letter-spacing:-.04em;color:var(--prensa);margin:0;text-wrap:balance;
+}
+.mod-grid{display:grid;gap:1px;background:var(--eco);border:1px solid var(--eco);border-radius:var(--r-imagen);overflow:hidden}
+@media(min-width:700px){.mod-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1040px){.mod-grid{grid-template-columns:repeat(4,1fr)}}
+.mod{background:var(--hueso);padding:clamp(22px,3vw,30px);display:grid;gap:10px;align-content:start}
+.mod-n{
+  font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.01em;
+  color:var(--musgo);
+}
+.mod h3{
+  font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,2.4vw,1.95rem);
+  line-height:1;letter-spacing:-.03em;color:var(--prensa);margin:0;
+}
+.mod p{margin:0;font-size:.92rem;line-height:1.6;color:var(--gris)}
+
+/* ---------- seccion oscura ---------- */
+.dark{
+  background:var(--prensa);color:var(--salvia);
+  padding:clamp(56px,8vw,110px) 0;margin-top:clamp(48px,7vw,var(--seccion));
+  --mark-bg:var(--prensa);
+}
+.dark h2{color:var(--hueso)}
+.dark-grid{display:grid;gap:clamp(30px,5vw,var(--seccion));grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;margin-top:clamp(28px,4vw,44px)}
+.dark p{font-size:1.02rem;line-height:1.7;color:var(--salvia);margin:0 0 16px;max-width:52ch}
+.dark p:last-child{margin-bottom:0}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--pizarra);border:1px solid var(--pizarra);border-radius:var(--r-imagen);overflow:hidden}
+.checks li{background:var(--prensa);padding:18px 22px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.checks b{
+  color:var(--verde);font-family:var(--ui);font-size:11px;font-weight:600;
+  letter-spacing:.01em;text-transform:uppercase;padding-top:3px;
+}
+.checks span{color:var(--salvia);font-size:.95rem;line-height:1.6}
+
+/* ---------- cierre + banda verde ---------- */
+.cta{padding:clamp(56px,8vw,110px) 0 clamp(40px,6vw,70px);text-align:center;border-top:1px solid var(--eco)}
+.cta h2{margin:0 auto 24px;max-width:14ch}
+.cta .hero-lede{margin:0 auto 32px;text-align:center;max-width:44ch}
+.slot{
+  display:inline-block;font-family:var(--ui);font-size:12px;font-weight:500;
+  letter-spacing:.02em;color:var(--gris);
+  border:1px dashed var(--musgo);border-radius:var(--r-pildora);
+  padding:10px 18px;margin-top:26px;
+}
+.band{background:var(--verde);color:var(--prensa);padding:16px 0;overflow:hidden}
+.band-in{
+  display:flex;gap:44px;white-space:nowrap;
+  font-family:var(--ui);font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  justify-content:center;flex-wrap:wrap;padding:0 20px;
+}
+footer{background:var(--prensa);color:var(--salvia);padding:clamp(40px,6vw,64px) 0;--mark-bg:var(--prensa)}
+.foot-in{display:flex;gap:var(--elemento);align-items:center;flex-wrap:wrap;justify-content:space-between}
+.foot-brand{display:flex;align-items:center;gap:11px}
+.foot-brand svg{width:24px;height:24px;color:var(--hueso)}
+.foot-brand span{font-size:14px;font-weight:600;letter-spacing:.14em;text-indent:.14em;text-transform:uppercase;color:var(--hueso)}
+footer small{font-size:11px;font-weight:500;letter-spacing:.01em;text-transform:uppercase;color:var(--gris)}
+
+@media(max-width:860px){
+  .hero-grid,.thesis-in,.dark-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+:focus-visible{outline:2px solid var(--verde);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-  <main>
-    <img class="mark" src="assets/logo.svg" alt="" width="150" height="150">
-    <h1 class="wordmark">OREZCO</h1>
-    <hr class="rule">
-    <p class="tagline">Pr&oacute;ximamente</p>
-  </main>
-  <footer>&copy; <span id="y">2026</span> Orezco</footer>
-  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 200 200">
+    <polygon points="100,26 166,63 166,137 100,174 34,137 34,63"
+             fill="currentColor" stroke="currentColor" stroke-width="26" stroke-linejoin="round"/>
+    <g stroke="var(--mark-bg,#fafffa)" stroke-width="13" stroke-linecap="round" fill="none">
+      <path d="M100 100 L38 64"/><path d="M100 100 L162 64"/><path d="M100 100 L100 172"/>
+    </g>
+    <g stroke="currentColor" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M100 44 L100 156"/><path d="M51.5 72 L148.5 128"/><path d="M51.5 128 L148.5 72"/>
+    </g>
+  </symbol>
+</svg>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><svg><use href="#mark"/></svg><span>Orezco</span></a>
+    <div class="nav-links">
+      <a href="#modulos">Módulos</a>
+      <a href="#migracion">Migración</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a class="btn btn-primary" href="#contacto">Pedir una demo</a>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ============ portada ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="label">ERP &middot; Gestión empresarial</p>
+      <h1>Un ERP que no se te va de las <em>manos</em></h1>
+
+      <div class="hero-grid">
+        <div>
+          <p class="hero-lede">Contabilidad, facturación, inventario, compras y ventas en un mismo sitio. Sin módulos que nadie recuerda haber instalado.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contacto">Pedir una demo</a>
+            <a class="btn btn-ghost" href="#modulos">Ver los módulos</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <dl>
+            <div class="row"><dt>Qué es</dt><dd>Un ERP completo para pymes</dd></div>
+            <div class="row"><dt>Para quién</dt><dd>Empresas que ya se han quedado pequeñas en su hoja de cálculo</dd></div>
+            <div class="row"><dt>Estado</dt><dd>En desarrollo</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ tesis ============ -->
+  <section class="thesis">
+    <div class="wrap thesis-in">
+      <p class="label">El problema</p>
+      <div>
+        <p>Los ERP no fallan el primer año. Fallan al tercero, cuando ya nadie sabe por qué está puesto lo que está puesto.</p>
+        <p class="small">Un módulo que se instaló para un caso puntual y se quedó. Un campo personalizado que solo entiende quien ya no trabaja aquí. Facturas que llevan meses sin salir y nadie se ha dado cuenta. El sistema sigue funcionando, pero ha dejado de ser fiable — y descubrirlo siempre cuesta más caro que evitarlo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ modulos ============ -->
+  <section class="modules" id="modulos">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Lo que trae dentro</h2>
+        <p class="label">Ocho áreas, un solo sistema</p>
+      </div>
+
+      <div class="mod-grid">
+        <article class="mod"><p class="mod-n">01</p><h3>Contabilidad</h3><p>Plan contable, asientos, conciliación bancaria y cierre. El libro mayor como fuente única de verdad.</p></article>
+        <article class="mod"><p class="mod-n">02</p><h3>Facturación</h3><p>Emisión, rectificativas y seguimiento de cobro. Con la trazabilidad que exige la administración.</p></article>
+        <article class="mod"><p class="mod-n">03</p><h3>Inventario</h3><p>Existencias, lotes y movimientos entre almacenes. Lo que hay, dónde está y desde cuándo.</p></article>
+        <article class="mod"><p class="mod-n">04</p><h3>Compras</h3><p>Proveedores, pedidos y recepciones. Del presupuesto a la factura sin volver a teclear nada.</p></article>
+        <article class="mod"><p class="mod-n">05</p><h3>Ventas</h3><p>Presupuestos, pedidos y clientes. El histórico completo de cada cuenta en una sola ficha.</p></article>
+        <article class="mod"><p class="mod-n">06</p><h3>Proyectos</h3><p>Tareas, imputación de horas y rentabilidad. Saber lo que cuesta un proyecto mientras se hace.</p></article>
+        <article class="mod"><p class="mod-n">07</p><h3>Personal</h3><p>Plantilla, ausencias y gastos. Lo imprescindible, sin convertirse en un software de RRHH aparte.</p></article>
+        <article class="mod"><p class="mod-n">08</p><h3>Informes</h3><p>Cuadros de mando sobre datos en vivo. Sin exportar a una hoja de cálculo para poder leerlos.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ migracion ============ -->
+  <section class="dark" id="migracion">
+    <div class="wrap">
+      <p class="label on-dark">Venir de otro ERP</p>
+      <h2>Cambiar sin parar la empresa</h2>
+
+      <div class="dark-grid">
+        <div>
+          <p>Nadie cambia de ERP porque le apetezca. Se cambia cuando el que hay ya cuesta más de mantener que de sustituir — y aun así da vértigo, porque durante la migración la empresa tiene que seguir facturando.</p>
+          <p>Orezco se plantea desde ese día concreto: el traspaso de datos, el periodo en que conviven los dos sistemas y la vuelta atrás si algo sale mal.</p>
+        </div>
+        <ul class="checks">
+          <li><b>Datos</b><span>Clientes, proveedores, artículos y saldos se traen con su histórico, no como saldo inicial suelto.</span></li>
+          <li><b>Convivencia</b><span>Un periodo en que el sistema antiguo sigue vivo en solo lectura, para poder consultar y comparar.</span></li>
+          <li><b>Reversión</b><span>Un punto de retorno definido antes de empezar, no improvisado a mitad.</span></li>
+          <li><b>Formación</b><span>El equipo trabaja en un entorno de pruebas con datos reales antes del cambio.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ cierre ============ -->
+  <section class="cta" id="contacto">
+    <div class="wrap">
+      <p class="label" style="justify-content:center;text-align:center">Hablemos</p>
+      <h2>¿Te enseñamos cómo funciona?</h2>
+      <p class="hero-lede">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
+      <div><span class="slot">[ pendiente: email o formulario de contacto ]</span></div>
+    </div>
+  </section>
+
+</main>
+
+<div class="band">
+  <div class="band-in">
+    <span>Contabilidad</span><span>Facturación</span><span>Inventario</span><span>Compras</span>
+    <span>Ventas</span><span>Proyectos</span><span>Personal</span><span>Informes</span>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot-in">
+    <div class="foot-brand"><svg><use href="#mark"/></svg><span>Orezco</span></div>
+    <small>&copy; <span id="y">2026</span> Orezco</small>
+  </div>
+</footer>
+
+<script>document.getElementById("y").textContent=new Date().getFullYear();</script>
 </body>
 </html>

@@ -3,94 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Orezco</title>
-<meta name="description" content="Orezco.">
+<title>Página no encontrada — Orezco</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<meta property="og:title" content="Orezco">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://orezco.com/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;600&display=swap">
 <style>
-  :root{
-    --bg:#000;
-    --fg:#fff;
-    --muted:rgba(255,255,255,.45);
-    --logo-bg:#000;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--fg);
-    font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:clamp(24px,6vw,64px);
-    -webkit-font-smoothing:antialiased;
-  }
-  main{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:clamp(28px,5vw,44px);
-    text-align:center;
-    animation:rise .9s cubic-bezier(.2,.7,.3,1) both;
-  }
-  .mark{
-    width:clamp(96px,22vw,150px);
-    height:auto;
-    color:var(--fg);
-    display:block;
-  }
-  .wordmark{
-    margin:0;
-    font-size:clamp(2rem,9vw,3.75rem);
-    font-weight:600;
-    letter-spacing:.18em;
-    text-indent:.18em; /* compensa el tracking del ultimo caracter */
-    line-height:1;
-  }
-  .tagline{
-    margin:0;
-    font-size:clamp(.8rem,2.6vw,1rem);
-    font-weight:400;
-    letter-spacing:.32em;
-    text-indent:.32em;
-    text-transform:uppercase;
-    color:var(--muted);
-  }
-  .rule{
-    width:clamp(48px,12vw,88px);
-    height:1px;
-    background:rgba(255,255,255,.2);
-    border:0;
-    margin:0;
-  }
-  footer{
-    position:fixed;
-    inset:auto 0 clamp(18px,4vw,30px) 0;
-    text-align:center;
-    font-size:.72rem;
-    letter-spacing:.12em;
-    color:rgba(255,255,255,.28);
-  }
-  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){main{animation:none}}
+:root{
+  color-scheme:light;
+  --verde:#2bee4b;--musgo:#93b799;--eco:#c4e4c9;
+  --prensa:#121613;--gris:#516254;--hueso:#fafffa;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;background:var(--hueso);color:var(--prensa);
+  font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  display:grid;place-items:center;padding:clamp(24px,6vw,64px);text-align:center;
+}
+main{display:grid;gap:22px;justify-items:center;max-width:44ch}
+svg.mark{width:60px;height:60px;color:var(--prensa)}
+p.label{
+  font-size:11px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;
+  color:var(--gris);margin:0;
+}
+h1{
+  font-family:"Instrument Serif",Georgia,serif;font-weight:400;
+  font-size:clamp(2.6rem,9vw,5rem);line-height:.9;letter-spacing:-.04em;
+  margin:0;text-wrap:balance;
+}
+p.lede{margin:0;color:var(--gris);font-size:1rem;line-height:1.6}
+a.btn{
+  display:inline-flex;align-items:center;
+  font-size:13px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;
+  padding:12px 22px;border-radius:5px;text-decoration:none;
+  background:var(--verde);color:var(--prensa);
+  box-shadow:0 2px 0 var(--musgo);
+}
+a.btn:focus-visible{outline:2px solid var(--prensa);outline-offset:3px}
 </style>
 </head>
 <body>
-  <main>
-    <img class="mark" src="assets/logo.svg" alt="" width="150" height="150">
-    <h1 class="wordmark">OREZCO</h1>
-    <hr class="rule">
-    <p class="tagline">Pr&oacute;ximamente</p>
-  </main>
-  <footer>&copy; <span id="y">2026</span> Orezco</footer>
-  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+<main>
+  <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
+    <polygon points="100,26 166,63 166,137 100,174 34,137 34,63"
+             fill="currentColor" stroke="currentColor" stroke-width="26" stroke-linejoin="round"/>
+    <g stroke="#fafffa" stroke-width="13" stroke-linecap="round" fill="none">
+      <path d="M100 100 L38 64"/><path d="M100 100 L162 64"/><path d="M100 100 L100 172"/>
+    </g>
+    <g stroke="currentColor" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M100 44 L100 156"/><path d="M51.5 72 L148.5 128"/><path d="M51.5 128 L148.5 72"/>
+    </g>
+  </svg>
+  <p class="label">Error 404</p>
+  <h1>Esta página no existe</h1>
+  <p class="lede">El enlace está roto o la página se movió de sitio.</p>
+  <a class="btn" href="/">Volver al inicio</a>
+</main>
 </body>
 </html>

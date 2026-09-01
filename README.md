@@ -1,16 +1,22 @@
 # orezco.com
 
-Sitio de Orezco. Ahora mismo, una pagina de espera estatica.
+Web de Orezco, un ERP. Sitio estatico: HTML y CSS planos, sin build ni dependencias.
 
 ## Que hay
 
-    index.html      pagina unica
-    404.html        copia de index (Pages sirve esto en rutas no encontradas)
-    assets/logo.svg logo reconstruido, monocromo, usa currentColor
+    index.html      landing completa
+    404.html        pagina de error, mismo sistema visual
+    assets/logo.svg logo monocromo, usa currentColor
     CNAME           dominio personalizado de GitHub Pages
-    DESIGN.md       SSOT visual: color, tipografia, reglas del logo
+    DESIGN.md       SSOT visual: color, tipografia, ritmo, componentes
 
-Sin build, sin dependencias. HTML y CSS planos.
+## Diseno
+
+Direccion "broadsheet editorial en sala verde": titulares monumentales con serifa,
+micro-etiquetas en versalitas y un unico verde (#2bee4b) usado como rotulador.
+Mundo visual unico y deliberado, sin tema oscuro alternativo.
+
+Todo el sistema esta en DESIGN.md. **Leerlo antes de tocar cualquier estilo.**
 
 ## Despliegue
 
@@ -21,10 +27,20 @@ DNS en Hostinger apuntando a Pages:
     @    A      185.199.108.153 / .109.153 / .110.153 / .111.153
     www  CNAME  syed112212.github.io.
 
+Script para aplicarlo: `~/.claude/scripts/hostinger-dns-orezco.sh {pages|rollback|show}`
+
 ## Pendiente
 
-- Sustituir `assets/logo.svg` por el original si aparece (el actual es reconstruccion).
-- Definir sector, producto y publico. Hasta entonces la pagina no afirma nada.
-- Decidir color de acento y tipografia definitiva.
-- `<meta name="robots" content="noindex">` esta puesto a proposito. Quitarlo cuando
-  haya contenido real que indexar.
+- **DNS**: el dominio sigue apuntando al aparcamiento de Hostinger.
+- **Contacto**: el bloque de cierre tiene un hueco a la vista porque no hay buzon real.
+  Hace falta email o formulario.
+- **Logo**: `assets/logo.svg` es reconstruccion del PNG original, no el original.
+- **Copy**: los textos son propuesta, pendientes de aprobar.
+- **noindex**: puesto a proposito en index.html y 404.html. Quitarlo cuando la copy este
+  aprobada y haya via de contacto.
+
+## Reglas de contenido
+
+Nada inventado. Sin cifras de clientes, sin testimonios, sin logotipos de empresas y sin
+precios mientras no existan de verdad. El estado del producto se dice tal cual:
+en desarrollo.
