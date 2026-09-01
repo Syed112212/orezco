@@ -27,9 +27,9 @@ se pintan explícitamente.
 | Token | Hex | Uso |
 |---|---|---|
 | `--tinta` | `#17191c` | Texto principal y relleno del botón. La única superficie oscura |
-| `--pizarra` | `#777b86` | Apoyo, texto de párrafo secundario |
-| `--ceniza` | `#979799` | Etiquetas de categoría. Tipográficas, sin fondo ni borde |
-| `--humo` | `#a3a6af` | Marcador de campo (placeholder) |
+| `--pizarra` | `#6b6e78` | Apoyo, texto de párrafo secundario |
+| `--ceniza` | `#6c6e74` | Etiquetas de categoría. Tipográficas, sin fondo ni borde |
+| `--humo` | `#71747c` | Marcador de campo (placeholder) |
 | `--sienna` | `#5d2a1a` | **Solo sobre melocotón.** Nunca como texto sobre blanco |
 | `--hairline` | `#ececec` | Divisores y borde de campo |
 
@@ -38,6 +38,22 @@ blanco —nunca sobre una banda de color—. Y el sienna es la tinta del melocot
 esa tarjeta no se usa.
 
 El sistema es intencionadamente **casi acromático**. Meter azul, verde o morado lo rompe.
+
+### Desviación consciente de la referencia: contraste
+
+Los tres grises de texto **se han oscurecido respecto a la referencia**, porque los
+originales no llegan al mínimo de WCAG AA (4.5:1 para texto normal):
+
+| Token | Referencia | En uso | Antes | Ahora |
+|---|---|---|---|---|
+| `--pizarra` | `#777b86` | `#6b6e78` | 3.78:1 sobre tarjeta | **4.55:1** |
+| `--ceniza` | `#979799` | `#6c6e74` | 2.92:1 sobre papel | **4.56:1** |
+| `--humo` | `#a3a6af` | `#71747c` | 2.43:1 sobre campo | **4.68:1** |
+
+El cambio es imperceptible a la vista y la diferencia de legibilidad es real. Todo lo
+demás de la referencia se respeta al pie de la letra. `scripts/check-design.py` mide
+estos contrastes en cada ejecución, así que si alguien devuelve los valores originales,
+salta.
 
 ## Tipografía
 
@@ -153,6 +169,24 @@ de ellos. No renombrar: así el código y el sistema de diseño hablan el mismo 
 
 `tokens.json` guarda los mismos valores en formato DTCG, listo para alimentar Figma,
 Tailwind o Style Dictionary. Si cambia un valor, cambia en los dos sitios.
+
+## El verificador
+
+`scripts/check-design.py` convierte las reglas duras de este documento en comprobaciones
+ejecutables. Se ejecuta solo en cada push (`.github/workflows/check-design.yml`) y falla
+la build si alguna se incumple:
+
+1. **Nada de `filter`, `opacity` ni `mask` sobre `preserve-3d`** — la trampa que aplanó el cubo.
+2. **Una sola tarjeta melocotón** por página.
+3. **La serifa siempre en peso 400.**
+4. **Sombra solo en artefactos flotantes.**
+5. **Cuatro radios** y ni uno más.
+6. **Ninguna variable CSS usada sin declarar.**
+7. **Contraste WCAG AA** en los ocho emparejamientos reales de texto y fondo.
+8. **`tokens.json` y el `:root` dicen lo mismo.**
+
+Si cambias una regla en este documento, cámbiala también en el verificador. Si no, el
+documento miente.
 
 ## Reglas de contenido
 
