@@ -1,0 +1,53 @@
+# Publica cada dia los articulos a los que les toca el turno.
+#
+# El blog no suelta todo su contenido de golpe: calendario_blog.py reparte
+# los articulos en el tiempo y build-blog.py solo escribe los que ya tocan.
+# Este flujo se pasa una vez al dia, regenera y sube lo que haya cambiado.
+#
+# Si no hay nada nuevo que publicar, no hace commit y termina.
+name: Publicar los articulos del dia
+
+on:
+  schedule:
+    # 07:12 UTC, a diario. Minuto raro a proposito: a las en punto se
+    # amontonan los flujos de medio mundo y GitHub los retrasa.
+    - cron: "12 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Regenerar el sitio
+        run: |
+          python scripts/build-blog.py
+          python scripts/build-sitio.py
+          python scripts/sync-portada.py
+
+      - name: Comprobar antes de publicar
+        run: |
+          python scripts/check-design.py
+          python scripts/check-voz.py
+
+      - name: Subir lo que haya salido hoy
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Hoy no toca ningun articulo nuevo."
+            exit 0
+          fi
+          git config user.name "Contaes"
+          git config user.email "info@contaes.com"
+          git add -A
+          git commit -m "Articulos del $(date +%d/%m/%Y)
+
+          Publicados por el calendario del blog, que reparte los articulos
+          en el tiempo en vez de soltarlos todos el mismo dia."
+          git push

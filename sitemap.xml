@@ -266,17 +266,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/cobrar-antes-sin-perder-clientes.html</loc>
+    <loc>https://contaes.com/blog/cambiar-de-asesoria-sin-perder-el-historico.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/el-recuento-anual-llega-tarde.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/como-elegir-un-erp-sin-equivocarse.html</loc>
+    <loc>https://contaes.com/blog/senales-de-que-tu-erp-se-esta-degradando.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -291,12 +286,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/modelos-que-presenta-una-pyme-cada-ano.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/cambiar-de-asesoria-sin-perder-el-historico.html</loc>
+    <loc>https://contaes.com/blog/que-deberia-hacer-la-ia-en-un-erp.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -306,12 +296,22 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/senales-de-que-tu-erp-se-esta-degradando.html</loc>
+    <loc>https://contaes.com/blog/el-recuento-anual-llega-tarde.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/que-deberia-hacer-la-ia-en-un-erp.html</loc>
+    <loc>https://contaes.com/blog/como-elegir-un-erp-sin-equivocarse.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/cobrar-antes-sin-perder-clientes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/modelos-que-presenta-una-pyme-cada-ano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

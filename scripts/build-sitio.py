@@ -816,11 +816,15 @@ def paginas_legales():
 # Sitemap y robots
 # ─────────────────────────────────────────────────────────────────────
 def articulos_del_blog():
+    """Solo los que ya estan publicados: el sitemap no puede anunciar
+    paginas que aun no existen."""
+    import calendario_blog as CAL
     ruta = os.path.join(AQUI, "build-blog.py")
     spec = importlib.util.spec_from_file_location("build_blog", ruta)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    return [a["slug"] for a in mod.ARTICULOS]
+    publicados, _total = CAL.reparte(mod.ARTICULOS)
+    return [a["slug"] for a in publicados]
 
 
 def construir_sitemap(rutas):

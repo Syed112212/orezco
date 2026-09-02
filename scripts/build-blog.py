@@ -299,6 +299,7 @@ import sys
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 import plantilla as P
+import calendario_blog as CAL
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -443,6 +444,11 @@ def construir_404():
 def main():
     os.makedirs(os.path.join(RAIZ, "blog"), exist_ok=True)
 
+    # Solo se escriben los que ya toca publicar. El resto espera su turno:
+    # un blog que suelta ciento ochenta articulos el mismo dia se delata.
+    global ARTICULOS
+    ARTICULOS, escritos = CAL.reparte(ARTICULOS)
+
     salidas = {"404.html": construir_404(),
                os.path.join("blog", "index.html"): construir_indice(),
                }
@@ -455,7 +461,8 @@ def main():
         print("  %-52s %6d bytes" % (ruta.replace(os.sep, "/"), len(contenido)))
 
     print()
-    print("  %d articulos. El sitemap lo escribe build-sitio.py" % len(ARTICULOS))
+    print(CAL.resumen(escritos, len(ARTICULOS)))
+    print("  El sitemap lo escribe build-sitio.py")
 
 
 if __name__ == "__main__":
