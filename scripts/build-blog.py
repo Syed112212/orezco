@@ -1954,7 +1954,22 @@ article.post{padding:44px 0 80px}
   text-decoration:none;padding:7px 13px;border:1px solid var(--borde);
   border-radius:var(--r-btn);background:var(--papel);transition:border-color .16s ease}
 .enlaces-tema a:hover{border-color:var(--azul)}
-.post-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:inherit;display:grid;transition:transform .22s ease,border-color .22s ease}
+/* ── Filtro por tema ─────────────────────────────────────────
+   Funciona sin JavaScript: son anclas y :target. Con ciento y
+   pico articulos, bajar hasta encontrar algo no es una opcion. */
+.filtros{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.filtro{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:14.5px;font-weight:500;color:var(--grafito);text-decoration:none;
+  padding:8px 14px;border:1px solid var(--borde);border-radius:var(--r-pill);
+  background:var(--blanco);transition:border-color .16s ease,color .16s ease;
+}
+.filtro span{font-size:12.5px;color:var(--piedra);font-variant-numeric:tabular-nums}
+.filtro:hover{border-color:rgba(0,0,0,.24);color:var(--tinta-fuerte)}
+.filtro:target,.filtro.activo{border-color:var(--azul);color:var(--azul);background:var(--azul-tinte)}
+.sin-resultados{display:none;margin-top:30px;color:var(--piedra)}
+/* la rejilla filtrada: se marca en el contenedor y el CSS esconde el resto */
+.listado[data-tema] .post-card{display:none}\n.post-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:inherit;display:grid;transition:transform .22s ease,border-color .22s ease}
 .post-card:hover{transform:translateY(-4px);border-color:rgba(0,0,0,.18)}
 .post-card .franja{height:7px}
 .post-card .dentro{padding:22px}
@@ -2000,6 +2015,15 @@ ENLACES_POR_DEFECTO = [('gestoria/', 'La gestoría'), ('funcionalidades/', 'El s
 
 def enlaces_de(tema):
     return POR_TEMA.get(tema, ENLACES_POR_DEFECTO)
+
+
+import unicodedata
+
+
+def sin_tildes(s):
+    """Quita las tildes para poder usar el tema como clase de CSS."""
+    return "".join(c for c in unicodedata.normalize("NFD", s)
+                   if unicodedata.category(c) != "Mn")
 
 
 def construir_articulo(a):
@@ -2065,32 +2089,57 @@ def construir_articulo(a):
 
 
 def construir_indice():
+    # Los temas, por cuantos articulos tienen: el que mas, primero.
+    cuenta = {}
+    for a in ARTICULOS:
+        cuenta[a["tema"]] = cuenta.get(a["tema"], 0) + 1
+    temas = sorted(cuenta, key=lambda x: (-cuenta[x], x))
+
+    def clase(tema):
+        return "t-" + re.sub(r"[^a-z0-9]+", "", sin_tildes(tema).lower())
+
+    filtros = ['<a class="filtro filtro-todo" href="#todo">Todo '
+               '<span>%d</span></a>' % len(ARTICULOS)]
+    for tema in temas:
+        filtros.append('<a class="filtro" href="#%s">%s <span>%d</span></a>'
+                       % (clase(tema), tema, cuenta[tema]))
+
     tarjetas = "\n".join(
-        '<a class="post-card" href="%s.html"><span class="franja" style="background:%s"></span>'
+        '<a class="post-card %s" href="%s.html"><span class="franja" style="background:%s"></span>'
         '<span class="dentro"><span class="tema" style="background:%s">%s</span>'
         '<h2 class="post-tit">%s</h2><p>%s</p><p class="pie">%s min de lectura</p></span></a>'
-        % (a["slug"], ACENTOS[a["acento"]], ACENTOS[a["acento"]], a["tema"], a["titulo"], a["descripcion"], a["minutos"])
+        % (clase(a["tema"]), a["slug"], ACENTOS[a["acento"]], ACENTOS[a["acento"]],
+           a["tema"], a["titulo"], a["descripcion"], a["minutos"])
         for a in ARTICULOS)
 
     cuerpo = f'''<section style="padding:56px 0 80px">
   <div class="wrap">
     <p class="migas"><a href="/">Inicio</a></p>
-    <h1 style="max-width:16ch">Cómo se lleva un ERP sin que se te vaya de las manos</h1>
-    <p class="entradilla" style="max-width:60ch;margin-top:18px;font-family:var(--serif);font-size:20px;line-height:1.55;color:var(--grafito)">
-      Lo que aprendemos construyendo Contaes: migraciones, contabilidad, y qué puede hacer de verdad la IA en un sistema de gestión.
+    <h1 style="max-width:17ch">Lo que preguntan los que llevan una empresa</h1>
+    <p class="entradilla" style="max-width:62ch;margin-top:18px;font-family:var(--serif);font-size:20px;line-height:1.55;color:var(--grafito)">
+      Impuestos, contabilidad, nóminas, contratos, financiación y salir fuera. Explicado
+      como se lo explicaríamos a un cliente en la mesa de al lado, sin dar por sabido nada.
     </p>
-    <div class="rejilla revela" style="margin-top:40px">{tarjetas}</div>
+
+    <nav class="filtros" aria-label="Filtrar por tema" id="todo">
+      {"".join(filtros)}
+    </nav>
+
+    <div class="rejilla listado revela" style="margin-top:26px">{tarjetas}</div>
+    <p class="sin-resultados">No hay artículos de ese tema todavía.</p>
   </div>
 </section>'''
 
     ld = '''<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Blog","name":"Blog de Contaes",
- "description":"Migraciones de ERP, contabilidad para pymes e inteligencia artificial aplicada a la gestión.",
+ "description":"Impuestos, contabilidad, nóminas, contratos, financiación e internacionalización para autónomos, startups y pymes.",
  "url":"%s/blog/","inLanguage":"es",
  "publisher":{"@type":"Organization","name":"Contaes","url":"%s/"}}
 </script>''' % (DOMINIO, DOMINIO)
 
-    return pagina("Blog · Contaes", "Migraciones de ERP, contabilidad para pymes e inteligencia artificial aplicada a la gestión. Lo que aprendemos construyendo Contaes.",
+    return pagina("Blog · Contaes",
+                  "Impuestos, contabilidad, nóminas, contratos, financiación e "
+                  "internacionalización, explicados para autónomos, startups y pymes.",
                   "%s/blog/" % DOMINIO, cuerpo, ld, base="")
 
 
