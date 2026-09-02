@@ -202,7 +202,7 @@ def pagina_funcionalidades():
         "cierre": cierre(),
     }
     return P.pagina("Producto · Contaes",
-                    "El software de Contaes: contabilidad, facturación, almacén, compras, ventas, proyectos e informes, y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.",
+                    "Contabilidad, facturación, almacén, compras, ventas, proyectos e informes sobre el mismo libro mayor, con asesoría fiscal incluida.",
                     "%s/funcionalidades/" % DOMINIO, cuerpo)
 
 
@@ -409,6 +409,25 @@ def pagina_sectores():
 
 <section class="seccion">
   <div class="wrap estrecho prosa revela">
+    <h2>Por qué el sector cambia tanto las cosas</h2>
+    <p>Un ERP no se elige por la lista de funciones: se elige por si entiende cómo trabaja tu
+      negocio. Y lo que hace difícil a cada negocio no es lo mismo.</p>
+    <p>En fabricación el problema es el coste: transformar materiales y horas en producto sin
+      saber cuánto cuesta esa transformación convierte el margen en una opinión. En
+      distribución es el volumen: márgenes finos donde un error de precio se come el beneficio
+      de varias operaciones buenas. En construcción es la obra: el resultado no es de la
+      empresa, es de cada obra, y una empresa con cinco puede tener beneficio y estar
+      perdiendo dinero en tres.</p>
+    <p>En servicios profesionales el problema es el tiempo, que se apunta tarde y a la baja.
+      En comercio, que el TPV, el almacén y la contabilidad cuentan tres verdades distintas
+      del mismo negocio. Y en alimentación, la trazabilidad, que no es una mejora sino una
+      obligación legal.</p>
+
+    <h2>Lo que no cambia</h2>
+    <p>Debajo de todos ellos hay lo mismo: un libro mayor, unas existencias valoradas, unos
+      clientes que pagan tarde y unos modelos que presentar. Por eso no son ocho productos:
+      es el mismo sistema, con el peso puesto en sitios distintos.</p>
+
     <h2>Y si tu sector no está</h2>
     <p>Estas ocho fichas no son ocho productos distintos: es el mismo sistema contado desde el problema de cada uno. Si tu actividad no aparece, casi siempre es porque se parece a alguna de ellas.</p>
     <p>Lo que sí conviene decir claro: hay procesos muy particulares (fabricación compleja, normativa sectorial concreta) que hoy no cubrimos. Preferimos decirlo antes que después de la demo.</p>
