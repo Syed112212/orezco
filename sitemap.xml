@@ -281,6 +281,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://contaes.com/blog/cuando-me-interesa-crear-una-sociedad-limitada-en-lugar-de-ser-autonom.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://contaes.com/blog/factura-electronica-obligatoria.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -311,7 +316,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/vender-fuera-de-espana-iva.html</loc>
+    <loc>https://contaes.com/blog/como-se-si-necesito-un-agente-de-aduanas-o-puedo-tramitarlo-yo.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -321,17 +326,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/puedo-modificar-un-contrato-firmado-sin-que-se-rompa-la-relacion.html</loc>
+    <loc>https://contaes.com/blog/puedo-incluir-una-clausula-de-penalizacion-por-retraso-en-mis-presupue.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/de-donde-vienen-tus-clientes.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/migrar-de-odoo-sin-parar-la-empresa.html</loc>
+    <loc>https://contaes.com/blog/como-saber-si-mi-pagina-web-esta-perdiendo-ventas.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

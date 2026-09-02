@@ -822,7 +822,9 @@ main,footer{position:relative;z-index:1}
 
 /* ── 18. Adaptacion ──────────────────────────────────────── */
 @media(max-width:980px){
-  .modulos-marco,.dos-col,.rejilla-3,  .chat{border-right:0;border-bottom:1px solid var(--borde)}
+  .modulos-marco,.dos-col,.rejilla-3,.rejilla-2,.maqueta-cuerpo{grid-template-columns:1fr}
+  .mods{grid-template-columns:1fr}
+  .chat{border-right:0;border-bottom:1px solid var(--borde)}
   .menu-btn{display:flex}
   /* El menu completo baja bajo la barra. Cerrado va con visibility:hidden
      y no solo con opacidad, para que el tabulador no entre en enlaces que
