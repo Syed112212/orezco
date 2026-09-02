@@ -109,7 +109,7 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .migas{font-size:14px;color:var(--piedra);margin-bottom:20px}
 .migas a{color:var(--piedra);text-decoration:none}
 .migas a:hover{color:var(--tinta-fuerte);text-decoration:underline}
-.revela{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.revela.espera{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
 .revela.visible{opacity:1;transform:none}
 .encabezado{padding:52px 0 30px}
 .encabezado .editorial{margin-top:18px;max-width:60ch}
@@ -380,16 +380,30 @@ footer small{font-size:13.5px;color:#8b93b5}
   </div>
 </footer>
 <script>
-/* -- Entrada al aparecer ------------------------------------- */
+/* -- Entrada al aparecer -------------------------------------
+   La hoja de estilos no esconde nada por su cuenta: solo se oculta
+   lo que este JavaScript marca, y siempre hay una red de seguridad
+   que lo muestra pase lo que pase.                            */
 (function(){
   var piezas=document.querySelectorAll(".revela");
+  if(!piezas.length)return;
+  function mostrar(e){e.classList.remove("espera");e.classList.add("visible");}
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){
-    for(var i=0;i<piezas.length;i++)piezas[i].classList.add("visible");return;
+    for(var i=0;i<piezas.length;i++)mostrar(piezas[i]);return;
+  }
+  var pendientes=[];
+  for(var j=0;j<piezas.length;j++){
+    if(piezas[j].getBoundingClientRect().top<window.innerHeight*0.92){mostrar(piezas[j]);}
+    else{piezas[j].classList.add("espera");pendientes.push(piezas[j]);}
   }
   var obs=new IntersectionObserver(function(es){es.forEach(function(e){
-    if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}
-  });},{threshold:.1,rootMargin:"0px 0px -50px 0px"});
-  for(var j=0;j<piezas.length;j++)obs.observe(piezas[j]);
+    if(e.isIntersecting){mostrar(e.target);obs.unobserve(e.target);}
+  });},{threshold:.05,rootMargin:"0px 0px -40px 0px"});
+  for(var k=0;k<pendientes.length;k++)obs.observe(pendientes[k]);
+  setTimeout(function(){
+    for(var n=0;n<pendientes.length;n++)
+      if(pendientes[n].classList.contains("espera"))mostrar(pendientes[n]);
+  },2500);
 })();
 
 /* -- El menu: por areas en escritorio, plegable en movil ------

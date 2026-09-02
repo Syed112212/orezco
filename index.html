@@ -265,12 +265,15 @@ footer small{font-size:13.5px;color:#8b93b5}
 .hero-nota{margin-top:18px;font-size:14px;color:var(--piedra)}
 
 /* entrada escalonada */
-.entra{opacity:0;transform:translateY(16px);animation:entra .75s cubic-bezier(.22,1,.36,1) forwards}
+/* Parte de visible: 'backwards' hace que se pinte el estado inicial
+   durante el retardo, y al terminar vuelve al del elemento. Si la
+   animacion no corriera, el contenido se ve igual. */
+.entra{animation:entra .75s cubic-bezier(.22,1,.36,1) backwards}
 .entra:nth-child(1){animation-delay:.05s}
 .entra:nth-child(2){animation-delay:.14s}
 .entra:nth-child(3){animation-delay:.23s}
 .entra:nth-child(4){animation-delay:.32s}
-@keyframes entra{to{opacity:1;transform:none}}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
 /* revelado al entrar en pantalla */
 .revela{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
@@ -450,7 +453,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 .form-nota a{color:var(--azul)}
 .form-alt{margin:14px 0 0;font-size:15px;color:var(--grafito);text-align:center}
 .form-alt a{color:var(--azul)}
-.pildora-info{display:inline-block;background:var(--blanco);border:1px solid var(--borde);color:var(--grafito);border-radius:var(--r-pill);padding:13px 22px;font-size:15px}
 
 
 /* ── Aversion a la perdida: el coste de no hacer nada ─────────
@@ -543,8 +545,11 @@ main,footer{position:relative;z-index:1}
 .marca svg,.marca span,.nav-in{transition:width .25s ease,height .25s ease,font-size .25s ease,min-height .25s ease,padding .25s ease}
 
 /* entrada en cascada dentro de las rejillas */
-.cascada > *{opacity:0;transform:translateY(22px)}
-.cascada.visible > *{animation:sube-item .6s cubic-bezier(.22,1,.36,1) forwards}
+/* Oculto solo mientras esta marcado, y quien marca es el JavaScript,
+   nunca la hoja de estilos. Asi ningun fallo de la animacion puede
+   dejar contenido invisible. */
+.cascada.espera > *{opacity:0;transform:translateY(22px)}
+.cascada.espera.visible > *{animation:sube-item .6s cubic-bezier(.22,1,.36,1) forwards}
 .cascada.visible > *:nth-child(1){animation-delay:.02s}
 .cascada.visible > *:nth-child(2){animation-delay:.09s}
 .cascada.visible > *:nth-child(3){animation-delay:.16s}
@@ -1081,8 +1086,6 @@ main,footer{position:relative;z-index:1}
         <div class="garantia"><span class="gicono" aria-hidden="true">€</span><p><strong>La llamada no cuesta nada</strong> y no hay nada que firmar para tenerla.</p></div>
       </div>
 
-      <div id="sin-canal"><span class="pildora-info">Canal de contacto disponible en breve</span></div>
-
       <form class="form" id="form-contacto" action="https://formsubmit.co/info@contaes.com" method="POST">
         <input type="hidden" name="_subject" value="Demo de Contaes - desde la portada">
         <input type="hidden" name="_next" value="https://contaes.com/gracias/">
@@ -1230,20 +1233,47 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
 })();
 
 /* ── Revelado al entrar en pantalla ──────────────────────────
-   Sin IntersectionObserver, todo se muestra de golpe: el contenido
-   nunca depende de que la animacion funcione.                  */
+   El contenido nunca depende de que esto funcione: la hoja de
+   estilos no esconde nada por su cuenta. Aqui se marca lo que esta
+   por debajo de la pantalla, se revela al llegar, y a los cuatro
+   segundos se muestra lo que quede, sea cual sea el motivo.    */
 (function () {
-  var piezas = document.querySelectorAll(".revela");
+  var piezas = document.querySelectorAll(".revela, .cascada");
+  if (!piezas.length) return;
+
+  function mostrar(e) {
+    e.classList.remove("espera");
+    e.classList.add("visible");
+  }
   if (SIN_MOVIMIENTO || !("IntersectionObserver" in window)) {
-    for (var i = 0; i < piezas.length; i++) piezas[i].classList.add("visible");
+    for (var i = 0; i < piezas.length; i++) mostrar(piezas[i]);
     return;
   }
+
+  var pendientes = [];
+  for (var j = 0; j < piezas.length; j++) {
+    // lo que ya se ve al cargar no se esconde nunca
+    if (piezas[j].getBoundingClientRect().top < window.innerHeight * 0.92) {
+      mostrar(piezas[j]);
+    } else {
+      piezas[j].classList.add("espera");
+      pendientes.push(piezas[j]);
+    }
+  }
+
   var obs = new IntersectionObserver(function (entradas) {
     entradas.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); }
+      if (e.isIntersecting) { mostrar(e.target); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
-  for (var j = 0; j < piezas.length; j++) obs.observe(piezas[j]);
+  }, { threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
+  for (var k = 0; k < pendientes.length; k++) obs.observe(pendientes[k]);
+
+  // red de seguridad: nada se queda escondido por un fallo de la animacion
+  setTimeout(function () {
+    for (var n = 0; n < pendientes.length; n++) {
+      if (pendientes[n].classList.contains("espera")) mostrar(pendientes[n]);
+    }
+  }, 2500);
 })();
 
 
