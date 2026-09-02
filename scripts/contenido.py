@@ -16,7 +16,7 @@ MODULOS = {
     "contabilidad": {
         "titulo": "Contabilidad",
         "lema": "El libro mayor como fuente única de verdad",
-        "entradilla": "Todo lo que pasa en la empresa acaba siendo un apunte. Si el apunte nace donde ocurre el hecho —la factura, el cobro, el movimiento de almacén— la contabilidad deja de ser una tarea aparte.",
+        "entradilla": "Todo lo que pasa en la empresa acaba siendo un apunte. Si el apunte nace donde ocurre el hecho (la factura, el cobro, el movimiento de almacén) la contabilidad deja de ser una tarea aparte.",
         "secciones": [
             ("Por qué la contabilidad va primero", [
                 "En muchos negocios la contabilidad es lo último: se factura durante el mes, se guardan los papeles y a final de trimestre alguien los ordena. Ese orden invierte el problema. Cuando el asiento se genera en el momento del hecho, no hay nada que reconstruir después.",
@@ -24,7 +24,7 @@ MODULOS = {
             ]),
             ("Plan contable y cuentas", [
                 "El plan general contable español viene cargado, con la posibilidad de abrir subcuentas por cliente, proveedor o centro de coste. Las cuentas que no se usan no estorban: la búsqueda va por nombre, no por número, así que no hace falta memorizar el código.",
-                "Cada cuenta guarda su histórico completo. Entrar en una cuenta y ver los apuntes que la componen —con el documento original a un clic— es lo que convierte un balance en algo que se puede auditar.",
+                "Cada cuenta guarda su histórico completo. Entrar en una cuenta y ver los apuntes que la componen (con el documento original a un clic) es lo que convierte un balance en algo que se puede auditar.",
             ]),
             ("El cierre", [
                 "El cierre de ejercicio deja de ser una campaña si durante el año no se ha acumulado deuda: amortizaciones calculadas, periodificaciones puestas, saldos de clientes y proveedores cuadrados con sus documentos.",
@@ -61,7 +61,7 @@ MODULOS = {
                 "El sistema no permite modificar una factura ya contabilizada. Puede parecer incómodo la primera vez; es exactamente lo que evita la conversación de «este número no cuadra con el del año pasado».",
             ]),
             ("El seguimiento del cobro", [
-                "La parte que más dinero mueve no es emitir: es cobrar. Cada factura lleva su estado —emitida, vencida, cobrada parcialmente, cobrada— y su antigüedad.",
+                "La parte que más dinero mueve no es emitir: es cobrar. Cada factura lleva su estado (emitida, vencida, cobrada parcialmente, cobrada) y su antigüedad.",
                 "Desde ahí se puede pedir al asistente que ordene lo pendiente por antigüedad, que prepare los recordatorios de las que pasan de un plazo o que enseñe qué cliente concentra el riesgo. La decisión de enviar sigue siendo tuya.",
             ]),
         ],
@@ -91,7 +91,7 @@ MODULOS = {
                 "Aquí cada entrada y cada salida mueve existencias y valor a la vez. El inventario permanente no es una función avanzada, es lo normal.",
             ]),
             ("Lotes, caducidades y trazabilidad", [
-                "Cuando el sector lo exige —alimentación, farmacia, componentes con garantía— el lote deja de ser opcional. Saber a qué clientes fue un lote concreto es la diferencia entre una retirada quirúrgica y una retirada total.",
+                "Cuando el sector lo exige (alimentación, farmacia, componentes con garantía) el lote deja de ser opcional. Saber a qué clientes fue un lote concreto es la diferencia entre una retirada quirúrgica y una retirada total.",
                 "El movimiento guarda de dónde vino y a dónde fue, así que la trazabilidad se puede recorrer en los dos sentidos.",
             ]),
             ("Varios almacenes", [
@@ -368,7 +368,7 @@ CAPACIDADES = {
         "entradilla": "La conciliación es la prueba de que la contabilidad se parece a la realidad. Si el banco dice una cosa y los libros otra, uno de los dos está mal, y casi siempre son los libros.",
         "secciones": [
             ("Casar movimientos", [
-                "El movimiento del banco se propone contra el cobro o el pago que le corresponde. Lo evidente —importe y fecha que coinciden con una factura pendiente— se propone casado; lo demás se marca.",
+                "El movimiento del banco se propone contra el cobro o el pago que le corresponde. Lo evidente (importe y fecha que coinciden con una factura pendiente) se propone casado; lo demás se marca.",
                 "Los que no casan son los interesantes: cobros parciales, transferencias agrupadas, comisiones, devoluciones. Verlos aparte es lo que evita que se pierdan en el montón.",
             ]),
             ("Lo que aparece al conciliar de verdad", [
@@ -399,7 +399,7 @@ CAPACIDADES = {
                 "Y, sobre todo, que el sistema no permita llevar contabilidades paralelas ni borrar sin rastro. Buena parte del reglamento va de eso.",
             ]),
             ("A quién afecta y desde cuándo", [
-                "Afecta a quienes emiten facturas usando sistemas informáticos, con excepciones —entre ellas, quienes ya están en el Suministro Inmediato de Información—. Las fechas de entrada en vigor han cambiado varias veces desde que se aprobó el reglamento.",
+                "Afecta a quienes emiten facturas usando sistemas informáticos, con excepciones (entre ellas, quienes ya están en el Suministro Inmediato de Información). Las fechas de entrada en vigor han cambiado varias veces desde que se aprobó el reglamento.",
                 "Por eso aquí no vas a encontrar una fecha con aire de certeza absoluta: consulta el calendario vigente en la sede de la Agencia Tributaria o pregunta a tu asesor por tu caso concreto. Lo que sí puedes dar por hecho es que el sistema con el que factures tendrá que cumplirlo.",
             ]),
             ("Qué significa para Contaes", [

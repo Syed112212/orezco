@@ -24,6 +24,7 @@ sys.path.insert(0, AQUI)
 import plantilla as P
 import contenido as C
 import contenido_paginas as CP
+import contenido_servicios as CS
 import formulario as F
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -167,7 +168,7 @@ def pagina_funcionalidad(slug, d, es_modulo):
         "cierre": cierre(),
     }
     return P.pagina(
-        "%s — Contaes" % d["titulo"],
+        "%s: Contaes" % d["titulo"],
         d["entradilla"][:158],
         "%s/funcionalidades/%s/" % (DOMINIO, slug),
         cuerpo)
@@ -201,9 +202,93 @@ def pagina_funcionalidades():
         "capacidades": rejilla_tarjetas([("funcionalidades/%s/" % s, n, d) for s, n, d in P.CAPACIDADES], "/"),
         "cierre": cierre(),
     }
-    return P.pagina("Producto — Contaes",
+    return P.pagina("Producto: Contaes",
                     "Los ocho módulos de Contaes y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.",
                     "%s/funcionalidades/" % DOMINIO, cuerpo)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Servicios: gestoria, crecimiento y publico
+# ─────────────────────────────────────────────────────────────────────
+AREAS = {
+    "gestoria": ("Gestoría", "Gestoría", CS.GESTORIA, P.GESTORIA),
+    "crecimiento": ("Crecimiento", "Crecimiento", CS.CRECIMIENTO, P.CRECIMIENTO),
+    "para": ("Para quién", "Para quién es", CS.PARA, P.PUBLICO),
+}
+
+
+def pagina_servicio(area, slug, d):
+    etiqueta, nombre_area, _datos, _mapa = AREAS[area]
+    rastro = migas(("/", "Inicio"), ("/%s/" % area, nombre_area), (None, d["titulo"]))
+
+    hermanas = [(s, n, p_) for s, n, p_ in AREAS[area][3] if s != slug][:3]
+    otras = rejilla_tarjetas([("%s/%s/" % (area, s), n, p_) for s, n, p_ in hermanas], "/")
+
+    cuerpo = '''%(enc)s
+
+<section class="seccion">
+  <div class="wrap estrecho prosa revela">
+%(prosa)s
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho revela">
+    <h2>Qué incluye</h2>
+%(incluye)s
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho revela">
+    <h2>Para quién no es</h2>
+    <div class="aviso">%(limites)s</div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap revela">
+    <h2>También te puede interesar</h2>
+    %(otras)s
+  </div>
+</section>
+
+%(cierre)s''' % {
+        "enc": encabezado(etiqueta,
+                          d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">"
+                          + d["lema"] + "</span>",
+                          d["entradilla"], rastro),
+        "prosa": prosa(d["secciones"]),
+        "incluye": lista_incluye(d["incluye"]),
+        "limites": d["limites"],
+        "otras": otras,
+        "cierre": cierre(),
+    }
+    return P.pagina("%s: Contaes" % d["titulo"],
+                    " ".join(d["entradilla"].split())[:158],
+                    "%s/%s/%s/" % (DOMINIO, area, slug), cuerpo)
+
+
+def pagina_area(area, titulo, entradilla, extra=""):
+    etiqueta, nombre_area, datos, mapa = AREAS[area]
+    rastro = migas(("/", "Inicio"), (None, nombre_area))
+    cuerpo = '''%(enc)s
+
+<section class="seccion">
+  <div class="wrap">
+    %(rejilla)s
+  </div>
+</section>
+%(extra)s
+%(cierre)s''' % {
+        "enc": encabezado(etiqueta, titulo, entradilla, rastro),
+        "rejilla": rejilla_tarjetas([("%s/%s/" % (area, s), n, p_) for s, n, p_ in mapa], "/"),
+        "extra": extra,
+        "cierre": cierre(),
+    }
+    return P.pagina("%s: Contaes" % titulo,
+                    " ".join(entradilla.split())[:158],
+                    "%s/%s/" % (DOMINIO, area), cuerpo)
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -252,7 +337,7 @@ def pagina_sector(slug, d):
                          "En la primera llamada preferimos escuchar cómo trabajáis antes que enseñar pantallas. "
                          "Si no encajamos, se dice ahí."),
     }
-    return P.pagina("ERP para %s — Contaes" % d["titulo"].lower(),
+    return P.pagina("ERP para %s: Contaes" % d["titulo"].lower(),
                     d["entradilla"][:158],
                     "%s/sectores/%s/" % (DOMINIO, slug), cuerpo)
 
@@ -271,7 +356,7 @@ def pagina_sectores():
   <div class="wrap estrecho prosa revela">
     <h2>Y si tu sector no está</h2>
     <p>Estas ocho fichas no son ocho productos distintos: es el mismo sistema contado desde el problema de cada uno. Si tu actividad no aparece, casi siempre es porque se parece a alguna de ellas.</p>
-    <p>Lo que sí conviene decir claro: hay procesos muy particulares —fabricación compleja, normativa sectorial concreta— que hoy no cubrimos. Preferimos decirlo antes que después de la demo.</p>
+    <p>Lo que sí conviene decir claro: hay procesos muy particulares (fabricación compleja, normativa sectorial concreta) que hoy no cubrimos. Preferimos decirlo antes que después de la demo.</p>
   </div>
 </section>
 
@@ -282,7 +367,7 @@ def pagina_sectores():
         "rejilla": rejilla_tarjetas([("sectores/%s/" % s, n, d) for s, n, d in P.SECTORES], "/"),
         "cierre": cierre(),
     }
-    return P.pagina("Sectores — Contaes",
+    return P.pagina("Sectores: Contaes",
                     "Fabricación, distribución, construcción, comercio, logística, servicios, instalaciones y agroalimentario: el mismo ERP contado desde el problema de cada sector.",
                     "%s/sectores/" % DOMINIO, cuerpo)
 
@@ -318,7 +403,7 @@ def pagina_glosario():
                          "Un glosario sirve para entender el vocabulario. Para saber qué te toca a ti "
                          "hace falta mirar tu caso."),
     }
-    return P.pagina("Glosario de contabilidad y fiscalidad — Contaes",
+    return P.pagina("Glosario de contabilidad y fiscalidad: Contaes",
                     "Asiento, base imponible, devengo, IVA repercutido, modelos 303, 111, 130, 347, VeriFactu y más de veinte términos explicados en claro.",
                     "%s/glosario/" % DOMINIO, cuerpo, extra_head=ld)
 
@@ -357,7 +442,7 @@ def pagina_calendario():
                          "Es exactamente para lo que existe Contaes: la contabilidad al día y los "
                          "modelos presentados por un asesor."),
     }
-    return P.pagina("Calendario fiscal para pymes y autónomos — Contaes",
+    return P.pagina("Calendario fiscal para pymes y autónomos: Contaes",
                     "Modelos 303, 111, 115, 130, 349, 347, 390, 190 y 200: qué se presenta en cada mes del año y de dónde salen los datos.",
                     "%s/calendario-fiscal/" % DOMINIO, cuerpo)
 
@@ -388,7 +473,7 @@ def pagina_preguntas():
                           "ante Hacienda.", rastro),
         "items": items, "cierre": cierre(),
     }
-    return P.pagina("Preguntas frecuentes — Contaes",
+    return P.pagina("Preguntas frecuentes: Contaes",
                     "Si está disponible, qué hace la IA y qué no, quién firma los modelos, cómo se migra desde otro ERP y cuánto costará.",
                     "%s/preguntas/" % DOMINIO, cuerpo, extra_head=ld)
 
@@ -412,7 +497,7 @@ def pagina_simple(slug, etiqueta, titulo, entradilla, secciones, meta,
         "prosa": prosa(secciones), "extra": extra,
         "cierre": cierre(*cierre_txt) if cierre_txt else cierre(),
     }
-    return P.pagina("%s — Contaes" % titulo, meta, "%s/%s" % (DOMINIO, slug), cuerpo)
+    return P.pagina("%s: Contaes" % titulo, meta, "%s/%s" % (DOMINIO, slug), cuerpo)
 
 
 def pagina_precios():
@@ -463,7 +548,7 @@ def pagina_precios():
                          "Cuéntanos cuánta gente sois, qué usáis hoy y cuántas facturas movéis al mes. "
                          "Con eso se puede hablar de números con sentido."),
     }
-    return P.pagina("Precios — Contaes",
+    return P.pagina("Precios: Contaes",
                     "Todavía no hay tarifa pública porque el producto está en desarrollo. Esto es de qué dependerá el precio y qué no vamos a hacer.",
                     "%s/precios/" % DOMINIO, cuerpo)
 
@@ -515,7 +600,7 @@ def pagina_integraciones():
                           "el producto está en desarrollo.", rastro),
         "filas": filas, "cierre": cierre(),
     }
-    return P.pagina("Integraciones — Contaes",
+    return P.pagina("Integraciones: Contaes",
                     "Hoja de ruta de integraciones de Contaes: bancos, Agencia Tributaria, correo, tiendas en línea y pasarelas de pago. Ninguna disponible todavía.",
                     "%s/integraciones/" % DOMINIO, cuerpo)
 
@@ -557,7 +642,7 @@ def pagina_demo():
         "campos": CAMPOS_DEMO,
         "buzon": F.BUZON,
     }
-    return P.pagina("Pedir una demo — Contaes",
+    return P.pagina("Pedir una demo: Contaes",
                     "Una demo sobre vuestro caso concreto. Si no encajamos, se dice en la primera llamada.",
                     "%s/demo/" % DOMINIO, cuerpo)
 
@@ -592,7 +677,7 @@ def pagina_gracias():
     </div>
   </div>
 </section>'''
-    return P.pagina("Gracias — Contaes",
+    return P.pagina("Gracias: Contaes",
                     "Hemos recibido tu mensaje. Te contestamos pronto.",
                     "%s/gracias/" % DOMINIO, cuerpo, noindex=True)
 
@@ -681,7 +766,7 @@ def paginas_legales():
              ]),
              ("Encargados y transferencias", [
                  "Este sitio está alojado en GitHub Pages, que registra datos técnicos de la conexión "
-                 "—como la dirección IP— para servir las páginas y protegerse de abusos. Las tipografías "
+                 " (como la dirección IP) para servir las páginas y protegerse de abusos. Las tipografías "
                  "se cargan desde Google Fonts, lo que implica una conexión a servidores de Google. El "
                  "formulario se procesa a través de FormSubmit, que actúa como encargado del tratamiento "
                  "para hacernos llegar tu mensaje.",
@@ -699,7 +784,7 @@ def paginas_legales():
                  "El sitio se sirve desde GitHub Pages y carga las tipografías desde Google Fonts. Esas "
                  "conexiones no instalan cookies de seguimiento en tu navegador, pero sí implican que esos "
                  "servicios reciben datos técnicos de la conexión, como tu dirección IP.",
-                 "Tu navegador guarda además datos técnicos propios —caché, preferencias— que no son "
+                 "Tu navegador guarda además datos técnicos propios (caché, preferencias) que no son "
                  "cookies nuestras y que puedes borrar desde su configuración.",
              ]),
              ("Si esto cambia", [
@@ -728,7 +813,7 @@ def paginas_legales():
             "aviso": extra,
             "prosa": prosa(secciones),
         }
-        salidas[ruta + "index.html"] = P.pagina("%s — Contaes" % titulo, meta,
+        salidas[ruta + "index.html"] = P.pagina("%s: Contaes" % titulo, meta,
                                                 "%s/%s" % (DOMINIO, ruta), cuerpo)
     return salidas
 
@@ -767,6 +852,27 @@ def main():
     for slug, d in C.CAPACIDADES.items():
         salidas["funcionalidades/%s/index.html" % slug] = pagina_funcionalidad(slug, d, False)
 
+    for area in AREAS:
+        _e, _n, datos, mapa = AREAS[area]
+        for slug, _nombre, _pie in mapa:
+            salidas["%s/%s/index.html" % (area, slug)] = pagina_servicio(area, slug, datos[slug])
+
+    salidas["gestoria/index.html"] = pagina_area(
+        "gestoria", "La gestoría, hecha como debería estar hecha",
+        "Contabilidad, impuestos, nóminas y contratos. Lo de siempre, pero con los "
+        "libros al día en todo momento y no a final de trimestre, y con el software "
+        "incluido en vez de aparte.")
+    salidas["crecimiento/index.html"] = pagina_area(
+        "crecimiento", "Lo que una gestoría normal no te da",
+        "Una gestoría te mantiene en regla. Esto es lo que hace falta además para "
+        "crecer: dirección financiera, marketing, clientes nuevos, financiación y "
+        "salir fuera. Con las mismas personas que ya conocen tus números.")
+    salidas["para/index.html"] = pagina_area(
+        "para", "Autónomos, startups y pymes",
+        "No necesitan lo mismo. Un autónomo quiere saber qué le queda al mes; una "
+        "startup, unos libros que aguanten una ronda; una pyme, que la administración "
+        "crezca al ritmo de la empresa.")
+
     salidas["sectores/index.html"] = pagina_sectores()
     for slug, d in C.SECTORES.items():
         salidas["sectores/%s/index.html" % slug] = pagina_sector(slug, d)
@@ -788,7 +894,7 @@ def main():
             "Ese hueco no es un problema de software. Es un problema de reparto: el programa no se responsabiliza de lo que se presenta, y la asesoría no tiene los datos al día. Contaes existe para que las dos cosas estén del mismo lado.",
         ]),
          ("Con qué criterio se construye", [
-             "Que el dato se registre una vez, donde ocurre el hecho. Que cualquier cifra se pueda seguir hasta el documento que la origina. Que lo que sale de la empresa —un correo, un modelo— lo apruebe una persona. Y que la responsabilidad ante la Administración sea de alguien colegiado, no de un algoritmo.",
+             "Que el dato se registre una vez, donde ocurre el hecho. Que cualquier cifra se pueda seguir hasta el documento que la origina. Que lo que sale de la empresa (un correo, un modelo) lo apruebe una persona. Y que la responsabilidad ante la Administración sea de alguien colegiado, no de un algoritmo.",
              "También hay un criterio sobre lo que no se hace: no competir en número de funciones, no llenar el catálogo de integraciones que hacen poco y no prometer autonomía donde debería haber criterio profesional.",
          ]),
          ("En qué punto está", [
@@ -829,7 +935,7 @@ def main():
             "El tratamiento de datos personales se rige por el Reglamento General de Protección de Datos. Puedes leer qué recogemos hoy en la <a href=\"/legal/privacidad/\">política de privacidad</a>: en este momento, solo lo que nos escribes tú.",
         ]),
          ("Lo que todavía no podemos afirmar", [
-             "El producto está en desarrollo. No tenemos certificaciones que enseñar —ni ISO 27001, ni un informe SOC 2— porque no se certifica lo que aún se está construyendo, y presumir de una que no se tiene es exactamente el tipo de cosa que descalifica a un proveedor de contabilidad.",
+             "El producto está en desarrollo. No tenemos certificaciones que enseñar (ni ISO 27001, ni un informe SOC 2) porque no se certifica lo que aún se está construyendo, y presumir de una que no se tiene es exactamente el tipo de cosa que descalifica a un proveedor de contabilidad.",
              "Cuando existan compromisos concretos y verificables sobre alojamiento, cifrado, copias de seguridad y tiempos de recuperación, estarán aquí con nombre y fecha. Hasta entonces, esta página dice lo que hay.",
          ]),
          ("Este sitio web", [
@@ -845,6 +951,8 @@ def main():
     rutas = [""]
     rutas += ["funcionalidades/"] + ["funcionalidades/%s/" % s for s in
                                      list(C.MODULOS) + list(C.CAPACIDADES)]
+    for area in ("gestoria", "crecimiento", "para"):
+        rutas += ["%s/" % area] + ["%s/%s/" % (area, s) for s, _n, _p in AREAS[area][3]]
     rutas += ["sectores/"] + ["sectores/%s/" % s for s in C.SECTORES]
     rutas += ["glosario/", "calendario-fiscal/", "preguntas/", "precios/",
               "integraciones/", "demo/", "sobre/", "migracion/", "seguridad/"]

@@ -16,3 +16,5 @@ jobs:
           python-version: '3.12'
       - name: Verificar el sistema visual
         run: python scripts/check-design.py
+      - name: Voz, sin marcas de escritura automatica
+        run: python scripts/check-voz.py

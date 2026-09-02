@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contabilidad: Contaes</title>
+<meta name="description" content="Sigues perdiendo horas con facturas y papeles, y cuando preguntas por tus números, esperas al cierre del trimestre para que te manden un PDF.">
+<link rel="canonical" href="https://contaes.com/gestoria/contabilidad/">
+<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<meta property="og:site_name" content="Contaes">
+<meta property="og:title" content="Contabilidad: Contaes">
+<meta property="og:description" content="Sigues perdiendo horas con facturas y papeles, y cuando preguntas por tus números, esperas al cierre del trimestre para que te manden un PDF.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="https://contaes.com/gestoria/contabilidad/">
+<meta property="og:image" content="https://contaes.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --papel:#f6f5f4;--blanco:#ffffff;--borde:rgba(0,0,0,.08);--niebla:#f8fafb;
+  --tinta:rgba(0,0,0,.95);--tinta-fuerte:#000000;--grafito:#615d59;--piedra:#6a6a6a;--apagado:rgba(0,0,0,.54);
+  --azul:#0075de;--azul-tinte:#e6f3fe;
+  --marigold:#ffb110;--coral:#f64932;--cielo:#62aef0;--medianoche:#02093a;
+  --navy:#1E3A5F;--verde:#2FBF9B;--cian:#1F9EC4;--azul-marca:#1E6FB8;
+  --ancho:1160px;--r-card:12px;--r-btn:8px;--r-pill:9999px;--r-sm:4px;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Source Serif 4",ui-serif,Georgia,serif;
+  --marca:"Quicksand",var(--sans);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+p{margin:0}
+.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
+.estrecho{max-width:760px}
+h1{font-size:clamp(34px,5.2vw,56px);font-weight:600;line-height:1.1;letter-spacing:-.038em;margin:0;color:var(--tinta-fuerte);text-wrap:balance}
+h2{font-size:clamp(23px,2.6vw,30px);font-weight:600;line-height:1.2;letter-spacing:-.02em;margin:38px 0 14px;color:var(--tinta-fuerte)}
+h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fuerte)}
+.etiqueta{font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--piedra);margin:0;text-transform:uppercase}
+.wordmark{font-family:var(--marca);font-weight:600;letter-spacing:-.01em;color:var(--navy)}
+.wordmark i{font-style:normal;color:var(--verde)}
+.editorial{font-family:var(--serif);font-size:19px;line-height:1.6;color:var(--grafito)}
+.cuerpo{color:var(--grafito)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;line-height:1;padding:13px 20px;border-radius:var(--r-btn);text-decoration:none;border:1px solid transparent;transition:background .2s ease,transform .2s ease}
+.btn-azul{background:var(--azul);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.btn-azul:hover,.btn-azul:focus-visible{background:#0064c0;transform:translateY(-1px)}
+.btn-tinte{background:var(--azul-tinte);color:#005fb8}
+.btn-tinte:hover,.btn-tinte:focus-visible{background:#d5eafd;transform:translateY(-1px)}
+.btn .flecha{display:inline-block;transition:transform .22s cubic-bezier(.22,1,.36,1)}
+.btn:hover .flecha,.btn:focus-visible .flecha{transform:translateX(4px)}
+
+/* ── La barra, con el menu por areas ─────────────────────── */
+.nav{position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03)}
+.nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;min-height:64px}
+.marca{display:flex;align-items:center;gap:9px;text-decoration:none}
+.marca svg{width:32px;height:32px}
+.marca span{font-size:21px}
+.nav-links{display:flex;gap:2px;align-items:center;margin:0 auto}
+.nav-links > a,.area > button{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--apagado);font-family:var(--sans);font-size:15px;font-weight:500;text-decoration:none;
+  padding:10px 13px;border-radius:var(--r-btn);border:0;background:none;cursor:pointer;
+  transition:color .2s ease,background .2s ease;
+}
+.nav-links > a:hover,.nav-links > a:focus-visible,.area > button:hover,.area[data-abierta] > button{color:var(--tinta-fuerte);background:rgba(0,0,0,.04)}
+.area{position:relative}
+.area .punta{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .24s cubic-bezier(.22,1,.36,1)}
+.area[data-abierta] .punta{transform:rotate(-135deg) translateY(-2px)}
+.despliegue{
+  position:absolute;top:calc(100% + 8px);left:50%;translate:-50% 0;z-index:70;
+  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
+  box-shadow:0 18px 44px rgba(18,32,54,.14);padding:12px;
+  display:grid;gap:2px;min-width:320px;
+  visibility:hidden;opacity:0;transform:translateY(-8px) scale(.985);
+  transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1),visibility 0s .18s;
+}
+.area[data-abierta] .despliegue{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+.despliegue.doble{grid-template-columns:repeat(2,minmax(0,1fr));min-width:600px}
+.despliegue a{display:grid;gap:2px;padding:10px 12px;border-radius:var(--r-btn);text-decoration:none;transition:background .16s ease}
+.despliegue a:hover,.despliegue a:focus-visible{background:var(--niebla)}
+.despliegue a b{font-size:14.5px;font-weight:600;color:var(--tinta-fuerte)}
+.despliegue a span{font-size:13px;color:var(--piedra);line-height:1.4}
+.despliegue .titulo-grupo{grid-column:1/-1;padding:8px 12px 4px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra)}
+.menu-btn{display:none;margin-left:auto;width:40px;height:40px;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:none;border:1px solid var(--borde);border-radius:var(--r-btn);cursor:pointer}
+.mb-linea{display:block;width:17px;height:1.5px;background:var(--tinta-fuerte);transition:transform .26s cubic-bezier(.22,1,.36,1),opacity .18s ease}
+.nav.abierta .mb-linea:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav.abierta .mb-linea:nth-child(2){opacity:0}
+.nav.abierta .mb-linea:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* la marca animada, igual que en la portada */
+.marca-svg .mc-c{transform-origin:42% 50%;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.marca-svg .mc-b{transform-origin:56% 50%;animation:barra 6s cubic-bezier(.22,1,.36,1) infinite;transition:transform .32s cubic-bezier(.22,1,.36,1)}
+.marca-svg .b2{animation-delay:.12s}
+.marca-svg .b3{animation-delay:.24s}
+@keyframes barra{0%{transform:translateX(-14px) scaleX(.55);opacity:0}9%,52%{transform:none;opacity:1}62%{transform:translateX(7px)}72%,100%{transform:none;opacity:1}}
+.marca:hover .mc-c{transform:rotate(-14deg)}
+.marca:hover .mc-b{animation:none}
+.marca:hover .b1{transform:translateX(9px)}
+.marca:hover .b2{transform:translateX(5px)}
+.marca:hover .b3{transform:translateX(12px)}
+
+/* ── Piezas de pagina ────────────────────────────────────── */
+.migas{font-size:14px;color:var(--piedra);margin-bottom:20px}
+.migas a{color:var(--piedra);text-decoration:none}
+.migas a:hover{color:var(--tinta-fuerte);text-decoration:underline}
+.revela{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.revela.visible{opacity:1;transform:none}
+.encabezado{padding:52px 0 30px}
+.encabezado .editorial{margin-top:18px;max-width:60ch}
+.seccion{padding:34px 0}
+.rejilla{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.rejilla-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.tarjeta{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:22px;transition:transform .2s ease,border-color .2s ease}
+.tarjeta:hover{transform:translateY(-3px);border-color:rgba(0,0,0,.16)}
+.tarjeta h3,.tarjeta .tarjeta-tit{margin:0 0 7px}
+/* Titulo de tarjeta: es un h2 porque va detras del h1 de la pagina,
+   pero no debe verse como una cabecera de seccion. */
+.tarjeta-tit{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
+.tarjeta p{font-size:15px;color:var(--grafito)}
+a.tarjeta{text-decoration:none;color:inherit;display:block}
+.tarjeta .franja{height:5px;border-radius:var(--r-pill);margin-bottom:14px;width:44px}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{padding:14px 0;border-bottom:1px solid var(--borde);display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;color:var(--grafito)}
+.lista li:last-child{border-bottom:0}
+.lista b{color:var(--azul);font-weight:500;font-size:15px}
+.prosa p{margin:0 0 16px;color:var(--grafito);font-size:17px;line-height:1.65}
+.prosa ul,.prosa ol{margin:0 0 18px;padding-left:22px;color:var(--grafito);font-size:17px;line-height:1.65}
+.prosa li{margin-bottom:8px}
+.prosa strong{color:var(--tinta-fuerte);font-weight:600}
+.prosa a{color:var(--azul)}
+.prosa h2{margin-top:34px}
+.prosa h3{margin:26px 0 10px}
+.aviso{margin:26px 0;padding:18px 22px;background:var(--blanco);border:1px solid var(--borde);border-left:3px solid var(--marigold);border-radius:var(--r-card);font-size:15.5px;color:var(--grafito)}
+.aviso strong{color:var(--tinta-fuerte)}
+.tabla{width:100%;border-collapse:collapse;font-size:15px}
+.tabla th,.tabla td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--borde);vertical-align:top}
+.tabla th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--piedra);font-weight:600}
+.tabla td:first-child{font-weight:600;color:var(--tinta-fuerte);white-space:nowrap}
+.tabla-caja{overflow-x:auto;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card)}
+.cierre{margin:56px 0 88px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:30px;text-align:center}
+.cierre h2{margin:0 0 10px}
+.cierre p{color:var(--grafito);margin-bottom:20px;max-width:52ch;margin-left:auto;margin-right:auto}
+footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
+.foot-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:28px 24px;margin-bottom:34px}
+.foot-rejilla > :first-child{grid-column:span 2;min-width:0}
+.foot-titulo{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
+.foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
+.foot-col a:hover{color:#fff}
+.foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.foot-marca svg{width:26px;height:26px}
+.foot-marca .wordmark{font-size:18px;color:#fff}
+.foot-marca .wordmark i{color:var(--verde)}
+.foot-nota{font-size:14px;color:#8b93b5;max-width:34ch;line-height:1.55}
+.foot-bajo{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.foot-bajo a{font-size:13.5px;color:#8b93b5;text-decoration:none}
+.foot-bajo a:hover{color:#fff}
+footer small{font-size:13.5px;color:#8b93b5}
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
+.skip:focus{left:0}
+:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
+@media(max-width:980px){
+  .rejilla,.rejilla-2{grid-template-columns:1fr}
+  .menu-btn{display:flex}
+  /* El menu completo baja bajo la barra. Cerrado va con visibility:hidden
+     y no solo con opacidad, para que el tabulador no entre en enlaces que
+     no se ven. */
+  .nav-links{
+    position:absolute;left:0;right:0;top:100%;margin:0;
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:10px 16px 18px;max-height:78vh;overflow-y:auto;
+    background:var(--blanco);border-bottom:1px solid var(--borde);
+    box-shadow:0 12px 24px rgba(0,0,0,.06);
+    visibility:hidden;opacity:0;transform:translateY(-10px);
+    transition:opacity .2s ease,transform .26s cubic-bezier(.22,1,.36,1),visibility 0s .2s;
+  }
+  .nav.abierta .nav-links{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+  .nav-links > a,.area > button{width:100%;justify-content:space-between;padding:13px 12px;font-size:16px}
+  .despliegue{position:static;translate:none;transform:none;visibility:visible;opacity:1;
+         min-width:0;box-shadow:none;border:0;border-left:2px solid var(--borde);
+         border-radius:0;margin:0 0 8px 12px;padding:2px 0 2px 10px;display:none}
+  .despliegue.doble{grid-template-columns:1fr;min-width:0}
+  .area[data-abierta] .despliegue{display:grid}
+  .despliegue a span{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<nav class="nav" aria-label="Principal">
+  <div class="nav-in">
+    <a class="marca" href="/"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
+    </svg><span class="wordmark">cont<i>aes</i></span></a>
+    <div class="nav-links" id="nav-links">
+      <div class="area">
+        <button type="button" aria-expanded="false">Gestoría <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue">
+        <a href="/gestoria/contabilidad/"><b>Contabilidad</b><span>Los libros al día, no a final de trimestre</span></a>
+        <a href="/gestoria/fiscal/"><b>Fiscal y modelos</b><span>Preparados, firmados y presentados por un asesor</span></a>
+        <a href="/gestoria/laboral/"><b>Laboral y nóminas</b><span>Altas, contratos, nóminas y registro de jornada</span></a>
+        <a href="/gestoria/legal/"><b>Legal</b><span>Sociedades, contratos y protección de datos</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Crecimiento <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue doble">
+        <a href="/crecimiento/cfo/"><b>CFO a tu lado</b><span>Presupuesto, tesorería y márgenes, con criterio</span></a>
+        <a href="/crecimiento/cmo/"><b>CMO a tu lado</b><span>Posicionamiento, captación y medir lo que trae clientes</span></a>
+        <a href="/crecimiento/prospeccion/"><b>Prospección comercial</b><span>Encontrar clientes en vez de esperarlos</span></a>
+        <a href="/crecimiento/bots/"><b>Bot de llamadas y WhatsApp</b><span>Atender cuando no hay nadie, y pasar a persona</span></a>
+        <a href="/crecimiento/financiacion/"><b>Financiación pública y privada</b><span>Subvenciones, banca e inversión</span></a>
+        <a href="/crecimiento/internacionalizacion/"><b>Internacionalización</b><span>Vender fuera con las cosas en orden</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Software <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue doble">
+        <p class="titulo-grupo">Los ocho módulos</p>
+        <a href="/funcionalidades/contabilidad/"><b>Contabilidad</b><span>Asientos, plan contable, conciliación y cierre</span></a>
+        <a href="/funcionalidades/facturacion/"><b>Facturación</b><span>Emisión, rectificativas y seguimiento de cobro</span></a>
+        <a href="/funcionalidades/inventario/"><b>Inventario</b><span>Existencias, lotes y movimientos entre almacenes</span></a>
+        <a href="/funcionalidades/compras/"><b>Compras</b><span>Proveedores, pedidos y recepciones</span></a>
+        <a href="/funcionalidades/ventas/"><b>Ventas y clientes</b><span>Presupuestos, pedidos y la ficha de cada cuenta</span></a>
+        <a href="/funcionalidades/proyectos/"><b>Proyectos</b><span>Tareas, horas imputadas y rentabilidad</span></a>
+        <a href="/funcionalidades/personal/"><b>Personal</b><span>Plantilla, ausencias y gastos</span></a>
+        <a href="/funcionalidades/informes/"><b>Informes</b><span>Cuadros de mando sobre los datos en vivo</span></a>
+        <p class="titulo-grupo">Lo que lo hace distinto</p>
+        <a href="/funcionalidades/asesoria-fiscal/"><b>Asesoría fiscal incluida</b><span>Los modelos, preparados y presentados por un asesor</span></a>
+        <a href="/funcionalidades/asistente-ia/"><b>Asistente con IA</b><span>Preguntar en tu idioma en vez de buscar por menús</span></a>
+        <a href="/funcionalidades/escaner-facturas/"><b>Escáner de facturas</b><span>La factura del proveedor entra sin teclearla</span></a>
+        <a href="/funcionalidades/conciliacion-bancaria/"><b>Conciliación bancaria</b><span>El extracto contra los apuntes, cuadrado</span></a>
+        <a href="/funcionalidades/verifactu/"><b>VeriFactu</b><span>Qué es y a qué obliga tu sistema de facturación</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Para quién <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue doble">
+        <p class="titulo-grupo">Por tipo de empresa</p>
+        <a href="/para/autonomos/"><b>Autónomos</b><span>Cuota, modelos, gastos y saber qué te queda</span></a>
+        <a href="/para/startups/"><b>Startups</b><span>Libros que aguantan una due diligence</span></a>
+        <a href="/para/pymes/"><b>Pymes</b><span>Cuando la empresa creció y la administración no</span></a>
+        <p class="titulo-grupo">Por sector</p>
+        <a href="/sectores/fabricacion/"><b>Fabricación</b><span>Escandallos, órdenes y coste real de producción</span></a>
+        <a href="/sectores/distribucion/"><b>Distribución y mayorista</b><span>Muchas referencias, márgenes finos y stock que se mueve</span></a>
+        <a href="/sectores/construccion/"><b>Construcción</b><span>Obra a obra: certificaciones, coste y desvío</span></a>
+        <a href="/sectores/comercio/"><b>Comercio y retail</b><span>Tienda, almacén y contabilidad en el mismo sitio</span></a>
+        <a href="/sectores/logistica/"><b>Logística y transporte</b><span>Rutas, portes y lo que cuesta cada servicio</span></a>
+        <a href="/sectores/servicios/"><b>Servicios profesionales</b><span>Horas facturables, proyectos y rentabilidad</span></a>
+        <a href="/sectores/instalaciones/"><b>Instalaciones y mantenimiento</b><span>Partes de trabajo, materiales y garantías</span></a>
+        <a href="/sectores/agroalimentario/"><b>Agroalimentario</b><span>Lotes, trazabilidad y campañas</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Recursos <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue">
+        <a href="/blog/"><b>Blog</b><span>Artículos sobre gestión, fiscalidad y sistemas</span></a>
+        <a href="/glosario/"><b>Glosario</b><span>Los términos de contabilidad y fiscalidad, explicados</span></a>
+        <a href="/calendario-fiscal/"><b>Calendario fiscal</b><span>Qué modelo toca y cuándo</span></a>
+        <a href="/preguntas/"><b>Preguntas frecuentes</b><span>Lo que suelen preguntarnos</span></a>
+      </div>
+      </div>
+      <a href="/precios/">Precios</a>
+    </div>
+    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir el menu">
+      <span class="mb-linea"></span><span class="mb-linea"></span><span class="mb-linea"></span>
+    </button>
+    <a class="btn btn-azul" href="/demo/">Hablemos <span class="flecha" aria-hidden="true">&rarr;</span></a>
+  </div>
+</nav>
+<main id="contenido">
+<section class="encabezado">
+  <div class="wrap estrecho">
+    <p class="migas"><a href="/">Inicio</a> &rsaquo; <a href="/gestoria/">Gestoría</a> &rsaquo; <span>Contabilidad</span></p>
+    <p class="etiqueta">Gestoría</p>
+    <h1 style="margin-top:10px">Contabilidad. <span style="color:var(--grafito);font-weight:500">Contabilidad al día, sin esperas ni sorpresas</span></h1>
+    <p class="editorial">Sigues perdiendo horas con facturas y papeles, y cuando preguntas por tus números, esperas al cierre del trimestre para que te manden un PDF.</p>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho prosa revela">
+<h2>La manera tradicional no te da información</h2>
+<p>Hasta ahora, llevar la contabilidad era así: juntas facturas, las envías a tu gestor y esperas semanas. Al final recibes un PDF que no entiendes y que ya es historia vieja.</p>
+<p>El problema no es la contabilidad en sí. Es que siempre llegas tarde: no sabes si tu negocio va bien hasta que alguien te lo cuenta cuando ya no puedes reaccionar.</p>
+<h2>Llevamos tu contabilidad al día, sin que te des cuenta</h2>
+<p>Olvídate de guardar papeles en una carpeta. Con nuestro software, registramos tus movimientos y conciliamos tus bancos. Cuando llega el momento del cierre, ya está todo hecho.</p>
+<p>No esperamos a que nos mandes nada. Nosotros nos encargamos de actualizar tus libros con cada operación, desde la factura de un proveedor hasta la amortización de una máquina.</p>
+<h2>Tus libros, siempre delante de ti</h2>
+<p>La diferencia está en el acceso: tú ves tus asientos, tu plan contable y tus cuentas en tiempo real desde tu panel. No dependes de que te enviemos información por correo.</p>
+<p>Eso significa que puedes saber cómo va tu negocio antes de tomar decisiones. No esperas tres meses para descubrir si de verdad ganas dinero.</p>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho revela">
+    <h2>Qué incluye</h2>
+<ul class="lista">
+    <li><b>&#10003;</b><span>Contabilidad al día, sin depender de tus envíos trimestrales</span></li>
+    <li><b>&#10003;</b><span>Asientos contables registrados</span></li>
+    <li><b>&#10003;</b><span>Plan contable adecuado a tu actividad</span></li>
+    <li><b>&#10003;</b><span>Conciliación bancaria de tus cuentas</span></li>
+    <li><b>&#10003;</b><span>Cálculo de amortizaciones de tu inmovilizado</span></li>
+    <li><b>&#10003;</b><span>Cierre contable y cuentas anuales</span></li>
+    <li><b>&#10003;</b><span>Consulta de tus libros online en cualquier momento</span></li>
+  </ul>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho revela">
+    <h2>Para quién no es</h2>
+    <div class="aviso">Este servicio no es para ti si solo buscas presentar impuestos y no quieres saber cómo está tu negocio. Tampoco si necesitas llevar contabilidades muy complejas de grupos empresariales o con operaciones internacionales de gran volumen: para eso necesitas un equipo interno o una consultora especializada. Contaes cubre la contabilidad del día a día, con rigor, para pymes, autónomos y startups que quieren tomar decisiones con datos reales.</div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap revela">
+    <h2>También te puede interesar</h2>
+    <div class="rejilla revela">
+    <a class="tarjeta" href="/gestoria/fiscal/">
+      <span class="franja" style="background:var(--verde)"></span>
+      <h2 class="tarjeta-tit">Fiscal y modelos</h2>
+      <p>Preparados, firmados y presentados por un asesor</p>
+    </a>
+    <a class="tarjeta" href="/gestoria/laboral/">
+      <span class="franja" style="background:var(--cian)"></span>
+      <h2 class="tarjeta-tit">Laboral y nóminas</h2>
+      <p>Altas, contratos, nóminas y registro de jornada</p>
+    </a>
+    <a class="tarjeta" href="/gestoria/legal/">
+      <span class="franja" style="background:var(--azul-marca)"></span>
+      <h2 class="tarjeta-tit">Legal</h2>
+      <p>Sociedades, contratos y protección de datos</p>
+    </a>
+  </div>
+  </div>
+</section>
+
+<section class="wrap estrecho">
+  <div class="cierre revela">
+    <h2>¿Te enseñamos cómo funciona?</h2>
+    <p>Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
+    <a class="btn btn-azul" href="/demo/">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+  <div class="foot-rejilla">
+    <div class="foot-col">
+      <div class="foot-marca"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#ffffff" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#ffffff"/>
+    </svg><span class="wordmark">cont<i>aes</i></span></div>
+      <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
+    </div>
+    <nav class="foot-col" aria-label="Gestoría">
+      <p class="foot-titulo">Gestoría</p>
+      <a href="/gestoria/contabilidad/">Contabilidad</a>
+      <a href="/gestoria/fiscal/">Fiscal y modelos</a>
+      <a href="/gestoria/laboral/">Laboral y nóminas</a>
+      <a href="/gestoria/legal/">Legal</a>
+      <a href="/funcionalidades/">El software</a>
+    </nav>
+    <nav class="foot-col" aria-label="Crecimiento">
+      <p class="foot-titulo">Crecimiento</p>
+      <a href="/crecimiento/cfo/">CFO a tu lado</a>
+      <a href="/crecimiento/cmo/">CMO a tu lado</a>
+      <a href="/crecimiento/prospeccion/">Prospección comercial</a>
+      <a href="/crecimiento/bots/">Bot de llamadas y WhatsApp</a>
+      <a href="/crecimiento/financiacion/">Financiación pública y privada</a>
+      <a href="/crecimiento/internacionalizacion/">Internacionalización</a>
+    </nav>
+    <nav class="foot-col" aria-label="Para quién">
+      <p class="foot-titulo">Para quién</p>
+      <a href="/para/autonomos/">Autónomos</a>
+      <a href="/para/startups/">Startups</a>
+      <a href="/para/pymes/">Pymes</a>
+      <a href="/sectores/">Por sector</a>
+    </nav>
+    <nav class="foot-col" aria-label="Recursos">
+      <p class="foot-titulo">Recursos</p>
+      <a href="/blog/">Blog</a>
+      <a href="/glosario/">Glosario</a>
+      <a href="/calendario-fiscal/">Calendario fiscal</a>
+      <a href="/preguntas/">Preguntas frecuentes</a>
+    </nav>
+    <nav class="foot-col" aria-label="Empresa">
+      <p class="foot-titulo">Empresa</p>
+      <a href="/sobre/">Sobre Contaes</a>
+      <a href="/migracion/">Migración</a>
+      <a href="/seguridad/">Seguridad y datos</a>
+      <a href="/precios/">Precios</a>
+      <a href="/integraciones/">Integraciones</a>
+    </nav>
+  </div>
+  <div class="foot-bajo">
+    <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
+    <nav aria-label="Legal" style="display:flex;gap:18px;flex-wrap:wrap">
+      <a href="/legal/aviso-legal/">Aviso legal</a>
+      <a href="/legal/privacidad/">Política de privacidad</a>
+      <a href="/legal/cookies/">Política de cookies</a>
+
+    </nav>
+  </div>
+  </div>
+</footer>
+<script>
+/* -- Entrada al aparecer ------------------------------------- */
+(function(){
+  var piezas=document.querySelectorAll(".revela");
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){
+    for(var i=0;i<piezas.length;i++)piezas[i].classList.add("visible");return;
+  }
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}
+  });},{threshold:.1,rootMargin:"0px 0px -50px 0px"});
+  for(var j=0;j<piezas.length;j++)obs.observe(piezas[j]);
+})();
+
+/* -- El menu: por areas en escritorio, plegable en movil ------
+   Un solo mecanismo para los dos: el atributo data-abierta en el
+   area. En escritorio el panel flota; en movil se despliega en su
+   sitio. Cierra con Escape, al elegir enlace y al pulsar fuera.  */
+(function(){
+  var nav=document.querySelector(".nav");
+  var boton=document.getElementById("menu-btn");
+  var enlaces=document.getElementById("nav-links");
+  if(!nav||!enlaces)return;
+  var areas=[].slice.call(enlaces.querySelectorAll(".area"));
+
+  function cierraAreas(salvo){
+    areas.forEach(function(a){
+      if(a===salvo)return;
+      a.removeAttribute("data-abierta");
+      a.querySelector("button").setAttribute("aria-expanded","false");
+    });
+  }
+  areas.forEach(function(a){
+    var b=a.querySelector("button");
+    b.addEventListener("click",function(e){
+      e.stopPropagation();
+      var abre=!a.hasAttribute("data-abierta");
+      cierraAreas(a);
+      if(abre){a.setAttribute("data-abierta","");}else{a.removeAttribute("data-abierta");}
+      b.setAttribute("aria-expanded",abre?"true":"false");
+    });
+    /* con raton basta pasar por encima; con teclado hace falta el click */
+    a.addEventListener("mouseenter",function(){
+      if(!window.matchMedia("(min-width: 981px)").matches)return;
+      cierraAreas(a);a.setAttribute("data-abierta","");b.setAttribute("aria-expanded","true");
+    });
+    a.addEventListener("mouseleave",function(){
+      if(!window.matchMedia("(min-width: 981px)").matches)return;
+      a.removeAttribute("data-abierta");b.setAttribute("aria-expanded","false");
+    });
+  });
+
+  function ponMovil(abierto){
+    nav.classList.toggle("abierta",abierto);
+    if(!boton)return;
+    boton.setAttribute("aria-expanded",abierto?"true":"false");
+    boton.setAttribute("aria-label",abierto?"Cerrar el menu":"Abrir el menu");
+    if(!abierto)cierraAreas(null);
+  }
+  if(boton)boton.addEventListener("click",function(e){
+    e.stopPropagation();ponMovil(!nav.classList.contains("abierta"));
+  });
+  enlaces.addEventListener("click",function(e){if(e.target.closest("a"))ponMovil(false);});
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Escape")return;
+    cierraAreas(null);
+    if(nav.classList.contains("abierta")){ponMovil(false);if(boton)boton.focus();}
+  });
+  document.addEventListener("click",function(e){
+    if(!nav.contains(e.target)){cierraAreas(null);ponMovil(false);}
+  });
+})();
+document.getElementById("anio").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>

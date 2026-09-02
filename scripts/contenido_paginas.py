@@ -71,7 +71,7 @@ GLOSARIO = [
     ("Retención", "fiscalidad",
      "Cantidad que quien paga descuenta de la factura o la nómina y que ingresa en Hacienda a cuenta del impuesto de quien cobra. Quien retiene la declara en el 111 o el 115; quien la soporta se la descuenta en su declaración."),
     ("SII", "fiscalidad",
-     "Suministro Inmediato de Información: sistema por el que determinados obligados —grandes empresas, inscritos en el REDEME y grupos de IVA— remiten a la Agencia Tributaria los registros de facturación en plazos cortos, a través de la sede electrónica."),
+     "Suministro Inmediato de Información: sistema por el que determinados obligados (grandes empresas, inscritos en el REDEME y grupos de IVA) remiten a la Agencia Tributaria los registros de facturación en plazos cortos, a través de la sede electrónica."),
     ("Trazabilidad", "operaciones",
      "La capacidad de seguir el rastro de un producto hacia atrás, hasta la materia prima y el proveedor, y hacia delante, hasta el cliente que lo recibió. En alimentación y farmacia es una obligación legal, no una mejora."),
     ("VeriFactu", "fiscalidad",
@@ -209,5 +209,5 @@ PREGUNTAS = [
     ("¿Sirve para autónomos?",
      "Depende del caso. Un autónomo sin empleados ni almacén probablemente necesite algo más ligero que un ERP completo. Un autónomo con equipo, stock y proyectos sí encaja. Es una de las cosas que se aclara en la primera llamada."),
     ("¿Y si necesitamos algo muy específico de nuestro sector?",
-     "Hay procesos muy particulares —fabricación compleja, normativa sectorial concreta— que hoy no cubrimos. Preferimos decirlo antes que después de la demo."),
+     "Hay procesos muy particulares (fabricación compleja, normativa sectorial concreta) que hoy no cubrimos. Preferimos decirlo antes que después de la demo."),
 ]

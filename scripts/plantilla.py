@@ -18,6 +18,28 @@ DOMINIO = "https://contaes.com"
 # aqui, asi que no puede haber una pagina enlazada en un sitio y no en
 # otro.
 # ─────────────────────────────────────────────────────────────────────
+GESTORIA = [
+    ("contabilidad", "Contabilidad", "Los libros al día, no a final de trimestre"),
+    ("fiscal", "Fiscal y modelos", "Preparados, firmados y presentados por un asesor"),
+    ("laboral", "Laboral y nóminas", "Altas, contratos, nóminas y registro de jornada"),
+    ("legal", "Legal", "Sociedades, contratos y protección de datos"),
+]
+
+CRECIMIENTO = [
+    ("cfo", "CFO a tu lado", "Presupuesto, tesorería y márgenes, con criterio"),
+    ("cmo", "CMO a tu lado", "Posicionamiento, captación y medir lo que trae clientes"),
+    ("prospeccion", "Prospección comercial", "Encontrar clientes en vez de esperarlos"),
+    ("bots", "Bot de llamadas y WhatsApp", "Atender cuando no hay nadie, y pasar a persona"),
+    ("financiacion", "Financiación pública y privada", "Subvenciones, banca e inversión"),
+    ("internacionalizacion", "Internacionalización", "Vender fuera con las cosas en orden"),
+]
+
+PUBLICO = [
+    ("autonomos", "Autónomos", "Cuota, modelos, gastos y saber qué te queda"),
+    ("startups", "Startups", "Libros que aguantan una due diligence"),
+    ("pymes", "Pymes", "Cuando la empresa creció y la administración no"),
+]
+
 MODULOS = [
     ("contabilidad", "Contabilidad", "Asientos, plan contable, conciliación y cierre"),
     ("facturacion", "Facturación", "Emisión, rectificativas y seguimiento de cobro"),
@@ -339,42 +361,47 @@ def _panel(base, grupos, doble=False):
 def cabecera(base=""):
     modulos = [("funcionalidades/%s/" % s, n, d) for s, n, d in MODULOS]
     capacidades = [("funcionalidades/%s/" % s, n, d) for s, n, d in CAPACIDADES]
-    sectores = [("sectores/%s/" % s, n, d) for s, n, d in SECTORES]
     return '''<a class="skip" href="#contenido">Saltar al contenido</a>
 <nav class="nav" aria-label="Principal">
   <div class="nav-in">
     <a class="marca" href="%(base)s/">%(marca)s<span class="wordmark">cont<i>aes</i></span></a>
     <div class="nav-links" id="nav-links">
       <div class="area">
-        <button type="button" aria-expanded="false">Producto <span class="punta" aria-hidden="true"></span></button>
-%(panel_producto)s
+        <button type="button" aria-expanded="false">Gestoría <span class="punta" aria-hidden="true"></span></button>
+%(panel_gestoria)s
       </div>
       <div class="area">
-        <button type="button" aria-expanded="false">Sectores <span class="punta" aria-hidden="true"></span></button>
-%(panel_sectores)s
+        <button type="button" aria-expanded="false">Crecimiento <span class="punta" aria-hidden="true"></span></button>
+%(panel_crecimiento)s
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Software <span class="punta" aria-hidden="true"></span></button>
+%(panel_software)s
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Para quién <span class="punta" aria-hidden="true"></span></button>
+%(panel_publico)s
       </div>
       <div class="area">
         <button type="button" aria-expanded="false">Recursos <span class="punta" aria-hidden="true"></span></button>
 %(panel_recursos)s
-      </div>
-      <div class="area">
-        <button type="button" aria-expanded="false">Empresa <span class="punta" aria-hidden="true"></span></button>
-%(panel_empresa)s
       </div>
       <a href="%(base)s/precios/">Precios</a>
     </div>
     <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir el menu">
       <span class="mb-linea"></span><span class="mb-linea"></span><span class="mb-linea"></span>
     </button>
-    <a class="btn btn-azul" href="%(base)s/demo/">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
+    <a class="btn btn-azul" href="%(base)s/demo/">Hablemos <span class="flecha" aria-hidden="true">&rarr;</span></a>
   </div>
 </nav>''' % {
         "base": base,
         "marca": MARCA_SVG,
-        "panel_producto": _panel(base, [("Los ocho módulos", modulos), ("Lo que lo hace distinto", capacidades)], doble=True),
-        "panel_sectores": _panel(base, [("", sectores)], doble=True),
+        "panel_gestoria": _panel(base, [("", [("gestoria/%s/" % s, n, d) for s, n, d in GESTORIA])]),
+        "panel_crecimiento": _panel(base, [("", [("crecimiento/%s/" % s, n, d) for s, n, d in CRECIMIENTO])], doble=True),
+        "panel_software": _panel(base, [("Los ocho módulos", modulos), ("Lo que lo hace distinto", capacidades)], doble=True),
+        "panel_publico": _panel(base, [("Por tipo de empresa", [("para/%s/" % s, n, d) for s, n, d in PUBLICO]),
+                                       ("Por sector", [("sectores/%s/" % s, n, d) for s, n, d in SECTORES])], doble=True),
         "panel_recursos": _panel(base, [("", [(r, n, d) for r, n, d in RECURSOS])]),
-        "panel_empresa": _panel(base, [("", [(r, n, d) for r, n, d in EMPRESA])]),
     }
 
 
@@ -397,6 +424,7 @@ def pie(base=""):
 %(producto)s
 %(sectores)s
 %(recursos)s
+%(recursos2)s
 %(empresa)s
   </div>
   <div class="foot-bajo">
@@ -408,11 +436,12 @@ def pie(base=""):
   </div>
 </footer>''' % {
         "marca": MARCA_BLANCA,
-        "producto": col("Producto", [("funcionalidades/%s/" % s, n) for s, n, _ in MODULOS[:5]]
-                        + [("funcionalidades/", "Ver todo")]),
-        "sectores": col("Sectores", [("sectores/%s/" % s, n) for s, n, _ in SECTORES[:5]]
-                        + [("sectores/", "Ver todo")]),
-        "recursos": col("Recursos", [(r, n) for r, n, _ in RECURSOS]),
+        "producto": col("Gestoría", [("gestoria/%s/" % s, n) for s, n, _ in GESTORIA]
+                        + [("funcionalidades/", "El software")]),
+        "sectores": col("Crecimiento", [("crecimiento/%s/" % s, n) for s, n, _ in CRECIMIENTO]),
+        "recursos": col("Para quién", [("para/%s/" % s, n) for s, n, _ in PUBLICO]
+                        + [("sectores/", "Por sector")]),
+        "recursos2": col("Recursos", [(r, n) for r, n, _ in RECURSOS]),
         "empresa": col("Empresa", [(r, n) for r, n, _ in EMPRESA]),
         "legal": "".join('      <a href="%s/%s">%s</a>\n' % (base, r, n) for r, n in LEGAL),
     }
