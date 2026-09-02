@@ -478,6 +478,22 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 .escena svg{will-change:transform}
 
 /* cinta de sectores */
+.cinta{position:relative}
+/* WCAG 2.2.2: todo movimiento automatico de mas de cinco segundos
+   necesita un mecanismo de pausa que funcione tambien con teclado.
+   El hover solo no basta.                                          */
+.cinta-pausa{
+  position:absolute;right:10px;top:50%;translate:0 -50%;z-index:2;
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--papel);border:1px solid var(--borde);border-radius:var(--r-pill);
+  padding:5px 12px;font-family:var(--sans);font-size:12px;font-weight:500;
+  color:var(--piedra);cursor:pointer;opacity:0;transition:opacity .2s ease,color .2s ease;
+}
+.cinta:hover .cinta-pausa,.cinta-pausa:focus-visible{opacity:1}
+.cinta-pausa:hover{color:var(--tinta-fuerte)}
+.cp-icono{font-size:10px;letter-spacing:-1px}
+.cinta.parada .cinta-pista{animation-play-state:paused}
+@media(max-width:700px){.cinta-pausa{display:none}}
 .cinta{overflow:hidden;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);background:var(--blanco);padding:14px 0}
 .cinta-pista{display:flex;width:max-content;animation:desfila 42s linear infinite}
 .cinta-pista span{display:inline-flex;align-items:center;gap:10px;padding:0 26px;white-space:nowrap;font-size:15px;font-weight:500;color:var(--piedra)}
@@ -718,8 +734,11 @@ footer small{font-size:14px;color:#8b93b5}
 
   <!-- Cinta de sectores. La lista va dos veces para que el bucle no
        tenga costura: al llegar a la mitad vuelve a empezar identica. -->
-  <div class="cinta" aria-hidden="true">
-    <div class="cinta-pista"><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span></div>
+  <div class="cinta">
+    <button type="button" class="cinta-pausa" id="cinta-pausa" aria-pressed="false">
+      <span class="cp-icono" aria-hidden="true">II</span><span class="cp-texto">Pausar</span>
+    </button>
+    <div class="cinta-pista" aria-hidden="true"><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span></div>
   </div>
 
   <!-- ══ El problema ══ -->
@@ -1060,6 +1079,20 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   for (var j = 0; j < piezas.length; j++) obs.observe(piezas[j]);
 })();
 
+
+
+/* -- Pausa de la cinta, tambien con teclado ------------------- */
+(function () {
+  var cinta = document.querySelector(".cinta");
+  var boton = document.getElementById("cinta-pausa");
+  if (!cinta || !boton) return;
+  boton.addEventListener("click", function () {
+    var parada = cinta.classList.toggle("parada");
+    boton.setAttribute("aria-pressed", parada ? "true" : "false");
+    boton.querySelector(".cp-texto").textContent = parada ? "Reanudar" : "Pausar";
+    boton.querySelector(".cp-icono").textContent = parada ? "\u25B6" : "II";
+  });
+})();
 
 /* -- Barra de navegacion que se compacta al bajar ------------- */
 (function () {

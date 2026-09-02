@@ -33,6 +33,88 @@ DOMINIO = "https://contaes.com"
 # ─────────────────────────────────────────────────────────────────────────
 ARTICULOS = [
     {
+        "slug": "modelos-que-presenta-una-pyme-cada-ano",
+        "titulo": "Los modelos que presenta una pyme cada año",
+        "descripcion": "303, 111, 115, 130, 349, 347, 390, 190 y 200: qué es cada modelo, cuándo se presenta y de dónde salen los datos. Un calendario claro para empresarios que no son fiscalistas.",
+        "fecha": "2026-09-02",
+        "minutos": 9,
+        "tema": "Fiscalidad",
+        "acento": "cielo",
+        "entradilla": "Nadie monta una empresa para aprenderse los modelos de Hacienda. Pero conviene saber cuáles te tocan y de dónde sale cada número.",
+        "cuerpo": """
+<h2>Los trimestrales</h2>
+<p>Son los que marcan el ritmo del año. Se presentan en los veinte primeros días de abril, julio y octubre, y el del cuarto trimestre en enero.</p>
+<ul>
+  <li><strong>Modelo 303 — IVA.</strong> La diferencia entre el IVA que has repercutido en tus facturas y el que has soportado en las compras. Sale directo del libro de facturas emitidas y recibidas: si la contabilidad está al día, el 303 ya está hecho.</li>
+  <li><strong>Modelo 111 — retenciones de IRPF.</strong> Lo que has retenido a trabajadores y a profesionales que te facturan con retención. Sale de las nóminas y de las facturas recibidas de autónomos.</li>
+  <li><strong>Modelo 115 — retenciones por alquiler.</strong> Solo si alquilas local u oficina y practicas retención al arrendador.</li>
+  <li><strong>Modelo 130 — pago fraccionado de IRPF.</strong> Para autónomos en estimación directa. Una sociedad no lo presenta.</li>
+  <li><strong>Modelo 349 — operaciones intracomunitarias.</strong> Si compras o vendes a otros países de la UE. Su periodicidad depende del volumen.</li>
+</ul>
+
+<h2>Los anuales</h2>
+<ul>
+  <li><strong>Modelo 390 — resumen anual de IVA.</strong> En enero. Es la suma de los cuatro 303, y por eso cuadra o no cuadra: si durante el año hubo correcciones que no se rehicieron, aquí salta.</li>
+  <li><strong>Modelo 190 — resumen anual de retenciones.</strong> También en enero, y hace el mismo papel respecto a los 111.</li>
+  <li><strong>Modelo 347 — operaciones con terceros.</strong> En febrero. Declara a quién le has comprado o vendido más de 3.005,06 € en el año. Es el que más discrepancias genera, porque la otra parte declara lo mismo desde su lado y los importes tienen que casar.</li>
+  <li><strong>Modelo 200 — Impuesto de Sociedades.</strong> Para ejercicios que cierran el 31 de diciembre, se presenta en julio.</li>
+</ul>
+
+<h2>Por qué casi todos los errores vienen del mismo sitio</h2>
+<p>Los modelos no se rellenan: se calculan. Cada casilla sale de un dato que ya está en la contabilidad. Cuando algo falla, casi nunca es que alguien haya escrito mal un número en el formulario — es que el dato de origen estaba mal clasificado.</p>
+<p>Los tres casos que más se repiten:</p>
+<ul>
+  <li>Una factura de proveedor clasificada en la cuenta equivocada, que mete un IVA soportado donde no toca.</li>
+  <li>Un profesional al que se le paga sin practicar la retención que le corresponde.</li>
+  <li>Una operación intracomunitaria tratada como nacional, que descuadra el 349 y arrastra al 303.</li>
+</ul>
+
+<h2>La consecuencia práctica</h2>
+<p>Si la contabilidad está al día y bien clasificada, los modelos son casi automáticos. Si no lo está, cada trimestre se convierte en una semana de revisar hacia atrás. Ahí es donde se va el tiempo: no en presentar, en cuadrar antes de presentar.</p>
+<p>Por eso tiene sentido que el sistema que lleva las facturas sea el mismo que prepara los modelos. Cada traspaso de datos entre programas —o de la empresa a la asesoría por correo— es una oportunidad de que algo se pierda o llegue tarde.</p>
+
+<blockquote>Este artículo es una guía general. Los plazos y las obligaciones concretas dependen de tu situación: confírmalos siempre con tu asesor.</blockquote>
+"""
+    },
+    {
+        "slug": "cambiar-de-asesoria-sin-perder-el-historico",
+        "titulo": "Cambiar de asesoría sin perder el histórico",
+        "descripcion": "Qué documentación tienes derecho a llevarte, en qué momento del año conviene cambiar y cómo evitar quedarte sin poder consultar los años anteriores.",
+        "fecha": "2026-09-02",
+        "minutos": 6,
+        "tema": "Asesoría",
+        "acento": "marigold",
+        "entradilla": "El miedo a cambiar de asesoría casi nunca es al asesor nuevo. Es a quedarse sin los papeles de los cinco años anteriores.",
+        "cuerpo": """
+<h2>Lo que es tuyo y te puedes llevar</h2>
+<p>La documentación contable y fiscal de tu empresa es tuya, la tenga quien la tenga. Antes de cerrar la relación conviene pedir por escrito y comprobar que llega:</p>
+<ul>
+  <li>Los <strong>libros contables</strong> del ejercicio en curso y de los anteriores, en un formato que se pueda abrir sin el programa de la asesoría.</li>
+  <li>Los <strong>modelos presentados</strong> con su justificante de presentación.</li>
+  <li>El <strong>balance de sumas y saldos</strong> a la fecha del traspaso, con el detalle que compone cada saldo.</li>
+  <li>Las <strong>cuentas anuales</strong> depositadas y los libros legalizados.</li>
+  <li>Los <strong>datos maestros</strong>: clientes, proveedores y su histórico de operaciones.</li>
+</ul>
+
+<h2>El momento del año importa</h2>
+<p>El cambio limpio es a cierre de ejercicio: los saldos están cerrados y el asesor nuevo arranca con un punto de partida sin ambigüedad. El segundo mejor momento es a cierre de trimestre, con los modelos ya presentados.</p>
+<p>Cambiar a mitad de trimestre es posible, pero obliga a repartir la responsabilidad de un mismo periodo entre dos despachos, y ahí es donde se cuelan los huecos.</p>
+
+<h2>Las tres preguntas que conviene hacer antes de firmar</h2>
+<ul>
+  <li><strong>¿Quién firma y presenta?</strong> Conviene saber el nombre de la persona colegiada que asume la responsabilidad, no solo el del despacho.</li>
+  <li><strong>¿En qué formato me devolveréis los datos si algún día me voy?</strong> Si la respuesta es vaga, ya sabes cómo será la salida.</li>
+  <li><strong>¿Qué pasa si Hacienda requiere algo de un año que llevabais vosotros?</strong> Debe estar claro por escrito quién responde y hasta cuándo.</li>
+</ul>
+
+<h2>El error más caro: no solapar</h2>
+<p>Cortar con la asesoría antigua el mismo día que empieza la nueva deja un periodo sin nadie que responda. Merece la pena solapar unas semanas, aunque cueste, para que quien se va pueda aclarar dudas de lo que hizo.</p>
+<p>Es el mismo principio que en una migración de sistema: la convivencia temporal no es un lujo, es lo que evita el agujero.</p>
+
+<blockquote>Este artículo es orientativo y no sustituye al criterio de un profesional sobre tu caso concreto.</blockquote>
+"""
+    },
+    {
         "slug": "migrar-de-odoo-sin-parar-la-empresa",
         "titulo": "Migrar de Odoo sin parar la empresa",
         "descripcion": "Qué mirar antes de cambiar de ERP: el traspaso de datos con histórico, el periodo de convivencia y el punto de retorno. Una guía práctica para pymes.",
