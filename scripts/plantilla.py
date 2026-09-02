@@ -163,7 +163,16 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 }
 .area[data-abierta] .despliegue{visibility:visible;opacity:1;transform:none;transition-delay:0s}
 .despliegue.doble{grid-template-columns:repeat(2,minmax(0,1fr));min-width:600px}
-.despliegue a{display:grid;gap:2px;padding:10px 12px;border-radius:var(--r-btn);text-decoration:none;transition:background .16s ease}
+.despliegue a{display:flex;gap:11px;align-items:flex-start;padding:9px 12px;border-radius:var(--r-btn);text-decoration:none;transition:background .16s ease}
+.op-ico{flex:0 0 auto;width:19px;height:19px;margin-top:1px;fill:none;stroke:var(--piedra);
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .16s ease}
+.despliegue a:hover .op-ico,.despliegue a:focus-visible .op-ico{stroke:var(--azul)}
+.ml-texto{display:grid;gap:2px;min-width:0}
+/* La linea entre grupos dice donde acaba un area y empieza otra, que en
+   un panel de veinte enlaces no se ve solo con el espacio. */
+.despliegue.doble .titulo-grupo:not(:first-child){
+  border-top:1px solid var(--borde);margin-top:8px;padding-top:14px;
+}
 .despliegue a:hover,.despliegue a:focus-visible{background:var(--niebla)}
 .despliegue a b{font-size:14.5px;font-weight:600;color:var(--tinta-fuerte)}
 .despliegue a span{font-size:13px;color:var(--piedra);line-height:1.4}
@@ -537,6 +546,50 @@ document.getElementById("anio").textContent=new Date().getFullYear();
 </script>'''
 
 
+# ─────────────────────────────────────────────────────────────────────
+# Los iconos del menu. Trazos, no dibujos: heredan el color del texto
+# y no compiten con el. Cada uno se parece a lo que nombra.
+# ─────────────────────────────────────────────────────────────────────
+TRAZOS = {
+    "contabilidad": "M4 5h16v14H4z M4 10h16 M9 10v9",
+    "fiscal": "M6 3h9l4 4v14H6z M14 3v5h5 M9 13h6 M9 17h4",
+    "laboral": "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 20a8 8 0 0 1 16 0",
+    "legal": "M12 3v18 M5 8h14 M5 8l-2 6a3 3 0 0 0 6 0z M19 8l2 6a3 3 0 0 1-6 0z",
+    "facturacion": "M6 3h12v18l-3-2-3 2-3-2-3 2z M9 8h6 M9 12h6",
+    "inventario": "M3 8l9-5 9 5v8l-9 5-9-5z M3 8l9 5 9-5 M12 13v8",
+    "compras": "M4 5h2l2 10h10l2-7H7 M9 19a1 1 0 1 0 0 2 1 1 0 0 0 0-2z M17 19a1 1 0 1 0 0 2 1 1 0 0 0 0-2z",
+    "ventas": "M4 19V9 M10 19V5 M16 19v-7 M4 19h16",
+    "proyectos": "M4 6h16 M4 11h10 M4 16h13 M18 14l2 2 3-4",
+    "personal": "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M2 20a7 7 0 0 1 14 0 M17 6a3 3 0 0 1 0 6 M17 14a6 6 0 0 1 5 6",
+    "informes": "M4 20h16 M7 16v-5 M12 16V6 M17 16v-8",
+    "asesoria-fiscal": "M4 4h12l4 4v12H4z M14 4v5h5 M8 14l2.5 2.5L16 11",
+    "asistente-ia": "M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z",
+    "escaner-facturas": "M4 8V5h3 M20 8V5h-3 M4 16v3h3 M20 16v3h-3 M8 12h8",
+    "conciliacion-bancaria": "M4 7h7 M4 17h7 M13 7h7 M13 17h7 M9 5l2 2-2 2 M15 15l-2 2 2 2",
+    "verifactu": "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4",
+    "cfo": "M4 19h16 M7 16v-4 M12 16V7 M17 16v-6 M12 7l5-3",
+    "cmo": "M3 10v4h4l5 4V6L7 10z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12",
+    "prospeccion": "M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z M15.5 15.5L21 21",
+    "bots": "M12 3v3 M6 6h12v10H6z M9 10h.01 M15 10h.01 M9 19l3-3 3 3",
+    "financiacion": "M12 3v18 M16 7a4 4 0 0 0-8 0c0 4 8 2 8 6a4 4 0 0 1-8 0",
+    "internacionalizacion": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18",
+    "autonomos": "M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M5 21a7 7 0 0 1 14 0",
+    "startups": "M12 3c3 2 5 5.5 5 9l-5 4-5-4c0-3.5 2-7 5-9z M12 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M9 17l-2 4 5-2 5 2-2-4",
+    "pymes": "M3 21h18 M5 21V8l7-5 7 5v13 M10 21v-6h4v6",
+    "blog/": "M5 4h14v16H5z M9 8h6 M9 12h6 M9 16h3",
+    "glosario/": "M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z M8 8h7 M8 12h5",
+    "calendario-fiscal/": "M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4 M9 14h2 M14 14h2",
+    "preguntas/": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M9.5 9a2.6 2.6 0 0 1 5 1c0 1.7-2.5 2-2.5 3.5 M12 17h.01",
+}
+
+
+def _icono(ruta):
+    clave = ruta.rstrip("/").split("/")[-1]
+    d = TRAZOS.get(clave) or TRAZOS.get(ruta) or "M5 5h14v14H5z"
+    return ('<svg class="op-ico" viewBox="0 0 24 24" aria-hidden="true">'
+            '<path d="%s"/></svg>' % d)
+
+
 def _panel(base, grupos, doble=False):
     """Un panel del menu. `grupos` son pares (titulo, [(ruta, nombre, pie)])."""
     filas = []
@@ -544,7 +597,9 @@ def _panel(base, grupos, doble=False):
         if titulo:
             filas.append('        <p class="titulo-grupo">%s</p>' % titulo)
         for ruta, nombre, pie_txt in entradas:
-            filas.append('        <a href="%s/%s"><b>%s</b><span>%s</span></a>' % (base, ruta, nombre, pie_txt))
+            filas.append('        <a href="%s/%s">%s<span class="ml-texto">'
+                         '<b>%s</b><span>%s</span></span></a>'
+                         % (base, ruta, _icono(ruta), nombre, pie_txt))
     return '      <div class="despliegue%s">\n%s\n      </div>' % (" doble" if doble else "", "\n".join(filas))
 
 
