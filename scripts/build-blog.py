@@ -15,8 +15,10 @@ Genera:
     sitemap.xml        (portada + blog + articulos)
 
 SEO: cada articulo lleva su propio title, description, canonical, OG, y
-JSON-LD de tipo Article con BreadcrumbList. El sitemap se regenera entero,
-asi que no puede quedarse desincronizado.
+JSON-LD de tipo Article con BreadcrumbList. La cascara -marca, estilos,
+barra y pie- viene de plantilla.py, para que el menu no se separe del
+resto del sitio. El sitemap lo escribe build-sitio.py, que es el unico
+que conoce todas las paginas.
 """
 
 import io
@@ -226,70 +228,22 @@ ARTICULOS = [
 
 ACENTOS = {"marigold": "#ffb110", "coral": "#f64932", "cielo": "#62aef0", "medianoche": "#02093a"}
 
-MARCA_SVG = '''<svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
-      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
-      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
-      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
-      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
-    </svg>'''
+import sys
 
-MARCA_BLANCA = MARCA_SVG.replace("#1E3A5F", "#ffffff").replace("#2FBF9B", "#ffffff").replace("#1F9EC4", "#ffffff").replace("#1E6FB8", "#ffffff")
+AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, AQUI)
+import plantilla as P
 
-ESTILOS = '''
-:root{
-  color-scheme:light;
-  --papel:#f6f5f4;--blanco:#ffffff;--borde:rgba(0,0,0,.08);
-  --tinta:rgba(0,0,0,.95);--tinta-fuerte:#000000;--grafito:#615d59;--piedra:#6a6a6a;--apagado:rgba(0,0,0,.54);
-  --azul:#0075de;--azul-tinte:#e6f3fe;
-  --marigold:#ffb110;--coral:#f64932;--cielo:#62aef0;--medianoche:#02093a;
-  --navy:#1E3A5F;--verde:#2FBF9B;
-  --ancho:1160px;--r-card:12px;--r-btn:8px;--r-pill:9999px;
-  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --serif:"Source Serif 4",ui-serif,Georgia,serif;
-  --marca:"Quicksand",var(--sans);
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-p{margin:0}
-.wrap{max-width:var(--ancho);margin:0 auto;padding:0 24px}
-.estrecho{max-width:720px}
-h1{font-size:clamp(34px,5.6vw,60px);font-weight:600;line-height:1.08;letter-spacing:-.038em;margin:0;color:var(--tinta-fuerte)}
-h2{font-size:clamp(23px,2.6vw,30px);font-weight:600;line-height:1.2;letter-spacing:-.02em;margin:38px 0 14px;color:var(--tinta-fuerte)}
-h3{font-size:20px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fuerte)}
-.etiqueta{font-size:12px;font-weight:500;letter-spacing:.01em;color:var(--piedra);margin:0;text-transform:uppercase}
-.wordmark{font-family:var(--marca);font-weight:600;letter-spacing:-.01em;color:var(--navy)}
-.wordmark i{font-style:normal;color:var(--verde)}
-.btn{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;line-height:1;padding:13px 20px;border-radius:var(--r-btn);text-decoration:none;border:1px solid transparent;transition:background .2s ease,transform .2s ease}
-.btn-azul{background:var(--azul);color:#fff}
-.btn-azul:hover,.btn-azul:focus-visible{background:#0064c0;transform:translateY(-1px)}
-.nav{position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03)}
-.nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;min-height:64px}
-.marca{display:flex;align-items:center;gap:9px;text-decoration:none}
-.marca svg{width:32px;height:32px}
-.marca span{font-size:21px}
-.nav-links{display:flex;gap:4px;margin:0 auto}
-.nav-links a{color:var(--apagado);font-size:15px;font-weight:500;text-decoration:none;padding:10px 14px;border-radius:var(--r-btn);transition:color .2s ease,background .2s ease}
-.nav-links a:hover,.nav-links a:focus-visible{color:var(--tinta-fuerte);background:rgba(0,0,0,.04)}
-/* la marca animada, igual que en la portada */
-.marca-svg .mc-c{transform-origin:42% 50%;transition:transform .5s cubic-bezier(.22,1,.36,1)}
-.marca-svg .mc-b{transform-origin:56% 50%;animation:barra 6s cubic-bezier(.22,1,.36,1) infinite;transition:transform .32s cubic-bezier(.22,1,.36,1)}
-.marca-svg .b2{animation-delay:.12s}
-.marca-svg .b3{animation-delay:.24s}
-@keyframes barra{0%{transform:translateX(-14px) scaleX(.55);opacity:0}9%,52%{transform:none;opacity:1}62%{transform:translateX(7px)}72%,100%{transform:none;opacity:1}}
-.marca:hover .mc-c{transform:rotate(-14deg)}
-.marca:hover .mc-b{animation:none}
-.marca:hover .b1{transform:translateX(9px)}
-.marca:hover .b2{transform:translateX(5px)}
-.marca:hover .b3{transform:translateX(12px)}
-.btn .flecha{display:inline-block;transition:transform .22s cubic-bezier(.22,1,.36,1)}
-.btn:hover .flecha{transform:translateX(4px)}
-.post-card{transform-style:preserve-3d}
-.migas{font-size:14px;color:var(--piedra);margin-bottom:20px}
-.migas a{color:var(--piedra);text-decoration:none}
-.migas a:hover{color:var(--tinta-fuerte);text-decoration:underline}
-.revela{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
-.revela.visible{opacity:1;transform:none}
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+MARCA_SVG = P.MARCA_SVG
+MARCA_BLANCA = P.MARCA_BLANCA
+cabecera = P.cabecera
+pie = P.pie
+
+# Lo unico que el blog no comparte: el articulo y su tarjeta.
+ESTILOS_BLOG = '''
 article.post{padding:44px 0 80px}
 .post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
 .tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
@@ -302,7 +256,6 @@ article.post{padding:44px 0 80px}
 .cierre-post{margin-top:44px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:28px}
 .cierre-post h3{margin-bottom:8px}
 .cierre-post p{color:var(--grafito);margin-bottom:18px}
-.rejilla{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .post-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:inherit;display:grid;transition:transform .22s ease,border-color .22s ease}
 .post-card:hover{transform:translateY(-4px);border-color:rgba(0,0,0,.18)}
 .post-card .franja{height:7px}
@@ -311,106 +264,12 @@ article.post{padding:44px 0 80px}
 .post-card h3{margin-bottom:8px;font-size:19px}
 .post-card p{font-size:15px;color:var(--grafito)}
 .post-card .pie{margin-top:14px;font-size:13px;color:var(--piedra)}
-footer{background:var(--medianoche);color:#c6cbe0;padding:44px 0;margin-top:0}
-.foot-in{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-.foot-marca{display:flex;align-items:center;gap:9px}
-.foot-marca svg{width:26px;height:26px}
-.foot-marca .wordmark{font-size:18px;color:#fff}
-.foot-marca .wordmark i{color:var(--verde)}
-.foot-links{display:flex;gap:18px;flex-wrap:wrap}
-.foot-links a{font-size:14px;color:#c6cbe0;text-decoration:none;transition:color .2s ease}
-.foot-links a:hover{color:#fff}
-footer small{font-size:14px;color:#8b93b5}
-.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
-.skip:focus{left:0}
-:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
-@media(max-width:900px){.rejilla{grid-template-columns:1fr}.nav-links{display:none}}
 '''
-
-REVELA_JS = '''<script>
-(function(){
-  var piezas=document.querySelectorAll(".revela");
-  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){
-    for(var i=0;i<piezas.length;i++)piezas[i].classList.add("visible");return;
-  }
-  var obs=new IntersectionObserver(function(es){es.forEach(function(e){
-    if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}
-  });},{threshold:.1,rootMargin:"0px 0px -50px 0px"});
-  for(var j=0;j<piezas.length;j++)obs.observe(piezas[j]);
-})();
-document.getElementById("anio").textContent=new Date().getFullYear();
-</script>'''
-
-
-def cabecera(base=""):
-    return f'''<a class="skip" href="#contenido">Saltar al contenido</a>
-<nav class="nav" aria-label="Principal">
-  <div class="nav-in">
-    <a class="marca" href="{base}/">{MARCA_SVG}<span class="wordmark">cont<i>aes</i></span></a>
-    <div class="nav-links">
-      <a href="{base}/#ia">La IA</a>
-      <a href="{base}/#modulos">Módulos</a>
-      <a href="{base}/#migracion">Migración</a>
-      <a href="{base}/blog/">Blog</a>
-      <a href="{base}/#preguntas">Preguntas</a>
-    </div>
-    <a class="btn btn-azul" href="{base}/#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
-  </div>
-</nav>'''
-
-
-def pie(base=""):
-    return f'''<footer>
-  <div class="wrap foot-in">
-    <div class="foot-marca">{MARCA_BLANCA}<span class="wordmark">cont<i>aes</i></span></div>
-    <nav class="foot-links" aria-label="Pie">
-      <a href="{base}/#ia">La IA</a>
-      <a href="{base}/#modulos">Módulos</a>
-      <a href="{base}/blog/">Blog</a>
-      <a href="{base}/#preguntas">Preguntas</a>
-      <a href="{base}/#contacto">Contacto</a>
-    </nav>
-    <small>&copy; <span id="anio">2026</span> Contaes</small>
-  </div>
-</footer>'''
 
 
 def pagina(titulo, descripcion, url, cuerpo, extra_head="", base=""):
-    return f'''<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{titulo}</title>
-<meta name="description" content="{descripcion}">
-<link rel="canonical" href="{url}">
-<meta name="theme-color" content="#f6f5f4">
-<link rel="icon" href="{base}/assets/logo.svg" type="image/svg+xml">
-<meta property="og:site_name" content="Contaes">
-<meta property="og:title" content="{titulo}">
-<meta property="og:description" content="{descripcion}">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_ES">
-<meta property="og:url" content="{url}">
-<meta property="og:image" content="{DOMINIO}/assets/og.png">
-<meta name="twitter:card" content="summary_large_image">
-{extra_head}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<style>{ESTILOS}</style>
-</head>
-<body>
-{cabecera(base)}
-<main id="contenido">
-{cuerpo}
-</main>
-{pie(base)}
-{REVELA_JS}
-</body>
-</html>
-'''
+    return P.pagina(titulo, descripcion, url, cuerpo,
+                    extra_head=extra_head, base=base, extra_css=ESTILOS_BLOG)
 
 
 def construir_articulo(a):
@@ -515,22 +374,12 @@ def construir_404():
                   '<meta name="robots" content="noindex">', base="")
 
 
-def construir_sitemap():
-    urls = ["%s/" % DOMINIO, "%s/blog/" % DOMINIO]
-    urls += ["%s/blog/%s.html" % (DOMINIO, a["slug"]) for a in ARTICULOS]
-    filas = "\n".join(
-        "  <url>\n    <loc>%s</loc>\n    <changefreq>%s</changefreq>\n    <priority>%s</priority>\n  </url>"
-        % (u, "weekly" if u.endswith("/") else "monthly", "1.0" if u == urls[0] else "0.7")
-        for u in urls)
-    return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s\n</urlset>\n' % filas
-
-
 def main():
     os.makedirs(os.path.join(RAIZ, "blog"), exist_ok=True)
 
     salidas = {"404.html": construir_404(),
                os.path.join("blog", "index.html"): construir_indice(),
-               "sitemap.xml": construir_sitemap()}
+               }
     for a in ARTICULOS:
         salidas[os.path.join("blog", a["slug"] + ".html")] = construir_articulo(a)
 
@@ -540,7 +389,7 @@ def main():
         print("  %-52s %6d bytes" % (ruta.replace(os.sep, "/"), len(contenido)))
 
     print()
-    print("  %d articulos, %d URLs en el sitemap" % (len(ARTICULOS), len(ARTICULOS) + 2))
+    print("  %d articulos. El sitemap lo escribe build-sitio.py" % len(ARTICULOS))
 
 
 if __name__ == "__main__":

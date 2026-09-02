@@ -76,6 +76,7 @@
   --papel:#f6f5f4;          /* lienzo calido: la firma del sistema */
   --blanco:#ffffff;         /* tarjetas */
   --borde:rgba(0,0,0,.08);  /* hairline. Nunca sombra en tarjetas */
+  --niebla:#f8fafb;         /* banda de seccion: tapa el fondo y da ritmo */
 
   /* texto: jerarquia por alfa sobre el mismo negro */
   --tinta:rgba(0,0,0,.95);
@@ -129,7 +130,7 @@ section{padding:var(--seccion) 0}
 
 /* ── 3. Tipografia ───────────────────────────────────────── */
 /* Tracking negativo agresivo en los tamanos grandes: es la firma. */
-h1{font-size:clamp(40px,7.4vw,84px);font-weight:600;line-height:1.06;letter-spacing:-.048em;margin:0;color:var(--tinta-fuerte)}
+h1{font-size:clamp(36px,5.6vw,68px);font-weight:600;line-height:1.12;letter-spacing:-.045em;margin:0;color:var(--tinta-fuerte)}
 h2{font-size:clamp(30px,4.6vw,54px);font-weight:600;line-height:1.08;letter-spacing:-.035em;margin:0;color:var(--tinta-fuerte)}
 h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin:0;color:var(--tinta-fuerte)}
 .editorial{font-family:var(--serif);font-size:18px;line-height:1.56;color:var(--grafito)}
@@ -192,24 +193,64 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 @keyframes parpadeo{50%{opacity:.35}}
 
 /* ── 5. Navegacion ───────────────────────────────────────── */
-.nav{
-  position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);
-  box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03);
-}
-.nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;min-height:64px}
+/* === barra y pie: los reescribe scripts/sync-portada.py === */
+/* ── La barra, con el menu por areas ─────────────────────── */
+.nav{position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03)}
+.nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;min-height:64px}
 .marca{display:flex;align-items:center;gap:9px;text-decoration:none}
 .marca svg{width:32px;height:32px}
 .marca span{font-size:21px}
-.nav-links{display:flex;gap:4px;align-items:center;margin:0 auto}
-.nav-links a{
-  color:var(--apagado);font-size:15px;font-weight:500;text-decoration:none;
-  padding:10px 14px;border-radius:var(--r-btn);transition:color .2s ease,background .2s ease;
+.nav-links{display:flex;gap:2px;align-items:center;margin:0 auto}
+.nav-links > a,.area > button{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--apagado);font-family:var(--sans);font-size:15px;font-weight:500;text-decoration:none;
+  padding:10px 13px;border-radius:var(--r-btn);border:0;background:none;cursor:pointer;
+  transition:color .2s ease,background .2s ease;
 }
-.nav-links a:hover,.nav-links a:focus-visible{color:var(--tinta-fuerte);background:rgba(0,0,0,.04)}
+.nav-links > a:hover,.nav-links > a:focus-visible,.area > button:hover,.area[data-abierta] > button{color:var(--tinta-fuerte);background:rgba(0,0,0,.04)}
+.area{position:relative}
+.area .punta{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .24s cubic-bezier(.22,1,.36,1)}
+.area[data-abierta] .punta{transform:rotate(-135deg) translateY(-2px)}
+.despliegue{
+  position:absolute;top:calc(100% + 8px);left:50%;translate:-50% 0;z-index:70;
+  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
+  box-shadow:0 18px 44px rgba(18,32,54,.14);padding:12px;
+  display:grid;gap:2px;min-width:320px;
+  visibility:hidden;opacity:0;transform:translateY(-8px) scale(.985);
+  transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1),visibility 0s .18s;
+}
+.area[data-abierta] .despliegue{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+.despliegue.doble{grid-template-columns:repeat(2,minmax(0,1fr));min-width:600px}
+.despliegue a{display:grid;gap:2px;padding:10px 12px;border-radius:var(--r-btn);text-decoration:none;transition:background .16s ease}
+.despliegue a:hover,.despliegue a:focus-visible{background:var(--niebla)}
+.despliegue a b{font-size:14.5px;font-weight:600;color:var(--tinta-fuerte)}
+.despliegue a span{font-size:13px;color:var(--piedra);line-height:1.4}
+.despliegue .titulo-grupo{grid-column:1/-1;padding:8px 12px 4px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra)}
+.menu-btn{display:none;margin-left:auto;width:40px;height:40px;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:none;border:1px solid var(--borde);border-radius:var(--r-btn);cursor:pointer}
+.mb-linea{display:block;width:17px;height:1.5px;background:var(--tinta-fuerte);transition:transform .26s cubic-bezier(.22,1,.36,1),opacity .18s ease}
+.nav.abierta .mb-linea:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav.abierta .mb-linea:nth-child(2){opacity:0}
+.nav.abierta .mb-linea:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
+.foot-rejilla{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;margin-bottom:34px}
+.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
+.foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
+.foot-col a:hover{color:#fff}
+.foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.foot-marca svg{width:26px;height:26px}
+.foot-marca .wordmark{font-size:18px;color:#fff}
+.foot-marca .wordmark i{color:var(--verde)}
+.foot-nota{font-size:14px;color:#8b93b5;max-width:34ch;line-height:1.55}
+.foot-bajo{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.foot-bajo a{font-size:13.5px;color:#8b93b5;text-decoration:none}
+.foot-bajo a:hover{color:#fff}
+footer small{font-size:13.5px;color:#8b93b5}
+/* === fin de barra y pie === */
 
 /* ── 6. Portada ──────────────────────────────────────────── */
 .hero{padding:clamp(36px,6vw,72px) 0 var(--seccion);text-align:center}
-.hero h1{max-width:15ch;margin:0 auto 22px}
+.hero h1{max-width:20ch;margin:0 auto 22px;text-wrap:balance}
 .hero .editorial{max-width:56ch;margin:0 auto 30px}
 .hero-acciones{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .hero-nota{margin-top:18px;font-size:14px;color:var(--piedra)}
@@ -275,6 +316,10 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 .panel.marigold{background:var(--marigold);color:#000}
 .panel.marigold .cuerpo{color:rgba(0,0,0,.72)}
 .panel h2{color:inherit}
+/* La tarjeta tiene fondo propio, asi que corta la herencia del panel:
+   el gris claro del panel medianoche sobre blanco no se lee.        */
+.panel .tarjeta,.panel .tarjeta h3{color:var(--tinta-fuerte)}
+.panel .tarjeta .cuerpo,.panel .tarjeta p{color:var(--grafito)}
 
 /* ── 10. Tarjetas ────────────────────────────────────────── */
 .tarjeta{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:24px;transition:transform .2s ease,border-color .2s ease}
@@ -296,6 +341,16 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
   background:var(--papel);border:1px solid var(--borde);
   transition:transform .3s cubic-bezier(.22,1,.36,1),background .3s ease,border-color .3s ease,opacity .3s ease;
 }
+/* Papel sobre papel no deja ver que son ocho capas. Recorren el mismo
+   degradado que las barras del logo, de abajo a arriba. */
+.losa:nth-child(1){background:#eaf6f2;border-color:rgba(47,191,155,.34)}
+.losa:nth-child(2){background:#e7f4f3;border-color:rgba(47,191,155,.28)}
+.losa:nth-child(3){background:#e6f3f6;border-color:rgba(31,158,196,.30)}
+.losa:nth-child(4){background:#e6f1f8;border-color:rgba(31,158,196,.26)}
+.losa:nth-child(5){background:#e7effa;border-color:rgba(30,111,184,.26)}
+.losa:nth-child(6){background:#e9eefb;border-color:rgba(30,111,184,.22)}
+.losa:nth-child(7){background:#ecedfa;border-color:rgba(30,58,95,.18)}
+.losa:nth-child(8){background:var(--blanco);border-color:rgba(30,58,95,.16)}
 .losa.activa{background:var(--marigold);border-color:var(--marigold)}
 .losas.hay-activa .losa:not(.activa){opacity:.3}
 .losas-pie{margin-top:16px;text-align:center;font-size:14px;color:var(--piedra);min-height:1.4em}
@@ -324,7 +379,7 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 
 /* ── 13. Migracion: dos planos flotantes ─────────────────── */
 .dos-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
-.pila{perspective:1200px;perspective-origin:60% 50%;display:grid;place-items:center;min-height:290px;padding:20px 0 0}
+.pila{perspective:1200px;perspective-origin:60% 50%;display:grid;place-items:center;min-height:330px;padding:34px 0 10px}
 .pila-in{position:relative;width:min(100%,330px);height:210px;transform-style:preserve-3d;transform:rotateX(6deg) rotateY(-19deg)}
 .plano{position:absolute;inset:0;border-radius:var(--r-card);background:var(--blanco);border:1px solid var(--borde);box-shadow:0 4px 12px rgba(0,0,0,.1);padding:18px;display:grid;align-content:start;gap:7px;transition:transform .35s cubic-bezier(.22,1,.36,1)}
 .plano .tit{font-size:15px;font-weight:600}
@@ -333,13 +388,13 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 .plano .barras i{display:block;height:7px;border-radius:4px;background:rgba(0,0,0,.07)}
 .plano .barras i:nth-child(2){width:78%}
 .plano .barras i:nth-child(3){width:54%}
-.plano.viejo{transform:translate3d(-32px,24px,-70px);opacity:.7}
-.plano.nuevo{transform:translate3d(32px,-24px,40px)}
+.plano.viejo{transform:translate3d(-34px,-32px,-70px);opacity:.7}
+.plano.nuevo{transform:translate3d(30px,30px,40px)}
 .plano.nuevo .barras i:nth-child(1){background:var(--marigold)}
 .plano.nuevo .barras i:nth-child(2){background:var(--cielo)}
 .plano.nuevo .barras i:nth-child(3){background:var(--coral)}
-.pila:hover .plano.viejo{transform:translate3d(-54px,34px,-100px)}
-.pila:hover .plano.nuevo{transform:translate3d(54px,-34px,70px)}
+.pila:hover .plano.viejo{transform:translate3d(-52px,-44px,-100px)}
+.pila:hover .plano.nuevo{transform:translate3d(48px,42px,70px)}
 
 .lista{list-style:none;margin:0;padding:0}
 .lista li{padding:14px 0;border-bottom:1px solid var(--borde);display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
@@ -438,6 +493,21 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 @media(max-width:700px){.escena{margin-top:36px}.escena svg{opacity:.75}}
 
 
+
+/* -- El fondo -------------------------------------------------
+   Un lienzo pegado a la ventana; el contenido pasa por encima. La
+   barra NO entra en la regla de apilado: ya es sticky con z-index
+   60 en su bloque, y repetir 'position' aqui se lo quitaba.      */
+.fondo{
+  position:fixed;inset:0;z-index:0;pointer-events:none;display:block;
+  width:100%;height:100%;
+}
+main,footer{position:relative;z-index:1}
+
+/* las secciones sin color propio dejan ver el fondo; las que lo
+   tienen lo tapan, y eso da el ritmo */
+.banda{background:var(--niebla)}
+
 /* -- Mas animacion -------------------------------------------
    Todo con transform y opacity, que son las dos propiedades que
    el navegador anima sin recalcular el diseno.                  */
@@ -525,17 +595,6 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 }
 
 /* ── 16. Pie ─────────────────────────────────────────────── */
-footer{background:var(--medianoche);color:#c6cbe0;padding:44px 0}
-.foot-in{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-.foot-marca{display:flex;align-items:center;gap:9px}
-.foot-marca svg{width:26px;height:26px}
-.foot-marca .wordmark{font-size:18px;color:#fff}
-.foot-marca .wordmark i{color:var(--verde)}
-.foot-links{display:flex;gap:18px;flex-wrap:wrap}
-.foot-links a{font-size:14px;color:#c6cbe0;text-decoration:none;transition:color .2s ease}
-.foot-links a:hover,.foot-links a:focus-visible{color:#fff}
-footer small{font-size:14px;color:#8b93b5}
-
 /* ── 17. Accesibilidad ───────────────────────────────────── */
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;font-size:15px;text-decoration:none}
 .skip:focus{left:0}
@@ -550,10 +609,30 @@ footer small{font-size:14px;color:#8b93b5}
 }
 
 /* ── 18. Adaptacion ──────────────────────────────────────── */
-@media(max-width:900px){
+@media(max-width:980px){
   .modulos-marco,.dos-col,.rejilla-3,.pasos,.maqueta-cuerpo{grid-template-columns:1fr}
   .chat{border-right:0;border-bottom:1px solid var(--borde)}
-  .nav-links{display:none}
+  .menu-btn{display:flex}
+  /* El menu completo baja bajo la barra. Cerrado va con visibility:hidden
+     y no solo con opacidad, para que el tabulador no entre en enlaces que
+     no se ven. */
+  .nav-links{
+    position:absolute;left:0;right:0;top:100%;margin:0;
+    flex-direction:column;align-items:stretch;gap:0;
+    padding:10px 16px 18px;max-height:78vh;overflow-y:auto;
+    background:var(--blanco);border-bottom:1px solid var(--borde);
+    box-shadow:0 12px 24px rgba(0,0,0,.06);
+    visibility:hidden;opacity:0;transform:translateY(-10px);
+    transition:opacity .2s ease,transform .26s cubic-bezier(.22,1,.36,1),visibility 0s .2s;
+  }
+  .nav.abierta .nav-links{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+  .nav-links > a,.area > button{width:100%;justify-content:space-between;padding:13px 12px;font-size:16px}
+  .despliegue{position:static;translate:none;transform:none;visibility:visible;opacity:1;
+         min-width:0;box-shadow:none;border:0;border-left:2px solid var(--borde);
+         border-radius:0;margin:0 0 8px 12px;padding:2px 0 2px 10px;display:none}
+  .despliegue.doble{grid-template-columns:1fr;min-width:0}
+  .area[data-abierta] .despliegue{display:grid}
+  .despliegue a span{display:none}
   .mota{display:none}
 }
 @media(max-width:560px){
@@ -564,6 +643,11 @@ footer small{font-size:14px;color:#8b93b5}
 </head>
 
 <body>
+
+<!-- El fondo: laminas flotando en un espacio con perspectiva. Es
+     decorativo, no informa ni enlaza, y va detras de todo. Se pinta en
+     canvas porque son decenas de piezas por cuadro. -->
+<canvas class="fondo" id="fondo" aria-hidden="true"></canvas>
 
 <!-- simbolos de marca, generados por scripts/build-logo.py -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -585,24 +669,71 @@ footer small{font-size:14px;color:#8b93b5}
 
 <nav class="nav" aria-label="Principal">
   <div class="nav-in">
-    <a class="marca" href="#contenido">
-      <svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
-        <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
-        <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
-        <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
-        <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
-      </svg>
-      <span class="wordmark">cont<i>aes</i></span>
-    </a>
-    <div class="nav-links">
-      <a href="#problema">El problema</a>
-      <a href="#ia">La IA</a>
-      <a href="#modulos">Módulos</a>
-      <a href="#migracion">Migración</a>
-      <a href="#para-quien">Para quién</a>
-      <a href="blog/">Blog</a>
+    <a class="marca" href="/"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
+    </svg><span class="wordmark">cont<i>aes</i></span></a>
+    <div class="nav-links" id="nav-links">
+      <div class="area">
+        <button type="button" aria-expanded="false">Producto <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue doble">
+        <p class="titulo-grupo">Los ocho módulos</p>
+        <a href="/funcionalidades/contabilidad/"><b>Contabilidad</b><span>Asientos, plan contable, conciliación y cierre</span></a>
+        <a href="/funcionalidades/facturacion/"><b>Facturación</b><span>Emisión, rectificativas y seguimiento de cobro</span></a>
+        <a href="/funcionalidades/inventario/"><b>Inventario</b><span>Existencias, lotes y movimientos entre almacenes</span></a>
+        <a href="/funcionalidades/compras/"><b>Compras</b><span>Proveedores, pedidos y recepciones</span></a>
+        <a href="/funcionalidades/ventas/"><b>Ventas y clientes</b><span>Presupuestos, pedidos y la ficha de cada cuenta</span></a>
+        <a href="/funcionalidades/proyectos/"><b>Proyectos</b><span>Tareas, horas imputadas y rentabilidad</span></a>
+        <a href="/funcionalidades/personal/"><b>Personal</b><span>Plantilla, ausencias y gastos</span></a>
+        <a href="/funcionalidades/informes/"><b>Informes</b><span>Cuadros de mando sobre los datos en vivo</span></a>
+        <p class="titulo-grupo">Lo que lo hace distinto</p>
+        <a href="/funcionalidades/asesoria-fiscal/"><b>Asesoría fiscal incluida</b><span>Los modelos, preparados y presentados por un asesor</span></a>
+        <a href="/funcionalidades/asistente-ia/"><b>Asistente con IA</b><span>Preguntar en tu idioma en vez de buscar por menús</span></a>
+        <a href="/funcionalidades/escaner-facturas/"><b>Escáner de facturas</b><span>La factura del proveedor entra sin teclearla</span></a>
+        <a href="/funcionalidades/conciliacion-bancaria/"><b>Conciliación bancaria</b><span>El extracto contra los apuntes, cuadrado</span></a>
+        <a href="/funcionalidades/verifactu/"><b>VeriFactu</b><span>Qué es y a qué obliga tu sistema de facturación</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Sectores <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue doble">
+        <a href="/sectores/fabricacion/"><b>Fabricación</b><span>Escandallos, órdenes y coste real de producción</span></a>
+        <a href="/sectores/distribucion/"><b>Distribución y mayorista</b><span>Muchas referencias, márgenes finos y stock que se mueve</span></a>
+        <a href="/sectores/construccion/"><b>Construcción</b><span>Obra a obra: certificaciones, coste y desvío</span></a>
+        <a href="/sectores/comercio/"><b>Comercio y retail</b><span>Tienda, almacén y contabilidad en el mismo sitio</span></a>
+        <a href="/sectores/logistica/"><b>Logística y transporte</b><span>Rutas, portes y lo que cuesta cada servicio</span></a>
+        <a href="/sectores/servicios/"><b>Servicios profesionales</b><span>Horas facturables, proyectos y rentabilidad</span></a>
+        <a href="/sectores/instalaciones/"><b>Instalaciones y mantenimiento</b><span>Partes de trabajo, materiales y garantías</span></a>
+        <a href="/sectores/agroalimentario/"><b>Agroalimentario</b><span>Lotes, trazabilidad y campañas</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Recursos <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue">
+        <a href="/blog/"><b>Blog</b><span>Artículos sobre gestión, fiscalidad y sistemas</span></a>
+        <a href="/glosario/"><b>Glosario</b><span>Los términos de contabilidad y fiscalidad, explicados</span></a>
+        <a href="/calendario-fiscal/"><b>Calendario fiscal</b><span>Qué modelo toca y cuándo</span></a>
+        <a href="/preguntas/"><b>Preguntas frecuentes</b><span>Lo que suelen preguntarnos</span></a>
+      </div>
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Empresa <span class="punta" aria-hidden="true"></span></button>
+      <div class="despliegue">
+        <a href="/sobre/"><b>Sobre Contaes</b><span>Qué estamos construyendo y por qué</span></a>
+        <a href="/migracion/"><b>Migración</b><span>Cómo se cambia de sistema sin parar</span></a>
+        <a href="/seguridad/"><b>Seguridad y datos</b><span>Dónde viven tus datos y qué derechos tienes</span></a>
+        <a href="/precios/"><b>Precios</b><span>Lo que sabemos hoy sobre el precio</span></a>
+        <a href="/integraciones/"><b>Integraciones</b><span>Con qué se conectará y con qué no</span></a>
+      </div>
+      </div>
+      <a href="/precios/">Precios</a>
     </div>
-    <a class="btn btn-azul" href="#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
+    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir el menu">
+      <span class="mb-linea"></span><span class="mb-linea"></span><span class="mb-linea"></span>
+    </button>
+    <a class="btn btn-azul" href="/demo/">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
   </div>
 </nav>
 
@@ -615,7 +746,7 @@ footer small{font-size:14px;color:#8b93b5}
     <div class="mota m3" aria-hidden="true">📦</div>
 
     <div class="wrap">
-      <h1 class="entra">El ERP que además <span class="resalte">presenta tus modelos</span></h1>
+      <h1 class="entra">El ERP que además<br><span class="resalte">presenta tus modelos</span></h1>
       <p class="editorial entra">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta. Tú no tocas Hacienda.</p>
       <div class="hero-acciones entra">
         <a class="btn btn-azul" href="#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
@@ -646,89 +777,6 @@ footer small{font-size:14px;color:#8b93b5}
       <p class="hero-nota">Ejemplo ilustrativo de la interfaz. No son datos reales.</p>
     </div>
 
-      <!-- Los sectores a los que sirve el ERP, de fondo. Decorativo:
-           no informa ni enlaza, por eso va aria-hidden. -->
-      <div class="escena" aria-hidden="true">
-        <svg viewBox="0 0 1200 240" preserveAspectRatio="xMidYMax meet">
-          <!-- nubes -->
-          <g class="nubes" fill="#0075de" fill-opacity=".07">
-            <ellipse cx="180" cy="46" rx="42" ry="15"/><ellipse cx="214" cy="40" rx="30" ry="13"/>
-            <ellipse cx="900" cy="34" rx="48" ry="16"/><ellipse cx="940" cy="30" rx="32" ry="12"/>
-          </g>
-
-          <!-- avion cruzando -->
-          <g class="avion">
-            <path d="M0 0 L34 8 L0 16 L7 8 Z" fill="#1E3A5F" fill-opacity=".5"/>
-            <path d="M12 8 L2 -8 L9 -8 L22 6 Z" fill="#1E3A5F" fill-opacity=".35"/>
-            <path d="M12 8 L2 24 L9 24 L22 10 Z" fill="#1E3A5F" fill-opacity=".35"/>
-            <rect class="estela" x="-70" y="7" width="66" height="2" rx="1" fill="#1E3A5F" fill-opacity=".16"/>
-          </g>
-
-          <!-- grua de obra -->
-          <g class="obra" fill="#f64932" fill-opacity=".26">
-            <rect x="120" y="96" width="7" height="98"/>
-            <g class="pluma"><rect x="72" y="92" width="118" height="6" rx="3"/><rect x="167" y="98" width="4" height="26" rx="2"/><rect x="161" y="122" width="16" height="12" rx="2"/></g>
-          </g>
-
-          <!-- fabrica con humo -->
-          <g class="fabrica">
-            <g fill="#1E3A5F" fill-opacity=".22">
-              <rect x="286" y="140" width="126" height="54" rx="3"/>
-              <path d="M286 140 L316 116 L346 140 Z"/><path d="M346 140 L376 116 L406 140 Z"/>
-              <rect x="420" y="104" width="20" height="90" rx="3"/>
-            </g>
-            <g fill="#615d59">
-              <circle class="humo h1" cx="430" cy="98" r="11"/>
-              <circle class="humo h2" cx="430" cy="98" r="9"/>
-              <circle class="humo h3" cx="430" cy="98" r="13"/>
-            </g>
-          </g>
-
-          <!-- almacen -->
-          <g fill="#ffb110" fill-opacity=".34">
-            <rect x="486" y="146" width="112" height="48" rx="3"/>
-            <path d="M486 146 L542 122 L598 146 Z"/>
-            <rect x="524" y="164" width="36" height="30" rx="2" fill="#615d59" fill-opacity=".22"/>
-          </g>
-
-          <!-- tienda -->
-          <g>
-            <rect x="640" y="150" width="86" height="44" rx="3" fill="#62aef0" fill-opacity=".34"/>
-            <rect x="634" y="142" width="98" height="10" rx="4" fill="#1F9EC4" fill-opacity=".4"/>
-            <rect x="660" y="164" width="26" height="30" rx="2" fill="#615d59" fill-opacity=".2"/>
-          </g>
-
-          <!-- oficinas -->
-          <g fill="#1E3A5F" fill-opacity=".18">
-            <rect x="770" y="104" width="54" height="90" rx="3"/>
-            <rect x="832" y="128" width="42" height="66" rx="3"/>
-          </g>
-          <g fill="#2FBF9B" fill-opacity=".5">
-            <rect x="782" y="118" width="10" height="10" rx="2"/><rect x="802" y="118" width="10" height="10" rx="2"/>
-            <rect x="782" y="140" width="10" height="10" rx="2"/><rect x="802" y="140" width="10" height="10" rx="2"/>
-            <rect x="844" y="144" width="9" height="9" rx="2"/><rect x="860" y="144" width="9" height="9" rx="2"/>
-          </g>
-
-          <!-- contenedores de puerto -->
-          <g>
-            <rect x="920" y="168" width="46" height="16" rx="2" fill="#f64932" fill-opacity=".3"/>
-            <rect x="920" y="150" width="46" height="16" rx="2" fill="#1F9EC4" fill-opacity=".3"/>
-            <rect x="974" y="168" width="46" height="16" rx="2" fill="#ffb110" fill-opacity=".38"/>
-            <rect x="1048" y="152" width="60" height="42" rx="3" fill="#1E3A5F" fill-opacity=".16"/>
-          </g>
-
-          <!-- camion rodando -->
-          <g class="camion">
-            <rect x="0" y="164" width="56" height="24" rx="3" fill="#1E6FB8" fill-opacity=".42"/>
-            <path d="M56 172 L78 172 L86 182 L86 188 L56 188 Z" fill="#1E3A5F" fill-opacity=".38"/>
-            <circle cx="18" cy="192" r="6" fill="#615d59" fill-opacity=".45"/>
-            <circle cx="72" cy="192" r="6" fill="#615d59" fill-opacity=".45"/>
-          </g>
-
-          <!-- suelo -->
-          <rect x="0" y="194" width="1200" height="2" fill="#615d59" fill-opacity=".18"/>
-        </svg>
-      </div>
   </section>
 
 
@@ -987,23 +1035,60 @@ footer small{font-size:14px;color:#8b93b5}
 </main>
 
 <footer>
-  <div class="wrap foot-in">
-    <div class="foot-marca">
-      <svg viewBox="0 0 200 200" aria-hidden="true"><use href="#mark-blanco"/></svg>
-      <span class="wordmark">cont<i>aes</i></span>
+  <div class="wrap">
+  <div class="foot-rejilla">
+    <div class="foot-col">
+      <div class="foot-marca"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#ffffff" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#ffffff"/>
+    </svg><span class="wordmark">cont<i>aes</i></span></div>
+      <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
     </div>
-    <nav class="foot-links" aria-label="Pie">
-      <a href="#problema">El problema</a>
-      <a href="#ia">La IA</a>
-      <a href="#modulos">Módulos</a>
-      <a href="#proceso">Proceso</a>
-      <a href="#migracion">Migración</a>
-      <a href="#para-quien">Para quién</a>
-      <a href="#preguntas">Preguntas</a>
-      <a href="blog/">Blog</a>
-      <a href="#contacto">Contacto</a>
+    <div class="foot-col">
+      <h4>Producto</h4>
+      <a href="/funcionalidades/contabilidad/">Contabilidad</a>
+      <a href="/funcionalidades/facturacion/">Facturación</a>
+      <a href="/funcionalidades/inventario/">Inventario</a>
+      <a href="/funcionalidades/compras/">Compras</a>
+      <a href="/funcionalidades/ventas/">Ventas y clientes</a>
+      <a href="/funcionalidades/">Ver todo</a>
+    </div>
+    <div class="foot-col">
+      <h4>Sectores</h4>
+      <a href="/sectores/fabricacion/">Fabricación</a>
+      <a href="/sectores/distribucion/">Distribución y mayorista</a>
+      <a href="/sectores/construccion/">Construcción</a>
+      <a href="/sectores/comercio/">Comercio y retail</a>
+      <a href="/sectores/logistica/">Logística y transporte</a>
+      <a href="/sectores/">Ver todo</a>
+    </div>
+    <div class="foot-col">
+      <h4>Recursos</h4>
+      <a href="/blog/">Blog</a>
+      <a href="/glosario/">Glosario</a>
+      <a href="/calendario-fiscal/">Calendario fiscal</a>
+      <a href="/preguntas/">Preguntas frecuentes</a>
+    </div>
+    <div class="foot-col">
+      <h4>Empresa</h4>
+      <a href="/sobre/">Sobre Contaes</a>
+      <a href="/migracion/">Migración</a>
+      <a href="/seguridad/">Seguridad y datos</a>
+      <a href="/precios/">Precios</a>
+      <a href="/integraciones/">Integraciones</a>
+    </div>
+  </div>
+  <div class="foot-bajo">
+    <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
+    <nav aria-label="Legal" style="display:flex;gap:18px;flex-wrap:wrap">
+      <a href="/legal/aviso-legal/">Aviso legal</a>
+      <a href="/legal/privacidad/">Política de privacidad</a>
+      <a href="/legal/cookies/">Política de cookies</a>
+
     </nav>
-    <small>&copy; <span id="anio">2026</span> Contaes</small>
+  </div>
   </div>
 </footer>
 
@@ -1094,6 +1179,297 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   });
 })();
 
+/* -- El fondo: laminas en un espacio con perspectiva ----------
+   Proyeccion en perspectiva de toda la vida: una lamina a
+   distancia z se ve a escala f/(f+z). Se pintan de la mas lejana
+   a la mas cercana para que se tapen bien, y el desenfoque y la
+   transparencia crecen con la distancia, que es lo que el ojo lee
+   como profundidad.
+
+   Las laminas se dibujan una vez en imagenes fuera de pantalla,
+   con el desenfoque ya aplicado. Cada cuadro solo las coloca con
+   su giro y su escala: repintar el desenfoque a cada cuadro
+   costaria mas que todo lo demas junto.                          */
+(function () {
+  var lienzo = document.getElementById("fondo");
+  if (!lienzo || !lienzo.getContext) return;
+  var ctx = lienzo.getContext("2d");
+  if (!ctx) return;
+
+  var FOCO = 900;            // distancia focal, en pixeles del mundo
+  var CERCA = 340;           // ninguna se acerca mas que esto
+  var HONDO = 1700;          // la lamina mas lejana
+  var CAPAS = 3;             // tres grados de desenfoque
+  var TINTAS = [
+    ["#2FBF9B", "#1F9EC4", "#eaf7f2"],   // el degradado de las barras del logo
+    ["#1F9EC4", "#1E6FB8", "#e9f4f9"],
+    ["#1E6FB8", "#1E3A5F", "#eaf1fa"],
+    ["#ffb110", "#f2a10a", "#fff5e2"],   // el acento, en una de cada cinco
+    ["#62aef0", "#1E6FB8", "#ecf4fd"]
+  ];
+  var ANCHO_L = 168, ALTO_L = 116, MARGEN = 26;  // la lamina, en su imagen
+
+  var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var estrecho = window.matchMedia("(max-width: 760px)").matches;
+  var CUANTAS = estrecho ? 10 : 24;
+
+  /* ---- las imagenes de las laminas, dibujadas una sola vez ---- */
+  var sellos = [];
+  function dibujaLamina(tinta, tipo, desenfoque) {
+    var d = document.createElement("canvas");
+    d.width = ANCHO_L + MARGEN * 2;
+    d.height = ALTO_L + MARGEN * 2;
+    var c = d.getContext("2d");
+    var x = MARGEN, y = MARGEN, r = 11;
+
+    function silueta() {
+      c.beginPath();
+      c.moveTo(x + r, y);
+      c.arcTo(x + ANCHO_L, y, x + ANCHO_L, y + ALTO_L, r);
+      c.arcTo(x + ANCHO_L, y + ALTO_L, x, y + ALTO_L, r);
+      c.arcTo(x, y + ALTO_L, x, y, r);
+      c.arcTo(x, y, x + ANCHO_L, y, r);
+      c.closePath();
+    }
+
+    c.save();
+    if (desenfoque > 0 && typeof c.filter === "string") c.filter = "blur(" + desenfoque + "px)";
+
+    // sombra baja y muy abierta: separa el panel sin ensuciarlo
+    c.shadowColor = "rgba(30,58,95,.13)";
+    c.shadowBlur = 22;
+    c.shadowOffsetY = 9;
+
+    // el cristal: blanco arriba, tenido abajo
+    var g = c.createLinearGradient(x, y, x + ANCHO_L * .5, y + ALTO_L);
+    g.addColorStop(0, "rgba(255,255,255,.97)");
+    g.addColorStop(1, tinta[2]);
+    c.fillStyle = g;
+    silueta();
+    c.fill();
+    c.shadowColor = "transparent";
+
+    // el canto encendido: es lo que hace que parezca vidrio y no papel
+    var bg = c.createLinearGradient(x, y, x + ANCHO_L, y + ALTO_L);
+    bg.addColorStop(0, tinta[0]);
+    bg.addColorStop(1, tinta[1]);
+    c.strokeStyle = bg;
+    c.globalAlpha = .42;
+    c.lineWidth = 1.4;
+    silueta();
+    c.stroke();
+    c.globalAlpha = 1;
+
+    // el reflejo que cruza la esquina de arriba
+    c.save();
+    silueta();
+    c.clip();
+    var rf = c.createLinearGradient(x, y, x + ANCHO_L * .8, y + ALTO_L * .8);
+    rf.addColorStop(0, "rgba(255,255,255,.85)");
+    rf.addColorStop(.45, "rgba(255,255,255,0)");
+    c.fillStyle = rf;
+    c.fillRect(x, y, ANCHO_L, ALTO_L);
+    c.restore();
+
+    // el contenido, siempre en color de marca: nada de gris
+    function barra(bx, by, an, al, alfa) {
+      var b = c.createLinearGradient(bx, by, bx + an, by);
+      b.addColorStop(0, tinta[0]);
+      b.addColorStop(1, tinta[1]);
+      c.fillStyle = b;
+      c.globalAlpha = alfa;
+      c.beginPath();
+      var rr = Math.min(al / 2, 3);
+      c.moveTo(bx + rr, by);
+      c.arcTo(bx + an, by, bx + an, by + al, rr);
+      c.arcTo(bx + an, by + al, bx, by + al, rr);
+      c.arcTo(bx, by + al, bx, by, rr);
+      c.arcTo(bx, by, bx + an, by, rr);
+      c.closePath();
+      c.fill();
+      c.globalAlpha = 1;
+    }
+
+    if (tipo === 0) {                 // las tres barras del logo
+      barra(x + 18, y + 26, 96, 9, .78);
+      barra(x + 18, y + 46, 96, 9, .58);
+      barra(x + 18, y + 66, 74, 9, .40);
+      barra(x + 18, y + 88, 46, 6, .22);
+    } else if (tipo === 1) {          // una tabla
+      barra(x + 18, y + 20, 54, 7, .72);
+      for (var j = 0; j < 4; j++) {
+        barra(x + 18, y + 40 + j * 16, 78, 6, .30 - j * .05);
+        barra(x + 106, y + 40 + j * 16, 44, 6, .18 - j * .03);
+      }
+    } else {                          // un cuadro de mando
+      barra(x + 18, y + 20, 54, 7, .72);
+      var altos = [20, 34, 27, 44, 37];
+      for (var k = 0; k < altos.length; k++)
+        barra(x + 20 + k * 26, y + ALTO_L - 18 - altos[k], 17, altos[k], .40 + k * .06);
+    }
+    c.restore();
+    return d;
+  }
+
+  for (var capa = 0; capa < CAPAS; capa++) {
+    var fila = [];
+    for (var ti = 0; ti < TINTAS.length; ti++)
+      for (var tipo = 0; tipo < 3; tipo++)
+        fila.push(dibujaLamina(TINTAS[ti], tipo, capa * 1.6));
+    sellos.push(fila);
+  }
+
+  /* ---- las laminas, repartidas por el espacio ---- */
+  var laminas = [];
+  for (var n = 0; n < CUANTAS; n++) {
+    laminas.push({
+      x: (Math.random() - .5) * 3000,
+      y: (Math.random() - .5) * 1900,
+      z: CERCA + Math.random() * HONDO,
+      giro: Math.random() * Math.PI * 2,          // sobre su eje vertical
+      vgiro: (.05 + Math.random() * .07) * (Math.random() < .5 ? -1 : 1),
+      ladeo: (Math.random() - .5) * .34,          // inclinacion en el plano
+      vladeo: (Math.random() - .5) * .05,
+      sube: 9 + Math.random() * 13,               // pixeles por segundo
+      sello: (Math.random() * 15) | 0
+    });
+  }
+  laminas.sort(function (a, b) { return b.z - a.z; });
+
+  /* ---- el bucle ---- */
+  var an = 0, al = 0, dpr = 1;
+  function mide() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    an = lienzo.clientWidth;
+    al = lienzo.clientHeight;
+    lienzo.width = Math.round(an * dpr);
+    lienzo.height = Math.round(al * dpr);
+  }
+  mide();
+  var remide;
+  window.addEventListener("resize", function () {
+    clearTimeout(remide);
+    remide = setTimeout(mide, 180);
+  }, { passive: true });
+
+  function pinta(dt) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, an, al);
+    var cx = an / 2, cy = al / 2;
+
+    for (var i = 0; i < laminas.length; i++) {
+      var l = laminas[i];
+      if (dt) {
+        l.y -= l.sube * dt;
+        if (l.y < -1100) l.y = 1100;
+        l.giro += l.vgiro * dt;
+        l.ladeo += l.vladeo * dt * .12;
+      }
+      var k = FOCO / (FOCO + l.z);              // la escala por perspectiva
+      var px = cx + l.x * k, py = cy + l.y * k;
+      var tam = k * 1.05;
+      if (px < -300 || px > an + 300 || py < -260 || py > al + 260) continue;
+
+      // el giro sobre el eje vertical: la lamina se estrecha al ponerse de canto
+      var canto = Math.cos(l.giro);
+      var estrecha = Math.abs(canto);
+      if (estrecha < .08) continue;             // de perfil no se ve
+
+      var capa = l.z < 480 ? 0 : (l.z < 1000 ? 1 : 2);
+      var img = sellos[capa][l.sello];
+      // El texto vive en la columna central. Los paneles no se quitan de
+      // enmedio -eso se notaria-, se apagan al acercarse a ella.
+      var centrado = Math.abs(px - cx) / (an * .5);
+      var paso = Math.min(1, Math.max(0, (centrado - .18) / .34));
+      var aire = .22 + .78 * paso * paso;
+      ctx.globalAlpha = (.42 - capa * .09) * Math.min(1, .35 + estrecha) * aire;
+      ctx.setTransform(
+        dpr * tam * estrecha * Math.cos(l.ladeo), dpr * tam * estrecha * Math.sin(l.ladeo),
+        dpr * tam * -Math.sin(l.ladeo), dpr * tam * Math.cos(l.ladeo),
+        dpr * px, dpr * py
+      );
+      ctx.drawImage(img, -img.width / 2, -img.height / 2);
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+  }
+
+  if (quieto) { pinta(0); return; }             // un cuadro y quieta
+
+  var antes = 0, vivo = true;
+  document.addEventListener("visibilitychange", function () {
+    vivo = !document.hidden;
+    if (vivo) { antes = 0; requestAnimationFrame(cuadro); }
+  });
+  function cuadro(ahora) {
+    if (!vivo) return;
+    var dt = antes ? Math.min((ahora - antes) / 1000, .05) : 0;
+    antes = ahora;
+    pinta(dt);
+    requestAnimationFrame(cuadro);
+  }
+  requestAnimationFrame(cuadro);
+})();
+
+/* -- El menu: por areas en escritorio, plegable en movil ------
+   Un solo mecanismo para los dos: el atributo data-abierta en el
+   area. En escritorio el panel flota; en movil se despliega en su
+   sitio. Cierra con Escape, al elegir enlace y al pulsar fuera.  */
+(function(){
+  var nav=document.querySelector(".nav");
+  var boton=document.getElementById("menu-btn");
+  var enlaces=document.getElementById("nav-links");
+  if(!nav||!enlaces)return;
+  var areas=[].slice.call(enlaces.querySelectorAll(".area"));
+
+  function cierraAreas(salvo){
+    areas.forEach(function(a){
+      if(a===salvo)return;
+      a.removeAttribute("data-abierta");
+      a.querySelector("button").setAttribute("aria-expanded","false");
+    });
+  }
+  areas.forEach(function(a){
+    var b=a.querySelector("button");
+    b.addEventListener("click",function(e){
+      e.stopPropagation();
+      var abre=!a.hasAttribute("data-abierta");
+      cierraAreas(a);
+      if(abre){a.setAttribute("data-abierta","");}else{a.removeAttribute("data-abierta");}
+      b.setAttribute("aria-expanded",abre?"true":"false");
+    });
+    /* con raton basta pasar por encima; con teclado hace falta el click */
+    a.addEventListener("mouseenter",function(){
+      if(!window.matchMedia("(min-width: 981px)").matches)return;
+      cierraAreas(a);a.setAttribute("data-abierta","");b.setAttribute("aria-expanded","true");
+    });
+    a.addEventListener("mouseleave",function(){
+      if(!window.matchMedia("(min-width: 981px)").matches)return;
+      a.removeAttribute("data-abierta");b.setAttribute("aria-expanded","false");
+    });
+  });
+
+  function ponMovil(abierto){
+    nav.classList.toggle("abierta",abierto);
+    if(!boton)return;
+    boton.setAttribute("aria-expanded",abierto?"true":"false");
+    boton.setAttribute("aria-label",abierto?"Cerrar el menu":"Abrir el menu");
+    if(!abierto)cierraAreas(null);
+  }
+  if(boton)boton.addEventListener("click",function(e){
+    e.stopPropagation();ponMovil(!nav.classList.contains("abierta"));
+  });
+  enlaces.addEventListener("click",function(e){if(e.target.closest("a"))ponMovil(false);});
+  document.addEventListener("keydown",function(e){
+    if(e.key!=="Escape")return;
+    cierraAreas(null);
+    if(nav.classList.contains("abierta")){ponMovil(false);if(boton)boton.focus();}
+  });
+  document.addEventListener("click",function(e){
+    if(!nav.contains(e.target)){cierraAreas(null);ponMovil(false);}
+  });
+})();
+
 /* -- Barra de navegacion que se compacta al bajar ------------- */
 (function () {
   var nav = document.querySelector(".nav");
@@ -1127,24 +1503,6 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   }
 })();
 
-/* -- La escena de sectores se desplaza al hacer scroll -------- */
-(function () {
-  var svg = document.querySelector(".escena svg");
-  if (!svg || SIN_MOVIMIENTO) return;
-  var caja = svg.parentElement, pedido = false;
-  window.addEventListener("scroll", function () {
-    if (pedido) return;
-    pedido = true;
-    requestAnimationFrame(function () {
-      var r = caja.getBoundingClientRect();
-      if (r.bottom > 0 && r.top < window.innerHeight) {
-        var avance = 1 - (r.top / window.innerHeight);
-        svg.style.transform = "translateX(" + (avance * -26) + "px)";
-      }
-      pedido = false;
-    });
-  }, { passive: true });
-})();
 
 /* -- La conversacion de la maqueta se representa sola ----------
    Es una maqueta, no una conversacion real: la etiqueta bajo el

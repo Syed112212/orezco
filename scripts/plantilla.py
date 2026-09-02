@@ -1,26 +1,85 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Página no encontrada — Contaes</title>
-<meta name="description" content="La página que buscas no existe.">
-<link rel="canonical" href="https://contaes.com/404.html">
-<meta name="theme-color" content="#f6f5f4">
-<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-<meta property="og:site_name" content="Contaes">
-<meta property="og:title" content="Página no encontrada — Contaes">
-<meta property="og:description" content="La página que buscas no existe.">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_ES">
-<meta property="og:url" content="https://contaes.com/404.html">
-<meta property="og:image" content="https://contaes.com/assets/og.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<style>
+# -*- coding: utf-8 -*-
+"""La cascara comun de todas las paginas generadas.
+
+Aqui viven la marca, los estilos, la barra y el pie. Los generadores
+(build-sitio.py y build-blog.py) importan de aqui para que el menu no se
+separe entre secciones: si se anade una pagina, se anade en un sitio.
+
+No incluye la portada: index.html se escribe a mano porque tiene piezas
+propias (el fondo en canvas, la maqueta del asistente, la pila de
+modulos) que no comparte nadie mas. Su barra se mantiene a la par a mano,
+y check-design.py avisa si se separan.
+"""
+
+DOMINIO = "https://contaes.com"
+
+# ─────────────────────────────────────────────────────────────────────
+# El mapa del sitio. Es la unica fuente: barra, pie y sitemap salen de
+# aqui, asi que no puede haber una pagina enlazada en un sitio y no en
+# otro.
+# ─────────────────────────────────────────────────────────────────────
+MODULOS = [
+    ("contabilidad", "Contabilidad", "Asientos, plan contable, conciliación y cierre"),
+    ("facturacion", "Facturación", "Emisión, rectificativas y seguimiento de cobro"),
+    ("inventario", "Inventario", "Existencias, lotes y movimientos entre almacenes"),
+    ("compras", "Compras", "Proveedores, pedidos y recepciones"),
+    ("ventas", "Ventas y clientes", "Presupuestos, pedidos y la ficha de cada cuenta"),
+    ("proyectos", "Proyectos", "Tareas, horas imputadas y rentabilidad"),
+    ("personal", "Personal", "Plantilla, ausencias y gastos"),
+    ("informes", "Informes", "Cuadros de mando sobre los datos en vivo"),
+]
+
+CAPACIDADES = [
+    ("asesoria-fiscal", "Asesoría fiscal incluida", "Los modelos, preparados y presentados por un asesor"),
+    ("asistente-ia", "Asistente con IA", "Preguntar en tu idioma en vez de buscar por menús"),
+    ("escaner-facturas", "Escáner de facturas", "La factura del proveedor entra sin teclearla"),
+    ("conciliacion-bancaria", "Conciliación bancaria", "El extracto contra los apuntes, cuadrado"),
+    ("verifactu", "VeriFactu", "Qué es y a qué obliga tu sistema de facturación"),
+]
+
+SECTORES = [
+    ("fabricacion", "Fabricación", "Escandallos, órdenes y coste real de producción"),
+    ("distribucion", "Distribución y mayorista", "Muchas referencias, márgenes finos y stock que se mueve"),
+    ("construccion", "Construcción", "Obra a obra: certificaciones, coste y desvío"),
+    ("comercio", "Comercio y retail", "Tienda, almacén y contabilidad en el mismo sitio"),
+    ("logistica", "Logística y transporte", "Rutas, portes y lo que cuesta cada servicio"),
+    ("servicios", "Servicios profesionales", "Horas facturables, proyectos y rentabilidad"),
+    ("instalaciones", "Instalaciones y mantenimiento", "Partes de trabajo, materiales y garantías"),
+    ("agroalimentario", "Agroalimentario", "Lotes, trazabilidad y campañas"),
+]
+
+RECURSOS = [
+    ("blog/", "Blog", "Artículos sobre gestión, fiscalidad y sistemas"),
+    ("glosario/", "Glosario", "Los términos de contabilidad y fiscalidad, explicados"),
+    ("calendario-fiscal/", "Calendario fiscal", "Qué modelo toca y cuándo"),
+    ("preguntas/", "Preguntas frecuentes", "Lo que suelen preguntarnos"),
+]
+
+EMPRESA = [
+    ("sobre/", "Sobre Contaes", "Qué estamos construyendo y por qué"),
+    ("migracion/", "Migración", "Cómo se cambia de sistema sin parar"),
+    ("seguridad/", "Seguridad y datos", "Dónde viven tus datos y qué derechos tienes"),
+    ("precios/", "Precios", "Lo que sabemos hoy sobre el precio"),
+    ("integraciones/", "Integraciones", "Con qué se conectará y con qué no"),
+]
+
+LEGAL = [
+    ("legal/aviso-legal/", "Aviso legal"),
+    ("legal/privacidad/", "Política de privacidad"),
+    ("legal/cookies/", "Política de cookies"),
+]
+
+MARCA_SVG = '''<svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
+    </svg>'''
+
+MARCA_BLANCA = (MARCA_SVG.replace("#1E3A5F", "#ffffff").replace("#2FBF9B", "#ffffff")
+                .replace("#1F9EC4", "#ffffff").replace("#1E6FB8", "#ffffff"))
+
+ESTILOS = '''
 :root{
   color-scheme:light;
   --papel:#f6f5f4;--blanco:#ffffff;--borde:rgba(0,0,0,.08);--niebla:#f8fafb;
@@ -186,168 +245,9 @@ footer small{font-size:13.5px;color:#8b93b5}
   .area[data-abierta] .despliegue{display:grid}
   .despliegue a span{display:none}
 }
+'''
 
-article.post{padding:44px 0 80px}
-.post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
-.tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
-.post .entradilla{font-family:var(--serif);font-size:21px;line-height:1.55;color:var(--grafito);margin-bottom:8px}
-.post .cuerpo p{margin:0 0 16px;color:var(--grafito);font-size:17px;line-height:1.65}
-.post .cuerpo strong{color:var(--tinta-fuerte);font-weight:600}
-.post .cuerpo ul{margin:0 0 18px;padding-left:22px;color:var(--grafito);font-size:17px;line-height:1.65}
-.post .cuerpo li{margin-bottom:8px}
-.post .cuerpo blockquote{margin:24px 0;padding:20px 24px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--tinta-fuerte)}
-.cierre-post{margin-top:44px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:28px}
-.cierre-post h3{margin-bottom:8px}
-.cierre-post p{color:var(--grafito);margin-bottom:18px}
-.post-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:inherit;display:grid;transition:transform .22s ease,border-color .22s ease}
-.post-card:hover{transform:translateY(-4px);border-color:rgba(0,0,0,.18)}
-.post-card .franja{height:7px}
-.post-card .dentro{padding:22px}
-.post-card .tema{display:inline-block;margin-bottom:12px}
-.post-card h3{margin-bottom:8px;font-size:19px}
-.post-card p{font-size:15px;color:var(--grafito)}
-.post-card .pie{margin-top:14px;font-size:13px;color:var(--piedra)}
-</style>
-</head>
-<body>
-<a class="skip" href="#contenido">Saltar al contenido</a>
-<nav class="nav" aria-label="Principal">
-  <div class="nav-in">
-    <a class="marca" href="/"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
-      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
-      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
-      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
-      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
-    </svg><span class="wordmark">cont<i>aes</i></span></a>
-    <div class="nav-links" id="nav-links">
-      <div class="area">
-        <button type="button" aria-expanded="false">Producto <span class="punta" aria-hidden="true"></span></button>
-      <div class="despliegue doble">
-        <p class="titulo-grupo">Los ocho módulos</p>
-        <a href="/funcionalidades/contabilidad/"><b>Contabilidad</b><span>Asientos, plan contable, conciliación y cierre</span></a>
-        <a href="/funcionalidades/facturacion/"><b>Facturación</b><span>Emisión, rectificativas y seguimiento de cobro</span></a>
-        <a href="/funcionalidades/inventario/"><b>Inventario</b><span>Existencias, lotes y movimientos entre almacenes</span></a>
-        <a href="/funcionalidades/compras/"><b>Compras</b><span>Proveedores, pedidos y recepciones</span></a>
-        <a href="/funcionalidades/ventas/"><b>Ventas y clientes</b><span>Presupuestos, pedidos y la ficha de cada cuenta</span></a>
-        <a href="/funcionalidades/proyectos/"><b>Proyectos</b><span>Tareas, horas imputadas y rentabilidad</span></a>
-        <a href="/funcionalidades/personal/"><b>Personal</b><span>Plantilla, ausencias y gastos</span></a>
-        <a href="/funcionalidades/informes/"><b>Informes</b><span>Cuadros de mando sobre los datos en vivo</span></a>
-        <p class="titulo-grupo">Lo que lo hace distinto</p>
-        <a href="/funcionalidades/asesoria-fiscal/"><b>Asesoría fiscal incluida</b><span>Los modelos, preparados y presentados por un asesor</span></a>
-        <a href="/funcionalidades/asistente-ia/"><b>Asistente con IA</b><span>Preguntar en tu idioma en vez de buscar por menús</span></a>
-        <a href="/funcionalidades/escaner-facturas/"><b>Escáner de facturas</b><span>La factura del proveedor entra sin teclearla</span></a>
-        <a href="/funcionalidades/conciliacion-bancaria/"><b>Conciliación bancaria</b><span>El extracto contra los apuntes, cuadrado</span></a>
-        <a href="/funcionalidades/verifactu/"><b>VeriFactu</b><span>Qué es y a qué obliga tu sistema de facturación</span></a>
-      </div>
-      </div>
-      <div class="area">
-        <button type="button" aria-expanded="false">Sectores <span class="punta" aria-hidden="true"></span></button>
-      <div class="despliegue doble">
-        <a href="/sectores/fabricacion/"><b>Fabricación</b><span>Escandallos, órdenes y coste real de producción</span></a>
-        <a href="/sectores/distribucion/"><b>Distribución y mayorista</b><span>Muchas referencias, márgenes finos y stock que se mueve</span></a>
-        <a href="/sectores/construccion/"><b>Construcción</b><span>Obra a obra: certificaciones, coste y desvío</span></a>
-        <a href="/sectores/comercio/"><b>Comercio y retail</b><span>Tienda, almacén y contabilidad en el mismo sitio</span></a>
-        <a href="/sectores/logistica/"><b>Logística y transporte</b><span>Rutas, portes y lo que cuesta cada servicio</span></a>
-        <a href="/sectores/servicios/"><b>Servicios profesionales</b><span>Horas facturables, proyectos y rentabilidad</span></a>
-        <a href="/sectores/instalaciones/"><b>Instalaciones y mantenimiento</b><span>Partes de trabajo, materiales y garantías</span></a>
-        <a href="/sectores/agroalimentario/"><b>Agroalimentario</b><span>Lotes, trazabilidad y campañas</span></a>
-      </div>
-      </div>
-      <div class="area">
-        <button type="button" aria-expanded="false">Recursos <span class="punta" aria-hidden="true"></span></button>
-      <div class="despliegue">
-        <a href="/blog/"><b>Blog</b><span>Artículos sobre gestión, fiscalidad y sistemas</span></a>
-        <a href="/glosario/"><b>Glosario</b><span>Los términos de contabilidad y fiscalidad, explicados</span></a>
-        <a href="/calendario-fiscal/"><b>Calendario fiscal</b><span>Qué modelo toca y cuándo</span></a>
-        <a href="/preguntas/"><b>Preguntas frecuentes</b><span>Lo que suelen preguntarnos</span></a>
-      </div>
-      </div>
-      <div class="area">
-        <button type="button" aria-expanded="false">Empresa <span class="punta" aria-hidden="true"></span></button>
-      <div class="despliegue">
-        <a href="/sobre/"><b>Sobre Contaes</b><span>Qué estamos construyendo y por qué</span></a>
-        <a href="/migracion/"><b>Migración</b><span>Cómo se cambia de sistema sin parar</span></a>
-        <a href="/seguridad/"><b>Seguridad y datos</b><span>Dónde viven tus datos y qué derechos tienes</span></a>
-        <a href="/precios/"><b>Precios</b><span>Lo que sabemos hoy sobre el precio</span></a>
-        <a href="/integraciones/"><b>Integraciones</b><span>Con qué se conectará y con qué no</span></a>
-      </div>
-      </div>
-      <a href="/precios/">Precios</a>
-    </div>
-    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir el menu">
-      <span class="mb-linea"></span><span class="mb-linea"></span><span class="mb-linea"></span>
-    </button>
-    <a class="btn btn-azul" href="/demo/">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
-  </div>
-</nav>
-<main id="contenido">
-<section style="padding:96px 0 120px;text-align:center">
-  <div class="wrap estrecho">
-    <p class="etiqueta" style="margin-bottom:14px">Error 404</p>
-    <h1>Esta página no existe</h1>
-    <p style="margin:20px auto 28px;max-width:44ch;color:var(--grafito);font-size:17px">El enlace está roto o la página se movió de sitio.</p>
-    <a class="btn btn-azul" href="/">Volver al inicio</a>
-  </div>
-</section>
-</main>
-<footer>
-  <div class="wrap">
-  <div class="foot-rejilla">
-    <div class="foot-col">
-      <div class="foot-marca"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
-      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#ffffff" stroke-width="27" stroke-linecap="round"/>
-      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
-      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
-      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#ffffff"/>
-    </svg><span class="wordmark">cont<i>aes</i></span></div>
-      <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
-    </div>
-    <div class="foot-col">
-      <h4>Producto</h4>
-      <a href="/funcionalidades/contabilidad/">Contabilidad</a>
-      <a href="/funcionalidades/facturacion/">Facturación</a>
-      <a href="/funcionalidades/inventario/">Inventario</a>
-      <a href="/funcionalidades/compras/">Compras</a>
-      <a href="/funcionalidades/ventas/">Ventas y clientes</a>
-      <a href="/funcionalidades/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Sectores</h4>
-      <a href="/sectores/fabricacion/">Fabricación</a>
-      <a href="/sectores/distribucion/">Distribución y mayorista</a>
-      <a href="/sectores/construccion/">Construcción</a>
-      <a href="/sectores/comercio/">Comercio y retail</a>
-      <a href="/sectores/logistica/">Logística y transporte</a>
-      <a href="/sectores/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Recursos</h4>
-      <a href="/blog/">Blog</a>
-      <a href="/glosario/">Glosario</a>
-      <a href="/calendario-fiscal/">Calendario fiscal</a>
-      <a href="/preguntas/">Preguntas frecuentes</a>
-    </div>
-    <div class="foot-col">
-      <h4>Empresa</h4>
-      <a href="/sobre/">Sobre Contaes</a>
-      <a href="/migracion/">Migración</a>
-      <a href="/seguridad/">Seguridad y datos</a>
-      <a href="/precios/">Precios</a>
-      <a href="/integraciones/">Integraciones</a>
-    </div>
-  </div>
-  <div class="foot-bajo">
-    <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
-    <nav aria-label="Legal" style="display:flex;gap:18px;flex-wrap:wrap">
-      <a href="/legal/aviso-legal/">Aviso legal</a>
-      <a href="/legal/privacidad/">Política de privacidad</a>
-      <a href="/legal/cookies/">Política de cookies</a>
-
-    </nav>
-  </div>
-  </div>
-</footer>
-<script>
+PIE_JS = '''<script>
 /* -- Entrada al aparecer ------------------------------------- */
 (function(){
   var piezas=document.querySelectorAll(".revela");
@@ -419,6 +319,135 @@ article.post{padding:44px 0 80px}
   });
 })();
 document.getElementById("anio").textContent=new Date().getFullYear();
-</script>
+</script>'''
+
+
+def _panel(base, grupos, doble=False):
+    """Un panel del menu. `grupos` son pares (titulo, [(ruta, nombre, pie)])."""
+    filas = []
+    for titulo, entradas in grupos:
+        if titulo:
+            filas.append('        <p class="titulo-grupo">%s</p>' % titulo)
+        for ruta, nombre, pie_txt in entradas:
+            filas.append('        <a href="%s/%s"><b>%s</b><span>%s</span></a>' % (base, ruta, nombre, pie_txt))
+    return '      <div class="despliegue%s">\n%s\n      </div>' % (" doble" if doble else "", "\n".join(filas))
+
+
+def cabecera(base=""):
+    modulos = [("funcionalidades/%s/" % s, n, d) for s, n, d in MODULOS]
+    capacidades = [("funcionalidades/%s/" % s, n, d) for s, n, d in CAPACIDADES]
+    sectores = [("sectores/%s/" % s, n, d) for s, n, d in SECTORES]
+    return '''<a class="skip" href="#contenido">Saltar al contenido</a>
+<nav class="nav" aria-label="Principal">
+  <div class="nav-in">
+    <a class="marca" href="%(base)s/">%(marca)s<span class="wordmark">cont<i>aes</i></span></a>
+    <div class="nav-links" id="nav-links">
+      <div class="area">
+        <button type="button" aria-expanded="false">Producto <span class="punta" aria-hidden="true"></span></button>
+%(panel_producto)s
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Sectores <span class="punta" aria-hidden="true"></span></button>
+%(panel_sectores)s
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Recursos <span class="punta" aria-hidden="true"></span></button>
+%(panel_recursos)s
+      </div>
+      <div class="area">
+        <button type="button" aria-expanded="false">Empresa <span class="punta" aria-hidden="true"></span></button>
+%(panel_empresa)s
+      </div>
+      <a href="%(base)s/precios/">Precios</a>
+    </div>
+    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir el menu">
+      <span class="mb-linea"></span><span class="mb-linea"></span><span class="mb-linea"></span>
+    </button>
+    <a class="btn btn-azul" href="%(base)s/demo/">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
+  </div>
+</nav>''' % {
+        "base": base,
+        "marca": MARCA_SVG,
+        "panel_producto": _panel(base, [("Los ocho módulos", modulos), ("Lo que lo hace distinto", capacidades)], doble=True),
+        "panel_sectores": _panel(base, [("", sectores)], doble=True),
+        "panel_recursos": _panel(base, [("", [(r, n, d) for r, n, d in RECURSOS])]),
+        "panel_empresa": _panel(base, [("", [(r, n, d) for r, n, d in EMPRESA])]),
+    }
+
+
+def pie(base=""):
+    def col(titulo, entradas):
+        enlaces = "".join('      <a href="%s/%s">%s</a>\n' % (base, r, n) for r, n in entradas)
+        return '    <div class="foot-col">\n      <h4>%s</h4>\n%s    </div>' % (titulo, enlaces)
+
+    return '''<footer>
+  <div class="wrap">
+  <div class="foot-rejilla">
+    <div class="foot-col">
+      <div class="foot-marca">%(marca)s<span class="wordmark">cont<i>aes</i></span></div>
+      <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
+    </div>
+%(producto)s
+%(sectores)s
+%(recursos)s
+%(empresa)s
+  </div>
+  <div class="foot-bajo">
+    <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
+    <nav aria-label="Legal" style="display:flex;gap:18px;flex-wrap:wrap">
+%(legal)s
+    </nav>
+  </div>
+  </div>
+</footer>''' % {
+        "marca": MARCA_BLANCA,
+        "producto": col("Producto", [("funcionalidades/%s/" % s, n) for s, n, _ in MODULOS[:5]]
+                        + [("funcionalidades/", "Ver todo")]),
+        "sectores": col("Sectores", [("sectores/%s/" % s, n) for s, n, _ in SECTORES[:5]]
+                        + [("sectores/", "Ver todo")]),
+        "recursos": col("Recursos", [(r, n) for r, n, _ in RECURSOS]),
+        "empresa": col("Empresa", [(r, n) for r, n, _ in EMPRESA]),
+        "legal": "".join('      <a href="%s/%s">%s</a>\n' % (base, r, n) for r, n in LEGAL),
+    }
+
+
+def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=False, extra_css=""):
+    return '''<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%(titulo)s</title>
+<meta name="description" content="%(desc)s">
+<link rel="canonical" href="%(url)s">
+%(robots)s<meta name="theme-color" content="#f6f5f4">
+<link rel="icon" href="%(base)s/assets/logo.svg" type="image/svg+xml">
+<meta property="og:site_name" content="Contaes">
+<meta property="og:title" content="%(titulo)s">
+<meta property="og:description" content="%(desc)s">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:url" content="%(url)s">
+<meta property="og:image" content="%(dominio)s/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+%(extra)s
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
+<style>%(estilos)s</style>
+</head>
+<body>
+%(cabecera)s
+<main id="contenido">
+%(cuerpo)s
+</main>
+%(pie)s
+%(js)s
 </body>
 </html>
+''' % {
+        "titulo": titulo, "desc": descripcion, "url": url, "base": base,
+        "robots": '<meta name="robots" content="noindex, follow">\n' if noindex else "",
+        "dominio": DOMINIO, "extra": extra_head, "estilos": ESTILOS + extra_css,
+        "cabecera": cabecera(base), "cuerpo": cuerpo, "pie": pie(base), "js": PIE_JS,
+    }

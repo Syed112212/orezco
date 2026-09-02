@@ -117,7 +117,10 @@ def regla_serifa_400_sin_uso(nombre, css):
 # 4. Solo los artefactos flotantes llevan sombra
 # ─────────────────────────────────────────────────────────────────────────
 # El anillo de foco de un campo es accesibilidad, no decoracion.
-PERMITIDOS_SOMBRA = {".nav", ".maqueta", ".plano", ".btn-azul", "input", "textarea", "input:focus", "textarea:focus"}
+# El menu desplegable flota sobre el contenido, como la barra: la sombra
+# es lo que lo separa de lo que tapa.
+PERMITIDOS_SOMBRA = {".nav", ".nav-links", ".despliegue", ".maqueta", ".plano", ".btn-azul",
+                     "input", "textarea", "input:focus", "textarea:focus"}
 
 
 def regla_sombra_solo_flotantes(nombre, css):
@@ -229,6 +232,95 @@ def regla_tokens(css):
 
 
 # ─────────────────────────────────────────────────────────────────────────
+def regla_herencia_en_tarjetas(nombre, css):
+    """Un panel de fondo oscuro aclara su texto. Si dentro hay tarjetas de
+    fondo claro, ese color se hereda y queda gris claro sobre blanco: no se
+    lee. Cada hoja que aclare texto de panel tiene que devolverlo en la
+    tarjeta."""
+    aclara = re.findall(
+        r"\.panel\.([a-z-]+)\s+\.cuerpo\s*\{[^}]*color\s*:\s*"
+        r"(?:#[0-9a-fA-F]{3,6}|rgba?\([^)]*\))", css)
+    if not aclara:
+        return
+    if not re.search(r"\.panel\s+\.tarjeta[^{]*\{[^}]*color\s*:", css):
+        fallo("herencia-en-tarjetas",
+              "%s: los paneles '%s' cambian el color del texto y ninguna regla lo "
+              "devuelve dentro de .tarjeta; quedaria ilegible sobre el fondo claro"
+              % (nombre, "', '".join(sorted(set(aclara)))))
+
+
+def regla_barra_intacta(nombre, css):
+    """La barra se queda arriba y por encima de todo. Cualquier regla
+    posterior que vuelva a declarar su 'position' o su 'z-index' se lo
+    quita en silencio: el fallo solo se ve al desplazar la pagina, nunca
+    leyendo el codigo."""
+    tocan = []
+    for sel, bloque in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        partes = [s.strip() for s in sel.split(",")]
+        if not any(s == ".nav" for s in partes):
+            continue
+        if re.search(r"(^|;)\s*(position|z-index)\s*:", bloque):
+            tocan.append(sel.strip()[:46])
+    if len(tocan) > 1:
+        fallo("barra-intacta",
+              "%s: '%s' vuelve a declarar position/z-index de .nav; se pierde el "
+              "sticky y la barra queda por debajo del contenido"
+              % (nombre, tocan[-1]))
+
+
+# Clases del menu. Si alguna se declara dos veces en la misma hoja, la
+# segunda gana y el menu se rompe sin que nada falle: paso con .panel, que
+# era a la vez el desplegable y el panel de acento de la portada.
+CLASES_UNICAS = [".nav-in", ".nav-links", ".despliegue", ".menu-btn", ".area"]
+
+
+def sin_medias(css):
+    """El CSS sin los bloques @media. Redeclarar una clase dentro de una
+    consulta es lo normal -es como se adapta a la pantalla-; declararla
+    dos veces fuera es el fallo que buscamos."""
+    fuera, i = [], 0
+    while i < len(css):
+        j = css.find("@media", i)
+        if j < 0:
+            fuera.append(css[i:])
+            break
+        fuera.append(css[i:j])
+        k = css.find("{", j)
+        if k < 0:
+            break
+        hondo, k = 1, k + 1
+        while k < len(css) and hondo:
+            if css[k] == "{":
+                hondo += 1
+            elif css[k] == "}":
+                hondo -= 1
+            k += 1
+        i = k
+    return "".join(fuera)
+
+
+def regla_clases_del_menu(nombre, css):
+    """Una clase del menu declarada dos veces con 'position' o 'display' es
+    un fallo mudo: la segunda gana y el menu se descoloca sin que nada
+    proteste. Paso con .panel, que era a la vez el desplegable del menu y
+    el panel de acento de la portada.
+
+    No cuenta lo que va dentro de un @media -adaptar a la pantalla es su
+    trabajo-, ni las reglas que solo tocan la clase de pasada, como una
+    transicion compartida entre varios selectores."""
+    for clase in CLASES_UNICAS:
+        veces = 0
+        for sel, bloque in re.findall(r"([^{}]+)\{([^{}]*)\}", sin_medias(css)):
+            if clase not in [s.strip() for s in sel.split(",")]:
+                continue
+            if re.search(r"(^|;)\s*(position|display)\s*:", bloque):
+                veces += 1
+        if veces > 1:
+            fallo("clases-del-menu",
+                  "%s: '%s' fija position o display %d veces fuera de cualquier @media; "
+                  "la segunda gana y descoloca el menu sin dar ningun error"
+                  % (nombre, clase, veces))
+
 def main():
     index = leer("index.html")
     css_index = css_de(index)
@@ -241,6 +333,9 @@ def main():
         regla_sombra_solo_flotantes(nombre, css)
         regla_radios(nombre, css)
         regla_variables(nombre, css)
+        regla_herencia_en_tarjetas(nombre, css)
+        regla_barra_intacta(nombre, css)
+        regla_clases_del_menu(nombre, css)
 
     regla_contraste()
 
