@@ -166,7 +166,11 @@ def regla_variables(nombre, css):
     con_defecto = set(re.findall(r"var\((--[a-z0-9-]+)\s*,", css))
     # --i la fija el JS al generar las capas del logo 3D; --mark-bg y --l
     # son parametros de los simbolos. Ninguna es un olvido.
-    huerfanas = usadas - declaradas - con_defecto - {"--i", "--mark-bg", "--l", "--lado"}
+    # Las que se declaran en linea, sobre cada elemento, y por tanto no
+    # aparecen en la hoja: los saltos del punto que recorre un diagrama
+    # y el largo del trazo que se dibuja solo.
+    EN_LINEA = {"--i", "--mark-bg", "--l", "--lado", "--largo", "--p1", "--p2", "--p3"}
+    huerfanas = usadas - declaradas - con_defecto - EN_LINEA
     for v in sorted(huerfanas):
         fallo("variables", "%s: se usa var(%s) pero no esta declarada." % (nombre, v))
 
