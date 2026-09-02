@@ -140,11 +140,19 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 
 /* la pildora del titular: el gesto tipografico del sistema */
 .resalte{
-  display:inline-block;background:var(--marigold);color:#000;
-  border-radius:var(--r-pill);padding:0 .34em;
-  transform:rotate(-1.2deg);
+  position:relative;display:inline-block;color:#000;
+  padding:0 .3em;isolation:isolate;
 }
-.resalte.coral{background:var(--coral);color:#000}
+/* La pildora va detras del texto, no encima: el titular se lee
+   desde el primer fotograma pase lo que pase con la animacion.
+   Se anima con transform, que el navegador compone aparte y no
+   depende del hilo que repinta el fondo. */
+.resalte::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--marigold);border-radius:var(--r-pill);
+  transform:scaleX(0);transform-origin:left center;
+  animation:pinta .8s .3s cubic-bezier(.22,1,.36,1) forwards;
+}
 
 /* el wordmark reproduce el logo: "conta" navy, "es" verde */
 .wordmark{font-family:var(--marca);font-weight:600;letter-spacing:-.01em;color:var(--navy)}
@@ -515,8 +523,7 @@ main,footer{position:relative;z-index:1}
    el navegador anima sin recalcular el diseno.                  */
 
 /* la pildora del titular se dibuja al cargar */
-.resalte{clip-path:inset(0 100% 0 0);animation:pinta .85s .35s cubic-bezier(.22,1,.36,1) forwards}
-@keyframes pinta{to{clip-path:inset(0 0 0 0)}}
+@keyframes pinta{to{transform:scaleX(1)}}}
 
 /* la barra de navegacion se compacta al bajar */
 .nav.encogida .nav-in{min-height:52px;padding-top:6px;padding-bottom:6px}
@@ -588,7 +595,7 @@ main,footer{position:relative;z-index:1}
 @keyframes late{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.12)}100%{transform:none;opacity:1}}
 
 @media(prefers-reduced-motion:reduce){
-  .resalte{clip-path:none;animation:none}
+  .resalte::before{transform:none;animation:none}
   .cascada > *{opacity:1;transform:none;animation:none}
   .plano.nuevo .barras i{transform:none;animation:none}
   .cinta-pista{animation:none}
@@ -1217,9 +1224,10 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   ];
   var ANCHO_L = 168, ALTO_L = 116, MARGEN = 26;  // la lamina, en su imagen
 
+  var MINIMO_ENTRE_CUADROS = 1000 / 30;   // 30 por segundo basta para algo tan lento
   var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var estrecho = window.matchMedia("(max-width: 760px)").matches;
-  var CUANTAS = estrecho ? 10 : 24;
+  var CUANTAS = estrecho ? 8 : 18;
 
   /* ---- las imagenes de las laminas, dibujadas una sola vez ---- */
   var sellos = [];
@@ -1411,10 +1419,13 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   });
   function cuadro(ahora) {
     if (!vivo) return;
-    var dt = antes ? Math.min((ahora - antes) / 1000, .05) : 0;
+    requestAnimationFrame(cuadro);
+    // A treinta por segundo no se nota y se deja libre la mitad del hilo
+    // principal, que es el que dibuja el texto.
+    if (antes && ahora - antes < MINIMO_ENTRE_CUADROS) return;
+    var dt = antes ? Math.min((ahora - antes) / 1000, .08) : 0;
     antes = ahora;
     pinta(dt);
-    requestAnimationFrame(cuadro);
   }
   requestAnimationFrame(cuadro);
 })();
