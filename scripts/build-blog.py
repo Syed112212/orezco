@@ -393,7 +393,7 @@ def construir_articulo(a):
   </div>
 </article>'''
 
-    return pagina("%s: Contaes" % a["titulo"], a["descripcion"], url, cuerpo, ld, base="")
+    return pagina("%s · Contaes" % a["titulo"], a["descripcion"], url, cuerpo, ld, base="")
 
 
 def construir_indice():
@@ -422,7 +422,7 @@ def construir_indice():
  "publisher":{"@type":"Organization","name":"Contaes","url":"%s/"}}
 </script>''' % (DOMINIO, DOMINIO)
 
-    return pagina("Blog: Contaes", "Migraciones de ERP, contabilidad para pymes e inteligencia artificial aplicada a la gestión. Lo que aprendemos construyendo Contaes.",
+    return pagina("Blog · Contaes", "Migraciones de ERP, contabilidad para pymes e inteligencia artificial aplicada a la gestión. Lo que aprendemos construyendo Contaes.",
                   "%s/blog/" % DOMINIO, cuerpo, ld, base="")
 
 
@@ -435,7 +435,7 @@ def construir_404():
     <a class="btn btn-azul" href="/">Volver al inicio</a>
   </div>
 </section>'''
-    return pagina("Página no encontrada: Contaes", "La página que buscas no existe.",
+    return pagina("Página no encontrada · Contaes", "La página que buscas no existe.",
                   "%s/404.html" % DOMINIO, cuerpo,
                   '<meta name="robots" content="noindex">', base="")
 

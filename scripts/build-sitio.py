@@ -88,13 +88,16 @@ def cierre(titulo="¿Te enseñamos cómo funciona?",
 
 def rejilla_tarjetas(entradas, base, columnas=3):
     """entradas: [(ruta, titulo, pie)]"""
+    # Sin barrita de color arriba: no codificaba nada (ni orden, ni
+    # categoria, ni estado) y la decoracion que no significa nada es lo
+    # primero que hace que una pagina parezca hecha por una maquina.
     tarjetas = []
-    for i, (ruta, titulo, pie) in enumerate(entradas):
+    for ruta, titulo, pie in entradas:
         tarjetas.append(
             '    <a class="tarjeta" href="%s%s">\n'
-            '      <span class="franja" style="background:%s"></span>\n'
-            '      <h2 class="tarjeta-tit">%s</h2>\n      <p>%s</p>\n    </a>'
-            % (base, ruta, COLORES[i % len(COLORES)], titulo, pie))
+            '      <h2 class="tarjeta-tit">%s</h2>\n      <p>%s</p>\n'
+            '      <span class="tarjeta-mas" aria-hidden="true">Ver</span>\n    </a>'
+            % (base, ruta, titulo, pie))
     clase = "rejilla" if columnas == 3 else "rejilla-2"
     return '<div class="%s revela">\n%s\n  </div>' % (clase, "\n".join(tarjetas))
 
@@ -124,7 +127,7 @@ def nombre_de(slug):
 # Paginas de modulo y de capacidad
 # ─────────────────────────────────────────────────────────────────────
 def pagina_funcionalidad(slug, d, es_modulo):
-    rastro = migas(("/", "Inicio"), ("/funcionalidades/", "Producto"), (None, d["titulo"]))
+    rastro = migas(("/", "Inicio"), ("/funcionalidades/", "Software"), (None, d["titulo"]))
     conecta = "".join(
         '    <li><b>%s</b><span>%s</span></li>\n'
         % ('<a href="/funcionalidades/%s/" style="color:inherit">%s</a>' % (s, nombre_de(s)), por)
@@ -158,7 +161,7 @@ def pagina_funcionalidad(slug, d, es_modulo):
 </section>
 
 %(cierre)s''' % {
-        "enc": encabezado("Producto" if es_modulo else "Lo que lo hace distinto",
+        "enc": encabezado("Software" if es_modulo else "Lo que lo hace distinto",
                           d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">" + d["lema"] + "</span>",
                           d["entradilla"], rastro),
         "prosa": prosa(d["secciones"]),
@@ -168,14 +171,14 @@ def pagina_funcionalidad(slug, d, es_modulo):
         "cierre": cierre(),
     }
     return P.pagina(
-        "%s: Contaes" % d["titulo"],
+        "%s · Contaes" % d["titulo"],
         d["entradilla"][:158],
         "%s/funcionalidades/%s/" % (DOMINIO, slug),
         cuerpo)
 
 
 def pagina_funcionalidades():
-    rastro = migas(("/", "Inicio"), (None, "Producto"))
+    rastro = migas(("/", "Inicio"), (None, "Software"))
     cuerpo = '''%(enc)s
 
 <section class="seccion">
@@ -195,14 +198,14 @@ def pagina_funcionalidades():
 </section>
 
 %(cierre)s''' % {
-        "enc": encabezado("Producto", "Ocho áreas, un solo sistema",
+        "enc": encabezado("Software", "Ocho áreas, un solo sistema",
                           "Un ERP no es una suma de programas: es un sitio donde cada hecho se registra "
                           "una vez y aparece en todos los sitios donde hace falta.", rastro),
         "modulos": rejilla_tarjetas([("funcionalidades/%s/" % s, n, d) for s, n, d in P.MODULOS], "/"),
         "capacidades": rejilla_tarjetas([("funcionalidades/%s/" % s, n, d) for s, n, d in P.CAPACIDADES], "/"),
         "cierre": cierre(),
     }
-    return P.pagina("Producto: Contaes",
+    return P.pagina("Producto · Contaes",
                     "Los ocho módulos de Contaes y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.",
                     "%s/funcionalidades/" % DOMINIO, cuerpo)
 
@@ -264,7 +267,7 @@ def pagina_servicio(area, slug, d):
         "otras": otras,
         "cierre": cierre(),
     }
-    return P.pagina("%s: Contaes" % d["titulo"],
+    return P.pagina("%s · Contaes" % d["titulo"],
                     " ".join(d["entradilla"].split())[:158],
                     "%s/%s/%s/" % (DOMINIO, area, slug), cuerpo)
 
@@ -286,7 +289,7 @@ def pagina_area(area, titulo, entradilla, extra=""):
         "extra": extra,
         "cierre": cierre(),
     }
-    return P.pagina("%s: Contaes" % titulo,
+    return P.pagina("%s · Contaes" % titulo,
                     " ".join(entradilla.split())[:158],
                     "%s/%s/" % (DOMINIO, area), cuerpo)
 
@@ -337,7 +340,7 @@ def pagina_sector(slug, d):
                          "En la primera llamada preferimos escuchar cómo trabajáis antes que enseñar pantallas. "
                          "Si no encajamos, se dice ahí."),
     }
-    return P.pagina("ERP para %s: Contaes" % d["titulo"].lower(),
+    return P.pagina("ERP para %s · Contaes" % d["titulo"].lower(),
                     d["entradilla"][:158],
                     "%s/sectores/%s/" % (DOMINIO, slug), cuerpo)
 
@@ -367,7 +370,7 @@ def pagina_sectores():
         "rejilla": rejilla_tarjetas([("sectores/%s/" % s, n, d) for s, n, d in P.SECTORES], "/"),
         "cierre": cierre(),
     }
-    return P.pagina("Sectores: Contaes",
+    return P.pagina("Sectores · Contaes",
                     "Fabricación, distribución, construcción, comercio, logística, servicios, instalaciones y agroalimentario: el mismo ERP contado desde el problema de cada sector.",
                     "%s/sectores/" % DOMINIO, cuerpo)
 
@@ -403,7 +406,7 @@ def pagina_glosario():
                          "Un glosario sirve para entender el vocabulario. Para saber qué te toca a ti "
                          "hace falta mirar tu caso."),
     }
-    return P.pagina("Glosario de contabilidad y fiscalidad: Contaes",
+    return P.pagina("Glosario de contabilidad y fiscalidad · Contaes",
                     "Asiento, base imponible, devengo, IVA repercutido, modelos 303, 111, 130, 347, VeriFactu y más de veinte términos explicados en claro.",
                     "%s/glosario/" % DOMINIO, cuerpo, extra_head=ld)
 
@@ -442,7 +445,7 @@ def pagina_calendario():
                          "Es exactamente para lo que existe Contaes: la contabilidad al día y los "
                          "modelos presentados por un asesor."),
     }
-    return P.pagina("Calendario fiscal para pymes y autónomos: Contaes",
+    return P.pagina("Calendario fiscal para pymes y autónomos · Contaes",
                     "Modelos 303, 111, 115, 130, 349, 347, 390, 190 y 200: qué se presenta en cada mes del año y de dónde salen los datos.",
                     "%s/calendario-fiscal/" % DOMINIO, cuerpo)
 
@@ -473,7 +476,7 @@ def pagina_preguntas():
                           "ante Hacienda.", rastro),
         "items": items, "cierre": cierre(),
     }
-    return P.pagina("Preguntas frecuentes: Contaes",
+    return P.pagina("Preguntas frecuentes · Contaes",
                     "Si está disponible, qué hace la IA y qué no, quién firma los modelos, cómo se migra desde otro ERP y cuánto costará.",
                     "%s/preguntas/" % DOMINIO, cuerpo, extra_head=ld)
 
@@ -497,7 +500,7 @@ def pagina_simple(slug, etiqueta, titulo, entradilla, secciones, meta,
         "prosa": prosa(secciones), "extra": extra,
         "cierre": cierre(*cierre_txt) if cierre_txt else cierre(),
     }
-    return P.pagina("%s: Contaes" % titulo, meta, "%s/%s" % (DOMINIO, slug), cuerpo)
+    return P.pagina("%s · Contaes" % titulo, meta, "%s/%s" % (DOMINIO, slug), cuerpo)
 
 
 def pagina_precios():
@@ -548,7 +551,7 @@ def pagina_precios():
                          "Cuéntanos cuánta gente sois, qué usáis hoy y cuántas facturas movéis al mes. "
                          "Con eso se puede hablar de números con sentido."),
     }
-    return P.pagina("Precios: Contaes",
+    return P.pagina("Precios · Contaes",
                     "Todavía no hay tarifa pública porque el producto está en desarrollo. Esto es de qué dependerá el precio y qué no vamos a hacer.",
                     "%s/precios/" % DOMINIO, cuerpo)
 
@@ -600,7 +603,7 @@ def pagina_integraciones():
                           "el producto está en desarrollo.", rastro),
         "filas": filas, "cierre": cierre(),
     }
-    return P.pagina("Integraciones: Contaes",
+    return P.pagina("Integraciones · Contaes",
                     "Hoja de ruta de integraciones de Contaes: bancos, Agencia Tributaria, correo, tiendas en línea y pasarelas de pago. Ninguna disponible todavía.",
                     "%s/integraciones/" % DOMINIO, cuerpo)
 
@@ -642,7 +645,7 @@ def pagina_demo():
         "campos": CAMPOS_DEMO,
         "buzon": F.BUZON,
     }
-    return P.pagina("Pedir una demo: Contaes",
+    return P.pagina("Pedir una demo · Contaes",
                     "Una demo sobre vuestro caso concreto. Si no encajamos, se dice en la primera llamada.",
                     "%s/demo/" % DOMINIO, cuerpo)
 
@@ -671,13 +674,13 @@ def pagina_gracias():
     <h2 style="margin-top:0">Mientras tanto</h2>
     <p class="cuerpo" style="margin-bottom:22px">Si quieres ir haciendote una idea, estas tres paginas son las que mas cuentan.</p>
     <div class="rejilla">
-      <a class="tarjeta" href="/funcionalidades/asesoria-fiscal/"><span class="franja" style="background:var(--verde)"></span><h2 class="tarjeta-tit">Asesoria fiscal incluida</h2><p>Lo que de verdad separa a Contaes de un ERP normal.</p></a>
-      <a class="tarjeta" href="/migracion/"><span class="franja" style="background:var(--cian)"></span><h2 class="tarjeta-tit">Migracion</h2><p>Como se cambia de sistema sin parar la empresa.</p></a>
-      <a class="tarjeta" href="/preguntas/"><span class="franja" style="background:var(--azul-marca)"></span><h2 class="tarjeta-tit">Preguntas</h2><p>Incluidas las incomodas.</p></a>
+      <a class="tarjeta" href="/funcionalidades/asesoria-fiscal/"><h2 class="tarjeta-tit">Asesoria fiscal incluida</h2><p>Lo que de verdad separa a Contaes de un ERP normal.</p></a>
+      <a class="tarjeta" href="/migracion/"><h2 class="tarjeta-tit">Migracion</h2><p>Como se cambia de sistema sin parar la empresa.</p></a>
+      <a class="tarjeta" href="/preguntas/"><h2 class="tarjeta-tit">Preguntas</h2><p>Incluidas las incomodas.</p></a>
     </div>
   </div>
 </section>'''
-    return P.pagina("Gracias: Contaes",
+    return P.pagina("Gracias · Contaes",
                     "Hemos recibido tu mensaje. Te contestamos pronto.",
                     "%s/gracias/" % DOMINIO, cuerpo, noindex=True)
 
@@ -813,7 +816,7 @@ def paginas_legales():
             "aviso": extra,
             "prosa": prosa(secciones),
         }
-        salidas[ruta + "index.html"] = P.pagina("%s: Contaes" % titulo, meta,
+        salidas[ruta + "index.html"] = P.pagina("%s · Contaes" % titulo, meta,
                                                 "%s/%s" % (DOMINIO, ruta), cuerpo)
     return salidas
 

@@ -204,8 +204,13 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
    pero no debe verse como una cabecera de seccion. */
 .tarjeta-tit{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .tarjeta p{font-size:15px;color:var(--grafito)}
-a.tarjeta{text-decoration:none;color:inherit;display:block}
-.tarjeta .franja{height:5px;border-radius:var(--r-pill);margin-bottom:14px;width:44px}
+a.tarjeta{text-decoration:none;color:inherit;display:grid;align-content:start;gap:7px}
+/* La senal de que la tarjeta lleva a algun sitio. Aparece al pasar,
+   asi que no compite con el texto cuando se esta leyendo. */
+.tarjeta-mas{font-size:13.5px;font-weight:500;color:var(--azul);opacity:0;
+  transform:translateX(-4px);transition:opacity .2s ease,transform .2s ease}
+.tarjeta-mas::after{content:" \2192"}
+a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;transform:none}
 .lista{list-style:none;margin:0;padding:0}
 .lista li{padding:14px 0;border-bottom:1px solid var(--borde);display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;color:var(--grafito)}
 .lista li:last-child{border-bottom:0}

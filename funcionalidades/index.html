@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Producto: Contaes</title>
+<title>Producto · Contaes</title>
 <meta name="description" content="Los ocho módulos de Contaes y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.">
 <link rel="canonical" href="https://contaes.com/funcionalidades/">
 <meta name="theme-color" content="#f6f5f4">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <meta property="og:site_name" content="Contaes">
-<meta property="og:title" content="Producto: Contaes">
+<meta property="og:title" content="Producto · Contaes">
 <meta property="og:description" content="Los ocho módulos de Contaes y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
@@ -123,8 +123,13 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
    pero no debe verse como una cabecera de seccion. */
 .tarjeta-tit{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .tarjeta p{font-size:15px;color:var(--grafito)}
-a.tarjeta{text-decoration:none;color:inherit;display:block}
-.tarjeta .franja{height:5px;border-radius:var(--r-pill);margin-bottom:14px;width:44px}
+a.tarjeta{text-decoration:none;color:inherit;display:grid;align-content:start;gap:7px}
+/* La senal de que la tarjeta lleva a algun sitio. Aparece al pasar,
+   asi que no compite con el texto cuando se esta leyendo. */
+.tarjeta-mas{font-size:13.5px;font-weight:500;color:var(--azul);opacity:0;
+  transform:translateX(-4px);transition:opacity .2s ease,transform .2s ease}
+.tarjeta-mas::after{content:" 92"}
+a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;transform:none}
 .lista{list-style:none;margin:0;padding:0}
 .lista li{padding:14px 0;border-bottom:1px solid var(--borde);display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;color:var(--grafito)}
 .lista li:last-child{border-bottom:0}
@@ -280,8 +285,8 @@ footer small{font-size:13.5px;color:#8b93b5}
 <main id="contenido">
 <section class="encabezado">
   <div class="wrap estrecho">
-    <p class="migas"><a href="/">Inicio</a> &rsaquo; <span>Producto</span></p>
-    <p class="etiqueta">Producto</p>
+    <p class="migas"><a href="/">Inicio</a> &rsaquo; <span>Software</span></p>
+    <p class="etiqueta">Software</p>
     <h1 style="margin-top:10px">Ocho áreas, un solo sistema</h1>
     <p class="editorial">Un ERP no es una suma de programas: es un sitio donde cada hecho se registra una vez y aparece en todos los sitios donde hace falta.</p>
   </div>
@@ -293,44 +298,44 @@ footer small{font-size:13.5px;color:#8b93b5}
     <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">Ocho áreas sobre el mismo libro mayor. Lo que se registra en una está disponible en las demás sin exportar nada.</p>
     <div class="rejilla revela">
     <a class="tarjeta" href="/funcionalidades/contabilidad/">
-      <span class="franja" style="background:var(--verde)"></span>
       <h2 class="tarjeta-tit">Contabilidad</h2>
       <p>Asientos, plan contable, conciliación y cierre</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/facturacion/">
-      <span class="franja" style="background:var(--cian)"></span>
       <h2 class="tarjeta-tit">Facturación</h2>
       <p>Emisión, rectificativas y seguimiento de cobro</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/inventario/">
-      <span class="franja" style="background:var(--azul-marca)"></span>
       <h2 class="tarjeta-tit">Inventario</h2>
       <p>Existencias, lotes y movimientos entre almacenes</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/compras/">
-      <span class="franja" style="background:var(--marigold)"></span>
       <h2 class="tarjeta-tit">Compras</h2>
       <p>Proveedores, pedidos y recepciones</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/ventas/">
-      <span class="franja" style="background:var(--cielo)"></span>
       <h2 class="tarjeta-tit">Ventas y clientes</h2>
       <p>Presupuestos, pedidos y la ficha de cada cuenta</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/proyectos/">
-      <span class="franja" style="background:var(--coral)"></span>
       <h2 class="tarjeta-tit">Proyectos</h2>
       <p>Tareas, horas imputadas y rentabilidad</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/personal/">
-      <span class="franja" style="background:var(--navy)"></span>
       <h2 class="tarjeta-tit">Personal</h2>
       <p>Plantilla, ausencias y gastos</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/informes/">
-      <span class="franja" style="background:var(--azul)"></span>
       <h2 class="tarjeta-tit">Informes</h2>
       <p>Cuadros de mando sobre los datos en vivo</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
   </div>
   </div>
@@ -342,29 +347,29 @@ footer small{font-size:13.5px;color:#8b93b5}
     <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">Un ERP más no hacía falta. Lo que cambia el trabajo es que la contabilidad esté al día sola y que los modelos los presente alguien por ti.</p>
     <div class="rejilla revela">
     <a class="tarjeta" href="/funcionalidades/asesoria-fiscal/">
-      <span class="franja" style="background:var(--verde)"></span>
       <h2 class="tarjeta-tit">Asesoría fiscal incluida</h2>
       <p>Los modelos, preparados y presentados por un asesor</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/asistente-ia/">
-      <span class="franja" style="background:var(--cian)"></span>
       <h2 class="tarjeta-tit">Asistente con IA</h2>
       <p>Preguntar en tu idioma en vez de buscar por menús</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/escaner-facturas/">
-      <span class="franja" style="background:var(--azul-marca)"></span>
       <h2 class="tarjeta-tit">Escáner de facturas</h2>
       <p>La factura del proveedor entra sin teclearla</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/conciliacion-bancaria/">
-      <span class="franja" style="background:var(--marigold)"></span>
       <h2 class="tarjeta-tit">Conciliación bancaria</h2>
       <p>El extracto contra los apuntes, cuadrado</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
     <a class="tarjeta" href="/funcionalidades/verifactu/">
-      <span class="franja" style="background:var(--cielo)"></span>
       <h2 class="tarjeta-tit">VeriFactu</h2>
       <p>Qué es y a qué obliga tu sistema de facturación</p>
+      <span class="tarjeta-mas" aria-hidden="true">Ver</span>
     </a>
   </div>
   </div>
