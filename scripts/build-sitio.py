@@ -26,25 +26,13 @@ import contenido as C
 import contenido_paginas as CP
 import contenido_servicios as CS
 import formulario as F
+import dibujos as DIB
+import diagramas_pagina as DP
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 DOMINIO = P.DOMINIO
-CAMPOS_DEMO = """        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Nombre
-          <input name="Nombre" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Empresa
-          <input name="Empresa" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Email
-          <input name="Email" type="email" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué usáis ahora
-          <input name="Sistema actual" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-"""
-
 COLORES = ["var(--verde)", "var(--cian)", "var(--azul-marca)", "var(--marigold)",
            "var(--cielo)", "var(--coral)", "var(--navy)", "var(--azul)"]
 
@@ -145,6 +133,12 @@ def pagina_funcionalidad(slug, d, es_modulo):
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+%(dibujo)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap estrecho revela">
     <h2>Qué incluye</h2>
 %(incluye)s
@@ -166,6 +160,7 @@ def pagina_funcionalidad(slug, d, es_modulo):
                           d["entradilla"], rastro),
         "prosa": prosa(d["secciones"]),
         "aviso": aviso,
+        "dibujo": DP.para("funcionalidades/" + slug),
         "incluye": lista_incluye(d["incluye"]),
         "conecta": conecta,
         "cierre": cierre(),
@@ -236,6 +231,12 @@ def pagina_servicio(area, slug, d):
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+%(dibujo)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap estrecho revela">
     <h2>Qué incluye</h2>
 %(incluye)s
@@ -262,6 +263,7 @@ def pagina_servicio(area, slug, d):
                           + d["lema"] + "</span>",
                           d["entradilla"], rastro),
         "prosa": prosa(d["secciones"]),
+        "dibujo": DP.para("%s/%s" % (area, slug)),
         "incluye": lista_incluye(d["incluye"]),
         "limites": d["limites"],
         "otras": otras,
@@ -623,27 +625,15 @@ def pagina_demo():
     <ul class="lista" style="margin-bottom:30px">
 %(filas)s    </ul>
 
-    <form class="tarjeta" action="%(endpoint)s" method="POST" style="display:grid;gap:16px;padding:26px">
-%(ocultos)s      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-%(campos)s      </div>
-      <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué es lo que peor lleváis
-        <textarea name="Mensaje" rows="4" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta);resize:vertical"></textarea>
-      </label>
-      <p style="font-size:13px;color:var(--piedra);line-height:1.5">Al enviar aceptas que usemos estos datos para responderte. Nada más. Puedes leer el detalle en la <a href="/legal/privacidad/" style="color:var(--azul)">política de privacidad</a>.</p>
-      <div><button class="btn btn-azul" type="submit">Enviar <span class="flecha" aria-hidden="true">&rarr;</span></button></div>
-    </form>
+%(formulario)s
 
-    <p class="cuerpo" style="margin-top:20px">O escríbenos directamente a <a href="mailto:%(buzon)s" style="color:var(--azul)">%(buzon)s</a>.</p>
   </div>
 </section>''' % {
         "enc": encabezado("Hablemos", "¿Te enseñamos cómo funciona?",
                           "Una demo sobre tu caso concreto, no una presentación genérica. "
                           "Cuéntanos qué usáis ahora y qué es lo que peor lleváis.", rastro),
         "filas": filas,
-        "endpoint": F.ENDPOINT,
-        "ocultos": F.campos_ocultos("Demo de Contaes"),
-        "campos": CAMPOS_DEMO,
-        "buzon": F.BUZON,
+        "formulario": F.form("Contaes: peticion desde /demo/"),
     }
     return P.pagina("Pedir una demo · Contaes",
                     "Una demo sobre vuestro caso concreto. Si no encajamos, se dice en la primera llamada.",

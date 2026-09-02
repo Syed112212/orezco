@@ -201,6 +201,75 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 @keyframes parpadeo{50%{opacity:.35}}
 
 /* ── 5. Navegacion ───────────────────────────────────────── */
+/* ── El formulario que se rellena pinchando ──────────────── */
+.form{display:grid;gap:26px;max-width:720px;margin:0 auto;text-align:left}
+.bloque{border:0;padding:0;margin:0;display:grid;gap:10px}
+.bloque legend{font-size:17px;font-weight:600;color:var(--tinta-fuerte);padding:0;margin-bottom:2px}
+.bloque-pie{font-size:14px;color:var(--piedra);margin:-4px 0 6px}
+.bloque > .op,.bloque > label.op{margin:0}
+.bloque{grid-auto-flow:row}
+.bloque:has(.op:not(.op-chica)){grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.bloque legend,.bloque-pie,.subs{grid-column:1/-1}
+
+/* La opcion: una superficie que se pincha. Sin sombra, sin color de
+   relleno hasta que se elige, y con la marca de elegido a la izquierda
+   para que se lea de un vistazo cual esta activa. */
+.op{
+  position:relative;display:flex;gap:10px;align-items:flex-start;
+  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-btn);
+  padding:12px 14px;cursor:pointer;
+  transition:border-color .16s ease,background .16s ease,transform .16s ease;
+}
+.op:hover{border-color:rgba(0,0,0,.2)}
+.op input{position:absolute;opacity:0;width:0;height:0}
+.op-cuerpo{display:grid;gap:2px;min-width:0}
+.op-tit{font-size:15px;font-weight:500;color:var(--tinta-fuerte);line-height:1.3}
+.op-pie{font-size:13px;color:var(--piedra);line-height:1.35}
+.op::before{
+  content:"";flex:0 0 auto;width:17px;height:17px;margin-top:1px;
+  border:1.5px solid rgba(0,0,0,.22);border-radius:50%;
+  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease;
+}
+.op:has(input[type=checkbox])::before{border-radius:var(--r-sm)}
+.op:has(input:checked){border-color:var(--azul);background:var(--azul-tinte)}
+.op:has(input:checked)::before{border-color:var(--azul);background:var(--azul)}
+/* El punto del boton de opcion: hueco blanco por fuera, azul dentro. */
+.op:has(input[type=radio]:checked)::before{box-shadow:inset 0 0 0 3px var(--blanco)}
+/* La casilla marcada lleva su marca de verificacion, que se lee mucho
+   mejor que un cuadrado de color a 17px. */
+.op:has(input[type=checkbox]:checked)::before{
+  background:var(--azul) no-repeat center/11px 11px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.4 4.6 9 10 3.2' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.op:has(input:focus-visible){outline:2px solid var(--azul);outline-offset:2px}
+.op-chica{padding:10px 12px}
+.op-chica .op-tit{font-size:14.5px}
+
+.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.sub{display:grid;gap:7px;align-content:start}
+.sub-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra);margin:0}
+
+.datos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dato{display:grid;gap:6px;font-size:14px;color:var(--piedra)}
+.dato i{font-style:normal;color:rgba(0,0,0,.34)}
+.dato-ancho{margin-top:14px}
+.dato input,.dato textarea{
+  font:inherit;font-size:15px;color:var(--tinta);
+  padding:11px 13px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-btn);resize:vertical;
+  transition:border-color .16s ease,box-shadow .16s ease;
+}
+.dato input:focus,.dato textarea:focus{outline:0;border-color:var(--azul);box-shadow:0 0 0 3px var(--azul-tinte)}
+.form-nota{font-size:13px;color:var(--piedra);line-height:1.5}
+.form-nota a{color:var(--azul)}
+.form-acciones{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.form-alt{font-size:14px;color:var(--piedra)}
+.form-alt a{color:var(--azul)}
+@media(max-width:640px){
+  .datos{grid-template-columns:1fr}
+  .bloque:has(.op:not(.op-chica)){grid-template-columns:1fr}
+}
+
 /* === barra y pie: los reescribe scripts/sync-portada.py === */
 /* ── La barra, con el menu por areas ─────────────────────── */
 .nav{position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03)}
@@ -1087,27 +1156,96 @@ main,footer{position:relative;z-index:1}
       </div>
 
       <form class="form" id="form-contacto" action="https://formsubmit.co/info@contaes.com" method="POST">
-        <input type="hidden" name="_subject" value="Demo de Contaes - desde la portada">
-        <input type="hidden" name="_next" value="https://contaes.com/gracias/">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true"
-               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-        <div class="par">
-          <label>Nombre<input type="text" name="Nombre" autocomplete="name" required></label>
-          <label>Empresa<input type="text" name="Empresa" autocomplete="organization"></label>
+      <input type="hidden" name="_subject" value="Contaes: peticion desde la portada">
+      <input type="hidden" name="_next" value="https://contaes.com/gracias/">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true"
+             style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <fieldset class="bloque">
+        <legend>¿Qué eres?</legend>
+        <label class="op"><input type="radio" name="Perfil" value="Autónomo"><span class="op-cuerpo"><span class="op-tit">Autónomo</span><span class="op-pie">Trabajo por mi cuenta</span></span></label>
+        <label class="op"><input type="radio" name="Perfil" value="Startup"><span class="op-cuerpo"><span class="op-tit">Startup</span><span class="op-pie">Empresa joven, buscando crecer</span></span></label>
+        <label class="op"><input type="radio" name="Perfil" value="Pyme"><span class="op-cuerpo"><span class="op-tit">Pyme</span><span class="op-pie">Empresa con equipo</span></span></label>
+        <label class="op"><input type="radio" name="Perfil" value="Aún no tengo empresa"><span class="op-cuerpo"><span class="op-tit">Aún no tengo empresa</span><span class="op-pie">Quiero montarla</span></span></label>
+      </fieldset>
+      <fieldset class="bloque">
+        <legend>¿Cuántos sois?</legend>
+        <label class="op"><input type="radio" name="Equipo" value="Solo yo"><span class="op-cuerpo"><span class="op-tit">Solo yo</span></span></label>
+        <label class="op"><input type="radio" name="Equipo" value="2 a 5"><span class="op-cuerpo"><span class="op-tit">2 a 5</span></span></label>
+        <label class="op"><input type="radio" name="Equipo" value="6 a 15"><span class="op-cuerpo"><span class="op-tit">6 a 15</span></span></label>
+        <label class="op"><input type="radio" name="Equipo" value="16 a 50"><span class="op-cuerpo"><span class="op-tit">16 a 50</span></span></label>
+        <label class="op"><input type="radio" name="Equipo" value="Más de 50"><span class="op-cuerpo"><span class="op-tit">Más de 50</span></span></label>
+      </fieldset>
+      <fieldset class="bloque">
+        <legend>¿Con qué te podemos ayudar?</legend>
+        <p class="bloque-pie">Marca lo que te suene. No hace falta acertar: para eso está la llamada.</p>
+        <div class="subs">
+        <div class="sub">
+          <p class="sub-tit">La gestoría</p>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: La gestoría" value="Contabilidad"><span class="op-cuerpo"><span class="op-tit">Contabilidad</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: La gestoría" value="Impuestos y modelos"><span class="op-cuerpo"><span class="op-tit">Impuestos y modelos</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: La gestoría" value="Nóminas y laboral"><span class="op-cuerpo"><span class="op-tit">Nóminas y laboral</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: La gestoría" value="Legal y contratos"><span class="op-cuerpo"><span class="op-tit">Legal y contratos</span></span></label>
         </div>
-        <div class="par">
-          <label>Email<input type="email" name="Email" autocomplete="email" required></label>
-          <label>Qué usáis ahora<input type="text" name="Sistema actual" placeholder="Odoo, SAP, hojas de cálculo..."></label>
+        <div class="sub">
+          <p class="sub-tit">El software</p>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: El software" value="Facturación"><span class="op-cuerpo"><span class="op-tit">Facturación</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: El software" value="Inventario y almacén"><span class="op-cuerpo"><span class="op-tit">Inventario y almacén</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: El software" value="Compras y proveedores"><span class="op-cuerpo"><span class="op-tit">Compras y proveedores</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: El software" value="Ventas y clientes"><span class="op-cuerpo"><span class="op-tit">Ventas y clientes</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: El software" value="Proyectos y horas"><span class="op-cuerpo"><span class="op-tit">Proyectos y horas</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: El software" value="Informes"><span class="op-cuerpo"><span class="op-tit">Informes</span></span></label>
         </div>
-        <label>Qué es lo que peor lleváis<textarea name="Mensaje" rows="3"></textarea></label>
-        <p class="form-nota">Al enviar aceptas que usemos estos datos para responderte. Nada mas. Puedes leer el detalle en la <a href="/legal/privacidad/">política de privacidad</a>.</p>
-        <div class="form-acciones">
-          <button class="btn btn-azul" type="submit">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></button>
+        <div class="sub">
+          <p class="sub-tit">Crecer</p>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: Crecer" value="Dirección financiera"><span class="op-cuerpo"><span class="op-tit">Dirección financiera</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: Crecer" value="Marketing"><span class="op-cuerpo"><span class="op-tit">Marketing</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: Crecer" value="Captación de clientes"><span class="op-cuerpo"><span class="op-tit">Captación de clientes</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: Crecer" value="Bot de llamadas y WhatsApp"><span class="op-cuerpo"><span class="op-tit">Bot de llamadas y WhatsApp</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: Crecer" value="Financiación y subvenciones"><span class="op-cuerpo"><span class="op-tit">Financiación y subvenciones</span></span></label>
+          <label class="op op-chica"><input type="checkbox" name="Necesita: Crecer" value="Vender fuera de España"><span class="op-cuerpo"><span class="op-tit">Vender fuera de España</span></span></label>
         </div>
-        <p class="form-alt">O escríbenos directamente a <a href="mailto:info@contaes.com">info@contaes.com</a></p>
-      </form>
+        </div>
+      </fieldset>
+      <fieldset class="bloque">
+        <legend>¿Qué usas hoy?</legend>
+        <label class="op"><input type="radio" name="Sistema actual" value="Una gestoría"><span class="op-cuerpo"><span class="op-tit">Una gestoría</span></span></label>
+        <label class="op"><input type="radio" name="Sistema actual" value="Hojas de cálculo"><span class="op-cuerpo"><span class="op-tit">Hojas de cálculo</span></span></label>
+        <label class="op"><input type="radio" name="Sistema actual" value="Un ERP (Odoo, SAP, Sage...)"><span class="op-cuerpo"><span class="op-tit">Un ERP (Odoo, SAP, Sage...)</span></span></label>
+        <label class="op"><input type="radio" name="Sistema actual" value="Un programa de facturación"><span class="op-cuerpo"><span class="op-tit">Un programa de facturación</span></span></label>
+        <label class="op"><input type="radio" name="Sistema actual" value="Nada todavía"><span class="op-cuerpo"><span class="op-tit">Nada todavía</span></span></label>
+      </fieldset>
+      <fieldset class="bloque">
+        <legend>¿Para cuándo?</legend>
+        <label class="op"><input type="radio" name="Plazo" value="Cuanto antes"><span class="op-cuerpo"><span class="op-tit">Cuanto antes</span></span></label>
+        <label class="op"><input type="radio" name="Plazo" value="Este trimestre"><span class="op-cuerpo"><span class="op-tit">Este trimestre</span></span></label>
+        <label class="op"><input type="radio" name="Plazo" value="Aún estoy mirando"><span class="op-cuerpo"><span class="op-tit">Aún estoy mirando</span></span></label>
+      </fieldset>
+      <fieldset class="bloque">
+        <legend>¿Cómo te llamamos?</legend>
+        <div class="datos">
+          <label class="dato"><span>Nombre</span>
+            <input type="text" name="Nombre" autocomplete="name" required></label>
+          <label class="dato"><span>Empresa <i>(opcional)</i></span>
+            <input type="text" name="Empresa" autocomplete="organization"></label>
+          <label class="dato"><span>Email</span>
+            <input type="email" name="Email" autocomplete="email" required></label>
+          <label class="dato"><span>Teléfono <i>(opcional)</i></span>
+            <input type="tel" name="Teléfono" autocomplete="tel"></label>
+        </div>
+        <label class="dato dato-ancho"><span>¿Algo más que debamos saber? <i>(opcional)</i></span>
+          <textarea name="Mensaje" rows="3"></textarea></label>
+      </fieldset>
+      <p class="form-nota">Al enviar aceptas que usemos estos datos para
+        responderte. Nada más. Puedes leer el detalle en la
+        <a href="/legal/privacidad/">política de privacidad</a>.</p>
+      <div class="form-acciones">
+        <button class="btn btn-azul" type="submit">Enviar
+          <span class="flecha" aria-hidden="true">&rarr;</span></button>
+        <span class="form-alt">o escríbenos a <a href="mailto:info@contaes.com">info@contaes.com</a></span>
+      </div>
+    </form>
     </div>
   </section>
 
@@ -1661,18 +1799,34 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
 /* ── Contacto ────────────────────────────────────────────────
    Unico valor que hay que rellenar. Vacio: se muestra la pildora
    informativa y el formulario queda oculto.                    */
-/* -- Contacto -----------------------------------------------
-   El formulario se envia solo, con su action y su method: no hace
-   falta JavaScript para que funcione. Aqui solo queda avisar de que
-   se esta enviando, para que nadie pulse dos veces.            */
+/* -- El formulario ------------------------------------------
+   Se envia solo, con su action y su method: sin JavaScript
+   funciona igual. Esto solo desactiva el boton al enviar, para
+   que nadie pulse dos veces, y avisa si no se ha marcado nada
+   en las necesidades, que es lo unico que de verdad hace falta
+   para preparar la llamada.                                 */
 (function () {
   var f = document.getElementById("form-contacto");
   if (!f) return;
-  f.addEventListener("submit", function () {
+  f.addEventListener("submit", function (e) {
+    var marcadas = f.querySelectorAll('input[type=checkbox]:checked').length;
+    var aviso = f.querySelector(".form-aviso");
+    if (!marcadas) {
+      e.preventDefault();
+      if (!aviso) {
+        aviso = document.createElement("p");
+        aviso.className = "form-aviso form-nota";
+        aviso.style.color = "#b3261e";
+        f.querySelector(".form-acciones").insertAdjacentElement("beforebegin", aviso);
+      }
+      aviso.textContent = "Marca al menos una cosa en la que podamos ayudarte.";
+      var primera = f.querySelector('input[type=checkbox]');
+      if (primera) primera.closest(".bloque").scrollIntoView({block: "center", behavior: "smooth"});
+      return;
+    }
+    if (aviso) aviso.remove();
     var b = f.querySelector('button[type="submit"]');
-    if (!b) return;
-    b.disabled = true;
-    b.textContent = "Enviando...";
+    if (b) { b.disabled = true; b.textContent = "Enviando..."; }
   });
 })();
 </script>

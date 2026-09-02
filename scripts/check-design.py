@@ -129,6 +129,10 @@ def regla_sombra_solo_flotantes(nombre, css):
             continue
         if re.search(r"box-shadow:\s*none", bloque):
             continue
+        # una sombra 'inset' no eleva nada: es una forma de dibujar dentro
+        # del propio elemento, como el punto de un boton de opcion
+        if re.search(r"box-shadow:\s*inset", bloque):
+            continue
         selectores = {s.strip().split(":")[0].split(" ")[-1] for s in sel.split(",")}
         if not (selectores & PERMITIDOS_SOMBRA):
             aviso("sombra-solo-flotantes",
