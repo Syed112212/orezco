@@ -271,17 +271,37 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://contaes.com/blog/cerrar-el-ejercicio-sin-agobios.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://contaes.com/blog/senales-de-que-tu-erp-se-esta-degradando.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/que-mira-hacienda-cuando-pide-los-libros.html</loc>
+    <loc>https://contaes.com/blog/factura-electronica-obligatoria.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://contaes.com/blog/facturar-mucho-y-ganar-poco.html</loc>
+    <loc>https://contaes.com/blog/subvenciones-por-donde-empezar.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/que-es-el-runway.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/autonomo-o-sociedad.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/cambiar-de-gestoria.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -291,27 +311,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://contaes.com/blog/vender-fuera-de-espana-iva.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/contrato-o-factura-de-autonomo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/pacto-de-socios.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/de-donde-vienen-tus-clientes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://contaes.com/blog/migrar-de-odoo-sin-parar-la-empresa.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/el-recuento-anual-llega-tarde.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/como-elegir-un-erp-sin-equivocarse.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/cobrar-antes-sin-perder-clientes.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://contaes.com/blog/modelos-que-presenta-una-pyme-cada-ano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
