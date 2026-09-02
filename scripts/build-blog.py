@@ -1948,6 +1948,12 @@ article.post{padding:44px 0 80px}
 .cierre-post{margin-top:44px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:28px}
 .cierre-post h3{margin-bottom:8px}
 .cierre-post p{color:var(--grafito);margin-bottom:18px}
+.enlaces-tema{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.enlaces-tema a{
+  display:inline-block;font-size:14.5px;font-weight:500;color:var(--azul);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--borde);
+  border-radius:var(--r-btn);background:var(--papel);transition:border-color .16s ease}
+.enlaces-tema a:hover{border-color:var(--azul)}
 .post-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);overflow:hidden;text-decoration:none;color:inherit;display:grid;transition:transform .22s ease,border-color .22s ease}
 .post-card:hover{transform:translateY(-4px);border-color:rgba(0,0,0,.18)}
 .post-card .franja{height:7px}
@@ -1962,6 +1968,38 @@ article.post{padding:44px 0 80px}
 def pagina(titulo, descripcion, url, cuerpo, extra_head="", base=""):
     return P.pagina(titulo, descripcion, url, cuerpo,
                     extra_head=extra_head, base=base, extra_css=ESTILOS_BLOG)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# A que paginas lleva cada articulo, segun su tema. Un blog sin enlaces
+# hacia dentro es un callejon sin salida: se lee y se cierra la pestana.
+# ─────────────────────────────────────────────────────────────────────
+POR_TEMA = {
+    'Fiscalidad': [('gestoria/fiscal/', 'Fiscal y modelos'), ('calendario-fiscal/', 'Calendario fiscal'), ('glosario/', 'Glosario')],
+    'Contabilidad': [('gestoria/contabilidad/', 'Contabilidad'), ('funcionalidades/conciliacion-bancaria/', 'Conciliación bancaria'), ('funcionalidades/contabilidad/', 'El libro mayor')],
+    'Laboral': [('gestoria/laboral/', 'Laboral y nóminas'), ('funcionalidades/personal/', 'Personal'), ('gestoria/legal/', 'Legal')],
+    'Legal': [('gestoria/legal/', 'Legal'), ('para/startups/', 'Startups'), ('gestoria/fiscal/', 'Fiscal y modelos')],
+    'Finanzas': [('crecimiento/cfo/', 'CFO a tu lado'), ('funcionalidades/informes/', 'Informes'), ('crecimiento/financiacion/', 'Financiación')],
+    'Financiación': [('crecimiento/financiacion/', 'Financiación pública y privada'), ('crecimiento/cfo/', 'CFO a tu lado'), ('para/startups/', 'Startups')],
+    'Marketing': [('crecimiento/cmo/', 'CMO a tu lado'), ('crecimiento/prospeccion/', 'Prospección comercial'), ('crecimiento/bots/', 'Bot de llamadas y WhatsApp')],
+    'Ventas': [('crecimiento/prospeccion/', 'Prospección comercial'), ('funcionalidades/ventas/', 'Ventas y clientes'), ('crecimiento/cmo/', 'CMO a tu lado')],
+    'Internacional': [('crecimiento/internacionalizacion/', 'Internacionalización'), ('gestoria/fiscal/', 'Fiscal y modelos'), ('funcionalidades/verifactu/', 'VeriFactu')],
+    'Sistemas': [('funcionalidades/', 'El software'), ('migracion/', 'Migración'), ('seguridad/', 'Seguridad y datos')],
+    'Operaciones': [('funcionalidades/inventario/', 'Inventario'), ('funcionalidades/compras/', 'Compras'), ('sectores/', 'Por sector')],
+    'Facturación': [('funcionalidades/facturacion/', 'Facturación'), ('funcionalidades/verifactu/', 'VeriFactu'), ('funcionalidades/escaner-facturas/', 'Escáner de facturas')],
+    'Tesorería': [('crecimiento/cfo/', 'CFO a tu lado'), ('funcionalidades/conciliacion-bancaria/', 'Conciliación bancaria'), ('funcionalidades/facturacion/', 'Seguimiento de cobro')],
+    'Empresa': [('para/', 'Para quién es'), ('gestoria/legal/', 'Legal'), ('precios/', 'Precios')],
+    'Gestión': [('gestoria/', 'La gestoría'), ('funcionalidades/informes/', 'Informes'), ('crecimiento/', 'Crecimiento')],
+    'Migración': [('migracion/', 'Migración'), ('gestoria/', 'La gestoría'), ('funcionalidades/', 'El software')],
+    'Asesoría': [('gestoria/', 'La gestoría'), ('gestoria/fiscal/', 'Fiscal y modelos'), ('precios/', 'Precios')],
+    'Diagnóstico': [('demo/', 'Hablemos'), ('gestoria/', 'La gestoría'), ('precios/', 'Precios')],
+    'Inteligencia artificial': [('funcionalidades/asistente-ia/', 'Asistente con IA'), ('funcionalidades/escaner-facturas/', 'Escáner de facturas'), ('funcionalidades/informes/', 'Informes')],
+}
+ENLACES_POR_DEFECTO = [('gestoria/', 'La gestoría'), ('funcionalidades/', 'El software'), ('crecimiento/', 'Crecimiento')]
+
+
+def enlaces_de(tema):
+    return POR_TEMA.get(tema, ENLACES_POR_DEFECTO)
 
 
 def construir_articulo(a):
@@ -1997,6 +2035,9 @@ def construir_articulo(a):
         % (o["slug"], ACENTOS[o["acento"]], ACENTOS[o["acento"]], o["tema"], o["titulo"], o["descripcion"][:110] + "…")
         for o in otros)
 
+    enlaces = "".join('<li><a href="/%s">%s</a></li>' % e
+                       for e in enlaces_de(a.get("tema", "")))
+
     cuerpo = f'''<article class="post">
   <div class="wrap estrecho">
     <p class="migas"><a href="/">Inicio</a> · <a href="/blog/">Blog</a></p>
@@ -2007,9 +2048,10 @@ def construir_articulo(a):
     <div class="cuerpo">{a["cuerpo"]}</div>
 
     <div class="cierre-post revela">
-      <h3>Contaes es un ERP con IA para pymes</h3>
-      <p>Está en desarrollo. Si te interesa lo que cuenta este artículo, escríbenos y te avisamos cuando haya algo que enseñar.</p>
-      <a class="btn btn-azul" href="/#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
+      <h3>Sigue por aquí</h3>
+      <p>Si lo que has leído te toca de cerca, estas son las páginas que lo cuentan desde nuestro lado.</p>
+      <ul class="enlaces-tema">{enlaces}</ul>
+      <a class="btn btn-azul" href="/demo/">Hablemos <span class="flecha" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 
