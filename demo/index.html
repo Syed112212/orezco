@@ -277,48 +277,37 @@ footer small{font-size:13.5px;color:#8b93b5}
     <li><b>La llamada no cuesta nada</b><span>y no hay nada que firmar para tenerla.</span></li>
     </ul>
 
-    <form class="tarjeta" id="form-demo" style="display:grid;gap:16px;padding:26px" hidden>
+    <form class="tarjeta" action="https://formsubmit.co/info@contaes.com" method="POST" style="display:grid;gap:16px;padding:26px">
+        <input type="hidden" name="_subject" value="Demo de Contaes">
+        <input type="hidden" name="_next" value="https://contaes.com/gracias/">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Nombre
-          <input name="nombre" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+          <input name="Nombre" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
         </label>
         <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Empresa
-          <input name="empresa" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+          <input name="Empresa" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
         </label>
         <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Email
-          <input name="email" type="email" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+          <input name="Email" type="email" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
         </label>
         <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué usáis ahora
-          <input name="sistema" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+          <input name="Sistema actual" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
         </label>
       </div>
       <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué es lo que peor lleváis
-        <textarea name="mensaje" rows="4" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta);resize:vertical"></textarea>
+        <textarea name="Mensaje" rows="4" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta);resize:vertical"></textarea>
       </label>
-      <p style="font-size:13px;color:var(--piedra)">Al enviar se abrirá tu programa de correo con el mensaje preparado. Tus datos se usan solo para responderte; puedes leer cómo en la <a href="/legal/privacidad/" style="color:var(--azul)">política de privacidad</a>.</p>
+      <p style="font-size:13px;color:var(--piedra);line-height:1.5">Al enviar aceptas que usemos estos datos para responderte. Nada más. Puedes leer el detalle en la <a href="/legal/privacidad/" style="color:var(--azul)">política de privacidad</a>.</p>
       <div><button class="btn btn-azul" type="submit">Enviar <span class="flecha" aria-hidden="true">&rarr;</span></button></div>
     </form>
 
-    <p id="demo-directo" class="cuerpo">Escríbenos a <a href="mailto:info@contaes.com" style="color:var(--azul)">info@contaes.com</a> contándonos qué usáis hoy y qué es lo que peor lleváis.</p>
+    <p class="cuerpo" style="margin-top:20px">O escríbenos directamente a <a href="mailto:info@contaes.com" style="color:var(--azul)">info@contaes.com</a>.</p>
   </div>
 </section>
-
-<script>
-/* El formulario solo aparece si hay JavaScript: sin el, prepararlo no
-   serviria de nada y el correo directo funciona igual. */
-(function(){
-  var f=document.getElementById("form-demo"); if(!f)return;
-  f.hidden=false;
-  f.addEventListener("submit",function(e){
-    e.preventDefault();
-    var d=new FormData(f), l=[];
-    d.forEach(function(v,k){ if(String(v).trim()) l.push(k+": "+v); });
-    window.location.href="mailto:info@contaes.com"
-      +"?subject="+encodeURIComponent("Demo de Contaes")
-      +"&body="+encodeURIComponent(l.join("\n"));
-  });
-})();
-</script>
 </main>
 <footer>
   <div class="wrap">

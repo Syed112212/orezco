@@ -24,11 +24,26 @@ sys.path.insert(0, AQUI)
 import plantilla as P
 import contenido as C
 import contenido_paginas as CP
+import formulario as F
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 DOMINIO = P.DOMINIO
+CAMPOS_DEMO = """        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Nombre
+          <input name="Nombre" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+        </label>
+        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Empresa
+          <input name="Empresa" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+        </label>
+        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Email
+          <input name="Email" type="email" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+        </label>
+        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué usáis ahora
+          <input name="Sistema actual" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
+        </label>
+"""
+
 COLORES = ["var(--verde)", "var(--cian)", "var(--azul-marca)", "var(--marigold)",
            "var(--cielo)", "var(--coral)", "var(--navy)", "var(--azul)"]
 
@@ -520,56 +535,66 @@ def pagina_demo():
     <ul class="lista" style="margin-bottom:30px">
 %(filas)s    </ul>
 
-    <form class="tarjeta" id="form-demo" style="display:grid;gap:16px;padding:26px" hidden>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Nombre
-          <input name="nombre" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Empresa
-          <input name="empresa" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Email
-          <input name="email" type="email" required style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-        <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué usáis ahora
-          <input name="sistema" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta)">
-        </label>
-      </div>
+    <form class="tarjeta" action="%(endpoint)s" method="POST" style="display:grid;gap:16px;padding:26px">
+%(ocultos)s      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+%(campos)s      </div>
       <label style="display:grid;gap:6px;font-size:14px;color:var(--piedra)">Qué es lo que peor lleváis
-        <textarea name="mensaje" rows="4" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta);resize:vertical"></textarea>
+        <textarea name="Mensaje" rows="4" style="font:inherit;padding:11px 13px;border:1px solid var(--borde);border-radius:var(--r-btn);background:var(--blanco);color:var(--tinta);resize:vertical"></textarea>
       </label>
-      <p style="font-size:13px;color:var(--piedra)">Al enviar se abrirá tu programa de correo con el mensaje preparado. Tus datos se usan solo para responderte; puedes leer cómo en la <a href="/legal/privacidad/" style="color:var(--azul)">política de privacidad</a>.</p>
+      <p style="font-size:13px;color:var(--piedra);line-height:1.5">Al enviar aceptas que usemos estos datos para responderte. Nada más. Puedes leer el detalle en la <a href="/legal/privacidad/" style="color:var(--azul)">política de privacidad</a>.</p>
       <div><button class="btn btn-azul" type="submit">Enviar <span class="flecha" aria-hidden="true">&rarr;</span></button></div>
     </form>
 
-    <p id="demo-directo" class="cuerpo">Escríbenos a <a href="mailto:info@contaes.com" style="color:var(--azul)">info@contaes.com</a> contándonos qué usáis hoy y qué es lo que peor lleváis.</p>
+    <p class="cuerpo" style="margin-top:20px">O escríbenos directamente a <a href="mailto:%(buzon)s" style="color:var(--azul)">%(buzon)s</a>.</p>
   </div>
-</section>
-
-<script>
-/* El formulario solo aparece si hay JavaScript: sin el, prepararlo no
-   serviria de nada y el correo directo funciona igual. */
-(function(){
-  var f=document.getElementById("form-demo"); if(!f)return;
-  f.hidden=false;
-  f.addEventListener("submit",function(e){
-    e.preventDefault();
-    var d=new FormData(f), l=[];
-    d.forEach(function(v,k){ if(String(v).trim()) l.push(k+": "+v); });
-    window.location.href="mailto:info@contaes.com"
-      +"?subject="+encodeURIComponent("Demo de Contaes")
-      +"&body="+encodeURIComponent(l.join("\\n"));
-  });
-})();
-</script>''' % {
+</section>''' % {
         "enc": encabezado("Hablemos", "¿Te enseñamos cómo funciona?",
                           "Una demo sobre tu caso concreto, no una presentación genérica. "
                           "Cuéntanos qué usáis ahora y qué es lo que peor lleváis.", rastro),
         "filas": filas,
+        "endpoint": F.ENDPOINT,
+        "ocultos": F.campos_ocultos("Demo de Contaes"),
+        "campos": CAMPOS_DEMO,
+        "buzon": F.BUZON,
     }
     return P.pagina("Pedir una demo — Contaes",
                     "Una demo sobre vuestro caso concreto. Si no encajamos, se dice en la primera llamada.",
                     "%s/demo/" % DOMINIO, cuerpo)
+
+
+
+def pagina_gracias():
+    """Donde aterriza quien acaba de enviar el formulario. Sin indexar:
+    no tiene sentido llegar aqui desde un buscador."""
+    cuerpo = '''<section class="encabezado">
+  <div class="wrap estrecho" style="text-align:center;padding:60px 0 20px">
+    <p class="etiqueta">Recibido</p>
+    <h1 style="margin-top:10px">Gracias. Te contestamos pronto.</h1>
+    <p class="editorial" style="margin:18px auto 0;max-width:52ch">
+      Hemos recibido lo que nos has contado. Lo leemos nosotros, no un formulario
+      automatico, asi que la respuesta tarda lo que tarda una persona en leerlo.
+    </p>
+    <div style="margin-top:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a class="btn btn-azul" href="/">Volver al inicio <span class="flecha" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-tinte" href="/blog/">Leer el blog</a>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho revela">
+    <h2 style="margin-top:0">Mientras tanto</h2>
+    <p class="cuerpo" style="margin-bottom:22px">Si quieres ir haciendote una idea, estas tres paginas son las que mas cuentan.</p>
+    <div class="rejilla">
+      <a class="tarjeta" href="/funcionalidades/asesoria-fiscal/"><span class="franja" style="background:var(--verde)"></span><h3>Asesoria fiscal incluida</h3><p>Lo que de verdad separa a Contaes de un ERP normal.</p></a>
+      <a class="tarjeta" href="/migracion/"><span class="franja" style="background:var(--cian)"></span><h3>Migracion</h3><p>Como se cambia de sistema sin parar la empresa.</p></a>
+      <a class="tarjeta" href="/preguntas/"><span class="franja" style="background:var(--azul-marca)"></span><h3>Preguntas</h3><p>Incluidas las incomodas.</p></a>
+    </div>
+  </div>
+</section>'''
+    return P.pagina("Gracias — Contaes",
+                    "Hemos recibido tu mensaje. Te contestamos pronto.",
+                    "%s/gracias/" % DOMINIO, cuerpo, noindex=True)
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -632,9 +657,10 @@ def paginas_legales():
              ("Qué datos recogemos y por qué", [
                  "Solo los que nos envías tú al pedir una demo o escribirnos: nombre, empresa, correo "
                  "electrónico, el sistema que usáis hoy y lo que nos cuentes en el mensaje.",
-                 "El formulario de este sitio no envía nada a ningún servidor nuestro: abre tu programa "
-                 "de correo con el mensaje preparado. Es decir, los datos viajan por tu correo, y nosotros "
-                 "los recibimos como recibiríamos cualquier email.",
+                 "El formulario se envía a través de FormSubmit (formsubmit.co), un servicio que "
+                 "recibe el envío y lo reenvía a nuestro buzón. Es decir, tus datos pasan por ese "
+                 "servicio antes de llegarnos: lo decimos porque es tu derecho saberlo. Si prefieres "
+                 "evitarlo, escríbenos directamente a %s." % d["correo"],
                  "La finalidad es responderte y, si procede, preparar una demostración. No los usamos "
                  "para nada más ni los cedemos a terceros.",
              ]),
@@ -656,7 +682,9 @@ def paginas_legales():
              ("Encargados y transferencias", [
                  "Este sitio está alojado en GitHub Pages, que registra datos técnicos de la conexión "
                  "—como la dirección IP— para servir las páginas y protegerse de abusos. Las tipografías "
-                 "se cargan desde Google Fonts, lo que implica una conexión a servidores de Google.",
+                 "se cargan desde Google Fonts, lo que implica una conexión a servidores de Google. El "
+                 "formulario se procesa a través de FormSubmit, que actúa como encargado del tratamiento "
+                 "para hacernos llegar tu mensaje.",
                  "Ambos servicios pueden implicar transferencias internacionales de datos amparadas en los "
                  "mecanismos previstos por el Reglamento General de Protección de Datos.",
              ])]),
@@ -749,6 +777,7 @@ def main():
     salidas["precios/index.html"] = pagina_precios()
     salidas["integraciones/index.html"] = pagina_integraciones()
     salidas["demo/index.html"] = pagina_demo()
+    salidas["gracias/index.html"] = pagina_gracias()
 
     salidas["sobre/index.html"] = pagina_simple(
         "sobre/", "Empresa", "Qué estamos construyendo",

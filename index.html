@@ -427,6 +427,8 @@ footer small{font-size:13.5px;color:#8b93b5}
 .form input::placeholder,.form textarea::placeholder{color:var(--piedra)}
 .form input:focus,.form textarea:focus{outline:0;border-color:var(--azul);box-shadow:0 0 0 3px rgba(0,117,222,.15)}
 .form .btn{margin-top:4px;justify-self:start}
+.form-nota{font-size:13px;color:var(--piedra);line-height:1.5}
+.form-nota a{color:var(--azul)}
 .form-alt{margin:14px 0 0;font-size:15px;color:var(--grafito);text-align:center}
 .form-alt a{color:var(--azul)}
 .pildora-info{display:inline-block;background:var(--blanco);border:1px solid var(--borde);color:var(--grafito);border-radius:var(--r-pill);padding:13px 22px;font-size:15px}
@@ -1013,21 +1015,27 @@ main,footer{position:relative;z-index:1}
 
       <div id="sin-canal"><span class="pildora-info">Canal de contacto disponible en breve</span></div>
 
-      <form class="form" id="form-contacto" hidden>
+      <form class="form" id="form-contacto" action="https://formsubmit.co/info@contaes.com" method="POST">
+        <input type="hidden" name="_subject" value="Demo de Contaes - desde la portada">
+        <input type="hidden" name="_next" value="https://contaes.com/gracias/">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="par">
-          <label>Nombre<input type="text" name="nombre" autocomplete="name" required></label>
-          <label>Empresa<input type="text" name="empresa" autocomplete="organization"></label>
+          <label>Nombre<input type="text" name="Nombre" autocomplete="name" required></label>
+          <label>Empresa<input type="text" name="Empresa" autocomplete="organization"></label>
         </div>
         <div class="par">
-          <label>Email<input type="email" name="email" autocomplete="email" required></label>
-          <label>Qué usáis ahora<input type="text" name="actual" placeholder="Odoo, SAP, hojas de cálculo..."></label>
+          <label>Email<input type="email" name="Email" autocomplete="email" required></label>
+          <label>Qué usáis ahora<input type="text" name="Sistema actual" placeholder="Odoo, SAP, hojas de cálculo..."></label>
         </div>
-        <label>Qué es lo que peor lleváis<textarea name="mensaje" rows="3"></textarea></label>
+        <label>Qué es lo que peor lleváis<textarea name="Mensaje" rows="3"></textarea></label>
+        <p class="form-nota">Al enviar aceptas que usemos estos datos para responderte. Nada mas. Puedes leer el detalle en la <a href="/legal/privacidad/">política de privacidad</a>.</p>
         <div class="form-acciones">
-          <button class="btn btn-azul" type="submit">Pedir una demo</button>
-          <button class="btn btn-tinte" type="button" id="solo-avisadme">Solo avisadme cuando esté</button>
+          <button class="btn btn-azul" type="submit">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></button>
         </div>
-        <p class="form-alt">O escríbenos directamente a <a id="enlace-directo" href="#">&nbsp;</a></p>
+        <p class="form-alt">O escríbenos directamente a <a href="mailto:info@contaes.com">info@contaes.com</a></p>
       </form>
     </div>
   </section>
@@ -1545,51 +1553,18 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
 /* ── Contacto ────────────────────────────────────────────────
    Unico valor que hay que rellenar. Vacio: se muestra la pildora
    informativa y el formulario queda oculto.                    */
-var CONTACTO = "info@contaes.com";
-
+/* -- Contacto -----------------------------------------------
+   El formulario se envia solo, con su action y su method: no hace
+   falta JavaScript para que funcione. Aqui solo queda avisar de que
+   se esta enviando, para que nadie pulse dos veces.            */
 (function () {
-  if (!CONTACTO) return;
-  var form = document.getElementById("form-contacto");
-  var pildora = document.getElementById("sin-canal");
-  var directo = document.getElementById("enlace-directo");
-  if (!form || !pildora || !directo) return;
-
-  pildora.hidden = true;
-  form.hidden = false;
-  directo.href = "mailto:" + CONTACTO;
-  directo.textContent = CONTACTO;
-
-  // Salida de compromiso minimo: mismo buzon, otro asunto, para poder
-  // separar a quien quiere demo de quien solo quiere que le avisen.
-  var avisar = document.getElementById("solo-avisadme");
-  if (avisar) {
-    avisar.addEventListener("click", function () {
-      var d = new FormData(form);
-      window.location.href = "mailto:" + CONTACTO +
-        "?subject=" + encodeURIComponent("Avisadme cuando Contaes este listo") +
-        "&body=" + encodeURIComponent(
-          "Avisadme cuando haya algo que enseñar." + String.fromCharCode(10) + String.fromCharCode(10) +
-          "Nombre: "  + (d.get("nombre")  || "") + String.fromCharCode(10) +
-          "Empresa: " + (d.get("empresa") || "") + String.fromCharCode(10) +
-          "Email: "   + (d.get("email")   || ""));
-    });
-  }
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var d = new FormData(form);
-    var cuerpo = [
-      "Nombre: "     + (d.get("nombre")  || ""),
-      "Empresa: "    + (d.get("empresa") || ""),
-      "Email: "      + (d.get("email")   || ""),
-      "Usan ahora: " + (d.get("actual")  || ""),
-      "",
-      d.get("mensaje") || ""
-    ].join(String.fromCharCode(10));
-
-    window.location.href = "mailto:" + CONTACTO +
-      "?subject=" + encodeURIComponent("Demo de Contaes - " + (d.get("empresa") || d.get("nombre") || "")) +
-      "&body="    + encodeURIComponent(cuerpo);
+  var f = document.getElementById("form-contacto");
+  if (!f) return;
+  f.addEventListener("submit", function () {
+    var b = f.querySelector('button[type="submit"]');
+    if (!b) return;
+    b.disabled = true;
+    b.textContent = "Enviando...";
   });
 })();
 </script>
