@@ -588,7 +588,7 @@ def cabecera(base=""):
         "marca": MARCA_SVG,
         "panel_gestoria": _panel(base, [("", [("gestoria/%s/" % s, n, d) for s, n, d in GESTORIA])]),
         "panel_crecimiento": _panel(base, [("", [("crecimiento/%s/" % s, n, d) for s, n, d in CRECIMIENTO])], doble=True),
-        "panel_software": _panel(base, [("Los ocho módulos", modulos), ("Lo que lo hace distinto", capacidades)], doble=True),
+        "panel_software": _panel(base, [("La gestión del día a día", modulos), ("Lo que lo hace distinto", capacidades)], doble=True),
         "panel_publico": _panel(base, [("Por tipo de empresa", [("para/%s/" % s, n, d) for s, n, d in PUBLICO]),
                                        ("Por sector", [("sectores/%s/" % s, n, d) for s, n, d in SECTORES])], doble=True),
         "panel_recursos": _panel(base, [("", [(r, n, d) for r, n, d in RECURSOS])]),

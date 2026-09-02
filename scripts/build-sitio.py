@@ -178,8 +178,8 @@ def pagina_funcionalidades():
 
 <section class="seccion">
   <div class="wrap">
-    <h2 style="margin-top:0">Los ocho módulos</h2>
-    <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">Ocho áreas sobre el mismo libro mayor. Lo que se registra en una está disponible en las demás sin exportar nada.</p>
+    <h2 style="margin-top:0">La gestión del día a día</h2>
+    <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">Todo sobre el mismo libro mayor: lo que se registra en un sitio está disponible en los demás sin exportar nada. Se activa lo que necesites y se deja fuera lo que no.</p>
     %(modulos)s
   </div>
 </section>
@@ -193,15 +193,16 @@ def pagina_funcionalidades():
 </section>
 
 %(cierre)s''' % {
-        "enc": encabezado("Software", "Ocho áreas, un solo sistema",
-                          "Un ERP no es una suma de programas: es un sitio donde cada hecho se registra "
-                          "una vez y aparece en todos los sitios donde hace falta.", rastro),
+        "enc": encabezado("Software", "Un solo sitio para toda la gestión",
+                          "El programa que usamos para llevarte la gestoría es el mismo al "
+                          "que tú entras. Cada hecho se registra una vez y aparece donde hace "
+                          "falta, sin exportar nada de un sitio a otro.", rastro),
         "modulos": rejilla_tarjetas([("funcionalidades/%s/" % s, n, d) for s, n, d in P.MODULOS], "/"),
         "capacidades": rejilla_tarjetas([("funcionalidades/%s/" % s, n, d) for s, n, d in P.CAPACIDADES], "/"),
         "cierre": cierre(),
     }
     return P.pagina("Producto · Contaes",
-                    "Los ocho módulos de Contaes y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.",
+                    "El software de Contaes: contabilidad, facturación, almacén, compras, ventas, proyectos e informes, y lo que lo hace distinto: asesoría fiscal incluida, asistente con IA, escáner de facturas y conciliación bancaria.",
                     "%s/funcionalidades/" % DOMINIO, cuerpo)
 
 
