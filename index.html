@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Contaes — El ERP con IA para pymes</title>
-<meta name="description" content="Contaes es un ERP con IA para pymes: le preguntas en lenguaje natural y te enseña los datos de la empresa, y ejecuta las gestiones rutinarias pidiendo permiso. Contabilidad, facturación, inventario, compras, ventas, proyectos, personal e informes.">
+<title>Contaes — ERP con IA y asesoría que presenta tus modelos</title>
+<meta name="description" content="Contaes es un ERP con IA y asesoría incluida para pymes: la IA lleva la contabilidad al día y prepara los modelos fiscales (303, 111, 130, 347), y un asesor los revisa y los presenta. Facturación, inventario, compras, ventas y personal en el mismo sitio.">
 <link rel="canonical" href="https://contaes.com/">
 <meta name="theme-color" content="#f6f5f4">
 
@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" href="assets/og.png">
 
 <meta property="og:site_name" content="Contaes">
-<meta property="og:title" content="Contaes — El ERP que se lleva solo">
-<meta property="og:description" content="Una IA que conoce todos los datos de tu empresa, te los enseña y hace las gestiones por ti.">
+<meta property="og:title" content="Contaes — El ERP que además presenta tus modelos">
+<meta property="og:description" content="Un ERP con IA y asesoría detrás. La IA prepara los modelos; un asesor los revisa y los presenta.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
 <meta property="og:url" content="https://contaes.com/">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Contaes — El ERP que se lleva solo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Contaes — El ERP que se lleva solo">
-<meta name="twitter:description" content="Una IA que conoce todos los datos de tu empresa, te los enseña y hace las gestiones por ti.">
+<meta name="twitter:title" content="Contaes — El ERP que además presenta tus modelos">
+<meta name="twitter:description" content="Un ERP con IA y asesoría detrás. La IA prepara los modelos; un asesor los revisa y los presenta.">
 <meta name="twitter:image" content="https://contaes.com/assets/og.png">
 
 <script type="application/ld+json">
@@ -33,7 +33,7 @@
   "@type": "SoftwareApplication",
   "name": "Contaes",
   "applicationCategory": "BusinessApplication",
-  "description": "ERP con inteligencia artificial para pymes: contabilidad, facturación, inventario, compras, ventas, proyectos, personal e informes.",
+  "description": "ERP con inteligencia artificial y asesoría incluida para pymes. La IA lleva la contabilidad al día y prepara los modelos fiscales; un asesor los revisa y los presenta.",
   "url": "https://contaes.com/",
   "inLanguage": "es",
   "publisher": { "@type": "Organization", "name": "Contaes", "url": "https://contaes.com/" }
@@ -376,6 +376,67 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 .form-alt a{color:var(--azul)}
 .pildora-info{display:inline-block;background:var(--blanco);border:1px solid var(--borde);color:var(--grafito);border-radius:var(--r-pill);padding:13px 22px;font-size:15px}
 
+
+/* ── Aversion a la perdida: el coste de no hacer nada ─────────
+   Preguntas, no cifras nuestras. Los numeros del lector son
+   creibles; unos inventados por nosotros no lo serian.          */
+.cuenta{margin-top:28px;background:rgba(0,0,0,.06);border-radius:var(--r-card);padding:22px 24px;max-width:62ch}
+.cuenta-tit{font-size:14px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;margin-bottom:14px;color:rgba(0,0,0,.62)}
+.cuenta-lista{margin:0;padding-left:20px;display:grid;gap:9px}
+.cuenta-lista li{font-size:17px;line-height:1.45;color:#000}
+.cuenta-pie{margin-top:14px;font-size:15px;color:rgba(0,0,0,.62)}
+
+/* ── Reversion del riesgo ─────────────────────────────────────
+   Lo que frena no es el precio: es el miedo a equivocarse.      */
+.garantias{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:820px;margin:0 auto 30px;text-align:left}
+.garantia{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:18px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.gicono{width:26px;height:26px;border-radius:var(--r-pill);background:var(--azul-tinte);color:#005fb8;display:grid;place-items:center;font-size:13px;font-weight:600}
+.garantia p{font-size:14px;color:var(--grafito);line-height:1.45}
+.garantia strong{color:var(--tinta-fuerte);font-weight:600;display:block}
+.form-acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+@media(max-width:760px){.garantias{grid-template-columns:1fr}}
+
+
+/* ── Los sectores, de fondo ───────────────────────────────────
+   Fabrica, obra, almacen, tienda, oficinas, puerto: a quien sirve
+   el ERP, dibujado plano y en la paleta. Es decoracion, va
+   aria-hidden y en opacidad baja para no competir con el texto.  */
+.escena{
+  position:relative;width:100%;max-width:1400px;margin:clamp(40px,6vw,72px) auto 0;
+  pointer-events:none;line-height:0;
+}
+.escena svg{width:100%;height:auto;display:block;opacity:.9}
+
+/* el avion cruza de lado a lado, muy despacio */
+.avion{animation:vuela 34s linear infinite}
+@keyframes vuela{
+  0%  {transform:translate(-140px,66px)}
+  100%{transform:translate(1300px,30px)}
+}
+/* el camion rueda por el suelo */
+.camion{animation:rueda 26s linear infinite}
+@keyframes rueda{
+  0%  {transform:translateX(-120px)}
+  100%{transform:translateX(1260px)}
+}
+/* el humo sube y se disipa */
+.humo{opacity:0;animation:sube 5s ease-out infinite;transform-origin:430px 98px}
+.humo.h2{animation-delay:1.6s}
+.humo.h3{animation-delay:3.2s}
+@keyframes sube{
+  0%  {opacity:0;   transform:translateY(0) scale(.4)}
+  18% {opacity:.20}
+  100%{opacity:0;   transform:translateY(-62px) scale(1.5)}
+}
+/* la pluma de la grua bascula */
+.pluma{animation:bascula 12s ease-in-out infinite;transform-origin:124px 95px}
+@keyframes bascula{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+/* las nubes se desplazan apenas */
+.nubes{animation:deriva 40s ease-in-out infinite}
+@keyframes deriva{0%,100%{transform:translateX(0)}50%{transform:translateX(34px)}}
+
+@media(max-width:700px){.escena{margin-top:36px}.escena svg{opacity:.75}}
+
 /* ── 16. Pie ─────────────────────────────────────────────── */
 footer{background:var(--medianoche);color:#c6cbe0;padding:44px 0}
 .foot-in{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:space-between}
@@ -395,7 +456,7 @@ footer small{font-size:14px;color:#8b93b5}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .losas,.mota,.escribiendo i,.marca-svg .mc-b{animation:none;opacity:1;transform:none}
+  .losas,.mota,.escribiendo i,.marca-svg .mc-b,.avion,.camion,.humo,.pluma,.nubes{animation:none}
   .entra{opacity:1;transform:none;animation:none}
   .revela{opacity:1;transform:none;transition:none}
   *{transition-duration:.01ms!important}
@@ -467,8 +528,8 @@ footer small{font-size:14px;color:#8b93b5}
     <div class="mota m3" aria-hidden="true">📦</div>
 
     <div class="wrap">
-      <h1 class="entra">El ERP que se <span class="resalte">lleva solo</span></h1>
-      <p class="editorial entra">Una IA que conoce todos los datos de tu empresa, te los enseña cuando preguntas y hace las gestiones por ti. Sin aprenderte por qué menú se llega a cada cosa.</p>
+      <h1 class="entra">El ERP que además <span class="resalte">presenta tus modelos</span></h1>
+      <p class="editorial entra">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta. Tú no tocas Hacienda.</p>
       <div class="hero-acciones entra">
         <a class="btn btn-azul" href="#contacto">Pedir una demo</a>
         <a class="btn btn-tinte" href="#ia">Ver cómo funciona</a>
@@ -497,6 +558,90 @@ footer small{font-size:14px;color:#8b93b5}
       </div>
       <p class="hero-nota">Ejemplo ilustrativo de la interfaz. No son datos reales.</p>
     </div>
+
+      <!-- Los sectores a los que sirve el ERP, de fondo. Decorativo:
+           no informa ni enlaza, por eso va aria-hidden. -->
+      <div class="escena" aria-hidden="true">
+        <svg viewBox="0 0 1200 240" preserveAspectRatio="xMidYMax meet">
+          <!-- nubes -->
+          <g class="nubes" fill="#0075de" fill-opacity=".07">
+            <ellipse cx="180" cy="46" rx="42" ry="15"/><ellipse cx="214" cy="40" rx="30" ry="13"/>
+            <ellipse cx="900" cy="34" rx="48" ry="16"/><ellipse cx="940" cy="30" rx="32" ry="12"/>
+          </g>
+
+          <!-- avion cruzando -->
+          <g class="avion">
+            <path d="M0 0 L34 8 L0 16 L7 8 Z" fill="#1E3A5F" fill-opacity=".5"/>
+            <path d="M12 8 L2 -8 L9 -8 L22 6 Z" fill="#1E3A5F" fill-opacity=".35"/>
+            <path d="M12 8 L2 24 L9 24 L22 10 Z" fill="#1E3A5F" fill-opacity=".35"/>
+            <rect class="estela" x="-70" y="7" width="66" height="2" rx="1" fill="#1E3A5F" fill-opacity=".16"/>
+          </g>
+
+          <!-- grua de obra -->
+          <g class="obra" fill="#f64932" fill-opacity=".26">
+            <rect x="120" y="96" width="7" height="98"/>
+            <g class="pluma"><rect x="72" y="92" width="118" height="6" rx="3"/><rect x="167" y="98" width="4" height="26" rx="2"/><rect x="161" y="122" width="16" height="12" rx="2"/></g>
+          </g>
+
+          <!-- fabrica con humo -->
+          <g class="fabrica">
+            <g fill="#1E3A5F" fill-opacity=".22">
+              <rect x="286" y="140" width="126" height="54" rx="3"/>
+              <path d="M286 140 L316 116 L346 140 Z"/><path d="M346 140 L376 116 L406 140 Z"/>
+              <rect x="420" y="104" width="20" height="90" rx="3"/>
+            </g>
+            <g fill="#615d59">
+              <circle class="humo h1" cx="430" cy="98" r="11"/>
+              <circle class="humo h2" cx="430" cy="98" r="9"/>
+              <circle class="humo h3" cx="430" cy="98" r="13"/>
+            </g>
+          </g>
+
+          <!-- almacen -->
+          <g fill="#ffb110" fill-opacity=".34">
+            <rect x="486" y="146" width="112" height="48" rx="3"/>
+            <path d="M486 146 L542 122 L598 146 Z"/>
+            <rect x="524" y="164" width="36" height="30" rx="2" fill="#615d59" fill-opacity=".22"/>
+          </g>
+
+          <!-- tienda -->
+          <g>
+            <rect x="640" y="150" width="86" height="44" rx="3" fill="#62aef0" fill-opacity=".34"/>
+            <rect x="634" y="142" width="98" height="10" rx="4" fill="#1F9EC4" fill-opacity=".4"/>
+            <rect x="660" y="164" width="26" height="30" rx="2" fill="#615d59" fill-opacity=".2"/>
+          </g>
+
+          <!-- oficinas -->
+          <g fill="#1E3A5F" fill-opacity=".18">
+            <rect x="770" y="104" width="54" height="90" rx="3"/>
+            <rect x="832" y="128" width="42" height="66" rx="3"/>
+          </g>
+          <g fill="#2FBF9B" fill-opacity=".5">
+            <rect x="782" y="118" width="10" height="10" rx="2"/><rect x="802" y="118" width="10" height="10" rx="2"/>
+            <rect x="782" y="140" width="10" height="10" rx="2"/><rect x="802" y="140" width="10" height="10" rx="2"/>
+            <rect x="844" y="144" width="9" height="9" rx="2"/><rect x="860" y="144" width="9" height="9" rx="2"/>
+          </g>
+
+          <!-- contenedores de puerto -->
+          <g>
+            <rect x="920" y="168" width="46" height="16" rx="2" fill="#f64932" fill-opacity=".3"/>
+            <rect x="920" y="150" width="46" height="16" rx="2" fill="#1F9EC4" fill-opacity=".3"/>
+            <rect x="974" y="168" width="46" height="16" rx="2" fill="#ffb110" fill-opacity=".38"/>
+            <rect x="1048" y="152" width="60" height="42" rx="3" fill="#1E3A5F" fill-opacity=".16"/>
+          </g>
+
+          <!-- camion rodando -->
+          <g class="camion">
+            <rect x="0" y="164" width="56" height="24" rx="3" fill="#1E6FB8" fill-opacity=".42"/>
+            <path d="M56 172 L78 172 L86 182 L86 188 L56 188 Z" fill="#1E3A5F" fill-opacity=".38"/>
+            <circle cx="18" cy="192" r="6" fill="#615d59" fill-opacity=".45"/>
+            <circle cx="72" cy="192" r="6" fill="#615d59" fill-opacity=".45"/>
+          </g>
+
+          <!-- suelo -->
+          <rect x="0" y="194" width="1200" height="2" fill="#615d59" fill-opacity=".18"/>
+        </svg>
+      </div>
   </section>
 
   <!-- ══ El problema ══ -->
@@ -505,6 +650,16 @@ footer small{font-size:14px;color:#8b93b5}
       <div class="panel marigold revela">
         <h2 style="margin-bottom:16px;max-width:24ch">Los ERP no fallan el primer año. Fallan al tercero.</h2>
         <p class="cuerpo" style="max-width:62ch;font-size:18px">Cuando ya nadie sabe por qué está puesto lo que está puesto. Un módulo que se instaló para un caso puntual y se quedó. Un campo que solo entiende quien ya no trabaja aquí. Facturas que llevan meses sin salir y nadie se ha dado cuenta. El sistema sigue funcionando, pero ha dejado de ser fiable.</p>
+
+        <div class="cuenta">
+          <p class="cuenta-tit">Tres preguntas con tus propios números</p>
+          <ol class="cuenta-lista">
+            <li>¿Cuántas horas al mes se van en trabajo manual que el sistema debería hacer solo?</li>
+            <li>¿Cuánto se tarda hoy en responder una pregunta que debería ser inmediata?</li>
+            <li>¿Cuánto dinero tienes ahora mismo facturado y sin cobrar sin que nadie lo esté vigilando?</li>
+          </ol>
+          <p class="cuenta-pie">No hace falta que nos las respondas. Multiplica la primera por doce y ya tienes el coste anual de no hacer nada.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -513,24 +668,26 @@ footer small{font-size:14px;color:#8b93b5}
   <section id="ia">
     <div class="wrap">
       <div class="panel medianoche revela">
-        <p class="etiqueta" style="color:#8b93b5;margin-bottom:14px">Software de gestión con IA</p>
-        <h2 style="margin-bottom:18px;max-width:22ch">Un ERP en <span class="resalte">lenguaje natural</span></h2>
-        <p class="cuerpo" style="max-width:60ch">La mayoría de los ERP fallan por lo mismo: la información está dentro, pero hay que saber por dónde sacarla. Contaes le da la vuelta — preguntas lo que necesitas y la IA busca, cruza y te lo enseña. Y cuando hay que hacer algo rutinario, lo hace, enseñándote antes qué va a hacer.</p>
+        <p class="etiqueta" style="color:#8b93b5;margin-bottom:14px">Software de gestión con IA + asesoría</p>
+        <h2 style="margin-bottom:18px;max-width:24ch">El programa y la <span class="resalte">asesoría</span>, en el mismo sitio</h2>
+        <p class="cuerpo" style="max-width:62ch">Hoy tienes dos cosas separadas: un ERP donde metes los datos y una asesoría a la que se los mandas. En medio, un mes de correos, Excel y «¿me pasas las facturas?». Contaes junta las dos: la IA mantiene la contabilidad al día sobre tus propios datos, prepara los modelos, y un asesor los revisa, los firma y los presenta.</p>
 
         <div class="rejilla-3" style="margin-top:28px">
           <div class="tarjeta">
-            <h3 style="margin-bottom:8px">Te enseña los datos</h3>
-            <p class="cuerpo">Sin menús ni informes que configurar. Preguntas y sale, cruzado entre módulos si hace falta.</p>
+            <h3 style="margin-bottom:8px">La IA lleva el día a día</h3>
+            <p class="cuerpo">Concilia, clasifica gastos, cuadra facturas y te enseña cualquier dato cuando se lo preguntas en tu idioma.</p>
           </div>
           <div class="tarjeta">
-            <h3 style="margin-bottom:8px">Hace las gestiones</h3>
-            <p class="cuerpo">Recordatorios, conciliaciones, asientos repetitivos. El trabajo que hoy hace alguien a mano.</p>
+            <h3 style="margin-bottom:8px">Prepara los modelos</h3>
+            <p class="cuerpo">303, 111, 130, 347 y los que toquen, montados sobre los datos que ya están dentro. Sin volver a mandar nada.</p>
           </div>
           <div class="tarjeta">
-            <h3 style="margin-bottom:8px">Siempre pide permiso</h3>
-            <p class="cuerpo">Antes de tocar nada te enseña qué va a hacer. Nada se ejecuta a tus espaldas.</p>
+            <h3 style="margin-bottom:8px">Un asesor los presenta</h3>
+            <p class="cuerpo">Una persona colegiada revisa, firma y presenta. La IA prepara; la responsabilidad ante Hacienda es de un profesional.</p>
           </div>
         </div>
+
+        <p class="cuerpo" style="max-width:62ch;margin-top:24px;color:#8b93b5">Es la diferencia entre un programa que te ayuda a hacer la contabilidad y un servicio en el que la contabilidad ya está hecha.</p>
       </div>
     </div>
   </section>
@@ -703,6 +860,12 @@ footer small{font-size:14px;color:#8b93b5}
       <h2>¿Te enseñamos cómo funciona?</h2>
       <p class="editorial">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
 
+      <div class="garantias">
+        <div class="garantia"><span class="gicono" aria-hidden="true">✕</span><p><strong>Si no encajamos, te lo decimos</strong> en la primera llamada. No en la tercera.</p></div>
+        <div class="garantia"><span class="gicono" aria-hidden="true">↩</span><p><strong>Punto de retorno por escrito</strong> antes de tocar nada. Definido, no improvisado.</p></div>
+        <div class="garantia"><span class="gicono" aria-hidden="true">€</span><p><strong>La llamada no cuesta nada</strong> y no hay nada que firmar para tenerla.</p></div>
+      </div>
+
       <div id="sin-canal"><span class="pildora-info">Canal de contacto disponible en breve</span></div>
 
       <form class="form" id="form-contacto" hidden>
@@ -715,7 +878,10 @@ footer small{font-size:14px;color:#8b93b5}
           <label>Qué usáis ahora<input type="text" name="actual" placeholder="Odoo, SAP, hojas de cálculo..."></label>
         </div>
         <label>Qué es lo que peor lleváis<textarea name="mensaje" rows="3"></textarea></label>
-        <button class="btn btn-azul" type="submit">Enviar</button>
+        <div class="form-acciones">
+          <button class="btn btn-azul" type="submit">Pedir una demo</button>
+          <button class="btn btn-tinte" type="button" id="solo-avisadme">Solo avisadme cuando esté</button>
+        </div>
         <p class="form-alt">O escríbenos directamente a <a id="enlace-directo" href="#">&nbsp;</a></p>
       </form>
     </div>
@@ -832,6 +998,22 @@ var CONTACTO = "info@contaes.com";
   form.hidden = false;
   directo.href = "mailto:" + CONTACTO;
   directo.textContent = CONTACTO;
+
+  // Salida de compromiso minimo: mismo buzon, otro asunto, para poder
+  // separar a quien quiere demo de quien solo quiere que le avisen.
+  var avisar = document.getElementById("solo-avisadme");
+  if (avisar) {
+    avisar.addEventListener("click", function () {
+      var d = new FormData(form);
+      window.location.href = "mailto:" + CONTACTO +
+        "?subject=" + encodeURIComponent("Avisadme cuando Contaes este listo") +
+        "&body=" + encodeURIComponent(
+          "Avisadme cuando haya algo que enseñar." + String.fromCharCode(10) + String.fromCharCode(10) +
+          "Nombre: "  + (d.get("nombre")  || "") + String.fromCharCode(10) +
+          "Empresa: " + (d.get("empresa") || "") + String.fromCharCode(10) +
+          "Email: "   + (d.get("email")   || ""));
+    });
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
