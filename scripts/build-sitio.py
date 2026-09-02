@@ -166,7 +166,7 @@ def pagina_funcionalidad(slug, d, es_modulo):
         "cierre": cierre(),
     }
     return P.pagina(
-        "%s · Contaes" % d["titulo"],
+        "%s · El software · Contaes" % d["titulo"],
         d["entradilla"][:158],
         "%s/funcionalidades/%s/" % (DOMINIO, slug),
         cuerpo)
@@ -269,7 +269,10 @@ def pagina_servicio(area, slug, d):
         "otras": otras,
         "cierre": cierre(),
     }
-    return P.pagina("%s · Contaes" % d["titulo"],
+    # El titulo lleva el area: hay una pagina de Contabilidad en la
+    # gestoria y otra en el software, y con el mismo titulo Google no
+    # sabe cual ensenar para la misma busqueda.
+    return P.pagina("%s · %s · Contaes" % (d["titulo"], nombre_area),
                     " ".join(d["entradilla"].split())[:158],
                     "%s/%s/%s/" % (DOMINIO, area, slug), cuerpo)
 

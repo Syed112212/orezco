@@ -12,7 +12,7 @@ PENDIENTE = "[PENDIENTE]"
 
 DATOS_EMPRESA = {
     "razon_social": PENDIENTE,
-    "nif": PENDIENTE,
+    "nif": "B05427810",
     "domicilio": PENDIENTE,
     "correo": "info@contaes.com",
     "registro": PENDIENTE,

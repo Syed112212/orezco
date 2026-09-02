@@ -279,7 +279,8 @@ def regla_barra_intacta(nombre, css):
 # Clases del menu. Si alguna se declara dos veces en la misma hoja, la
 # segunda gana y el menu se rompe sin que nada falle: paso con .panel, que
 # era a la vez el desplegable y el panel de acento de la portada.
-CLASES_UNICAS = [".nav-in", ".nav-links", ".despliegue", ".menu-btn", ".area"]
+CLASES_UNICAS = [".nav-in", ".nav-links", ".despliegue", ".menu-btn", ".area",
+                 ".form", ".op", ".bloque", ".dato"]
 
 
 def sin_medias(css):

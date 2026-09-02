@@ -102,7 +102,7 @@ ARTICULOS = [
     {
         "slug": "modelos-que-presenta-una-pyme-cada-ano",
         "titulo": "Los modelos que presenta una pyme cada año",
-        "descripcion": "303, 111, 115, 130, 349, 347, 390, 190 y 200: qué es cada modelo, cuándo se presenta y de dónde salen los datos. Un calendario claro para empresarios que no son fiscalistas.",
+        "descripcion": "303, 111, 115, 130, 349, 347, 390, 190 y 200: qué es cada modelo, cuándo se presenta y de dónde salen los datos. Un calendario claro para empresarios que no.",
         "fecha": "2026-09-02",
         "minutos": 9,
         "tema": "Fiscalidad",
@@ -254,7 +254,7 @@ ARTICULOS = [
     {
         "slug": "que-deberia-hacer-la-ia-en-un-erp",
         "titulo": "Qué debería hacer la IA en un ERP (y qué no)",
-        "descripcion": "La IA en gestión empresarial es útil en dos sitios concretos: enseñar los datos sin menús y ejecutar tareas rutinarias con permiso. Dónde ayuda de verdad y dónde es un riesgo.",
+        "descripcion": "La IA en gestión empresarial es útil en dos sitios concretos: enseñar los datos sin menús y ejecutar tareas rutinarias con permiso. Dónde ayuda de verdad y.",
         "fecha": "2026-09-02",
         "minutos": 8,
         "tema": "Inteligencia artificial",
