@@ -361,6 +361,12 @@ def pagina_sector(slug, d):
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+%(dibujo)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap estrecho revela">
     <h2>Qué cambia con Contaes</h2>
     <ul class="lista">
@@ -381,6 +387,7 @@ def pagina_sector(slug, d):
                           d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">" + d["lema"] + "</span>",
                           d["entradilla"], rastro),
         "duele": duele, "aporta": aporta, "modulos": modulos,
+        "dibujo": DP.para("sectores/%s" % slug),
         "cierre": cierre("¿Se parece a lo vuestro?",
                          "En la primera llamada preferimos escuchar cómo trabajáis antes que enseñar pantallas. "
                          "Si no encajamos, se dice ahí."),

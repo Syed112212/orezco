@@ -193,6 +193,71 @@ DIBUJOS = {
         "Esta parte la trabajamos con Filnet, una empresa hermana especializada en abrir "
         "mercados."),
 
+    # ── Sectores ─────────────────────────────────────────────────
+    "sectores/fabricacion": lambda: D.flujo(
+        [("Escandallo", "con el coste de hoy"),
+         ("Orden de fabricación", "consume materia prima"),
+         ("Producto terminado", "entra valorado"),
+         ("Coste real", "no el estimado")],
+        "El escandallo toma el precio actual del almacén, no el del día que se creó. Y las "
+        "horas de taller se imputan a la orden, así que la mano de obra deja de repartirse "
+        "a ojo."),
+    "sectores/distribucion": lambda: D.comparacion(
+        ["La tarifa del cliente, de memoria",
+         "La rotura de stock se ve al servir",
+         "El rappel del proveedor no baja el coste",
+         "La deuda crece sin que nadie la mire"],
+        ["El precio pactado se aplica solo",
+         "El aviso llega antes de la rotura",
+         "El coste real incluye el rappel",
+         "La antigüedad de la deuda, a la vista"],
+        "En distribución el margen por línea es pequeño, así que un error de precio o una "
+        "rotura se comen el beneficio de varias operaciones buenas."),
+    "sectores/construccion": lambda: D.barras(
+        [.34, .52, .78, .46, .91, .27],
+        ["Obra 1", "Obra 2", "Obra 3", "Obra 4", "Obra 5", "Obra 6"],
+        "El resultado no es de la empresa: es de cada obra. Una empresa con cinco obras "
+        "puede tener beneficio y estar perdiendo dinero en tres de ellas.",
+        resalta=[2, 4]),
+    "sectores/comercio": lambda: D.flujo(
+        [("Venta en tienda", "o en la web"),
+         ("Descuenta stock", "en el momento"),
+         ("Asiento y IVA", "con su cuenta"),
+         ("Margen por producto", "no solo la caja")],
+        "El comercio pequeño suele tener tres verdades distintas del mismo negocio: lo que "
+        "dice el TPV, lo que hay en la estantería y lo que llega a la contabilidad tres "
+        "meses después."),
+    "sectores/logistica": lambda: D.barras(
+        [.62, .48, .81, .35, .7],
+        ["Ruta A", "Ruta B", "Ruta C", "Ruta D", "Ruta E"],
+        "Hay rutas que se mantienen porque nadie ha calculado que pierden dinero. Con "
+        "combustible, horas y peajes imputados al servicio, el coste por ruta es un dato.",
+        resalta=[2, 4]),
+    "sectores/servicios": lambda: D.comparacion(
+        ["Las horas se apuntan a fin de mes",
+         "De memoria y a la baja",
+         "El precio cerrado consume el doble",
+         "Y se sabe al facturar"],
+        ["Se apuntan sobre la tarea, al momento",
+         "Desde el móvil, sin abrir nada",
+         "El consumo, junto al presupuesto",
+         "El desvío se ve mientras se puede"],
+        "Cuando lo que vendes es tiempo, la rentabilidad es la diferencia entre las horas "
+        "que cobras y las que dedicas. Muchos despachos solo miden la primera mitad."),
+    "sectores/instalaciones": lambda: D.flujo(
+        [("Aviso", "entra el parte"),
+         ("Intervención", "material de la furgoneta"),
+         ("Firma en destino", "horas y material"),
+         ("Factura", "o garantía, si toca")],
+        "El material que sale de la furgoneta descuenta stock, y la intervención sabe si "
+        "está cubierta por garantía antes de facturarse, no después."),
+    "sectores/agroalimentario": lambda: D.entrada_documentos(
+        "La trazabilidad se recorre en los dos sentidos: desde el lote hacia los clientes "
+        "que lo recibieron, y desde un cliente hacia la materia prima que entró. Es la "
+        "diferencia entre una retirada quirúrgica y una retirada total.",
+        ("Entrada de materia prima", "Lote de producción", "Salida al cliente"),
+        "Trazabilidad completa"),
+
     # ── Para quién ───────────────────────────────────────────────
     "para/autonomos": lambda: D.flujo(
         [("Facturas", "las que emitas"),
