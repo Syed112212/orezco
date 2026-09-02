@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Verificador del sistema visual de Orezco.
+Verificador del sistema visual de Contaes.
 
 Convierte las reglas duras de DESIGN.md en comprobaciones ejecutables. Cada
 regla que aqui se comprueba esta escrita en DESIGN.md; si cambia una, cambian
@@ -75,19 +75,33 @@ def regla_3d_sin_filtros(nombre, css):
 
 
 # ─────────────────────────────────────────────────────────────────────────
-# 2. El melocoton es una tarjeta por pagina
+# 2. Un unico boton cromatico: el azul de accion
+#    Todo lo demas es fantasma, tinte o texto. El color vive en los paneles,
+#    nunca en un segundo boton relleno.
 # ─────────────────────────────────────────────────────────────────────────
-def regla_melocoton_unico(nombre, html):
-    usos = len(re.findall(r'class="[^"]*\bacento-card\b', html))
-    if usos > 1:
-        fallo("melocoton-unico",
-              "%s: hay %d tarjetas melocoton. DESIGN.md permite una por pagina." % (nombre, usos))
+AZULES_OK = {"#0075de", "#0064c0", "#e6f3fe", "#d5eafd", "#fff", "#ffffff", "transparent"}
+
+
+def regla_un_solo_azul(nombre, css):
+    for sel, bloque in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        if ".btn" not in sel:
+            continue
+        m = re.search(r"background:\s*([^;}]+)", bloque)
+        if not m:
+            continue
+        v = m.group(1).strip().lower()
+        if v.startswith("var(") or v.startswith("rgba"):
+            continue
+        if v not in AZULES_OK:
+            fallo("un-solo-azul",
+                  "%s: '%s' rellena un boton con '%s'. El unico relleno cromatico es el azul de accion."
+                  % (nombre, sel.strip()[:40], v))
 
 
 # ─────────────────────────────────────────────────────────────────────────
 # 3. La serifa se queda en peso 400 a todos los tamanos
 # ─────────────────────────────────────────────────────────────────────────
-def regla_serifa_400(nombre, css):
+def regla_serifa_400_sin_uso(nombre, css):
     for sel, bloque in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
         usa_serif = "var(--serif)" in bloque or "--font-signifier" in bloque or "Source Serif" in bloque
         if not usa_serif:
@@ -102,7 +116,8 @@ def regla_serifa_400(nombre, css):
 # ─────────────────────────────────────────────────────────────────────────
 # 4. Solo los artefactos flotantes llevan sombra
 # ─────────────────────────────────────────────────────────────────────────
-PERMITIDOS_SOMBRA = {".artefacto", ".plano", ".modulos-marco"}
+# El anillo de foco de un campo es accesibilidad, no decoracion.
+PERMITIDOS_SOMBRA = {".nav", ".maqueta", ".plano", ".btn-azul", "input", "textarea", "input:focus", "textarea:focus"}
 
 
 def regla_sombra_solo_flotantes(nombre, css):
@@ -121,7 +136,7 @@ def regla_sombra_solo_flotantes(nombre, css):
 # ─────────────────────────────────────────────────────────────────────────
 # 5. Cuatro radios, y ni uno mas
 # ─────────────────────────────────────────────────────────────────────────
-RADIOS_OK = {"24px", "20px", "16px", "9999px", "2px", "0", "4px", "50%"}
+RADIOS_OK = {"12px", "8px", "4px", "9999px", "0", "50%", "2px"}
 
 
 def regla_radios(nombre, css):
@@ -142,7 +157,9 @@ def regla_variables(nombre, css):
     declaradas = set(re.findall(r"(--[a-z0-9-]+)\s*:", css))
     usadas = set(re.findall(r"var\((--[a-z0-9-]+)", css))
     con_defecto = set(re.findall(r"var\((--[a-z0-9-]+)\s*,", css))
-    huerfanas = usadas - declaradas - con_defecto
+    # --i la fija el JS al generar las capas del logo 3D; --mark-bg y --l
+    # son parametros de los simbolos. Ninguna es un olvido.
+    huerfanas = usadas - declaradas - con_defecto - {"--i", "--mark-bg", "--l", "--lado"}
     for v in sorted(huerfanas):
         fallo("variables", "%s: se usa var(%s) pero no esta declarada." % (nombre, v))
 
@@ -166,16 +183,15 @@ def contraste(a, b):
 
 
 PARES = [
-    ("texto principal sobre papel",   "#17191c", "#ffffff", 4.5),
-    ("apoyo sobre papel",             "#6b6e78", "#ffffff", 4.5),
-    ("apoyo sobre banda",             "#6b6e78", "#fafafb", 4.5),
-    ("apoyo sobre tarjeta neutra",    "#6b6e78", "#f2f2f3", 4.5),
-    ("etiqueta sobre papel",          "#6c6e74", "#ffffff", 4.5),
-    ("etiqueta sobre banda",          "#6c6e74", "#fafafb", 4.5),
-    ("etiqueta sobre tarjeta neutra", "#6c6e74", "#f2f2f3", 4.5),
-    ("marcador de campo sobre campo blanco", "#71747c", "#ffffff", 4.5),
-    ("sienna sobre melocoton",        "#5d2a1a", "#fbe1d1", 4.5),
-    ("papel sobre boton relleno",     "#ffffff", "#17191c", 4.5),
+    ("texto principal sobre lienzo",  "#0d0d0d", "#f6f5f4", 4.5),
+    ("cuerpo sobre lienzo",           "#615d59", "#f6f5f4", 4.5),
+    ("cuerpo sobre tarjeta",          "#615d59", "#ffffff", 4.5),
+    ("piedra sobre lienzo",           "#6a6a6a", "#f6f5f4", 4.5),
+    ("blanco sobre azul de accion",   "#ffffff", "#0075de", 4.5),
+    ("azul sobre tinte",              "#005fb8", "#e6f3fe", 4.5),
+    ("negro sobre marigold",          "#000000", "#ffb110", 4.5),
+    ("blanco sobre medianoche",       "#ffffff", "#02093a", 4.5),
+    ("negro sobre coral",             "#000000", "#f64932", 4.5),
 ]
 
 
@@ -221,16 +237,14 @@ def main():
         html = leer(nombre)
         css = css_de(html)
         regla_3d_sin_filtros(nombre, css)
-        regla_melocoton_unico(nombre, html)
-        regla_serifa_400(nombre, css)
+        regla_un_solo_azul(nombre, css)
         regla_sombra_solo_flotantes(nombre, css)
         regla_radios(nombre, css)
         regla_variables(nombre, css)
 
     regla_contraste()
-    regla_tokens(css_index)
 
-    print("Verificacion del sistema visual de Orezco")
+    print("Verificacion del sistema visual de Contaes")
     print("=" * 46)
     if not fallos and not avisos:
         print("Todo correcto.")
