@@ -36,6 +36,7 @@ jobs:
         run: |
           python scripts/check-design.py
           python scripts/check-voz.py
+          python scripts/check-render.py --muestra
 
       - name: Subir lo que haya salido hoy
         run: |

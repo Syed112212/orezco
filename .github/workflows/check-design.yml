@@ -18,3 +18,5 @@ jobs:
         run: python scripts/check-design.py
       - name: Voz, sin marcas de escritura automatica
         run: python scripts/check-voz.py
+      - name: Renderizado, una pagina de cada clase
+        run: python scripts/check-render.py --muestra
