@@ -123,7 +123,10 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .rejilla-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .tarjeta{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:22px;transition:transform .2s ease,border-color .2s ease}
 .tarjeta:hover{transform:translateY(-3px);border-color:rgba(0,0,0,.16)}
-.tarjeta h3{margin-bottom:7px}
+.tarjeta h3,.tarjeta .tarjeta-tit{margin:0 0 7px}
+/* Titulo de tarjeta: es un h2 porque va detras del h1 de la pagina,
+   pero no debe verse como una cabecera de seccion. */
+.tarjeta-tit{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .tarjeta p{font-size:15px;color:var(--grafito)}
 a.tarjeta{text-decoration:none;color:inherit;display:block}
 .tarjeta .franja{height:5px;border-radius:var(--r-pill);margin-bottom:14px;width:44px}
@@ -149,8 +152,9 @@ a.tarjeta{text-decoration:none;color:inherit;display:block}
 .cierre h2{margin:0 0 10px}
 .cierre p{color:var(--grafito);margin-bottom:20px;max-width:52ch;margin-left:auto;margin-right:auto}
 footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
-.foot-rejilla{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;margin-bottom:34px}
-.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
+.foot-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:28px 24px;margin-bottom:34px}
+.foot-rejilla > :first-child{grid-column:span 2;min-width:0}
+.foot-titulo{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
 .foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
 .foot-col a:hover{color:#fff}
 .foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
@@ -168,7 +172,6 @@ footer small{font-size:13.5px;color:#8b93b5}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
 @media(max-width:980px){
   .rejilla,.rejilla-2{grid-template-columns:1fr}
-  .foot-rejilla{grid-template-columns:1fr 1fr}
   .menu-btn{display:flex}
   /* El menu completo baja bajo la barra. Cerrado va con visibility:hidden
      y no solo con opacidad, para que el tabulador no entre en enlaces que
@@ -209,7 +212,7 @@ article.post{padding:44px 0 80px}
 .post-card .franja{height:7px}
 .post-card .dentro{padding:22px}
 .post-card .tema{display:inline-block;margin-bottom:12px}
-.post-card h3{margin-bottom:8px;font-size:19px}
+.post-card .post-tit{margin:0 0 8px;font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .post-card p{font-size:15px;color:var(--grafito)}
 .post-card .pie{margin-top:14px;font-size:13px;color:var(--piedra)}
 </style>
@@ -293,16 +296,16 @@ article.post{padding:44px 0 80px}
     <p class="entradilla" style="max-width:60ch;margin-top:18px;font-family:var(--serif);font-size:20px;line-height:1.55;color:var(--grafito)">
       Lo que aprendemos construyendo Contaes: migraciones, contabilidad, y qué puede hacer de verdad la IA en un sistema de gestión.
     </p>
-    <div class="rejilla revela" style="margin-top:40px"><a class="post-card" href="cobrar-antes-sin-perder-clientes.html"><span class="franja" style="background:#2FBF9B"></span><span class="dentro"><span class="tema" style="background:#2FBF9B">Tesorería</span><h3>Cobrar antes sin perder al cliente</h3><p>Gestionar deudas de clientes sin perder la relación: priorizar por antigüedad, pactar por escrito, avisar antes del vencimiento y saber retirarse a tiempo.</p><p class="pie">7 min de lectura</p></span></a>
-<a class="post-card" href="el-recuento-anual-llega-tarde.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Operaciones</span><h3>El recuento anual llega tarde</h3><p>Por qué contar el stock solo a cierre de año distorsiona tus márgenes. Inventario permanente y recuento cíclico para llevar la merma al día.</p><p class="pie">7 min de lectura</p></span></a>
-<a class="post-card" href="como-elegir-un-erp-sin-equivocarse.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Sistemas</span><h3>Cómo elegir un ERP sin equivocarse</h3><p>Guía práctica para elegir ERP sin equivocarse. Preguntas clave sobre soporte, salida de datos, histórico, plazos de implantación y el peligro de la demo.</p><p class="pie">7 min de lectura</p></span></a>
-<a class="post-card" href="que-mira-hacienda-cuando-pide-los-libros.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Fiscalidad</span><h3>Qué mira Hacienda cuando pide los libros</h3><p>Resumen de qué revisa Hacienda al requerir la contabilidad: numeración, cuadre con modelos, gastos justificados y trazabilidad del apunte. Consejos para estar</p><p class="pie">7 min de lectura</p></span></a>
-<a class="post-card" href="facturar-mucho-y-ganar-poco.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Gestión</span><h3>Facturar mucho y ganar poco</h3><p>Por qué subir la facturación no garantiza ganar dinero. Cómo calcular margen bruto, margen de contribución y umbral de rentabilidad con un ejemplo realista.</p><p class="pie">7 min de lectura</p></span></a>
-<a class="post-card" href="modelos-que-presenta-una-pyme-cada-ano.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Fiscalidad</span><h3>Los modelos que presenta una pyme cada año</h3><p>303, 111, 115, 130, 349, 347, 390, 190 y 200: qué es cada modelo, cuándo se presenta y de dónde salen los datos. Un calendario claro para empresarios que no son fiscalistas.</p><p class="pie">9 min de lectura</p></span></a>
-<a class="post-card" href="cambiar-de-asesoria-sin-perder-el-historico.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Asesoría</span><h3>Cambiar de asesoría sin perder el histórico</h3><p>Qué documentación tienes derecho a llevarte, en qué momento del año conviene cambiar y cómo evitar quedarte sin poder consultar los años anteriores.</p><p class="pie">6 min de lectura</p></span></a>
-<a class="post-card" href="migrar-de-odoo-sin-parar-la-empresa.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Migración</span><h3>Migrar de Odoo sin parar la empresa</h3><p>Qué mirar antes de cambiar de ERP: el traspaso de datos con histórico, el periodo de convivencia y el punto de retorno. Una guía práctica para pymes.</p><p class="pie">7 min de lectura</p></span></a>
-<a class="post-card" href="senales-de-que-tu-erp-se-esta-degradando.html"><span class="franja" style="background:#f64932"></span><span class="dentro"><span class="tema" style="background:#f64932">Diagnóstico</span><h3>Siete señales de que tu ERP se está degradando</h3><p>Los ERP no fallan de golpe: se degradan. Siete síntomas concretos que aparecen antes de que el sistema deje de ser fiable, y qué hacer con cada uno.</p><p class="pie">6 min de lectura</p></span></a>
-<a class="post-card" href="que-deberia-hacer-la-ia-en-un-erp.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Inteligencia artificial</span><h3>Qué debería hacer la IA en un ERP (y qué no)</h3><p>La IA en gestión empresarial es útil en dos sitios concretos: enseñar los datos sin menús y ejecutar tareas rutinarias con permiso. Dónde ayuda de verdad y dónde es un riesgo.</p><p class="pie">8 min de lectura</p></span></a></div>
+    <div class="rejilla revela" style="margin-top:40px"><a class="post-card" href="cobrar-antes-sin-perder-clientes.html"><span class="franja" style="background:#2FBF9B"></span><span class="dentro"><span class="tema" style="background:#2FBF9B">Tesorería</span><h2 class="post-tit">Cobrar antes sin perder al cliente</h2><p>Gestionar deudas de clientes sin perder la relación: priorizar por antigüedad, pactar por escrito, avisar antes del vencimiento y saber retirarse a tiempo.</p><p class="pie">7 min de lectura</p></span></a>
+<a class="post-card" href="el-recuento-anual-llega-tarde.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Operaciones</span><h2 class="post-tit">El recuento anual llega tarde</h2><p>Por qué contar el stock solo a cierre de año distorsiona tus márgenes. Inventario permanente y recuento cíclico para llevar la merma al día.</p><p class="pie">7 min de lectura</p></span></a>
+<a class="post-card" href="como-elegir-un-erp-sin-equivocarse.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Sistemas</span><h2 class="post-tit">Cómo elegir un ERP sin equivocarse</h2><p>Guía práctica para elegir ERP sin equivocarse. Preguntas clave sobre soporte, salida de datos, histórico, plazos de implantación y el peligro de la demo.</p><p class="pie">7 min de lectura</p></span></a>
+<a class="post-card" href="que-mira-hacienda-cuando-pide-los-libros.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Fiscalidad</span><h2 class="post-tit">Qué mira Hacienda cuando pide los libros</h2><p>Resumen de qué revisa Hacienda al requerir la contabilidad: numeración, cuadre con modelos, gastos justificados y trazabilidad del apunte. Consejos para estar</p><p class="pie">7 min de lectura</p></span></a>
+<a class="post-card" href="facturar-mucho-y-ganar-poco.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Gestión</span><h2 class="post-tit">Facturar mucho y ganar poco</h2><p>Por qué subir la facturación no garantiza ganar dinero. Cómo calcular margen bruto, margen de contribución y umbral de rentabilidad con un ejemplo realista.</p><p class="pie">7 min de lectura</p></span></a>
+<a class="post-card" href="modelos-que-presenta-una-pyme-cada-ano.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Fiscalidad</span><h2 class="post-tit">Los modelos que presenta una pyme cada año</h2><p>303, 111, 115, 130, 349, 347, 390, 190 y 200: qué es cada modelo, cuándo se presenta y de dónde salen los datos. Un calendario claro para empresarios que no son fiscalistas.</p><p class="pie">9 min de lectura</p></span></a>
+<a class="post-card" href="cambiar-de-asesoria-sin-perder-el-historico.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Asesoría</span><h2 class="post-tit">Cambiar de asesoría sin perder el histórico</h2><p>Qué documentación tienes derecho a llevarte, en qué momento del año conviene cambiar y cómo evitar quedarte sin poder consultar los años anteriores.</p><p class="pie">6 min de lectura</p></span></a>
+<a class="post-card" href="migrar-de-odoo-sin-parar-la-empresa.html"><span class="franja" style="background:#ffb110"></span><span class="dentro"><span class="tema" style="background:#ffb110">Migración</span><h2 class="post-tit">Migrar de Odoo sin parar la empresa</h2><p>Qué mirar antes de cambiar de ERP: el traspaso de datos con histórico, el periodo de convivencia y el punto de retorno. Una guía práctica para pymes.</p><p class="pie">7 min de lectura</p></span></a>
+<a class="post-card" href="senales-de-que-tu-erp-se-esta-degradando.html"><span class="franja" style="background:#f64932"></span><span class="dentro"><span class="tema" style="background:#f64932">Diagnóstico</span><h2 class="post-tit">Siete señales de que tu ERP se está degradando</h2><p>Los ERP no fallan de golpe: se degradan. Siete síntomas concretos que aparecen antes de que el sistema deje de ser fiable, y qué hacer con cada uno.</p><p class="pie">6 min de lectura</p></span></a>
+<a class="post-card" href="que-deberia-hacer-la-ia-en-un-erp.html"><span class="franja" style="background:#62aef0"></span><span class="dentro"><span class="tema" style="background:#62aef0">Inteligencia artificial</span><h2 class="post-tit">Qué debería hacer la IA en un ERP (y qué no)</h2><p>La IA en gestión empresarial es útil en dos sitios concretos: enseñar los datos sin menús y ejecutar tareas rutinarias con permiso. Dónde ayuda de verdad y dónde es un riesgo.</p><p class="pie">8 min de lectura</p></span></a></div>
   </div>
 </section>
 </main>
@@ -318,39 +321,39 @@ article.post{padding:44px 0 80px}
     </svg><span class="wordmark">cont<i>aes</i></span></div>
       <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
     </div>
-    <div class="foot-col">
-      <h4>Producto</h4>
+    <nav class="foot-col" aria-label="Producto">
+      <p class="foot-titulo">Producto</p>
       <a href="/funcionalidades/contabilidad/">Contabilidad</a>
       <a href="/funcionalidades/facturacion/">Facturación</a>
       <a href="/funcionalidades/inventario/">Inventario</a>
       <a href="/funcionalidades/compras/">Compras</a>
       <a href="/funcionalidades/ventas/">Ventas y clientes</a>
       <a href="/funcionalidades/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Sectores</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Sectores">
+      <p class="foot-titulo">Sectores</p>
       <a href="/sectores/fabricacion/">Fabricación</a>
       <a href="/sectores/distribucion/">Distribución y mayorista</a>
       <a href="/sectores/construccion/">Construcción</a>
       <a href="/sectores/comercio/">Comercio y retail</a>
       <a href="/sectores/logistica/">Logística y transporte</a>
       <a href="/sectores/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Recursos</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Recursos">
+      <p class="foot-titulo">Recursos</p>
       <a href="/blog/">Blog</a>
       <a href="/glosario/">Glosario</a>
       <a href="/calendario-fiscal/">Calendario fiscal</a>
       <a href="/preguntas/">Preguntas frecuentes</a>
-    </div>
-    <div class="foot-col">
-      <h4>Empresa</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Empresa">
+      <p class="foot-titulo">Empresa</p>
       <a href="/sobre/">Sobre Contaes</a>
       <a href="/migracion/">Migración</a>
       <a href="/seguridad/">Seguridad y datos</a>
       <a href="/precios/">Precios</a>
       <a href="/integraciones/">Integraciones</a>
-    </div>
+    </nav>
   </div>
   <div class="foot-bajo">
     <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>

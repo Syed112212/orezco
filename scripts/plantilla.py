@@ -177,7 +177,10 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .rejilla-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .tarjeta{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:22px;transition:transform .2s ease,border-color .2s ease}
 .tarjeta:hover{transform:translateY(-3px);border-color:rgba(0,0,0,.16)}
-.tarjeta h3{margin-bottom:7px}
+.tarjeta h3,.tarjeta .tarjeta-tit{margin:0 0 7px}
+/* Titulo de tarjeta: es un h2 porque va detras del h1 de la pagina,
+   pero no debe verse como una cabecera de seccion. */
+.tarjeta-tit{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .tarjeta p{font-size:15px;color:var(--grafito)}
 a.tarjeta{text-decoration:none;color:inherit;display:block}
 .tarjeta .franja{height:5px;border-radius:var(--r-pill);margin-bottom:14px;width:44px}
@@ -203,8 +206,9 @@ a.tarjeta{text-decoration:none;color:inherit;display:block}
 .cierre h2{margin:0 0 10px}
 .cierre p{color:var(--grafito);margin-bottom:20px;max-width:52ch;margin-left:auto;margin-right:auto}
 footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
-.foot-rejilla{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;margin-bottom:34px}
-.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
+.foot-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:28px 24px;margin-bottom:34px}
+.foot-rejilla > :first-child{grid-column:span 2;min-width:0}
+.foot-titulo{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
 .foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
 .foot-col a:hover{color:#fff}
 .foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
@@ -222,7 +226,6 @@ footer small{font-size:13.5px;color:#8b93b5}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
 @media(max-width:980px){
   .rejilla,.rejilla-2{grid-template-columns:1fr}
-  .foot-rejilla{grid-template-columns:1fr 1fr}
   .menu-btn{display:flex}
   /* El menu completo baja bajo la barra. Cerrado va con visibility:hidden
      y no solo con opacidad, para que el tabulador no entre en enlaces que
@@ -378,7 +381,11 @@ def cabecera(base=""):
 def pie(base=""):
     def col(titulo, entradas):
         enlaces = "".join('      <a href="%s/%s">%s</a>\n' % (base, r, n) for r, n in entradas)
-        return '    <div class="foot-col">\n      <h4>%s</h4>\n%s    </div>' % (titulo, enlaces)
+        # Etiqueta de un grupo de enlaces, no titulo de contenido: iba como
+        # <h4> justo detras de un <h1> y rompia el orden de titulos de la
+        # pagina para quien navega con lector de pantalla.
+        return ('    <nav class="foot-col" aria-label="%s">\n'
+                '      <p class="foot-titulo">%s</p>\n%s    </nav>' % (titulo, titulo, enlaces))
 
     return '''<footer>
   <div class="wrap">

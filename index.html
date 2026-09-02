@@ -241,8 +241,9 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 .nav.abierta .mb-linea:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
 footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
-.foot-rejilla{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;margin-bottom:34px}
-.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
+.foot-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:28px 24px;margin-bottom:34px}
+.foot-rejilla > :first-child{grid-column:span 2;min-width:0}
+.foot-titulo{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
 .foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
 .foot-col a:hover{color:#fff}
 .foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
@@ -1061,39 +1062,39 @@ main,footer{position:relative;z-index:1}
     </svg><span class="wordmark">cont<i>aes</i></span></div>
       <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
     </div>
-    <div class="foot-col">
-      <h4>Producto</h4>
+    <nav class="foot-col" aria-label="Producto">
+      <p class="foot-titulo">Producto</p>
       <a href="/funcionalidades/contabilidad/">Contabilidad</a>
       <a href="/funcionalidades/facturacion/">Facturación</a>
       <a href="/funcionalidades/inventario/">Inventario</a>
       <a href="/funcionalidades/compras/">Compras</a>
       <a href="/funcionalidades/ventas/">Ventas y clientes</a>
       <a href="/funcionalidades/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Sectores</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Sectores">
+      <p class="foot-titulo">Sectores</p>
       <a href="/sectores/fabricacion/">Fabricación</a>
       <a href="/sectores/distribucion/">Distribución y mayorista</a>
       <a href="/sectores/construccion/">Construcción</a>
       <a href="/sectores/comercio/">Comercio y retail</a>
       <a href="/sectores/logistica/">Logística y transporte</a>
       <a href="/sectores/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Recursos</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Recursos">
+      <p class="foot-titulo">Recursos</p>
       <a href="/blog/">Blog</a>
       <a href="/glosario/">Glosario</a>
       <a href="/calendario-fiscal/">Calendario fiscal</a>
       <a href="/preguntas/">Preguntas frecuentes</a>
-    </div>
-    <div class="foot-col">
-      <h4>Empresa</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Empresa">
+      <p class="foot-titulo">Empresa</p>
       <a href="/sobre/">Sobre Contaes</a>
       <a href="/migracion/">Migración</a>
       <a href="/seguridad/">Seguridad y datos</a>
       <a href="/precios/">Precios</a>
       <a href="/integraciones/">Integraciones</a>
-    </div>
+    </nav>
   </div>
   <div class="foot-bajo">
     <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>

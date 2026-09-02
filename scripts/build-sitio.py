@@ -92,7 +92,7 @@ def rejilla_tarjetas(entradas, base, columnas=3):
         tarjetas.append(
             '    <a class="tarjeta" href="%s%s">\n'
             '      <span class="franja" style="background:%s"></span>\n'
-            '      <h3>%s</h3>\n      <p>%s</p>\n    </a>'
+            '      <h2 class="tarjeta-tit">%s</h2>\n      <p>%s</p>\n    </a>'
             % (base, ruta, COLORES[i % len(COLORES)], titulo, pie))
     clase = "rejilla" if columnas == 3 else "rejilla-2"
     return '<div class="%s revela">\n%s\n  </div>' % (clase, "\n".join(tarjetas))
@@ -296,7 +296,7 @@ def pagina_glosario():
     filas = "".join(
         '    <div class="tarjeta revela" id="%s">\n'
         '      <p class="etiqueta" style="margin-bottom:8px">%s</p>\n'
-        '      <h3>%s</h3>\n      <p style="margin-top:8px">%s</p>\n    </div>\n'
+        '      <h2 class="tarjeta-tit">%s</h2>\n      <p style="margin-top:8px">%s</p>\n    </div>\n'
         % (t.lower().replace(" ", "-").replace("ó", "o").replace("í", "i").replace("á", "a"), fam, t, txt)
         for t, fam, txt in terminos)
     ld = ('<script type="application/ld+json">{"@context":"https://schema.org",'
@@ -586,9 +586,9 @@ def pagina_gracias():
     <h2 style="margin-top:0">Mientras tanto</h2>
     <p class="cuerpo" style="margin-bottom:22px">Si quieres ir haciendote una idea, estas tres paginas son las que mas cuentan.</p>
     <div class="rejilla">
-      <a class="tarjeta" href="/funcionalidades/asesoria-fiscal/"><span class="franja" style="background:var(--verde)"></span><h3>Asesoria fiscal incluida</h3><p>Lo que de verdad separa a Contaes de un ERP normal.</p></a>
-      <a class="tarjeta" href="/migracion/"><span class="franja" style="background:var(--cian)"></span><h3>Migracion</h3><p>Como se cambia de sistema sin parar la empresa.</p></a>
-      <a class="tarjeta" href="/preguntas/"><span class="franja" style="background:var(--azul-marca)"></span><h3>Preguntas</h3><p>Incluidas las incomodas.</p></a>
+      <a class="tarjeta" href="/funcionalidades/asesoria-fiscal/"><span class="franja" style="background:var(--verde)"></span><h2 class="tarjeta-tit">Asesoria fiscal incluida</h2><p>Lo que de verdad separa a Contaes de un ERP normal.</p></a>
+      <a class="tarjeta" href="/migracion/"><span class="franja" style="background:var(--cian)"></span><h2 class="tarjeta-tit">Migracion</h2><p>Como se cambia de sistema sin parar la empresa.</p></a>
+      <a class="tarjeta" href="/preguntas/"><span class="franja" style="background:var(--azul-marca)"></span><h2 class="tarjeta-tit">Preguntas</h2><p>Incluidas las incomodas.</p></a>
     </div>
   </div>
 </section>'''

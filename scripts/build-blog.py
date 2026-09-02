@@ -327,7 +327,7 @@ article.post{padding:44px 0 80px}
 .post-card .franja{height:7px}
 .post-card .dentro{padding:22px}
 .post-card .tema{display:inline-block;margin-bottom:12px}
-.post-card h3{margin-bottom:8px;font-size:19px}
+.post-card .post-tit{margin:0 0 8px;font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .post-card p{font-size:15px;color:var(--grafito)}
 .post-card .pie{margin-top:14px;font-size:13px;color:var(--piedra)}
 '''
@@ -367,7 +367,7 @@ def construir_articulo(a):
     tarjetas = "\n".join(
         '<a class="post-card" href="%s.html"><span class="franja" style="background:%s"></span>'
         '<span class="dentro"><span class="tema" style="background:%s">%s</span>'
-        '<h3>%s</h3><p>%s</p></span></a>'
+        '<h2 class="post-tit">%s</h2><p>%s</p></span></a>'
         % (o["slug"], ACENTOS[o["acento"]], ACENTOS[o["acento"]], o["tema"], o["titulo"], o["descripcion"][:110] + "…")
         for o in otros)
 
@@ -400,7 +400,7 @@ def construir_indice():
     tarjetas = "\n".join(
         '<a class="post-card" href="%s.html"><span class="franja" style="background:%s"></span>'
         '<span class="dentro"><span class="tema" style="background:%s">%s</span>'
-        '<h3>%s</h3><p>%s</p><p class="pie">%s min de lectura</p></span></a>'
+        '<h2 class="post-tit">%s</h2><p>%s</p><p class="pie">%s min de lectura</p></span></a>'
         % (a["slug"], ACENTOS[a["acento"]], ACENTOS[a["acento"]], a["tema"], a["titulo"], a["descripcion"], a["minutos"])
         for a in ARTICULOS)
 

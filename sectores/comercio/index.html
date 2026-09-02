@@ -118,7 +118,10 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .rejilla-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .tarjeta{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:22px;transition:transform .2s ease,border-color .2s ease}
 .tarjeta:hover{transform:translateY(-3px);border-color:rgba(0,0,0,.16)}
-.tarjeta h3{margin-bottom:7px}
+.tarjeta h3,.tarjeta .tarjeta-tit{margin:0 0 7px}
+/* Titulo de tarjeta: es un h2 porque va detras del h1 de la pagina,
+   pero no debe verse como una cabecera de seccion. */
+.tarjeta-tit{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:0;color:var(--tinta-fuerte)}
 .tarjeta p{font-size:15px;color:var(--grafito)}
 a.tarjeta{text-decoration:none;color:inherit;display:block}
 .tarjeta .franja{height:5px;border-radius:var(--r-pill);margin-bottom:14px;width:44px}
@@ -144,8 +147,9 @@ a.tarjeta{text-decoration:none;color:inherit;display:block}
 .cierre h2{margin:0 0 10px}
 .cierre p{color:var(--grafito);margin-bottom:20px;max-width:52ch;margin-left:auto;margin-right:auto}
 footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
-.foot-rejilla{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;margin-bottom:34px}
-.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
+.foot-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:28px 24px;margin-bottom:34px}
+.foot-rejilla > :first-child{grid-column:span 2;min-width:0}
+.foot-titulo{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
 .foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
 .foot-col a:hover{color:#fff}
 .foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
@@ -163,7 +167,6 @@ footer small{font-size:13.5px;color:#8b93b5}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
 @media(max-width:980px){
   .rejilla,.rejilla-2{grid-template-columns:1fr}
-  .foot-rejilla{grid-template-columns:1fr 1fr}
   .menu-btn{display:flex}
   /* El menu completo baja bajo la barra. Cerrado va con visibility:hidden
      y no solo con opacidad, para que el tabulador no entre en enlaces que
@@ -301,27 +304,27 @@ footer small{font-size:13.5px;color:#8b93b5}
     <div class="rejilla revela">
     <a class="tarjeta" href="/funcionalidades/inventario/">
       <span class="franja" style="background:var(--verde)"></span>
-      <h3>Inventario</h3>
+      <h2 class="tarjeta-tit">Inventario</h2>
       <p>Lo que hay, dónde está y desde cuándo</p>
     </a>
     <a class="tarjeta" href="/funcionalidades/ventas/">
       <span class="franja" style="background:var(--cian)"></span>
-      <h3>Ventas y clientes</h3>
+      <h2 class="tarjeta-tit">Ventas y clientes</h2>
       <p>El histórico completo de cada cuenta en una sola ficha</p>
     </a>
     <a class="tarjeta" href="/funcionalidades/facturacion/">
       <span class="franja" style="background:var(--azul-marca)"></span>
-      <h3>Facturación</h3>
+      <h2 class="tarjeta-tit">Facturación</h2>
       <p>De la emisión al cobro, con la trazabilidad que exige la administración</p>
     </a>
     <a class="tarjeta" href="/funcionalidades/contabilidad/">
       <span class="franja" style="background:var(--marigold)"></span>
-      <h3>Contabilidad</h3>
+      <h2 class="tarjeta-tit">Contabilidad</h2>
       <p>El libro mayor como fuente única de verdad</p>
     </a>
     <a class="tarjeta" href="/funcionalidades/informes/">
       <span class="franja" style="background:var(--cielo)"></span>
-      <h3>Informes</h3>
+      <h2 class="tarjeta-tit">Informes</h2>
       <p>Cuadros de mando sobre datos en vivo, sin exportar a una hoja de cálculo</p>
     </a>
   </div>
@@ -348,39 +351,39 @@ footer small{font-size:13.5px;color:#8b93b5}
     </svg><span class="wordmark">cont<i>aes</i></span></div>
       <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
     </div>
-    <div class="foot-col">
-      <h4>Producto</h4>
+    <nav class="foot-col" aria-label="Producto">
+      <p class="foot-titulo">Producto</p>
       <a href="/funcionalidades/contabilidad/">Contabilidad</a>
       <a href="/funcionalidades/facturacion/">Facturación</a>
       <a href="/funcionalidades/inventario/">Inventario</a>
       <a href="/funcionalidades/compras/">Compras</a>
       <a href="/funcionalidades/ventas/">Ventas y clientes</a>
       <a href="/funcionalidades/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Sectores</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Sectores">
+      <p class="foot-titulo">Sectores</p>
       <a href="/sectores/fabricacion/">Fabricación</a>
       <a href="/sectores/distribucion/">Distribución y mayorista</a>
       <a href="/sectores/construccion/">Construcción</a>
       <a href="/sectores/comercio/">Comercio y retail</a>
       <a href="/sectores/logistica/">Logística y transporte</a>
       <a href="/sectores/">Ver todo</a>
-    </div>
-    <div class="foot-col">
-      <h4>Recursos</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Recursos">
+      <p class="foot-titulo">Recursos</p>
       <a href="/blog/">Blog</a>
       <a href="/glosario/">Glosario</a>
       <a href="/calendario-fiscal/">Calendario fiscal</a>
       <a href="/preguntas/">Preguntas frecuentes</a>
-    </div>
-    <div class="foot-col">
-      <h4>Empresa</h4>
+    </nav>
+    <nav class="foot-col" aria-label="Empresa">
+      <p class="foot-titulo">Empresa</p>
       <a href="/sobre/">Sobre Contaes</a>
       <a href="/migracion/">Migración</a>
       <a href="/seguridad/">Seguridad y datos</a>
       <a href="/precios/">Precios</a>
       <a href="/integraciones/">Integraciones</a>
-    </div>
+    </nav>
   </div>
   <div class="foot-bajo">
     <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
