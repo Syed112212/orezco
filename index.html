@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Contaes: ERP con IA y asesoría que presenta tus modelos</title>
-<meta name="description" content="Contaes es un ERP con IA y asesoría incluida para pymes: la IA lleva la contabilidad al día y prepara los modelos fiscales (303, 111, 130, 347), y un asesor los revisa y los presenta. Facturación, inventario, compras, ventas y personal en el mismo sitio.">
+<meta name="description" content="Gestoría online para autónomos, startups y pymes: contabilidad, impuestos, nóminas y contratos, con software propio incluido y servicios de crecimiento.">
 <link rel="canonical" href="https://contaes.com/">
 <meta name="theme-color" content="#f6f5f4">
 
@@ -333,6 +333,16 @@ footer small{font-size:13.5px;color:#8b93b5}
 /* ── 10. Tarjetas ────────────────────────────────────────── */
 .tarjeta{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:24px;transition:transform .2s ease,border-color .2s ease}
 .tarjeta:hover{transform:translateY(-3px);border-color:rgba(0,0,0,.16)}
+/* La tarjeta que es un enlace: sin subrayado en todo su contenido, y con
+   una senal de accion que aparece al pasar por encima. Estas reglas viven
+   en plantilla.py para las paginas generadas; la portada necesita las
+   suyas porque tiene hoja propia. */
+a.tarjeta{text-decoration:none;color:inherit;display:grid;align-content:start;gap:7px}
+a.tarjeta h3,a.tarjeta p{text-decoration:none}
+.tarjeta-mas{font-size:13.5px;font-weight:500;color:var(--azul);opacity:0;
+  transform:translateX(-4px);transition:opacity .2s ease,transform .2s ease}
+.tarjeta-mas::after{content:" 92"}
+a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;transform:none}
 .rejilla-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 
 /* ── 11. Modulos: ocho losas 3D ──────────────────────────── */
@@ -771,13 +781,13 @@ main,footer{position:relative;z-index:1}
     <div class="mota m3" aria-hidden="true">📦</div>
 
     <div class="wrap">
-      <h1 class="entra">El ERP que además<br><span class="resalte">presenta tus modelos</span></h1>
-      <p class="editorial entra">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta. Tú no tocas Hacienda.</p>
+      <h1 class="entra">La gestoría que además<br><span class="resalte">te ayuda a crecer</span></h1>
+      <p class="editorial entra">Contabilidad, impuestos, nóminas y contratos, con el software incluido en vez de aparte. Y cuando toca crecer: dirección financiera, clientes nuevos, financiación y salir fuera. La misma gente, que ya conoce tus números.</p>
       <div class="hero-acciones entra">
-        <a class="btn btn-azul" href="#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
-        <a class="btn btn-tinte" href="#ia">Ver cómo funciona</a>
+        <a class="btn btn-azul" href="#contacto">Hablemos <span class="flecha" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-tinte" href="#tres">Qué hacemos exactamente</a>
       </div>
-      <p class="hero-nota entra">En desarrollo · Para pymes</p>
+      <p class="hero-nota entra">Para autónomos, startups y pymes</p>
 
       <!-- maqueta del producto: la IA respondiendo -->
       <div class="maqueta revela" aria-label="Ejemplo de conversación con la IA de Contaes">
@@ -813,6 +823,41 @@ main,footer{position:relative;z-index:1}
     </button>
     <div class="cinta-pista" aria-hidden="true"><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span></div>
   </div>
+
+
+  <!-- Las tres patas del servicio. Va justo despues de la portada porque
+       es lo primero que hay que entender: no vendemos un programa. -->
+  <section id="tres">
+    <div class="wrap">
+      <p class="etiqueta">Qué hacemos</p>
+      <h2 style="margin-top:10px;max-width:20ch">Tres cosas que casi siempre están separadas</h2>
+      <p class="editorial" style="max-width:58ch;margin-top:14px">Una gestoría por un lado, un
+        programa de gestión por otro, y para crecer, cada consultor su factura. En medio, tú
+        haciendo de pegamento. Aquí las tres están del mismo lado.</p>
+
+      <div class="rejilla-3 cascada" style="margin-top:32px">
+        <a class="tarjeta inclina" href="/gestoria/">
+          <h3>La gestoría</h3>
+          <p class="cuerpo">Contabilidad, impuestos, nóminas y contratos. Los libros al día
+            todos los días, no a final de trimestre, y los modelos presentados por una persona
+            colegiada que firma.</p>
+          <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+        </a>
+        <a class="tarjeta inclina" href="/funcionalidades/">
+          <h3>El software</h3>
+          <p class="cuerpo">Ocho módulos sobre el mismo libro mayor, con un asistente al que se
+            le pregunta en tu idioma. Incluido, no un extra que se factura aparte.</p>
+          <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+        </a>
+        <a class="tarjeta inclina" href="/crecimiento/">
+          <h3>Lo que hace crecer</h3>
+          <p class="cuerpo">Dirección financiera, marketing, prospección comercial, bots de
+            atención, financiación pública y privada, y salida a otros mercados con Filnet.</p>
+          <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ══ El problema ══ -->
   <section id="problema" style="padding-top:0">
@@ -1075,7 +1120,7 @@ main,footer{position:relative;z-index:1}
       <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
       <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#ffffff"/>
     </svg><span class="wordmark">cont<i>aes</i></span></div>
-      <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
+      <p class="foot-nota">La gestoría de siempre, con el software dentro y gente que te ayuda a crecer. Contabilidad, impuestos, nóminas y contratos, más dirección financiera, captación de clientes, financiación y salida al exterior.</p>
     </div>
     <nav class="foot-col" aria-label="Gestoría">
       <p class="foot-titulo">Gestoría</p>
@@ -1118,7 +1163,7 @@ main,footer{position:relative;z-index:1}
     </nav>
   </div>
   <div class="foot-bajo">
-    <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
+    <small>&copy; <span id="anio">2026</span> Contaes &middot; Gestoría online para autónomos, startups y pymes</small>
     <nav aria-label="Legal" style="display:flex;gap:18px;flex-wrap:wrap">
       <a href="/legal/aviso-legal/">Aviso legal</a>
       <a href="/legal/privacidad/">Política de privacidad</a>

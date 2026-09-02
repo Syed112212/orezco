@@ -190,8 +190,8 @@ CALENDARIO_NOTA = (
 # Preguntas frecuentes
 # ═════════════════════════════════════════════════════════════════════
 PREGUNTAS = [
-    ("¿Está disponible ya?",
-     "No. Contaes está en desarrollo. Lo que puedes hacer hoy es contarnos cómo trabajáis y qué os duele: eso decide qué se construye antes. No hay ninguna versión de pago ni prueba gratuita porque no habría nada que probar."),
+    ("¿Qué se puede contratar?",
+     "Todo lo que hay en la web: la gestoría (contabilidad, fiscal, laboral y legal), el software, y los servicios de crecimiento por separado o juntos. Lo normal es empezar por la gestoría y añadir lo demás cuando hace falta, no al revés."),
     ("¿Qué es exactamente: un programa o una asesoría?",
      "Las dos cosas, y por eso existe. El programa lleva la gestión y la contabilidad; el servicio de asesoría revisa, firma y presenta los modelos. Un ERP solo te deja los modelos hechos pero sin presentar. Una asesoría sola no tiene tus datos al día."),
     ("¿Qué hace la IA y qué no hace?",
@@ -203,7 +203,7 @@ PREGUNTAS = [
     ("¿Qué pasa con nuestros datos durante el cambio?",
      "El sistema antiguo sigue vivo en solo lectura durante la convivencia, para consultar y comparar. No se apaga nada hasta que lo nuevo está funcionando y cuadrado."),
     ("¿Cuánto cuesta?",
-     "Todavía no hay tarifa pública, porque el producto no está terminado y poner un precio ahora sería inventarlo. Lo que sí podemos decir es de qué dependerá: número de personas que lo usan, módulos activos y si incluye o no el servicio de asesoría."),
+     "Depende de cuánta gente sois, qué servicios contratáis, qué módulos del software usáis y cuántos documentos movéis al mes. No publicamos tarifa porque cobrar lo mismo a un autónomo con veinte facturas al año que a una empresa de treinta personas sería cobrarle de más a uno de los dos. En la primera llamada sale un número, no un rango."),
     ("¿Cómo empieza el proceso?",
      "Con una llamada sobre lo que usáis hoy y qué es lo que peor lleváis. Si no encajamos, se dice en esa llamada y no en la tercera. Si encajamos, la siguiente es una demo sobre vuestro caso, no una presentación genérica."),
     ("¿Sirve para autónomos?",

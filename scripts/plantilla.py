@@ -424,7 +424,7 @@ def pie(base=""):
   <div class="foot-rejilla">
     <div class="foot-col">
       <div class="foot-marca">%(marca)s<span class="wordmark">cont<i>aes</i></span></div>
-      <p class="foot-nota">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta.</p>
+      <p class="foot-nota">La gestoría de siempre, con el software dentro y gente que te ayuda a crecer. Contabilidad, impuestos, nóminas y contratos, más dirección financiera, captación de clientes, financiación y salida al exterior.</p>
     </div>
 %(producto)s
 %(sectores)s
@@ -433,7 +433,7 @@ def pie(base=""):
 %(empresa)s
   </div>
   <div class="foot-bajo">
-    <small>&copy; <span id="anio">2026</span> Contaes &middot; En desarrollo</small>
+    <small>&copy; <span id="anio">2026</span> Contaes &middot; Gestoría online para autónomos, startups y pymes</small>
     <nav aria-label="Legal" style="display:flex;gap:18px;flex-wrap:wrap">
 %(legal)s
     </nav>

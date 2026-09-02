@@ -507,8 +507,8 @@ def pagina_precios():
     rastro = migas(("/", "Inicio"), (None, "Precios"))
     factores = [
         ("Cuánta gente lo usa", "no es lo mismo una administración de dos personas que un equipo de treinta con acceso desde obra o desde tienda."),
-        ("Qué módulos se activan", "quien solo necesita contabilidad y facturación no debería pagar por inventario y proyectos."),
-        ("Si incluye la asesoría", "es la parte con coste de personas detrás: alguien colegiado revisa, firma y presenta. Eso tiene un precio distinto al del software."),
+        ("Qué módulos del software usas", "quien solo necesita contabilidad y facturación no debería pagar por inventario y proyectos."),
+        ("Qué servicios contratas", "no es lo mismo la gestoría sola que sumarle dirección financiera, captación de clientes o la búsqueda de financiación. Se contrata por partes."),
         ("El volumen de documentos", "leer y clasificar facturas tiene un coste por documento; una empresa con cien facturas al mes no es como una con tres mil."),
         ("La migración", "traerse el histórico de otro sistema es un trabajo con principio y final, y se presupuesta aparte."),
     ]
@@ -518,17 +518,18 @@ def pagina_precios():
 <section class="seccion">
   <div class="wrap estrecho">
     <div class="aviso">
-      <strong>Todavía no hay tarifa pública.</strong> El producto está en desarrollo, y publicar
-      un precio ahora sería inventarlo. Preferimos decir esto que poner tres columnas con cifras
-      que no podríamos sostener.
+      <strong>No publicamos tarifa, y te decimos por qué.</strong> Una gestoría que cobra lo
+      mismo a un autónomo con veinte facturas al año que a una empresa de treinta personas con
+      almacén está cobrando de más a uno de los dos. El presupuesto sale de cinco cosas
+      concretas, y las tienes aquí abajo.
     </div>
   </div>
 </section>
 
 <section class="seccion">
   <div class="wrap estrecho revela">
-    <h2 style="margin-top:0">De qué dependerá</h2>
-    <p class="cuerpo" style="margin-bottom:8px">Lo que sí sabemos es qué mueve el precio. Son cinco cosas:</p>
+    <h2 style="margin-top:0">Las cinco cosas que mueven el precio</h2>
+    <p class="cuerpo" style="margin-bottom:8px">Ninguna sorpresa: son las mismas que te preguntaría cualquier gestoría seria antes de darte un número.</p>
     <ul class="lista">
 %(filas)s    </ul>
   </div>
@@ -537,34 +538,34 @@ def pagina_precios():
 <section class="seccion">
   <div class="wrap estrecho prosa revela">
     <h2>Lo que no vamos a hacer</h2>
-    <p>No va a haber un plan gratuito que sirva de poco para que acabes pagando el de arriba. No va a haber un precio de entrada que suba al año siguiente sin avisar. Y el presupuesto de migración no va a aparecer después de firmar.</p>
-    <p>Cuando haya tarifa, estará en esta página.</p>
+    <p>No hay plan gratuito que sirva de poco para que acabes pagando el de arriba. No hay precio de entrada que suba al año siguiente sin avisar. Y el presupuesto de migración se cierra antes de firmar, no después.</p>
+    <p>Tampoco hay permanencia escondida en una cláusula. Si un día te vas, te llevas tus datos en un formato que se abre sin nuestro programa.</p>
   </div>
 </section>
 
 %(cierre)s''' % {
-        "enc": encabezado("Precios", "Lo que sabemos hoy sobre el precio",
-                          "Contaes está en desarrollo. Esta página dice lo que hay: todavía no hay "
-                          "tarifa, y sí sabemos de qué dependerá.", rastro),
+        "enc": encabezado("Precios", "De qué depende lo que pagas",
+                          "Cada empresa paga por lo que usa. Aquí está de qué depende el presupuesto, "
+                          "para que sepas qué te van a preguntar antes de la llamada.", rastro),
         "filas": filas,
-        "cierre": cierre("¿Quieres saber qué supondría en tu caso?",
+        "cierre": cierre("¿Cuánto te saldría a ti?",
                          "Cuéntanos cuánta gente sois, qué usáis hoy y cuántas facturas movéis al mes. "
-                         "Con eso se puede hablar de números con sentido."),
+                         "Con eso te damos un número, no un rango."),
     }
     return P.pagina("Precios · Contaes",
-                    "Todavía no hay tarifa pública porque el producto está en desarrollo. Esto es de qué dependerá el precio y qué no vamos a hacer.",
+                    "De qué depende el presupuesto de una gestoría online: personas, servicios contratados, volumen de documentos y migración. Y lo que no vamos a hacer.",
                     "%s/precios/" % DOMINIO, cuerpo)
 
 
 def pagina_integraciones():
     rastro = migas(("/", "Inicio"), (None, "Integraciones"))
     previstas = [
-        ("Bancos", "importación de extractos para la conciliación, empezando por los formatos estándar (Norma 43) y las conexiones abiertas por PSD2."),
-        ("Agencia Tributaria", "presentación de modelos a través de la sede electrónica, que es por donde pasa el servicio de asesoría."),
-        ("Correo", "una dirección del sistema a la que reenviar facturas de proveedor para que entren por el escáner."),
-        ("Tiendas en línea", "pedidos y clientes desde las plataformas más habituales, para que la venta no se teclee dos veces."),
-        ("Pasarelas de pago", "conciliación de los cobros con sus liquidaciones, que es donde se pierden las comisiones."),
-        ("Exportación abierta", "poder sacar tus datos en formatos estándar. No es una integración: es un derecho."),
+        ("Tu banco", "el extracto entra para conciliar. Formato estándar Norma 43, que exporta cualquier banco español, y las conexiones abiertas por PSD2 donde están disponibles."),
+        ("La Agencia Tributaria", "por ahí pasan los modelos. Es la parte del servicio que hace una persona colegiada con su firma."),
+        ("Tu correo", "una dirección a la que reenviar las facturas de proveedor. Entran por el escáner y salen clasificadas."),
+        ("Tu tienda o tu TPV", "si vendes online o en local, los pedidos pueden entrar sin teclearse. Se monta caso por caso según con qué vendas."),
+        ("Tus pasarelas de cobro", "para cuadrar lo cobrado con lo liquidado, que es donde se pierden las comisiones sin que nadie las registre."),
+        ("La puerta de salida", "poder sacar tus datos en formatos estándar. No es una integración: es la condición para poder irte, y por tanto para poder confiar."),
     ]
     filas = "".join('    <li><b>%s</b><span>%s</span></li>\n' % (t, d) for t, d in previstas)
     cuerpo = '''%(enc)s
@@ -572,16 +573,17 @@ def pagina_integraciones():
 <section class="seccion">
   <div class="wrap estrecho">
     <div class="aviso">
-      <strong>Ninguna de estas integraciones está disponible todavía.</strong> Esto es la hoja de
-      ruta, no un catálogo. Poner logotipos de servicios con los que aún no conectamos sería
-      dar a entender algo que no es cierto.
+      <strong>Aquí no vas a ver un muro de logotipos.</strong> Un catálogo largo de conectores
+      suele esconder que la mayoría hacen poco: mueven un dato de un sitio a otro y dejan el
+      trabajo de cuadrar para una persona. Preferimos contarte con qué trabajamos de verdad y
+      preguntarte qué necesitas tú.
     </div>
   </div>
 </section>
 
 <section class="seccion">
   <div class="wrap estrecho revela">
-    <h2 style="margin-top:0">Lo que está previsto</h2>
+    <h2 style="margin-top:0">Lo que entra y sale del sistema</h2>
     <ul class="lista">
 %(filas)s    </ul>
   </div>
@@ -589,22 +591,20 @@ def pagina_integraciones():
 
 <section class="seccion">
   <div class="wrap estrecho prosa revela">
-    <h2>Por qué no habrá cien integraciones</h2>
-    <p>Un catálogo largo de conectores suele esconder que la mayoría hacen poco: mueven un dato de un sitio a otro y dejan el trabajo de cuadrar para la persona.</p>
-    <p>La razón de ser de Contaes es que las cosas estén dentro y no conectadas por fuera. Cada integración que hagamos es una que no ha hecho falta construir dentro, y eso es una decisión, no una victoria.</p>
+    <h2>Por qué no hay cien integraciones</h2>
+    <p>La razón de ser de Contaes es que las cosas estén dentro y no conectadas por fuera. Cada integración que montamos es una que no ha hecho falta construir dentro, y eso es una decisión, no una victoria.</p>
     <h2>Si necesitas una concreta</h2>
-    <p>Dínoslo en la primera llamada. Saber con qué tenéis que hablar es parte de decidir si encajamos.</p>
+    <p>Dínoslo en la primera llamada. Saber con qué tenéis que hablar los sistemas es parte de decidir si encajamos, y a veces la respuesta honesta es que hoy no llegamos.</p>
   </div>
 </section>
 
 %(cierre)s''' % {
-        "enc": encabezado("Integraciones", "Con qué se conectará, y con qué no",
-                          "Hoja de ruta de integraciones. Todavía no hay ninguna disponible: "
-                          "el producto está en desarrollo.", rastro),
+        "enc": encabezado("Integraciones", "Con qué trabajamos, y qué te vamos a preguntar",
+                          "Lo que hace falta para llevar una gestoría entra por aquí: el banco, la sede de la Agencia Tributaria y el correo por el que llegan las facturas.", rastro),
         "filas": filas, "cierre": cierre(),
     }
     return P.pagina("Integraciones · Contaes",
-                    "Hoja de ruta de integraciones de Contaes: bancos, Agencia Tributaria, correo, tiendas en línea y pasarelas de pago. Ninguna disponible todavía.",
+                    "Con qué trabaja Contaes: tu banco por Norma 43, la sede de la Agencia Tributaria, el correo de facturas, tu tienda y tus pasarelas de cobro.",
                     "%s/integraciones/" % DOMINIO, cuerpo)
 
 
@@ -713,8 +713,9 @@ def paginas_legales():
                 "Datos registrales: %s" % _falta("registro"),
             ]),
              ("Objeto", [
-                 "Este sitio informa sobre Contaes, un producto en desarrollo. No permite contratar nada ni "
-                 "realizar pagos: su única función es informar y recoger solicitudes de contacto.",
+                 "Este sitio informa sobre los servicios de Contaes. No permite contratar en línea ni "
+                 "realizar pagos: la contratación se formaliza aparte, y aquí solo se recogen "
+                 "solicitudes de contacto.",
              ]),
              ("Uso del sitio", [
                  "El acceso es libre y gratuito. Quien lo usa se compromete a no emplearlo para actividades "
@@ -890,8 +891,8 @@ def main():
 
     salidas["sobre/index.html"] = pagina_simple(
         "sobre/", "Empresa", "Qué estamos construyendo",
-        "Contaes es un ERP para pymes con una asesoría fiscal dentro. Está en desarrollo, "
-        "y esta página cuenta por qué y con qué criterio.",
+        "Contaes es una gestoría online con el software dentro y gente que te ayuda a "
+        "crecer. Esta página cuenta por qué existe y con qué criterio se trabaja.",
         [("El hueco que intenta llenar", [
             "Una pyme española con quince personas tiene hoy dos cosas separadas: un programa donde mete los datos y una asesoría a la que se los manda. En medio hay un mes de correos, una hoja de cálculo y la pregunta de siempre.",
             "Ese hueco no es un problema de software. Es un problema de reparto: el programa no se responsabiliza de lo que se presenta, y la asesoría no tiene los datos al día. Contaes existe para que las dos cosas estén del mismo lado.",
@@ -900,11 +901,11 @@ def main():
              "Que el dato se registre una vez, donde ocurre el hecho. Que cualquier cifra se pueda seguir hasta el documento que la origina. Que lo que sale de la empresa (un correo, un modelo) lo apruebe una persona. Y que la responsabilidad ante la Administración sea de alguien colegiado, no de un algoritmo.",
              "También hay un criterio sobre lo que no se hace: no competir en número de funciones, no llenar el catálogo de integraciones que hacen poco y no prometer autonomía donde debería haber criterio profesional.",
          ]),
-         ("En qué punto está", [
-             "En desarrollo. No hay versión disponible, ni prueba gratuita, ni tarifa. Esta web no tiene testimonios, ni logotipos de clientes, ni cifras de usuarios, porque no los hay: ponerlos sería mentir, y un producto de contabilidad que empieza mintiendo empieza mal.",
-             "Lo que sí se puede hacer hoy es contarnos cómo trabajáis. Eso decide qué se construye antes.",
+         ("Qué encontrarás y qué no", [
+             "Esta web no tiene testimonios, ni logotipos de clientes, ni cifras de usuarios. No porque no haya trabajo detrás, sino porque esas tres cosas son las más fáciles de inflar y las que menos dicen. Una gestoría que empieza la relación exagerando empieza mal.",
+             "Lo que sí encontrarás es lo que hacemos, lo que no hacemos y de qué depende el precio. Con eso se puede decidir.",
          ])],
-        "Contaes es un ERP para pymes con asesoría fiscal dentro, en desarrollo. Por qué existe, con qué criterio se construye y en qué punto está.",
+        "Contaes es una gestoría online para autónomos, startups y pymes, con software propio y servicios de crecimiento. Por qué existe y con qué criterio trabajamos.",
         rastro_nombre="Sobre Contaes")
 
     salidas["migracion/index.html"] = pagina_simple(
@@ -938,7 +939,7 @@ def main():
             "El tratamiento de datos personales se rige por el Reglamento General de Protección de Datos. Puedes leer qué recogemos hoy en la <a href=\"/legal/privacidad/\">política de privacidad</a>: en este momento, solo lo que nos escribes tú.",
         ]),
          ("Lo que todavía no podemos afirmar", [
-             "El producto está en desarrollo. No tenemos certificaciones que enseñar (ni ISO 27001, ni un informe SOC 2) porque no se certifica lo que aún se está construyendo, y presumir de una que no se tiene es exactamente el tipo de cosa que descalifica a un proveedor de contabilidad.",
+             "No tenemos certificaciones que enseñar: ni ISO 27001, ni un informe SOC 2. Podríamos no mencionarlo y casi nadie preguntaría, pero un proveedor que lleva tu contabilidad y presume de lo que no tiene es exactamente el que no quieres. Cuando existan compromisos concretos y verificables sobre alojamiento, cifrado, copias de seguridad y tiempos de recuperación, estarán aquí con su nombre y su fecha.",
              "Cuando existan compromisos concretos y verificables sobre alojamiento, cifrado, copias de seguridad y tiempos de recuperación, estarán aquí con nombre y fecha. Hasta entonces, esta página dice lo que hay.",
          ]),
          ("Este sitio web", [
