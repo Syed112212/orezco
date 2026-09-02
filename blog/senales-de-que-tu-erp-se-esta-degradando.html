@@ -75,6 +75,20 @@ h3{font-size:20px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .nav-links{display:flex;gap:4px;margin:0 auto}
 .nav-links a{color:var(--apagado);font-size:15px;font-weight:500;text-decoration:none;padding:10px 14px;border-radius:var(--r-btn);transition:color .2s ease,background .2s ease}
 .nav-links a:hover,.nav-links a:focus-visible{color:var(--tinta-fuerte);background:rgba(0,0,0,.04)}
+/* la marca animada, igual que en la portada */
+.marca-svg .mc-c{transform-origin:42% 50%;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.marca-svg .mc-b{transform-origin:56% 50%;animation:barra 6s cubic-bezier(.22,1,.36,1) infinite;transition:transform .32s cubic-bezier(.22,1,.36,1)}
+.marca-svg .b2{animation-delay:.12s}
+.marca-svg .b3{animation-delay:.24s}
+@keyframes barra{0%{transform:translateX(-14px) scaleX(.55);opacity:0}9%,52%{transform:none;opacity:1}62%{transform:translateX(7px)}72%,100%{transform:none;opacity:1}}
+.marca:hover .mc-c{transform:rotate(-14deg)}
+.marca:hover .mc-b{animation:none}
+.marca:hover .b1{transform:translateX(9px)}
+.marca:hover .b2{transform:translateX(5px)}
+.marca:hover .b3{transform:translateX(12px)}
+.btn .flecha{display:inline-block;transition:transform .22s cubic-bezier(.22,1,.36,1)}
+.btn:hover .flecha{transform:translateX(4px)}
+.post-card{transform-style:preserve-3d}
 .migas{font-size:14px;color:var(--piedra);margin-bottom:20px}
 .migas a{color:var(--piedra);text-decoration:none}
 .migas a:hover{color:var(--tinta-fuerte);text-decoration:underline}
@@ -114,7 +128,7 @@ footer small{font-size:14px;color:#8b93b5}
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--azul);outline-offset:3px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}*{transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
 @media(max-width:900px){.rejilla{grid-template-columns:1fr}.nav-links{display:none}}
 </style>
 </head>
@@ -122,11 +136,11 @@ footer small{font-size:14px;color:#8b93b5}
 <a class="skip" href="#contenido">Saltar al contenido</a>
 <nav class="nav" aria-label="Principal">
   <div class="nav-in">
-    <a class="marca" href="/"><svg viewBox="0 0 200 200" aria-hidden="true">
-      <path d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
-      <rect x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
-      <rect x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
-      <rect x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
+    <a class="marca" href="/"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#1E3A5F" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#2FBF9B"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#1F9EC4"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#1E6FB8"/>
     </svg><span class="wordmark">cont<i>aes</i></span></a>
     <div class="nav-links">
       <a href="/#ia">La IA</a>
@@ -135,7 +149,7 @@ footer small{font-size:14px;color:#8b93b5}
       <a href="/blog/">Blog</a>
       <a href="/#preguntas">Preguntas</a>
     </div>
-    <a class="btn btn-azul" href="/#contacto">Pedir una demo</a>
+    <a class="btn btn-azul" href="/#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
   </div>
 </nav>
 <main id="contenido">
@@ -175,7 +189,7 @@ footer small{font-size:14px;color:#8b93b5}
     <div class="cierre-post revela">
       <h3>Contaes es un ERP con IA para pymes</h3>
       <p>Está en desarrollo. Si te interesa lo que cuenta este artículo, escríbenos y te avisamos cuando haya algo que enseñar.</p>
-      <a class="btn btn-azul" href="/#contacto">Pedir una demo</a>
+      <a class="btn btn-azul" href="/#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 
@@ -188,11 +202,11 @@ footer small{font-size:14px;color:#8b93b5}
 </main>
 <footer>
   <div class="wrap foot-in">
-    <div class="foot-marca"><svg viewBox="0 0 200 200" aria-hidden="true">
-      <path d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#ffffff" stroke-width="27" stroke-linecap="round"/>
-      <rect x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
-      <rect x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
-      <rect x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#ffffff"/>
+    <div class="foot-marca"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
+      <path class="mc-c" d="M 123.56 61.80 A 55.00 55.00 0 1 0 123.56 138.20" fill="none" stroke="#ffffff" stroke-width="27" stroke-linecap="round"/>
+      <rect class="mc-b b1" x="113.0" y="59.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
+      <rect class="mc-b b2" x="113.0" y="90.5" width="74.0" height="19.0" rx="9.5" fill="#ffffff"/>
+      <rect class="mc-b b3" x="113.0" y="121.5" width="62.0" height="19.0" rx="9.5" fill="#ffffff"/>
     </svg><span class="wordmark">cont<i>aes</i></span></div>
     <nav class="foot-links" aria-label="Pie">
       <a href="/#ia">La IA</a>

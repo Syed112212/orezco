@@ -437,6 +437,77 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 
 @media(max-width:700px){.escena{margin-top:36px}.escena svg{opacity:.75}}
 
+
+/* -- Mas animacion -------------------------------------------
+   Todo con transform y opacity, que son las dos propiedades que
+   el navegador anima sin recalcular el diseno.                  */
+
+/* la pildora del titular se dibuja al cargar */
+.resalte{clip-path:inset(0 100% 0 0);animation:pinta .85s .35s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes pinta{to{clip-path:inset(0 0 0 0)}}
+
+/* la barra de navegacion se compacta al bajar */
+.nav.encogida .nav-in{min-height:52px;padding-top:6px;padding-bottom:6px}
+.nav.encogida .marca svg{width:26px;height:26px}
+.nav.encogida .marca span{font-size:18px}
+.marca svg,.marca span,.nav-in{transition:width .25s ease,height .25s ease,font-size .25s ease,min-height .25s ease,padding .25s ease}
+
+/* entrada en cascada dentro de las rejillas */
+.cascada > *{opacity:0;transform:translateY(22px)}
+.cascada.visible > *{animation:sube-item .6s cubic-bezier(.22,1,.36,1) forwards}
+.cascada.visible > *:nth-child(1){animation-delay:.02s}
+.cascada.visible > *:nth-child(2){animation-delay:.09s}
+.cascada.visible > *:nth-child(3){animation-delay:.16s}
+.cascada.visible > *:nth-child(4){animation-delay:.23s}
+.cascada.visible > *:nth-child(5){animation-delay:.30s}
+.cascada.visible > *:nth-child(6){animation-delay:.37s}
+.cascada.visible > *:nth-child(7){animation-delay:.44s}
+.cascada.visible > *:nth-child(8){animation-delay:.51s}
+@keyframes sube-item{to{opacity:1;transform:none}}
+
+/* las tarjetas se inclinan siguiendo al raton */
+.inclina{transform-style:preserve-3d;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+
+/* las barras del plano nuevo se llenan al aparecer */
+.plano.nuevo .barras i{transform-origin:left center;transform:scaleX(0)}
+.pila.visible .plano.nuevo .barras i{animation:llena .8s cubic-bezier(.22,1,.36,1) forwards}
+.pila.visible .plano.nuevo .barras i:nth-child(2){animation-delay:.14s}
+.pila.visible .plano.nuevo .barras i:nth-child(3){animation-delay:.28s}
+@keyframes llena{to{transform:scaleX(1)}}
+
+.escena svg{will-change:transform}
+
+/* cinta de sectores */
+.cinta{overflow:hidden;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);background:var(--blanco);padding:14px 0}
+.cinta-pista{display:flex;width:max-content;animation:desfila 42s linear infinite}
+.cinta-pista span{display:inline-flex;align-items:center;gap:10px;padding:0 26px;white-space:nowrap;font-size:15px;font-weight:500;color:var(--piedra)}
+.cinta-pista span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--borde)}
+@keyframes desfila{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cinta:hover .cinta-pista{animation-play-state:paused}
+
+/* la flecha del boton se desplaza al pasar */
+.btn .flecha{display:inline-block;transition:transform .22s cubic-bezier(.22,1,.36,1)}
+.btn:hover .flecha,.btn:focus-visible .flecha{transform:translateX(4px)}
+
+/* el desplegable de preguntas se abre con suavidad */
+.faq details[open] .resp{animation:abre .32s cubic-bezier(.22,1,.36,1)}
+@keyframes abre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* los iconos de garantia laten al aparecer */
+.garantias.visible .gicono{animation:late .7s cubic-bezier(.22,1,.36,1)}
+.garantias.visible .garantia:nth-child(2) .gicono{animation-delay:.12s}
+.garantias.visible .garantia:nth-child(3) .gicono{animation-delay:.24s}
+@keyframes late{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.12)}100%{transform:none;opacity:1}}
+
+@media(prefers-reduced-motion:reduce){
+  .resalte{clip-path:none;animation:none}
+  .cascada > *{opacity:1;transform:none;animation:none}
+  .plano.nuevo .barras i{transform:none;animation:none}
+  .cinta-pista{animation:none}
+  .inclina{transform:none!important}
+  .faq details[open] .resp,.garantias .gicono{animation:none}
+}
+
 /* ── 16. Pie ─────────────────────────────────────────────── */
 footer{background:var(--medianoche);color:#c6cbe0;padding:44px 0}
 .foot-in{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:space-between}
@@ -515,7 +586,7 @@ footer small{font-size:14px;color:#8b93b5}
       <a href="#para-quien">Para quién</a>
       <a href="blog/">Blog</a>
     </div>
-    <a class="btn btn-azul" href="#contacto">Pedir una demo</a>
+    <a class="btn btn-azul" href="#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
   </div>
 </nav>
 
@@ -531,7 +602,7 @@ footer small{font-size:14px;color:#8b93b5}
       <h1 class="entra">El ERP que además <span class="resalte">presenta tus modelos</span></h1>
       <p class="editorial entra">Un ERP con IA y una asesoría detrás. La IA mantiene la contabilidad al día y prepara los modelos; un asesor los revisa, los firma y los presenta. Tú no tocas Hacienda.</p>
       <div class="hero-acciones entra">
-        <a class="btn btn-azul" href="#contacto">Pedir una demo</a>
+        <a class="btn btn-azul" href="#contacto">Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a>
         <a class="btn btn-tinte" href="#ia">Ver cómo funciona</a>
       </div>
       <p class="hero-nota entra">En desarrollo · Para pymes</p>
@@ -644,6 +715,13 @@ footer small{font-size:14px;color:#8b93b5}
       </div>
   </section>
 
+
+  <!-- Cinta de sectores. La lista va dos veces para que el bucle no
+       tenga costura: al llegar a la mitad vuelve a empezar identica. -->
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta-pista"><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span></div>
+  </div>
+
   <!-- ══ El problema ══ -->
   <section id="problema" style="padding-top:0">
     <div class="wrap">
@@ -672,16 +750,16 @@ footer small{font-size:14px;color:#8b93b5}
         <h2 style="margin-bottom:18px;max-width:24ch">El programa y la <span class="resalte">asesoría</span>, en el mismo sitio</h2>
         <p class="cuerpo" style="max-width:62ch">Hoy tienes dos cosas separadas: un ERP donde metes los datos y una asesoría a la que se los mandas. En medio, un mes de correos, Excel y «¿me pasas las facturas?». Contaes junta las dos: la IA mantiene la contabilidad al día sobre tus propios datos, prepara los modelos, y un asesor los revisa, los firma y los presenta.</p>
 
-        <div class="rejilla-3" style="margin-top:28px">
-          <div class="tarjeta">
+        <div class="rejilla-3 cascada" style="margin-top:28px">
+          <div class="tarjeta inclina">
             <h3 style="margin-bottom:8px">La IA lleva el día a día</h3>
             <p class="cuerpo">Concilia, clasifica gastos, cuadra facturas y te enseña cualquier dato cuando se lo preguntas en tu idioma.</p>
           </div>
-          <div class="tarjeta">
+          <div class="tarjeta inclina">
             <h3 style="margin-bottom:8px">Prepara los modelos</h3>
             <p class="cuerpo">303, 111, 130, 347 y los que toquen, montados sobre los datos que ya están dentro. Sin volver a mandar nada.</p>
           </div>
-          <div class="tarjeta">
+          <div class="tarjeta inclina">
             <h3 style="margin-bottom:8px">Un asesor los presenta</h3>
             <p class="cuerpo">Una persona colegiada revisa, firma y presenta. La IA prepara; la responsabilidad ante Hacienda es de un profesional.</p>
           </div>
@@ -707,7 +785,7 @@ footer small{font-size:14px;color:#8b93b5}
           <p class="losas-pie" id="losas-pie">Ocho capas, un solo sistema</p>
         </div>
 
-        <div class="mods">
+        <div class="mods cascada">
           <article class="mod" data-losa="1" tabindex="0"><span class="n">01</span><div><h3>Contabilidad</h3><p>Plan contable, asientos, conciliación bancaria y cierre. El libro mayor como fuente única de verdad.</p></div></article>
           <article class="mod" data-losa="2" tabindex="0"><span class="n">02</span><div><h3>Facturación</h3><p>Emisión, rectificativas y seguimiento de cobro, con la trazabilidad que exige la administración.</p></div></article>
           <article class="mod" data-losa="3" tabindex="0"><span class="n">03</span><div><h3>Inventario</h3><p>Existencias, lotes y movimientos entre almacenes. Lo que hay, dónde está y desde cuándo.</p></div></article>
@@ -729,18 +807,18 @@ footer small{font-size:14px;color:#8b93b5}
         <h2 style="margin-bottom:16px">Tres pasos antes de tocar nada</h2>
         <p class="editorial">Ninguno implica cambiar de sistema. Sirven para saber si tiene sentido hacerlo.</p>
       </div>
-      <div class="pasos revela">
-        <div class="paso">
+      <div class="pasos revela cascada">
+        <div class="paso inclina">
           <span class="orden">1</span>
           <h3>Diagnóstico</h3>
           <p>Una llamada sobre lo que usáis hoy y qué es lo que peor lleváis. Si no encajamos, se dice en esa llamada y no en la tercera.</p>
         </div>
-        <div class="paso">
+        <div class="paso inclina">
           <span class="orden">2</span>
           <h3>Demo sobre vuestro caso</h3>
           <p>No una presentación genérica: los módulos que os afectan, con ejemplos parecidos a los vuestros.</p>
         </div>
-        <div class="paso">
+        <div class="paso inclina">
           <span class="orden">3</span>
           <h3>Plan de migración</h3>
           <p>Qué datos se traen, cuánto dura la convivencia y cuál es el punto de retorno. Por escrito, antes de empezar.</p>
@@ -762,7 +840,7 @@ footer small{font-size:14px;color:#8b93b5}
           <p class="cuerpo" style="margin-bottom:14px">Y aun así da vértigo, porque durante la migración la empresa tiene que seguir facturando.</p>
           <p class="cuerpo">Contaes se plantea desde ese día concreto: el traspaso de datos, el periodo en que <strong>conviven los dos sistemas</strong> y la vuelta atrás si algo sale mal.</p>
 
-          <div class="pila" aria-hidden="true">
+          <div class="pila revela" aria-hidden="true">
             <div class="pila-in">
               <div class="plano viejo">
                 <span class="tit">Sistema antiguo</span>
@@ -777,7 +855,7 @@ footer small{font-size:14px;color:#8b93b5}
             </div>
           </div>
         </div>
-        <div class="tarjeta">
+        <div class="tarjeta inclina">
           <ul class="lista">
             <li><b>Datos</b><span>Clientes, proveedores, artículos y saldos se traen con su histórico, no como saldo inicial suelto.</span></li>
             <li><b>Convivencia</b><span>Un periodo en que el sistema antiguo sigue vivo en solo lectura, para consultar y comparar.</span></li>
@@ -797,18 +875,18 @@ footer small{font-size:14px;color:#8b93b5}
         <h2 style="margin-bottom:16px">Y para quién no</h2>
         <p class="editorial">Un ERP no le sirve a todo el mundo. Preferimos decirlo antes que después de la demo.</p>
       </div>
-      <div class="rejilla-3 revela">
-        <div class="tarjeta">
+      <div class="rejilla-3 revela cascada">
+        <div class="tarjeta inclina">
           <p class="etiqueta" style="margin-bottom:8px">Encaja</p>
           <h3 style="margin-bottom:8px">Pymes sin sitio</h3>
           <p class="cuerpo">Facturáis lo suficiente como para que la hoja de cálculo ya duela, y tenéis almacén, compras o proyectos además de la contabilidad.</p>
         </div>
-        <div class="tarjeta">
+        <div class="tarjeta inclina">
           <p class="etiqueta" style="margin-bottom:8px">Encaja</p>
           <h3 style="margin-bottom:8px">Quien viene de un ERP degradado</h3>
           <p class="cuerpo">Ya tenéis sistema, pero lleva años acumulando módulos que nadie sabe explicar. Buscáis orden, no más funciones.</p>
         </div>
-        <div class="tarjeta">
+        <div class="tarjeta inclina">
           <p class="etiqueta" style="margin-bottom:8px">No encaja</p>
           <h3 style="margin-bottom:8px">Quien necesita algo muy específico</h3>
           <p class="cuerpo">Si dependéis de un proceso muy particular —fabricación compleja, normativa de un sector concreto—, hoy no lo cubrimos.</p>
@@ -860,7 +938,7 @@ footer small{font-size:14px;color:#8b93b5}
       <h2>¿Te enseñamos cómo funciona?</h2>
       <p class="editorial">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
 
-      <div class="garantias">
+      <div class="garantias revela">
         <div class="garantia"><span class="gicono" aria-hidden="true">✕</span><p><strong>Si no encajamos, te lo decimos</strong> en la primera llamada. No en la tercera.</p></div>
         <div class="garantia"><span class="gicono" aria-hidden="true">↩</span><p><strong>Punto de retorno por escrito</strong> antes de tocar nada. Definido, no improvisado.</p></div>
         <div class="garantia"><span class="gicono" aria-hidden="true">€</span><p><strong>La llamada no cuesta nada</strong> y no hay nada que firmar para tenerla.</p></div>
@@ -980,6 +1058,97 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
     });
   }, { threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
   for (var j = 0; j < piezas.length; j++) obs.observe(piezas[j]);
+})();
+
+
+/* -- Barra de navegacion que se compacta al bajar ------------- */
+(function () {
+  var nav = document.querySelector(".nav");
+  if (!nav || SIN_MOVIMIENTO) return;
+  var pedido = false;
+  window.addEventListener("scroll", function () {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(function () {
+      nav.classList.toggle("encogida", window.scrollY > 80);
+      pedido = false;
+    });
+  }, { passive: true });
+})();
+
+/* -- Tarjetas que se inclinan siguiendo al raton ---------------
+   Solo con puntero fino: en tactil no hay hover.               */
+(function () {
+  if (SIN_MOVIMIENTO || !window.matchMedia("(pointer: fine)").matches) return;
+  var piezas = document.querySelectorAll(".inclina");
+  for (var i = 0; i < piezas.length; i++) {
+    (function (el) {
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = "perspective(700px) rotateX(" + (-y * 7) + "deg) rotateY(" + (x * 9) + "deg) translateY(-4px)";
+      });
+      el.addEventListener("mouseleave", function () { el.style.transform = ""; });
+    })(piezas[i]);
+  }
+})();
+
+/* -- La escena de sectores se desplaza al hacer scroll -------- */
+(function () {
+  var svg = document.querySelector(".escena svg");
+  if (!svg || SIN_MOVIMIENTO) return;
+  var caja = svg.parentElement, pedido = false;
+  window.addEventListener("scroll", function () {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(function () {
+      var r = caja.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        var avance = 1 - (r.top / window.innerHeight);
+        svg.style.transform = "translateX(" + (avance * -26) + "px)";
+      }
+      pedido = false;
+    });
+  }, { passive: true });
+})();
+
+/* -- La conversacion de la maqueta se representa sola ----------
+   Es una maqueta, no una conversacion real: la etiqueta bajo el
+   marco lo dice. Va en bucle para quien llega tarde.            */
+(function () {
+  if (SIN_MOVIMIENTO) return;
+  var chat = document.querySelector(".maqueta .chat");
+  if (!chat) return;
+  var burbujas = chat.querySelectorAll(".burbuja");
+  var filas = document.querySelectorAll(".maqueta .tabla .fila");
+
+  function ocultar(lista, eje) {
+    for (var i = 0; i < lista.length; i++) {
+      lista[i].style.opacity = "0";
+      lista[i].style.transform = eje;
+      lista[i].style.transition = "opacity .4s ease, transform .4s cubic-bezier(.22,1,.36,1)";
+    }
+  }
+  function mostrar(lista, i, paso, luego) {
+    if (i >= lista.length) { if (luego) luego(); return; }
+    lista[i].style.opacity = "1";
+    lista[i].style.transform = "none";
+    setTimeout(function () { mostrar(lista, i + 1, paso, luego); }, paso);
+  }
+  function ciclo() {
+    ocultar(burbujas, "translateY(10px)");
+    ocultar(filas, "translateX(10px)");
+    setTimeout(function () {
+      mostrar(burbujas, 0, 850, function () {
+        mostrar(filas, 0, 150, function () { setTimeout(ciclo, 6500); });
+      });
+    }, 400);
+  }
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { ciclo(); obs.disconnect(); } });
+  }, { threshold: 0.3 });
+  obs.observe(chat);
 })();
 
 /* ── Contacto ────────────────────────────────────────────────
