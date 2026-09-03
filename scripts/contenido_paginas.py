@@ -15,6 +15,7 @@ DATOS_EMPRESA = {
     "nif": "B05427810",
     "domicilio": PENDIENTE,
     "correo": "info@contaes.com",
+    "telefono": "+34 666 02 95 59",
     "registro": PENDIENTE,
 }
 

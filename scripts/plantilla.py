@@ -1065,6 +1065,7 @@ def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=Fal
         "version": version_hoja(),
         "estilos_extra": ("<style>%s</style>" % extra_css) if extra_css else "",
         "cabecera": cabecera(base), "cuerpo": cuerpo, "pie": pie(base), "js": PIE_JS,
+        "tag_google": TAG_GOOGLE, "aviso_cookies": AVISO_COOKIES,
     }
 
 

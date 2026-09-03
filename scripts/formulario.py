@@ -23,6 +23,8 @@ un correo de activacion al buzon.
 BUZON = "info@contaes.com"
 ENDPOINT = "https://formsubmit.co/" + BUZON
 GRACIAS = "https://contaes.com/gracias/"
+TELEFONO = "+34 666 02 95 59"
+TELEFONO_TEL = "+34666029559"
 
 # El nombre del campo trampa lo fija FormSubmit: los robots rellenan todo
 # lo que ven, las personas no ven este porque esta oculto.
@@ -181,9 +183,10 @@ def cuerpo(asunto):
       <div class="form-acciones">
         <button class="btn btn-azul" type="submit">Enviar
           <span class="flecha" aria-hidden="true">&rarr;</span></button>
-        <span class="form-alt">o escríbenos a <a href="mailto:%s">%s</a></span>
+        <span class="form-alt">o escríbenos a <a href="mailto:%s">%s</a>,
+          o llama al <a href="tel:%s">%s</a></span>
       </div>
-''' % (BUZON, BUZON))
+''' % (BUZON, BUZON, TELEFONO_TEL, TELEFONO))
 
     return "".join(partes)
 

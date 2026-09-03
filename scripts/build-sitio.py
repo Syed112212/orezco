@@ -60,6 +60,8 @@ def ld_organizacion():
         "@id": DOMINIO + "/#contaes",
         "name": "Contaes",
         "url": DOMINIO + "/",
+        "telephone": CP.DATOS_EMPRESA["telefono"],
+        "email": CP.DATOS_EMPRESA["correo"],
         "areaServed": {"@type": "Country", "name": "España"},
         "knowsLanguage": "es",
         "description": ("Gestoría online para autónomos, startups y pymes: contabilidad, "
@@ -1174,8 +1176,9 @@ def pagina_formulario():
           <p class="etiqueta" style="margin-bottom:14px">Qué pasa después</p>
           <ol class="pasos-lado">
 %(pasos)s        </ol>
-          <p class="form-lado-nota">Si prefieres escribir sin rellenar nada,
-            <a href="mailto:%(buzon)s">%(buzon)s</a> también vale.</p>
+          <p class="form-lado-nota">Si prefieres no rellenar nada, escribe a
+            <a href="mailto:%(buzon)s">%(buzon)s</a> o llama al
+            <a href="tel:%(tel_href)s">%(telefono)s</a>.</p>
         </div>
       </div>
     </aside>
@@ -1194,6 +1197,8 @@ def pagina_formulario():
         "form": F.form("Contaes: peticion desde /formulario/"),
         "pasos": lista,
         "buzon": F.BUZON,
+        "telefono": F.TELEFONO,
+        "tel_href": F.TELEFONO_TEL,
     }
     return P.pagina(
         "Cuéntanos tu caso · Contaes",
@@ -1292,6 +1297,7 @@ def paginas_legales():
                 "NIF: %s" % _falta("nif"),
                 "Domicilio: %s" % _falta("domicilio"),
                 "Correo de contacto: %s" % d["correo"],
+                "Teléfono de contacto: %s" % d["telefono"],
                 "Datos registrales: %s" % _falta("registro"),
             ]),
              ("Objeto", [
