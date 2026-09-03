@@ -106,7 +106,7 @@ def regla_3d_sin_filtros(nombre, css):
 #    Todo lo demas es fantasma, tinte o texto. El color vive en los paneles,
 #    nunca en un segundo boton relleno.
 # ─────────────────────────────────────────────────────────────────────────
-AZULES_OK = {"#0075de", "#0064c0", "#e6f3fe", "#d5eafd", "#fff", "#ffffff", "transparent"}
+AZULES_OK = {"#006bcb", "#0064c0", "#e6f3fe", "#d5eafd", "#fff", "#ffffff", "transparent"}
 
 
 def regla_un_solo_azul(nombre, css):
@@ -224,8 +224,8 @@ PARES = [
     ("texto principal sobre lienzo",  "#0d0d0d", "#f6f5f4", 4.5),
     ("cuerpo sobre lienzo",           "#615d59", "#f6f5f4", 4.5),
     ("cuerpo sobre tarjeta",          "#615d59", "#ffffff", 4.5),
-    ("piedra sobre lienzo",           "#6a6a6a", "#f6f5f4", 4.5),
-    ("blanco sobre azul de accion",   "#ffffff", "#0075de", 4.5),
+    ("piedra sobre lienzo",           "#636363", "#f6f5f4", 4.5),
+    ("blanco sobre azul de accion",   "#ffffff", "#006bcb", 4.5),
     ("azul sobre tinte",              "#005fb8", "#e6f3fe", 4.5),
     ("negro sobre marigold",          "#000000", "#ffb110", 4.5),
     ("blanco sobre medianoche",       "#ffffff", "#02093a", 4.5),

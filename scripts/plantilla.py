@@ -111,8 +111,8 @@ ESTILOS = '''
 :root{
   color-scheme:light;
   --papel:#f6f5f4;--blanco:#ffffff;--borde:rgba(0,0,0,.08);--niebla:#f8fafb;
-  --tinta:rgba(0,0,0,.95);--tinta-fuerte:#000000;--grafito:#615d59;--piedra:#6a6a6a;--apagado:rgba(0,0,0,.54);
-  --azul:#0075de;--azul-tinte:#e6f3fe;
+  --tinta:rgba(0,0,0,.95);--tinta-fuerte:#000000;--grafito:#615d59;--piedra:#636363;--apagado:rgba(0,0,0,.54);
+  --azul:#006bcb;--azul-tinte:#e6f3fe;
   --marigold:#ffb110;--coral:#f64932;--cielo:#62aef0;--medianoche:#02093a;
   --navy:#1E3A5F;--verde:#2FBF9B;--cian:#1F9EC4;--azul-marca:#1E6FB8;
   --ancho:1160px;--r-card:12px;--r-btn:8px;--r-pill:9999px;--r-sm:4px;
