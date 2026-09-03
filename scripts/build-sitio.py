@@ -154,8 +154,12 @@ def prosa(secciones):
 
 
 def lista_incluye(puntos):
-    filas = "".join('    <li><b>&#10003;</b><span>%s</span></li>\n' % p for p in puntos)
-    return '<ul class="lista">\n%s  </ul>' % filas
+    """Siete puntos sueltos en columna se leen como un parrafo largo. En
+    rejilla se barren de un vistazo, que es para lo que estan."""
+    filas = "".join(
+        '    <li><span class="tic" aria-hidden="true"></span><span>%s</span></li>\n' % p
+        for p in puntos)
+    return '<ul class="incluye">\n%s  </ul>' % filas
 
 
 def nombre_de(slug):
@@ -193,9 +197,9 @@ def pagina_funcionalidad(slug, d, es_modulo):
   </div>
 </section>
 
-<section class="seccion">
-  <div class="wrap estrecho revela">
-    <h2>Qué incluye</h2>
+<section class="seccion banda">
+  <div class="wrap revela">
+    <h2 style="margin-top:0">Qué incluye</h2>
 %(incluye)s
   </div>
 </section>
@@ -317,23 +321,27 @@ def pagina_servicio(area, slug, d):
   </div>
 </section>
 
-<section class="seccion">
-  <div class="wrap estrecho revela">
-    <h2>Qué incluye</h2>
+<section class="seccion banda">
+  <div class="wrap revela">
+    <h2 style="margin-top:0">Qué incluye</h2>
 %(incluye)s
   </div>
 </section>
 
 <section class="seccion">
-  <div class="wrap estrecho revela">
-    <h2>Para quién no es</h2>
-    <div class="aviso">%(limites)s</div>
+  <div class="wrap">
+    <div class="panel medianoche revela">
+      <p class="etiqueta" style="color:#8b93b5;margin-bottom:12px">Con franqueza</p>
+      <h2 style="margin:0 0 14px;max-width:20ch">Para quién no es</h2>
+      <p class="cuerpo" style="max-width:64ch;font-size:17px">%(limites)s</p>
+    </div>
   </div>
 </section>
 
 <section class="seccion">
   <div class="wrap revela">
-    <h2>También te puede interesar</h2>
+    <p class="etiqueta" style="margin-bottom:10px">Del mismo bloque</p>
+    <h2 style="margin-top:0">También te puede interesar</h2>
     %(otras)s
   </div>
 </section>

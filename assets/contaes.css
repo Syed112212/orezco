@@ -238,6 +238,34 @@ main,footer{position:relative;z-index:1}
    y un fondo que compite con un parrafo largo cansa. */
 body:not(.portada) .fondo{opacity:.55}
 
+/* ── Que incluye ─────────────────────────────────────────────
+   En rejilla y no en columna: siete puntos sueltos apilados se
+   leen como un parrafo largo, que es justo lo que no son.      */
+.incluye{list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px 34px}
+.incluye li{
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;
+  padding:15px 0;border-bottom:1px solid var(--borde);color:var(--grafito);font-size:16px;
+}
+.tic{
+  width:19px;height:19px;margin-top:2px;border-radius:50%;background:var(--azul-tinte);
+  position:relative;
+}
+.tic::after{
+  content:"";position:absolute;left:5.5px;top:5px;width:5px;height:8px;
+  border:solid var(--azul);border-width:0 1.8px 1.8px 0;transform:rotate(45deg);
+}
+/* La banda clara separa esta seccion de las de alrededor sin
+   necesidad de una tarjeta. */
+.banda{background:var(--niebla);border-top:1px solid var(--borde);
+       border-bottom:1px solid var(--borde);margin:14px 0}
+.panel{border-radius:var(--r-card);padding:clamp(26px,4vw,44px);position:relative;overflow:hidden}
+.panel.medianoche{background:var(--medianoche);color:#fff}
+.panel.medianoche .cuerpo{color:#c6cbe0}
+.panel.medianoche h2{color:#fff}
+.panel .tarjeta,.panel .tarjeta h3{color:var(--tinta-fuerte)}
+.panel .tarjeta .cuerpo,.panel .tarjeta p{color:var(--grafito)}
+
 /* ── Diagramas ───────────────────────────────────────────── */
 .dibujo{
   background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
