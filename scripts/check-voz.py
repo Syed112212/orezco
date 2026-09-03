@@ -101,7 +101,10 @@ def texto_de(html):
 def analiza(nombre, html):
     visible = texto_de(html)
     palabras = len(visible.split())
-    if palabras < 120:
+    # Por debajo de doscientas palabras la puntuacion por mil se dispara: una
+    # sola enumeracion en una pagina corta marca mas que diez en un articulo
+    # largo, y eso no dice nada de como esta escrita.
+    if palabras < 200:
         return None
     hallazgos, puntos = [], 0.0
     for etiqueta, peso, patron, _consejo in TICS:
