@@ -39,6 +39,60 @@ COLORES = ["var(--verde)", "var(--cian)", "var(--azul-marca)", "var(--marigold)"
 
 
 # ─────────────────────────────────────────────────────────────────────
+# Datos estructurados. Solo lo que es cierto y esta en la pagina: sin
+# valoraciones, sin precios y sin numero de opiniones inventados. Marcar
+# lo que no existe es la forma mas rapida de que un buscador deje de
+# fiarse tambien de lo que si.
+# ─────────────────────────────────────────────────────────────────────
+import json as _json
+
+
+def _ld(datos):
+    return ('<script type="application/ld+json">%s</script>'
+            % _json.dumps(datos, ensure_ascii=False, separators=(",", ":")))
+
+
+def ld_organizacion():
+    return {
+        "@type": "ProfessionalService",
+        "@id": DOMINIO + "/#contaes",
+        "name": "Contaes",
+        "url": DOMINIO + "/",
+        "areaServed": {"@type": "Country", "name": "España"},
+        "knowsLanguage": "es",
+        "description": ("Gestoría online para autónomos, startups y pymes: contabilidad, "
+                        "impuestos, nóminas y contratos, con software propio incluido y "
+                        "servicios de crecimiento."),
+    }
+
+
+def ld_migas(pasos):
+    """pasos: [(ruta o None, nombre)] en orden."""
+    items = []
+    for i, (ruta, nombre) in enumerate(pasos, 1):
+        item = {"@type": "ListItem", "position": i, "name": nombre}
+        if ruta:
+            item["item"] = DOMINIO + ruta
+        items.append(item)
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+
+def ld_servicio(nombre, descripcion, ruta, tipo="Service"):
+    return {
+        "@type": tipo,
+        "name": nombre,
+        "description": " ".join(descripcion.split())[:300],
+        "url": DOMINIO + ruta,
+        "provider": {"@id": DOMINIO + "/#contaes"},
+        "areaServed": {"@type": "Country", "name": "España"},
+    }
+
+
+def ld_pagina(*bloques):
+    return _ld({"@context": "https://schema.org", "@graph": list(bloques)})
+
+
+# ─────────────────────────────────────────────────────────────────────
 # Piezas comunes
 # ─────────────────────────────────────────────────────────────────────
 def migas(*pasos):
@@ -166,11 +220,16 @@ def pagina_funcionalidad(slug, d, es_modulo):
         "conecta": conecta,
         "cierre": cierre(),
     }
+    ld = ld_pagina(
+        ld_organizacion(),
+        ld_servicio(d["titulo"], d["entradilla"], "/funcionalidades/%s/" % slug,
+                    tipo="SoftwareApplication" if es_modulo else "Service"),
+        ld_migas([("/", "Inicio"), ("/funcionalidades/", "Software"), (None, d["titulo"])]))
     return P.pagina(
         "%s · El software · Contaes" % d["titulo"],
         d["entradilla"][:158],
         "%s/funcionalidades/%s/" % (DOMINIO, slug),
-        cuerpo)
+        cuerpo, extra_head=ld)
 
 
 def pagina_funcionalidades():
@@ -294,9 +353,13 @@ def pagina_servicio(area, slug, d):
     # El titulo lleva el area: hay una pagina de Contabilidad en la
     # gestoria y otra en el software, y con el mismo titulo Google no
     # sabe cual ensenar para la misma busqueda.
+    ld = ld_pagina(
+        ld_organizacion(),
+        ld_servicio(d["titulo"], d["entradilla"], "/%s/%s/" % (area, slug)),
+        ld_migas([("/", "Inicio"), ("/%s/" % area, nombre_area), (None, d["titulo"])]))
     return P.pagina("%s · %s · Contaes" % (d["titulo"], nombre_area),
                     " ".join(d["entradilla"].split())[:158],
-                    "%s/%s/%s/" % (DOMINIO, area, slug), cuerpo)
+                    "%s/%s/%s/" % (DOMINIO, area, slug), cuerpo, extra_head=ld)
 
 
 def pagina_area(area, titulo, entradilla, intro=(), dibujo="", preguntas=()):
@@ -428,9 +491,14 @@ def pagina_sector(slug, d):
                          "En la primera llamada preferimos escuchar cómo trabajáis antes que enseñar pantallas. "
                          "Si no encajamos, se dice ahí."),
     }
-    return P.pagina("ERP para %s · Contaes" % d["titulo"].lower(),
+    ld = ld_pagina(
+        ld_organizacion(),
+        ld_servicio("Gestoría y software para %s" % d["titulo"].lower(),
+                    d["entradilla"], "/sectores/%s/" % slug),
+        ld_migas([("/", "Inicio"), ("/sectores/", "Sectores"), (None, d["titulo"])]))
+    return P.pagina("Gestoría y software para %s · Contaes" % d["titulo"].lower(),
                     d["entradilla"][:158],
-                    "%s/sectores/%s/" % (DOMINIO, slug), cuerpo)
+                    "%s/sectores/%s/" % (DOMINIO, slug), cuerpo, extra_head=ld)
 
 
 def pagina_sectores():
@@ -1014,13 +1082,24 @@ def articulos_del_blog():
 
 
 def construir_sitemap(rutas):
+    """El sitemap, con la fecha real de cada fichero.
+
+    La fecha sale de cuando se escribio el HTML, no de una constante: un
+    lastmod inventado es peor que no ponerlo, porque el buscador aprende
+    que no puede fiarse y deja de mirarlo."""
+    import datetime
     filas = []
     for r in rutas:
         u = "%s/%s" % (DOMINIO, r) if r else "%s/" % DOMINIO
         prioridad = "1.0" if not r else ("0.8" if r.count("/") <= 1 else "0.6")
-        filas.append("  <url>\n    <loc>%s</loc>\n    <changefreq>%s</changefreq>"
+        fichero = os.path.join(RAIZ, r.replace("/", os.sep) + ("index.html" if r.endswith("/") or not r else ""))
+        fecha = ""
+        if os.path.exists(fichero):
+            marca = datetime.date.fromtimestamp(os.path.getmtime(fichero))
+            fecha = "\n    <lastmod>%s</lastmod>" % marca.isoformat()
+        filas.append("  <url>\n    <loc>%s</loc>%s\n    <changefreq>%s</changefreq>"
                      "\n    <priority>%s</priority>\n  </url>"
-                     % (u, "weekly" if not r else "monthly", prioridad))
+                     % (u, fecha, "weekly" if not r else "monthly", prioridad))
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n%s\n</urlset>\n'
             % "\n".join(filas))
