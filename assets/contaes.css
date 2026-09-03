@@ -34,6 +34,58 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .btn .flecha{display:inline-block;transition:transform .22s cubic-bezier(.22,1,.36,1)}
 .btn:hover .flecha,.btn:focus-visible .flecha{transform:translateX(4px)}
 
+/* Un bloque de texto que no tiene indice al lado no se centra: se alinea
+   con el titular y con todo lo demas de la pagina. Centrado en una
+   columna de 760px dentro de una de 1160 quedaba flotando en el medio,
+   con hueco a los dos lados y sin alinearse con nada. */
+.seccion > .wrap.estrecho{max-width:var(--ancho)}
+.seccion > .wrap.estrecho > *{max-width:76ch}
+.seccion > .wrap.estrecho > .dibujo,
+.seccion > .wrap.estrecho > .incluye{max-width:none}
+
+/* ── Encabezado y lectura a dos columnas ─────────────────────────────
+   Una columna de 760px centrada en una pantalla de 1400 deja media
+   pagina vacia a cada lado y hace que la pagina parezca un documento
+   sin maquetar. El titular ocupa su lado y la entradilla el suyo. */
+.enc-rejilla{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:clamp(26px,4.5vw,68px);align-items:start}
+.enc-rejilla h1{margin:10px 0 0}
+.enc-lado{padding-top:6px}
+.enc-lado .editorial{margin-top:0;max-width:46ch}
+.enc-corto{margin:20px 0 0;padding:0;list-style:none;
+  border-top:1px solid var(--borde)}
+.enc-corto li{display:flex;gap:12px;padding:11px 0;font-size:15px;
+  line-height:1.45;color:var(--grafito);border-bottom:1px solid var(--borde)}
+.enc-corto b{color:var(--tinta-fuerte);font-weight:600;flex:0 0 auto;min-width:88px}
+
+/* La lectura con su indice al lado. Son las secciones reales de la
+   pagina, asi que ademas de llenar el hueco sirven para saltar. */
+.lectura{display:grid;grid-template-columns:190px minmax(0,1fr);
+  gap:clamp(22px,4vw,60px);align-items:start}
+.indice{position:sticky;top:92px}
+.indice p{margin:0 0 12px;font-size:12px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--piedra);font-weight:600}
+.indice ol{margin:0;padding:0;list-style:none;
+  border-left:1px solid var(--borde)}
+.indice li{margin:0}
+.indice a{display:block;padding:7px 0 7px 14px;margin-left:-1px;
+  border-left:2px solid transparent;color:var(--grafito);
+  font-size:14px;line-height:1.4;text-decoration:none}
+.indice a:hover,.indice a:focus-visible{color:var(--tinta-fuerte);
+  border-left-color:var(--azul)}
+.lectura .prosa > h2:first-child{margin-top:0}
+
+@media(max-width:900px){
+  .enc-rejilla{grid-template-columns:1fr;gap:18px;align-items:start}
+  .enc-lado{padding-bottom:0}
+  .lectura{grid-template-columns:1fr;gap:18px}
+  .indice{position:static}
+  .indice ol{display:flex;flex-wrap:wrap;gap:6px;border-left:0}
+  .indice a{padding:6px 12px;border:1px solid var(--borde);
+    border-radius:9999px;margin-left:0;font-size:13px}
+  .indice a:hover,.indice a:focus-visible{border-color:var(--azul)}
+}
+
 /* ── La barra, con el menu por areas ─────────────────────── */
 .nav{position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03)}
 .nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;min-height:64px}

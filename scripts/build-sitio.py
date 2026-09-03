@@ -16,6 +16,8 @@ import importlib.util
 import io
 import os
 import sys
+import re
+import unicodedata
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
@@ -131,15 +133,104 @@ def migas(*pasos):
     return '<p class="migas">%s</p>' % " &rsaquo; ".join(trozos)
 
 
-def encabezado(etiqueta, titulo, entradilla, rastro=""):
+def ancla(texto):
+    """Un identificador estable a partir de un titulo de seccion."""
+    s = unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode()
+    s = re.sub(r"[^a-zA-Z0-9]+", "-", s).strip("-").lower()
+    return s[:48] or "seccion"
+
+
+def en_corto(d, area=None):
+    """Tres lineas de resumen sacadas de lo que la pagina ya dice.
+
+    No hay dato nuevo aqui: es lo que el lector encontraria mas abajo,
+    adelantado al lado del titular. Asi la columna de la derecha no se
+    queda con una entradilla de tres lineas y medio metro de aire.
+    """
+    filas = []
+    if d.get("incluye"):
+        filas.append(("Incluye", "%d cosas concretas, listadas más abajo"
+                      % len(d["incluye"])))
+    if d.get("conecta"):
+        filas.append(("Se conecta con",
+                      ", ".join(nombre_de(s) for s, _ in d["conecta"][:2])))
+    if d.get("limites"):
+        filas.append(("Y además", "decimos para quién no es"))
+    if area == "gestoria":
+        filas.append(("Quién firma", "un asesor colegiado, con su nombre"))
+    return filas[:3]
+
+
+def titular(titulo, lema):
+    """El nombre de la pagina y su lema, sin decirlo dos veces.
+
+    Salia "Contabilidad. Contabilidad al dia, sin esperas ni sorpresas".
+    El lema de varias paginas empieza por el nombre de la pagina, asi que
+    cuando eso pasa el nombre sobra: ya esta en la miga, en la etiqueta y
+    en el titulo de la pestana.
+    """
+    if lema.lower().startswith(titulo.lower()):
+        return lema
+    return ('%s. <span style="color:var(--grafito);font-weight:500">%s</span>'
+            % (titulo, lema))
+
+
+def encabezado(etiqueta, titulo, entradilla, rastro="", corto=()):
+    """El encabezado, a dos columnas.
+
+    El titular solo, centrado en una columna estrecha, dejaba media
+    pantalla vacia. Ahora ocupa su lado y la entradilla el suyo, y debajo
+    de ella cabe el resumen en corto cuando la pagina lo tiene.
+    """
+    puntos = ""
+    if corto:
+        puntos = ('\n      <ul class="enc-corto">\n%s      </ul>'
+                  % "".join("        <li><b>%s</b><span>%s</span></li>\n" % (a, b)
+                            for a, b in corto))
     return '''<section class="encabezado">
-  <div class="wrap estrecho">
+  <div class="wrap">
     %s
-    <p class="etiqueta">%s</p>
-    <h1 style="margin-top:10px">%s</h1>
-    <p class="editorial">%s</p>
+    <div class="enc-rejilla">
+      <div>
+        <p class="etiqueta">%s</p>
+        <h1>%s</h1>
+      </div>
+      <div class="enc-lado">
+        <p class="editorial">%s</p>%s
+      </div>
+    </div>
   </div>
-</section>''' % (rastro, etiqueta, titulo, entradilla)
+</section>''' % (rastro, etiqueta, titulo, entradilla, puntos)
+
+
+def lectura(secciones):
+    """El texto con su indice al lado.
+
+    El indice sale de las mismas secciones que se van a leer, asi que no
+    puede quedarse desfasado, y da algo util al carril que antes estaba
+    vacio. Con menos de tres secciones no se pone: un indice de dos
+    linea es ruido, pero con dos ya sirve: ademas de poder saltar, el
+    carril deja de estar vacio y el texto arranca donde arranca todo lo
+    demas en vez de flotar en mitad de la pagina.
+    """
+    cuerpo = prosa(secciones, con_ancla=True)
+    if len(secciones) < 2:
+        return '''<div class="wrap estrecho prosa revela">
+%s
+  </div>''' % cuerpo
+    enlaces = "".join(
+        '        <li><a href="#%s">%s</a></li>\n' % (ancla(h2), h2)
+        for h2, _ in secciones)
+    return '''<div class="wrap lectura">
+    <nav class="indice" aria-label="En esta página">
+      <p>En esta página</p>
+      <ol>
+%s      </ol>
+    </nav>
+    <div class="prosa revela">
+%s
+    </div>
+  </div>''' % (enlaces, cuerpo)
 
 
 def cierre(titulo="¿Te enseñamos cómo funciona?",
@@ -170,10 +261,11 @@ def rejilla_tarjetas(entradas, base, columnas=3):
     return '<div class="%s revela">\n%s\n  </div>' % (clase, "\n".join(tarjetas))
 
 
-def prosa(secciones):
+def prosa(secciones, con_ancla=False):
     trozos = []
     for h2, parrafos in secciones:
-        trozos.append("<h2>%s</h2>" % h2)
+        trozos.append("<h2%s>%s</h2>"
+                      % (' id="%s"' % ancla(h2) if con_ancla else "", h2))
         trozos.extend("<p>%s</p>" % t for t in parrafos)
     return "\n".join(trozos)
 
@@ -205,17 +297,23 @@ def pagina_funcionalidad(slug, d, es_modulo):
         % ('<a href="/funcionalidades/%s/" style="color:inherit">%s</a>' % (s, nombre_de(s)), por)
         for s, por in d.get("conecta", []))
 
-    aviso = ('<div class="aviso">%s</div>' % d["aviso"]) if d.get("aviso") else ""
+    # El aviso legal iba dentro de la prosa. Al sacar el texto a la
+    # rejilla de lectura se quedaria bajo el indice, que no es su sitio:
+    # es una nota sobre toda la pagina, no sobre una seccion.
+    aviso = ""
+    if d.get("aviso"):
+        aviso = ('<section class="seccion">\n  <div class="wrap estrecho">\n'
+                 '    <div class="aviso">%s</div>\n  </div>\n</section>\n'
+                 % d["aviso"])
     faq_html, faq_ficha = bloque_faq(C.PREGUNTAS_MODULO.get(slug, ()))
 
     cuerpo = '''%(enc)s
 
 <section class="seccion">
-  <div class="wrap estrecho prosa revela">
-%(prosa)s
-%(aviso)s
-  </div>
+  %(prosa)s
 </section>
+
+%(aviso)s
 
 <section class="seccion">
   <div class="wrap estrecho">
@@ -241,9 +339,9 @@ def pagina_funcionalidad(slug, d, es_modulo):
 
 %(preguntas)s%(cierre)s''' % {
         "enc": encabezado("Software" if es_modulo else "Lo que lo hace distinto",
-                          d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">" + d["lema"] + "</span>",
-                          d["entradilla"], rastro),
-        "prosa": prosa(d["secciones"]),
+                          titular(d["titulo"], d["lema"]),
+                          d["entradilla"], rastro, en_corto(d)),
+        "prosa": lectura(d["secciones"]),
         "aviso": aviso,
         "dibujo": DP.para("funcionalidades/" + slug),
         "incluye": lista_incluye(d["incluye"]),
@@ -340,9 +438,7 @@ def pagina_servicio(area, slug, d):
     cuerpo = '''%(enc)s
 
 <section class="seccion">
-  <div class="wrap estrecho prosa revela">
-%(prosa)s
-  </div>
+  %(prosa)s
 </section>
 
 <section class="seccion">
@@ -378,10 +474,9 @@ def pagina_servicio(area, slug, d):
 
 %(cierre)s''' % {
         "enc": encabezado(etiqueta,
-                          d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">"
-                          + d["lema"] + "</span>",
-                          d["entradilla"], rastro),
-        "prosa": prosa(d["secciones"]),
+                          titular(d["titulo"], d["lema"]),
+                          d["entradilla"], rastro, en_corto(d, area)),
+        "prosa": lectura(d["secciones"]),
         "dibujo": DP.para("%s/%s" % (area, slug)),
         "incluye": lista_incluye(d["incluye"]),
         "limites": d["limites"],
@@ -407,12 +502,10 @@ def pagina_area(area, titulo, entradilla, intro=(), dibujo="", preguntas=()):
     bloque_intro = ""
     if intro:
         bloque_intro = ('''<section class="seccion">
-  <div class="wrap estrecho prosa revela">
-%s
-  </div>
+  %s
 </section>
 
-''' % prosa(intro))
+''' % lectura(intro))
 
     bloque_dibujo = ""
     if dibujo:
@@ -505,7 +598,7 @@ def pagina_sector(slug, d):
 
 %(cierre)s''' % {
         "enc": encabezado("Sectores",
-                          d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">" + d["lema"] + "</span>",
+                          titular(d["titulo"], d["lema"]),
                           d["entradilla"], rastro),
         "duele": duele, "aporta": aporta, "modulos": modulos,
         "preguntas": "".join(
@@ -906,9 +999,7 @@ def pagina_simple(slug, etiqueta, titulo, entradilla, secciones, meta,
     cuerpo = '''%(enc)s
 
 <section class="seccion">
-  <div class="wrap estrecho prosa revela">
-%(prosa)s
-  </div>
+  %(prosa)s
 </section>
 
 %(dibujo)s%(extra)s
