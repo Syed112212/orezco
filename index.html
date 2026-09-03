@@ -806,7 +806,13 @@ main,footer{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .entra{opacity:1;transform:none;animation:none}
-  .revela{opacity:1;transform:none;transition:none}
+  .revela,.revela.espera{opacity:1;transform:none;transition:none}
+  .cascada.espera > *{opacity:1;transform:none;animation:none}
+  /* Todo lo que se mueve solo se para. Quien pide menos movimiento suele
+     pedirlo porque le marea, no porque le parezca feo. */
+  .losas,.escribiendo i,.marca-svg .mc-b,.resalte::before{animation:none}
+  .marca-svg .mc-b{opacity:1;transform:none}
+  .resalte::before{transform:none}
   *{transition-duration:.01ms!important}
 }
 
