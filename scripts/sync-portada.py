@@ -41,6 +41,12 @@ def main():
     antes = t
 
     # ── el marcado ───────────────────────────────────────────────────
+    # El lienzo del fondo viene dentro de la cabecera comun. Si ya hay uno
+    # de una pasada anterior hay que quitarlo antes: dos elementos con el
+    # mismo id son HTML invalido, y el JavaScript solo encuentra el primero.
+    t = re.sub(r"<!-- El mismo fondo que la portada.*?\n", "", t, flags=re.S)
+    t = t.replace('<canvas class="fondo" id="fondo" aria-hidden="true"></canvas>\n', "")
+
     m = re.search(r'<nav class="nav" aria-label="Principal">.*?\n</nav>', t, re.S)
     assert m, "no encontrada la barra en index.html"
     t = t[:m.start()] + P.cabecera("").split("\n", 1)[1] + t[m.end():]
