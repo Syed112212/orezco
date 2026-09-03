@@ -39,8 +39,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=50b441a1">
+<link rel="stylesheet" href="/assets/contaes.css?v=9646ace5">
 <style>
+.indice-art{margin:0 0 32px;padding:20px 22px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-card)}
+.indice-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);margin:0 0 12px}
+.indice-art ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.indice-art li{color:var(--piedra);font-size:15.5px}
+.indice-art a{color:var(--azul);text-decoration:none}
+.indice-art a:hover{text-decoration:underline}
+.post .cuerpo h2{scroll-margin-top:88px}
 article.post{padding:44px 0 80px}
 .post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
 .tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
@@ -184,26 +193,27 @@ article.post{padding:44px 0 80px}
     <h1 style="margin-top:14px">Qué debería hacer la IA en un ERP (y qué no)</h1>
     <div class="meta"><time datetime="2026-09-02">2 de septiembre de 2026</time><span>·</span><span>8 min de lectura</span></div>
     <p class="entradilla">El problema de la mayoría de los ERP no es que les falten datos. Es que hay que saber por dónde sacarlos.</p>
+    <nav class="indice-art" aria-label="En este artículo"><p class="indice-tit">En este artículo</p><ol><li><a href="#a1-donde-la-ia-ayuda-de-verdad-llegar-al-da">Donde la IA ayuda de verdad: llegar al dato</a></li><li><a href="#a2-el-segundo-sitio-el-trabajo-repetitivo">El segundo sitio: el trabajo repetitivo</a></li><li><a href="#a3-la-regla-que-no-se-puede-saltar-ensenar-">La regla que no se puede saltar: enseñar antes de hacer</a></li><li><a href="#a4-donde-la-ia-no-debe-entrar">Donde la IA no debe entrar</a></li><li><a href="#a5-como-evaluarla-antes-de-comprarla">Cómo evaluarla antes de comprarla</a></li></ol></nav>
     <div class="cuerpo">
-<h2>Donde la IA ayuda de verdad: llegar al dato</h2>
+<h2 id="a1-donde-la-ia-ayuda-de-verdad-llegar-al-da">Donde la IA ayuda de verdad: llegar al dato</h2>
 <p>Un ERP mediano tiene cientos de pantallas. La información está dentro, pero llegar a ella exige conocer la estructura del programa, no la del negocio. Quien pregunta «¿qué clientes me deben más de 60 días y además tienen pedidos abiertos?» está haciendo una pregunta de negocio, y tiene que traducirla a dos informes y un cruce manual.</p>
 <p>Ahí es donde una IA cambia las cosas de verdad: recibe la pregunta en lenguaje natural, sabe qué tablas tocar, cruza lo que haga falta y devuelve la respuesta. No es magia, es quitar la traducción.</p>
 
-<h2>El segundo sitio: el trabajo repetitivo</h2>
+<h2 id="a2-el-segundo-sitio-el-trabajo-repetitivo">El segundo sitio: el trabajo repetitivo</h2>
 <p>Hay tareas que se hacen igual todos los meses y consumen horas: conciliar movimientos bancarios evidentes, mandar recordatorios de cobro, generar asientos periódicos, clasificar gastos recurrentes. Son trabajos donde el criterio ya está definido y lo único que falta es ejecutarlo.</p>
 
-<h2>La regla que no se puede saltar: enseñar antes de hacer</h2>
+<h2 id="a3-la-regla-que-no-se-puede-saltar-ensenar-">La regla que no se puede saltar: enseñar antes de hacer</h2>
 <p>Aquí está la diferencia entre una herramienta útil y un riesgo. Cualquier acción que modifique datos (enviar, contabilizar, cambiar un estado) tiene que enseñarse antes de ejecutarse. Qué va a hacer, sobre qué registros y con qué efecto.</p>
 <blockquote>Una IA que actúa sin enseñar lo que va a hacer no es automatización: es un error esperando a que alguien lo descubra en el cierre.</blockquote>
 
-<h2>Donde la IA no debe entrar</h2>
+<h2 id="a4-donde-la-ia-no-debe-entrar">Donde la IA no debe entrar</h2>
 <ul>
   <li><strong>Decisiones con criterio contable o fiscal.</strong> Puede preparar y proponer, pero la responsabilidad es de una persona.</li>
   <li><strong>Cierres y liquidaciones.</strong> Nada que se presente ante la administración debería salir sin revisión humana.</li>
   <li><strong>Inventar datos que no tiene.</strong> Si un dato no está, la respuesta correcta es «no lo tengo», no una estimación con aspecto de dato.</li>
 </ul>
 
-<h2>Cómo evaluarla antes de comprarla</h2>
+<h2 id="a5-como-evaluarla-antes-de-comprarla">Cómo evaluarla antes de comprarla</h2>
 <p>Tres preguntas sirven para separar lo real de la demo bonita:</p>
 <ul>
   <li>¿Puede decir <em>de dónde</em> ha sacado cada cifra, con el registro concreto?</li>

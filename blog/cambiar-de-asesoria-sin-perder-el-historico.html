@@ -39,8 +39,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=50b441a1">
+<link rel="stylesheet" href="/assets/contaes.css?v=9646ace5">
 <style>
+.indice-art{margin:0 0 32px;padding:20px 22px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-card)}
+.indice-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);margin:0 0 12px}
+.indice-art ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.indice-art li{color:var(--piedra);font-size:15.5px}
+.indice-art a{color:var(--azul);text-decoration:none}
+.indice-art a:hover{text-decoration:underline}
+.post .cuerpo h2{scroll-margin-top:88px}
 article.post{padding:44px 0 80px}
 .post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
 .tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
@@ -184,8 +193,9 @@ article.post{padding:44px 0 80px}
     <h1 style="margin-top:14px">Cambiar de asesoría sin perder el histórico</h1>
     <div class="meta"><time datetime="2026-09-02">2 de septiembre de 2026</time><span>·</span><span>6 min de lectura</span></div>
     <p class="entradilla">El miedo a cambiar de asesoría casi nunca es al asesor nuevo. Es a quedarse sin los papeles de los cinco años anteriores.</p>
+    <nav class="indice-art" aria-label="En este artículo"><p class="indice-tit">En este artículo</p><ol><li><a href="#a1-lo-que-es-tuyo-y-te-puedes-llevar">Lo que es tuyo y te puedes llevar</a></li><li><a href="#a2-el-momento-del-ano-importa">El momento del año importa</a></li><li><a href="#a3-las-tres-preguntas-que-conviene-hacer-an">Las tres preguntas que conviene hacer antes de firmar</a></li><li><a href="#a4-el-error-mas-caro-no-solapar">El error más caro: no solapar</a></li></ol></nav>
     <div class="cuerpo">
-<h2>Lo que es tuyo y te puedes llevar</h2>
+<h2 id="a1-lo-que-es-tuyo-y-te-puedes-llevar">Lo que es tuyo y te puedes llevar</h2>
 <p>La documentación contable y fiscal de tu empresa es tuya, la tenga quien la tenga. Antes de cerrar la relación conviene pedir por escrito y comprobar que llega:</p>
 <ul>
   <li>Los <strong>libros contables</strong> del ejercicio en curso y de los anteriores, en un formato que se pueda abrir sin el programa de la asesoría.</li>
@@ -195,18 +205,18 @@ article.post{padding:44px 0 80px}
   <li>Los <strong>datos maestros</strong>: clientes, proveedores y su histórico de operaciones.</li>
 </ul>
 
-<h2>El momento del año importa</h2>
+<h2 id="a2-el-momento-del-ano-importa">El momento del año importa</h2>
 <p>El cambio limpio es a cierre de ejercicio: los saldos están cerrados y el asesor nuevo arranca con un punto de partida sin ambigüedad. El segundo mejor momento es a cierre de trimestre, con los modelos ya presentados.</p>
 <p>Cambiar a mitad de trimestre es posible, pero obliga a repartir la responsabilidad de un mismo periodo entre dos despachos, y ahí es donde se cuelan los huecos.</p>
 
-<h2>Las tres preguntas que conviene hacer antes de firmar</h2>
+<h2 id="a3-las-tres-preguntas-que-conviene-hacer-an">Las tres preguntas que conviene hacer antes de firmar</h2>
 <ul>
   <li><strong>¿Quién firma y presenta?</strong> Conviene saber el nombre de la persona colegiada que asume la responsabilidad, no solo el del despacho.</li>
   <li><strong>¿En qué formato me devolveréis los datos si algún día me voy?</strong> Si la respuesta es vaga, ya sabes cómo será la salida.</li>
   <li><strong>¿Qué pasa si Hacienda requiere algo de un año que llevabais vosotros?</strong> Debe estar claro por escrito quién responde y hasta cuándo.</li>
 </ul>
 
-<h2>El error más caro: no solapar</h2>
+<h2 id="a4-el-error-mas-caro-no-solapar">El error más caro: no solapar</h2>
 <p>Cortar con la asesoría antigua el mismo día que empieza la nueva deja un periodo sin nadie que responda. Merece la pena solapar unas semanas, aunque cueste, para que quien se va pueda aclarar dudas de lo que hizo.</p>
 <p>Es el mismo principio que en una migración de sistema: la convivencia temporal no es un lujo, es lo que evita el agujero.</p>
 

@@ -39,8 +39,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=50b441a1">
+<link rel="stylesheet" href="/assets/contaes.css?v=9646ace5">
 <style>
+.indice-art{margin:0 0 32px;padding:20px 22px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-card)}
+.indice-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);margin:0 0 12px}
+.indice-art ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.indice-art li{color:var(--piedra);font-size:15.5px}
+.indice-art a{color:var(--azul);text-decoration:none}
+.indice-art a:hover{text-decoration:underline}
+.post .cuerpo h2{scroll-margin-top:88px}
 article.post{padding:44px 0 80px}
 .post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
 .tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
@@ -184,29 +193,30 @@ article.post{padding:44px 0 80px}
     <h1 style="margin-top:14px">Siete señales de que tu ERP se está degradando</h1>
     <div class="meta"><time datetime="2026-09-02">2 de septiembre de 2026</time><span>·</span><span>6 min de lectura</span></div>
     <p class="entradilla">Un ERP rara vez se cae. Lo que hace es dejar de ser fiable poco a poco, y eso no dispara ninguna alarma.</p>
+    <nav class="indice-art" aria-label="En este artículo"><p class="indice-tit">En este artículo</p><ol><li><a href="#a1-1-hay-informes-que-solo-sabe-sacar-una-p">1. Hay informes que solo sabe sacar una persona</a></li><li><a href="#a2-2-nadie-sabe-explicar-por-que-esta-puest">2. Nadie sabe explicar por qué está puesto un módulo</a></li><li><a href="#a3-3-el-equipo-lleva-un-excel-paralelo">3. El equipo lleva un Excel paralelo</a></li><li><a href="#a4-4-aparecen-facturas-sin-enviar-y-nadie-s">4. Aparecen facturas sin enviar y nadie se ha dado cuenta</a></li><li><a href="#a5-5-los-datos-maestros-estan-duplicados">5. Los datos maestros están duplicados</a></li><li><a href="#a6-6-actualizar-da-miedo">6. Actualizar da miedo</a></li><li><a href="#a7-7-cada-cambio-pequeno-requiere-un-presup">7. Cada cambio pequeño requiere un presupuesto</a></li><li><a href="#a8-que-hacer-con-esto">Qué hacer con esto</a></li></ol></nav>
     <div class="cuerpo">
-<h2>1. Hay informes que solo sabe sacar una persona</h2>
+<h2 id="a1-1-hay-informes-que-solo-sabe-sacar-una-p">1. Hay informes que solo sabe sacar una persona</h2>
 <p>Cuando el cierre mensual depende de que alguien concreto esté disponible, el sistema ya tiene un problema de diseño. No es una cuestión de formación: es que el camino para llegar al dato no está donde debería.</p>
 
-<h2>2. Nadie sabe explicar por qué está puesto un módulo</h2>
+<h2 id="a2-2-nadie-sabe-explicar-por-que-esta-puest">2. Nadie sabe explicar por qué está puesto un módulo</h2>
 <p>Se instaló para un caso puntual hace tres años, ese caso ya no existe, y el módulo sigue ahí. Cada uno de esos módulos añade campos, permisos y comportamientos que alguien tendrá que entender el día que algo falle.</p>
 
-<h2>3. El equipo lleva un Excel paralelo</h2>
+<h2 id="a3-3-el-equipo-lleva-un-excel-paralelo">3. El equipo lleva un Excel paralelo</h2>
 <p>Es la señal más honesta de todas. Si alguien mantiene una hoja aparte, es que el sistema no le da lo que necesita. Merece la pena preguntar qué hay en esa hoja antes de pedirle que la deje.</p>
 
-<h2>4. Aparecen facturas sin enviar y nadie se ha dado cuenta</h2>
+<h2 id="a4-4-aparecen-facturas-sin-enviar-y-nadie-s">4. Aparecen facturas sin enviar y nadie se ha dado cuenta</h2>
 <p>Los errores silenciosos son los peligrosos. Un envío que falla y no avisa, un proceso nocturno que dejó de ejecutarse, una cola que se llenó. El sistema sigue funcionando de cara al usuario mientras acumula deuda por detrás.</p>
 
-<h2>5. Los datos maestros están duplicados</h2>
+<h2 id="a5-5-los-datos-maestros-estan-duplicados">5. Los datos maestros están duplicados</h2>
 <p>El mismo cliente dado de alta tres veces con tres grafías. En cuanto eso pasa, cualquier informe agregado miente, y nadie sabe cuánto.</p>
 
-<h2>6. Actualizar da miedo</h2>
+<h2 id="a6-6-actualizar-da-miedo">6. Actualizar da miedo</h2>
 <p>Si nadie se atreve a subir de versión porque no se sabe qué personalizaciones se romperán, el sistema ya está congelado. Y un sistema congelado acumula riesgo de seguridad además de deuda funcional.</p>
 
-<h2>7. Cada cambio pequeño requiere un presupuesto</h2>
+<h2 id="a7-7-cada-cambio-pequeno-requiere-un-presup">7. Cada cambio pequeño requiere un presupuesto</h2>
 <p>Cuando añadir un campo o cambiar un informe pasa por un tercero y tarda semanas, la organización deja de pedir cambios. El sistema no mejora, y la gente se adapta trabajando fuera de él. Vuelve el punto 3.</p>
 
-<h2>Qué hacer con esto</h2>
+<h2 id="a8-que-hacer-con-esto">Qué hacer con esto</h2>
 <p>Ninguna de estas señales, por sí sola, obliga a cambiar de sistema. Tres o cuatro juntas suelen significar que el coste de mantener ya supera al de sustituir. Antes de decidir, conviene poner número a dos cosas: cuántas horas al mes se van en trabajo manual que el sistema debería hacer, y cuánto se tarda hoy en responder a una pregunta que debería ser inmediata.</p>
 </div>
 

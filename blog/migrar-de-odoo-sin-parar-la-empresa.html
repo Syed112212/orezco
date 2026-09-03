@@ -39,8 +39,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=50b441a1">
+<link rel="stylesheet" href="/assets/contaes.css?v=9646ace5">
 <style>
+.indice-art{margin:0 0 32px;padding:20px 22px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-card)}
+.indice-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);margin:0 0 12px}
+.indice-art ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.indice-art li{color:var(--piedra);font-size:15.5px}
+.indice-art a{color:var(--azul);text-decoration:none}
+.indice-art a:hover{text-decoration:underline}
+.post .cuerpo h2{scroll-margin-top:88px}
 article.post{padding:44px 0 80px}
 .post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
 .tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
@@ -184,12 +193,13 @@ article.post{padding:44px 0 80px}
     <h1 style="margin-top:14px">Migrar de Odoo sin parar la empresa</h1>
     <div class="meta"><time datetime="2026-09-03">2 de septiembre de 2026</time><span>·</span><span>7 min de lectura</span></div>
     <p class="entradilla">El día del cambio la empresa tiene que seguir facturando. Todo lo demás se puede planificar; eso no se puede parar.</p>
+    <nav class="indice-art" aria-label="En este artículo"><p class="indice-tit">En este artículo</p><ol><li><a href="#a1-el-error-de-plantearlo-como-un-corte">El error de plantearlo como un corte</a></li><li><a href="#a2-los-datos-se-traen-con-su-historico">Los datos se traen con su histórico</a></li><li><a href="#a3-el-punto-de-retorno-se-define-antes-no-a">El punto de retorno se define antes, no a mitad</a></li><li><a href="#a4-el-equipo-practica-antes-con-datos-reale">El equipo practica antes, con datos reales</a></li><li><a href="#a5-senales-de-que-todavia-no-toca-migrar">Señales de que todavía no toca migrar</a></li></ol></nav>
     <div class="cuerpo">
-<h2>El error de plantearlo como un corte</h2>
+<h2 id="a1-el-error-de-plantearlo-como-un-corte">El error de plantearlo como un corte</h2>
 <p>La mayoría de las migraciones se plantean como un salto: el viernes se apaga el sistema viejo, el lunes se enciende el nuevo. Suena limpio y casi nunca lo es. Los datos tardan más de lo previsto, aparecen casos que nadie contempló, y el lunes hay que facturar igual.</p>
 <p>La alternativa es tratar la migración como un periodo, no como un instante. Durante unas semanas los dos sistemas coexisten: el antiguo en solo lectura, para consultar y comparar; el nuevo operando. Nadie se queda sin poder mirar un dato del año pasado.</p>
 
-<h2>Los datos se traen con su histórico</h2>
+<h2 id="a2-los-datos-se-traen-con-su-historico">Los datos se traen con su histórico</h2>
 <p>Hay una tentación grande al migrar: arrancar con saldos iniciales y olvidarse del pasado. Es rápido y es un error caro. En cuanto llega la primera reclamación de un cliente sobre una factura de hace dos años, alguien tiene que volver a levantar el sistema viejo.</p>
 <p>Lo que conviene traer completo:</p>
 <ul>
@@ -199,14 +209,14 @@ article.post{padding:44px 0 80px}
   <li><strong>Facturas emitidas y recibidas</strong> del ejercicio en curso y del anterior, como mínimo.</li>
 </ul>
 
-<h2>El punto de retorno se define antes, no a mitad</h2>
+<h2 id="a3-el-punto-de-retorno-se-define-antes-no-a">El punto de retorno se define antes, no a mitad</h2>
 <p>Antes de empezar hay que escribir tres cosas: qué condiciones harían abortar la migración, quién toma esa decisión, y cuánto se tarda en volver atrás. Si esas tres respuestas no existen por escrito, la vuelta atrás se improvisa el peor día posible.</p>
 
-<h2>El equipo practica antes, con datos reales</h2>
+<h2 id="a4-el-equipo-practica-antes-con-datos-reale">El equipo practica antes, con datos reales</h2>
 <p>Formar al equipo con datos de ejemplo no sirve de mucho. Las dudas reales aparecen con los casos reales: el cliente que factura a tres sedes, el artículo que se vende por unidades y se compra por cajas, el proyecto que se imputa a dos centros de coste.</p>
 <p>Un entorno de pruebas cargado con una copia de los datos de verdad resuelve la mayoría de esas dudas antes de que cuesten dinero.</p>
 
-<h2>Señales de que todavía no toca migrar</h2>
+<h2 id="a5-senales-de-que-todavia-no-toca-migrar">Señales de que todavía no toca migrar</h2>
 <p>No todo problema con un ERP se arregla cambiándolo. Si lo que falla es que nadie ha definido los procesos, el sistema nuevo va a heredar el mismo desorden en tres meses. Y si el equipo está en plena temporada alta, la migración va a competir con el trabajo real y va a perder.</p>
 </div>
 

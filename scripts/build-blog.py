@@ -2092,6 +2092,15 @@ pie = P.pie
 
 # Lo unico que el blog no comparte: el articulo y su tarjeta.
 ESTILOS_BLOG = '''
+.indice-art{margin:0 0 32px;padding:20px 22px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-card)}
+.indice-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);margin:0 0 12px}
+.indice-art ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.indice-art li{color:var(--piedra);font-size:15.5px}
+.indice-art a{color:var(--azul);text-decoration:none}
+.indice-art a:hover{text-decoration:underline}
+.post .cuerpo h2{scroll-margin-top:88px}
 article.post{padding:44px 0 80px}
 .post .meta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:18px 0 26px;font-size:14px;color:var(--piedra)}
 .tema{border-radius:var(--r-pill);padding:3px 12px;font-size:13px;font-weight:500;color:#000}
@@ -2182,6 +2191,29 @@ def sin_tildes(s):
                    if unicodedata.category(c) != "Mn")
 
 
+def indice_de(cuerpo):
+    """El indice de un articulo, a partir de sus propios apartados.
+
+    Solo se pone si hay cuatro o mas: con dos o tres, un indice ocupa mas
+    que el propio articulo y no ahorra nada. Los enlaces salen del texto,
+    asi que no pueden apuntar a un apartado que no existe."""
+    titulos = re.findall(r"<h2>(.*?)</h2>", cuerpo, re.S)
+    if len(titulos) < 4:
+        return cuerpo, ""
+    entradas, nuevo = [], cuerpo
+    for i, bruto in enumerate(titulos, 1):
+        texto = re.sub(r"<[^>]+>", "", bruto).strip()
+        ancla = "a%d-%s" % (i, re.sub(r"[^a-z0-9]+", "-",
+                                      sin_tildes(texto).lower()).strip("-")[:40])
+        nuevo = nuevo.replace("<h2>%s</h2>" % bruto,
+                              '<h2 id="%s">%s</h2>' % (ancla, bruto), 1)
+        entradas.append('<li><a href="#%s">%s</a></li>' % (ancla, texto))
+    indice = ('<nav class="indice-art" aria-label="En este artículo">'
+              '<p class="indice-tit">En este artículo</p>'
+              '<ol>%s</ol></nav>' % "".join(entradas))
+    return nuevo, indice
+
+
 def construir_articulo(a):
     url = "%s/blog/%s.html" % (DOMINIO, a["slug"])
     color = ACENTOS[a["acento"]]
@@ -2217,6 +2249,8 @@ def construir_articulo(a):
 
     enlaces = "".join('<li><a href="/%s">%s</a></li>' % e
                        for e in enlaces_de(a.get("tema", "")))
+    a = dict(a)
+    a["cuerpo"], indice = indice_de(a["cuerpo"])
 
     cuerpo = f'''<article class="post">
   <div class="wrap estrecho">
@@ -2225,6 +2259,7 @@ def construir_articulo(a):
     <h1 style="margin-top:14px">{a["titulo"]}</h1>
     <div class="meta"><time datetime="{a['fecha']}">2 de septiembre de 2026</time><span>·</span><span>{a["minutos"]} min de lectura</span></div>
     <p class="entradilla">{a["entradilla"]}</p>
+    {indice}
     <div class="cuerpo">{a["cuerpo"]}</div>
 
     <div class="cierre-post revela">
@@ -2367,6 +2402,22 @@ def main():
                }
     for a in ARTICULOS:
         salidas[os.path.join("blog", a["slug"] + ".html")] = construir_articulo(a)
+
+    # Los articulos que aun no toca publicar no pueden quedarse en disco de
+    # una generacion anterior: estarian servidos y accesibles pero fuera del
+    # sitemap y sin enlaces, que es la definicion de pagina huerfana. El
+    # calendario decide que existe, no lo que hubo ayer.
+    vivos = {os.path.join("blog", a["slug"] + ".html") for a in ARTICULOS}
+    sobran = []
+    for f in os.listdir(os.path.join(RAIZ, "blog")):
+        if not f.endswith(".html") or f == "index.html":
+            continue
+        rel = os.path.join("blog", f)
+        if rel not in vivos:
+            os.remove(os.path.join(RAIZ, rel))
+            sobran.append(f)
+    if sobran:
+        print("  %d articulos retirados: aun no les toca" % len(sobran))
 
     for ruta, contenido in sorted(salidas.items()):
         with io.open(os.path.join(RAIZ, ruta), "w", encoding="utf-8") as f:
