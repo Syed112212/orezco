@@ -201,6 +201,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://contaes.com/herramientas/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://contaes.com/glosario/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -262,6 +267,16 @@
   </url>
   <url>
     <loc>https://contaes.com/blog/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/migrar-de-odoo-sin-parar-la-empresa.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contaes.com/blog/automatizar-atencion-al-cliente.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -28,6 +28,7 @@ import contenido_servicios as CS
 import formulario as F
 import dibujos as DIB
 import diagramas_pagina as DP
+import herramientas as H
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -449,6 +450,41 @@ def pagina_sectores():
 # ─────────────────────────────────────────────────────────────────────
 # Glosario, calendario, preguntas
 # ─────────────────────────────────────────────────────────────────────
+def pagina_herramientas():
+    """Cuatro cuentas que se hacen mal en una servilleta."""
+    rastro = migas(("/", "Inicio"), ("/#", "Recursos"), (None, "Herramientas"))
+    cuerpo = '''%(enc)s
+
+<section class="seccion">
+  <div class="wrap estrecho">
+%(indice)s
+  </div>
+</section>
+
+%(calculadoras)s
+
+%(cierre)s
+
+<style>%(css)s</style>
+<script>%(js)s</script>''' % {
+        "enc": encabezado("Recursos", "Cuatro cuentas que conviene hacer bien",
+                          "Se calculan en tu navegador y no se envía nada a ninguna parte. "
+                          "Ninguna trae tipos ni porcentajes puestos por nosotros: los pones "
+                          "tú, porque cambian y dependen de tu caso.", rastro),
+        "indice": H.indice(),
+        "calculadoras": H.cuerpo(),
+        "cierre": cierre("¿Y si lo miramos con tus números?",
+                         "Estas cuentas son la versión rápida. La de verdad sale de tus libros, "
+                         "y para eso hace falta media hora de conversación."),
+        "css": H.ESTILOS,
+        "js": H.js(),
+    }
+    return P.pagina("Calculadoras para tu empresa · Contaes",
+                    "Coste real de una contratación, punto de equilibrio, lo que cuesta cobrar "
+                    "tarde y el IVA de una factura. Se calculan en tu navegador.",
+                    "%s/herramientas/" % DOMINIO, cuerpo)
+
+
 def pagina_glosario():
     rastro = migas(("/", "Inicio"), ("/#", "Recursos"), (None, "Glosario"))
     terminos = sorted(CP.GLOSARIO, key=lambda x: x[0].lower())
@@ -1048,6 +1084,7 @@ def main():
         salidas["sectores/%s/index.html" % slug] = pagina_sector(slug, d)
 
     salidas["glosario/index.html"] = pagina_glosario()
+    salidas["herramientas/index.html"] = pagina_herramientas()
     salidas["calendario-fiscal/index.html"] = pagina_calendario()
     salidas["preguntas/index.html"] = pagina_preguntas()
     salidas["precios/index.html"] = pagina_precios()
@@ -1124,7 +1161,7 @@ def main():
     for area in ("gestoria", "crecimiento", "para"):
         rutas += ["%s/" % area] + ["%s/%s/" % (area, s) for s, _n, _p in AREAS[area][3]]
     rutas += ["sectores/"] + ["sectores/%s/" % s for s in C.SECTORES]
-    rutas += ["glosario/", "calendario-fiscal/", "preguntas/", "precios/",
+    rutas += ["herramientas/", "glosario/", "calendario-fiscal/", "preguntas/", "precios/",
               "integraciones/", "demo/", "sobre/", "migracion/", "seguridad/"]
     rutas += [r for r, _ in P.LEGAL]
     rutas += ["blog/"] + ["blog/%s.html" % s for s in articulos_del_blog()]

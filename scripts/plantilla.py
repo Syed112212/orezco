@@ -72,6 +72,7 @@ SECTORES = [
 
 RECURSOS = [
     ("blog/", "Blog", "Artículos sobre gestión, fiscalidad y sistemas"),
+    ("herramientas/", "Calculadoras", "Coste de contratar, punto de equilibrio, IVA"),
     ("glosario/", "Glosario", "Los términos de contabilidad y fiscalidad, explicados"),
     ("calendario-fiscal/", "Calendario fiscal", "Qué modelo toca y cuándo"),
     ("preguntas/", "Preguntas frecuentes", "Lo que suelen preguntarnos"),
@@ -579,6 +580,7 @@ TRAZOS = {
     "blog/": "M5 4h14v16H5z M9 8h6 M9 12h6 M9 16h3",
     "glosario/": "M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z M8 8h7 M8 12h5",
     "calendario-fiscal/": "M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4 M9 14h2 M14 14h2",
+    "herramientas/": "M4 4h16v16H4z M8 8h8 M8 12h2 M12 12h2 M16 12h.01 M8 16h2 M12 16h2 M16 16h.01",
     "preguntas/": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M9.5 9a2.6 2.6 0 0 1 5 1c0 1.7-2.5 2-2.5 3.5 M12 17h.01",
 }
 
