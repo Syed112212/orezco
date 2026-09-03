@@ -40,7 +40,7 @@ GESTORIA = {
         "secciones": [
             ("Tu día a día fiscal, en orden",
              ["Cada trimestre tienes que presentar el IVA, las retenciones y, si eres autónomo, el pago fraccionado. Y a final de año, los resúmenes. Si lo haces tú, te toca controlar fechas, calcular bases y cruzar datos. Si se te pasa algo, llega la carta de Hacienda.",
-              "Nosotros nos encargamos de todo ese proceso: preparamos los modelos, los revisamos y los presentamos. Tú solo tienes que pasarnos la información de tus ingresos y gastos a través de la app o del correo, y nosotros nos ocupamos del resto."]),
+              "Nosotros nos encargamos de todo ese proceso: preparamos los modelos, los revisamos y los presentamos. Y en realidad ni siquiera tienes que pasarnos nada: las facturas ya están dentro, porque el programa donde las emites es el mismo con el que llevamos tus libros."]),
             ("Una persona colegiada firma, no un robot",
              ["Nuestra inteligencia artificial prepara los borradores de cada modelo a partir de tus libros contables. Pero nadie presenta nada sin que un gestor colegiado lo revise, lo firme y lo envíe a Hacienda. La responsabilidad es humana, con nombre y apellidos, no de un algoritmo.",
               "Y antes de presentar, la IA cruza tus libros y te avisa si algo descuadra. Por ejemplo, si un gasto no tiene factura válida o un tipo de IVA no cuadra con lo declarado. Así puedes corregirlo a tiempo, en lugar de enterarte meses después con una regularización."]),
