@@ -41,34 +41,65 @@ def hoy():
     return datetime.date.today()
 
 
+REGISTRO = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                        "blog", "calendario.json")
+
+
+def _leer_registro():
+    if os.path.exists(REGISTRO):
+        import json
+        with open(REGISTRO, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+def _guardar_registro(fechas):
+    import json
+    os.makedirs(os.path.dirname(REGISTRO), exist_ok=True)
+    with open(REGISTRO, "w", encoding="utf-8") as f:
+        json.dump(dict(sorted(fechas.items())), f, ensure_ascii=False, indent=1)
+
+
 def reparte(articulos):
-    """Pone fecha a cada articulo y devuelve solo los que ya toca publicar.
+    """Pone fecha a cada articulo y devuelve los que ya toca publicar.
 
-    El orden importa: se mezcla por temas para que dos articulos del mismo
-    area no salgan seguidos, que es como se ve un blog escrito por
-    personas y no una lista volcada por orden de generacion.
+    La fecha se asigna una sola vez y se guarda en blog/calendario.json.
+    Si se recalculara por posicion, anadir un articulo nuevo moveria a
+    todos los demas y habria articulos que aparecen y desaparecen de la
+    web. Una fecha de publicacion no se mueve nunca hacia atras.
+
+    Los que llegan nuevos se reparten entrelazando temas, para que no
+    salgan cuatro de fiscalidad seguidos, y se colocan detras del ultimo
+    hueco ocupado.
     """
-    por_tema = {}
-    for a in articulos:
-        por_tema.setdefault(a.get("tema", "General"), []).append(a)
-    for lista in por_tema.values():
-        lista.reverse()
+    fechas = _leer_registro()
 
-    entrelazados, temas = [], sorted(por_tema)
-    while any(por_tema[t] for t in temas):
-        for t in temas:
-            if por_tema[t]:
-                entrelazados.append(por_tema[t].pop())
+    nuevos = [a for a in articulos if a["slug"] not in fechas]
+    if nuevos:
+        por_tema = {}
+        for a in nuevos:
+            por_tema.setdefault(a.get("tema", "General"), []).append(a)
+        for lista in por_tema.values():
+            lista.reverse()
+        entrelazados, temas = [], sorted(por_tema)
+        while any(por_tema[t] for t in temas):
+            for t in temas:
+                if por_tema[t]:
+                    entrelazados.append(por_tema[t].pop())
+
+        ocupados = len(fechas)
+        for i, a in enumerate(entrelazados):
+            fechas[a["slug"]] = fecha_de(ocupados + i).isoformat()
+        _guardar_registro(fechas)
 
     limite = hoy()
     publicados = []
-    for i, a in enumerate(entrelazados):
-        a["fecha"] = fecha_de(i).isoformat()
-        if fecha_de(i) <= limite:
+    for a in articulos:
+        a["fecha"] = fechas.get(a["slug"], fecha_de(0).isoformat())
+        if datetime.date.fromisoformat(a["fecha"]) <= limite:
             publicados.append(a)
-    # los mas nuevos primero
-    publicados.sort(key=lambda a: a["fecha"], reverse=True)
-    return publicados, len(entrelazados)
+    publicados.sort(key=lambda a: (a["fecha"], a["slug"]), reverse=True)
+    return publicados, len(articulos)
 
 
 def resumen(total, publicados):
