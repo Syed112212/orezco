@@ -80,6 +80,7 @@ RECURSOS = [
 
 EMPRESA = [
     ("sobre/", "Sobre Contaes", "Qué estamos construyendo y por qué"),
+    ("comparativa/", "Cómo se compara", "Frente a una gestoría con programa aparte"),
     ("migracion/", "Migración", "Cómo se cambia de sistema sin parar"),
     ("seguridad/", "Seguridad y datos", "Dónde viven tus datos y qué derechos tienes"),
     ("precios/", "Precios", "Lo que sabemos hoy sobre el precio"),

@@ -553,6 +553,117 @@ def pagina_sectores():
 # ─────────────────────────────────────────────────────────────────────
 # Glosario, calendario, preguntas
 # ─────────────────────────────────────────────────────────────────────
+TABLA_COMPARATIVA = """    <div class="tabla-caja">
+      <table class="tabla comparativa">
+        <thead><tr><th scope="col"></th><th scope="col">Gestoría y programa aparte</th><th scope="col">Solo software</th><th scope="col" class="col-nuestra">Las dos juntas</th></tr></thead>
+        <tbody>
+        <tr><th scope="row">Quién lleva los libros</th><td>Tu gestoría, con lo que le mandas cada trimestre</td><td>Tú o alguien de tu equipo, en el programa</td><td>Nosotros, en el mismo programa al que tú entras</td></tr>
+        <tr><th scope="row">Cuándo están al día</th><td>A trimestre vencido, cuando se cierra</td><td>Depende de lo constante que seas</td><td>Todos los días, porque el apunte nace con el hecho</td></tr>
+        <tr><th scope="row">Quién presenta los modelos</th><td>Tu gestoría, con su firma</td><td>Tú, o los pasas a una gestoría</td><td>Un asesor colegiado, con su firma</td></tr>
+        <tr><th scope="row">Qué pasa si algo descuadra</th><td>Se ve al cerrar el trimestre</td><td>Se ve si lo miras</td><td>Se avisa antes de presentar</td></tr>
+        <tr><th scope="row">Coste</th><td>Cuota de gestoría más licencia del programa</td><td>Solo licencia, más tu tiempo</td><td>Una cuota, según lo que uses</td></tr>
+        <tr><th scope="row">Dónde está el riesgo</th><td>En el traspaso: lo que no mandas, no se contabiliza</td><td>En que la responsabilidad fiscal acaba siendo tuya</td><td>En depender de un solo proveedor para las dos cosas</td></tr>
+        </tbody>
+      </table>
+    </div>"""
+
+CUANDO_COMPARATIVA = """      <div class="cuando">
+        <h3>Gestoría de siempre y programa aparte</h3>
+        <p><b>Encaja</b> Cuando ya tienes una relación buena con tu gestoría y un sistema que os funciona a los dos. Si el traspaso trimestral no te duele, cambiarlo por cambiarlo no tiene sentido.</p>
+        <p class="cuando-no"><b>No encaja</b> Deja de encajar cuando empiezas a tomar decisiones que necesitan datos de este mes y los que tienes son de hace tres.</p>
+      </div>
+      <div class="cuando">
+        <h3>Solo software, tú lo llevas</h3>
+        <p><b>Encaja</b> Cuando tienes a alguien dentro que sabe contabilidad y prefieres el control. Sale más barato en cuota y da más autonomía.</p>
+        <p class="cuando-no"><b>No encaja</b> Deja de encajar cuando esa persona se va de vacaciones, o cuando llega un requerimiento y descubres que la responsabilidad ante Hacienda es tuya.</p>
+      </div>
+      <div class="cuando">
+        <h3>Las dos cosas juntas</h3>
+        <p><b>Encaja</b> Cuando quieres los libros al día sin llevarlos tú, y que quien los lleva sea quien firma lo que se presenta. No hay traspaso porque no hay dos sistemas.</p>
+        <p class="cuando-no"><b>No encaja</b> No encaja si prefieres tener la contabilidad y el software con proveedores distintos para no depender de uno solo. Es una preferencia legítima y no vamos a discutirla.</p>
+      </div>"""
+
+CSS_COMPARATIVA = """
+/* ── Comparativa ─────────────────────────────────────────────
+   La columna propia se marca, pero no se maquilla: si las otras
+   dos salieran mal en todas las filas, nadie se creeria la tabla. */
+.comparativa th[scope="col"]{font-size:13px;color:var(--tinta-fuerte);text-transform:none;
+  letter-spacing:0;font-weight:600;vertical-align:bottom}
+.comparativa th[scope="row"]{font-size:14px;font-weight:600;color:var(--tinta-fuerte);
+  white-space:normal;width:9rem;text-transform:none;letter-spacing:0}
+.comparativa td{font-size:14.5px;color:var(--grafito);vertical-align:top}
+.comparativa .col-nuestra{color:var(--azul)}
+.comparativa tbody td:last-child{background:var(--azul-tinte)}
+.comparativa thead th:last-child{background:var(--azul-tinte)}
+.cuando{padding:22px 0;border-top:1px solid var(--borde)}
+.cuando h3{margin-bottom:10px}
+.cuando p{color:var(--grafito);margin-bottom:8px;max-width:66ch}
+.cuando b{color:var(--tinta-fuerte);font-weight:600}
+.cuando-no b{color:var(--piedra)}
+"""
+
+
+def pagina_comparativa():
+    """Las tres maneras de llevar esto, comparadas sin maquillar."""
+    rastro = migas(("/", "Inicio"), (None, "Cómo se compara"))
+    cuerpo = '''%(enc)s
+
+<section class="seccion">
+  <div class="wrap estrecho prosa revela">
+    <h2 style="margin-top:0">La decisión no es entre marcas</h2>
+    <p>Quien busca gestoría no compara empresas: compara maneras de llevarlo. O sigues con la
+      gestoría de siempre y un programa aparte, o te compras un software y lo lleva alguien de
+      tu equipo, o juntas las dos cosas. Esa es la decisión.</p>
+    <p>Ninguna de las tres es mala en abstracto. Cada una tiene un caso en el que es la
+      correcta, y esta página dice cuál es, incluida la nuestra y cuándo no lo es.</p>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap">
+%(tabla)s
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho">
+    <h2 style="margin-top:0">Cuándo encaja cada una</h2>
+%(cuando)s
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho prosa revela">
+    <h2>Lo que no cambia elijas lo que elijas</h2>
+    <p>Los libros tienen que estar bien, los modelos hay que presentarlos en plazo y alguien
+      tiene que responder si Hacienda pregunta. Las tres opciones resuelven eso; lo que cambia
+      es quién carga con qué y cuándo te enteras de las cosas.</p>
+    <p>Y una cosa que conviene mirar en cualquiera de las tres: cómo se sale. Pregunta en qué
+      formato te devuelven tus datos si algún día te vas. Si la respuesta es vaga, ya sabes
+      cómo será la salida.</p>
+  </div>
+</section>
+
+%(cierre)s
+
+<style>%(css)s</style>''' % {
+        "enc": encabezado("Cómo se compara", "Tres maneras de llevar la gestión",
+                          "Gestoría de siempre con un programa aparte, software que llevas tú, "
+                          "o las dos cosas juntas. Qué cambia en cada una y cuándo conviene, "
+                          "también cuándo no conviene la nuestra.", rastro),
+        "tabla": TABLA_COMPARATIVA,
+        "cuando": CUANDO_COMPARATIVA,
+        "cierre": cierre("¿Cuál te encaja a ti?",
+                         "En la primera llamada te decimos cuál de las tres tiene más sentido "
+                         "en tu caso, aunque no sea la nuestra."),
+        "css": CSS_COMPARATIVA,
+    }
+    return P.pagina("Gestoría online, software o las dos cosas · Contaes",
+                    "Gestoría de siempre con programa aparte, software que llevas tú, o las dos "
+                    "juntas. Qué cambia, cuándo encaja cada una y cuándo no.",
+                    "%s/comparativa/" % DOMINIO, cuerpo)
+
+
 def pagina_recursos():
     """La entrada a todo lo que se puede leer sin hablar con nadie."""
     rastro = migas(("/", "Inicio"), (None, "Recursos"))
@@ -1246,6 +1357,7 @@ def main():
     salidas["glosario/index.html"] = pagina_glosario()
     salidas["herramientas/index.html"] = pagina_herramientas()
     salidas["recursos/index.html"] = pagina_recursos()
+    salidas["comparativa/index.html"] = pagina_comparativa()
     salidas["calendario-fiscal/index.html"] = pagina_calendario()
     salidas["preguntas/index.html"] = pagina_preguntas()
     salidas["precios/index.html"] = pagina_precios()
@@ -1340,7 +1452,7 @@ def main():
     for area in ("gestoria", "crecimiento", "para"):
         rutas += ["%s/" % area] + ["%s/%s/" % (area, s) for s, _n, _p in AREAS[area][3]]
     rutas += ["sectores/"] + ["sectores/%s/" % s for s in C.SECTORES]
-    rutas += ["recursos/", "herramientas/", "glosario/", "calendario-fiscal/", "preguntas/", "precios/",
+    rutas += ["comparativa/", "recursos/", "herramientas/", "glosario/", "calendario-fiscal/", "preguntas/", "precios/",
               "integraciones/", "demo/", "sobre/", "migracion/", "seguridad/"]
     rutas += [r for r, _ in P.LEGAL]
     rutas += ["blog/"] + ["blog/%s.html" % s for s in articulos_del_blog()]
