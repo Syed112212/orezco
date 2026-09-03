@@ -437,6 +437,37 @@ def regla_portada_sin_copia(html):
               % (len(repetidos), ", ".join(repetidos[:4])))
 
 
+def regla_llaves_balanceadas(nombre, css):
+    """Ninguna llave de mas ni de menos en el CSS de la pagina.
+
+    Nace de un bug que llevaba tiempo en produccion sin que nada lo
+    cazara: un cierre huerfano y un @keyframes con una llave de mas en
+    el <style> de la portada. El navegador ignora en silencio una llave
+    sobrante -deja de aplicar la regla siguiente sin avisar-, asi que
+    esto no se ve mirando la pagina: se ve contando.
+
+    No dice donde esta el fallo con precision porque una llave de menos
+    descuadra todo lo que viene detras; dice el primer punto en que las
+    cuentas dejan de cuadrar, que es de donde hay que tirar del hilo.
+    """
+    prof = 0
+    for i, c in enumerate(css):
+        if c == "{":
+            prof += 1
+        elif c == "}":
+            prof -= 1
+            if prof < 0:
+                linea = css.count(chr(10), 0, i) + 1
+                fallo("llaves-balanceadas",
+                      "%s: hay una '}' de mas cerca de la linea %d del <style>. "
+                      "El navegador la ignora en silencio y dejan de aplicarse "
+                      "las reglas siguientes." % (nombre, linea))
+                return
+    if prof != 0:
+        fallo("llaves-balanceadas",
+              "%s: quedan %d '{' sin cerrar en el <style>." % (nombre, prof))
+
+
 def main():
     index = leer("index.html")
     regla_portada_sin_copia(index)
@@ -446,6 +477,7 @@ def main():
         html = leer(nombre)
         regla_comentarios_cerrados(nombre, html)
         css = css_de(html) + chr(10) + hoja_comun()
+        regla_llaves_balanceadas(nombre, css_de(html))
         regla_3d_sin_filtros(nombre, css)
         regla_un_solo_azul(nombre, css)
         regla_sombra_solo_flotantes(nombre, css)
