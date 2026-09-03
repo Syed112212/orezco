@@ -506,9 +506,22 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 .faq .resp{padding:0 0 20px;font-size:16px;color:var(--grafito);max-width:70ch}
 
 /* ── 15. Contacto ────────────────────────────────────────── */
-.cierre{text-align:center}
-.cierre h2{margin:0 auto 18px;max-width:18ch}
-.cierre .editorial{max-width:48ch;margin:0 auto 28px}
+/* El cierre de la portada ya no es una caja centrada y simetrica: a la
+   izquierda el titular, a la derecha lo que cubre la demo. Es lo ultimo
+   que se lee antes del formulario, y hasta ahora no decia que la demo
+   habla tambien de crecimiento, no solo del software. */
+.contacto-final{margin:56px 0 88px;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:var(--r-card);padding:clamp(24px,4vw,40px)}
+.cf-cabecera{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:clamp(24px,4vw,52px);align-items:start;margin-bottom:28px}
+.cf-cabecera h2{margin:0 0 12px;max-width:16ch}
+.cf-cabecera .editorial{margin:0;max-width:46ch}
+.cf-cubre{background:var(--niebla);border-radius:var(--r-card);padding:20px 22px}
+.cf-cubre-tit{margin:0 0 14px;font-size:13px;font-weight:600;color:var(--tinta-fuerte)}
+.cf-cubre ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.cf-cubre li{font-size:14px;line-height:1.4;color:var(--grafito)}
+.cf-cubre b{display:block;color:var(--tinta-fuerte);font-weight:600;margin-bottom:2px}
+@media(max-width:760px){.cf-cabecera{grid-template-columns:1fr}}
 .form .dato input,.form .dato textarea{font-family:var(--sans);font-size:15px;color:var(--tinta);background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-btn);padding:13px 14px;width:100%;transition:border-color .2s ease,box-shadow .2s ease}
 .form .dato textarea{resize:vertical;min-height:92px}
 .form .dato input::placeholder,.form .dato textarea::placeholder{color:var(--piedra)}
@@ -529,7 +542,7 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 
 /* ── Reversion del riesgo ─────────────────────────────────────
    Lo que frena no es el precio: es el miedo a equivocarse.      */
-.garantias{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:820px;margin:0 auto 30px;text-align:left}
+.garantias{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 4px}
 .garantia{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);padding:18px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
 .gicono{width:26px;height:26px;border-radius:var(--r-pill);background:var(--azul-tinte);color:#005fb8;display:grid;place-items:center;font-size:13px;font-weight:600}
 .garantia p{font-size:14px;color:var(--grafito);line-height:1.45}
@@ -1121,18 +1134,18 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
         <div class="encaje-fila">
           <dt>Autónomos con volumen</dt>
           <dd>Cuando un error cuesta más que la cuota, o cuando el tiempo en papeles
-            es tiempo sin facturar. <a href="/para/autonomos/">Ver</a></dd>
+            es tiempo sin facturar. <a href="/para/autonomos/">Cómo encaja si eres autónomo</a></dd>
         </div>
         <div class="encaje-fila">
           <dt>Startups</dt>
           <dd>Que necesitan unos libros capaces de aguantar la revisión de un inversor,
             y un pacto de socios firmado mientras todo va bien.
-            <a href="/para/startups/">Ver</a></dd>
+            <a href="/para/startups/">Cómo encaja si sois una startup</a></dd>
         </div>
         <div class="encaje-fila">
           <dt>Pymes de cinco a cincuenta</dt>
           <dd>Que crecieron y tienen cuatro programas que no se hablan y un Excel
-            crítico que lleva una sola persona. <a href="/para/pymes/">Ver</a></dd>
+            crítico que lleva una sola persona. <a href="/para/pymes/">Cómo encaja si sois una pyme</a></dd>
         </div>
         <div class="encaje-fila encaje-no">
           <dt>Para quién no</dt>
@@ -1218,11 +1231,23 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
     </div>
   </section>
 
-  <section class="cierre" id="contacto">
-    <div class="wrap revela">
-      <p class="etiqueta" style="margin-bottom:12px">Hablemos</p>
-      <h2>¿Te enseñamos cómo funciona?</h2>
-      <p class="editorial">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
+  <section class="contacto-final" id="contacto">
+    <div class="wrap">
+      <div class="cf-cabecera revela">
+        <div>
+          <p class="etiqueta" style="margin-bottom:12px">Hablemos</p>
+          <h2>¿Te enseñamos cómo funciona?</h2>
+          <p class="editorial">Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.</p>
+        </div>
+        <div class="cf-cubre">
+          <p class="cf-cubre-tit">En la demo se ve todo, no solo el software</p>
+          <ul>
+            <li><b>La gestión</b><span>cómo quedarían tu contabilidad, tus impuestos y tus nóminas</span></li>
+            <li><b>El software</b><span>las pantallas reales, con un caso parecido al tuyo</span></li>
+            <li><b>El crecimiento</b><span>si os hace falta CFO, marketing o financiación, también se habla ahí</span></li>
+          </ul>
+        </div>
+      </div>
 
       <div class="garantias revela">
         <div class="garantia"><span class="gicono" aria-hidden="true">✕</span><p><strong>Si no encajamos, te lo decimos</strong> en la primera llamada. No en la tercera.</p></div>
