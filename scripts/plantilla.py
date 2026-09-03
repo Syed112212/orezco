@@ -339,6 +339,25 @@ footer small{font-size:13.5px;color:#8b93b5}
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+/* ── El aviso de cookies ─────────────────────────────────────────────
+   Abajo y estrecho, no una cortina que tape la pagina. Las dos opciones
+   pesan lo mismo: un "rechazar" escondido no es un consentimiento. */
+.cookies{position:fixed;left:16px;right:16px;bottom:16px;z-index:80;
+  max-width:640px;margin:0 auto;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:12px;
+  box-shadow:0 12px 32px rgba(0,0,0,.12);padding:18px 20px}
+.cookies[hidden]{display:none}
+.cookies-in{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.cookies-txt{margin:0;flex:1 1 260px;font-size:14px;line-height:1.5;
+  color:var(--grafito)}
+.cookies-txt b{color:var(--tinta-fuerte)}
+.cookies-btns{display:flex;gap:8px;flex:0 0 auto}
+.cookies-btns .btn{padding:9px 16px;font-size:14px}
+@media(max-width:560px){
+  .cookies-btns{width:100%;}
+  .cookies-btns .btn{flex:1}
+}
+
 /*@FORM_CSS@*/
 
 /* -- El fondo -------------------------------------------------
@@ -495,6 +514,7 @@ PIE_JS = '''<script>
     if(!nav.contains(e.target)){cierraAreas(null);ponMovil(false);}
   });
 })();
+/*@COOKIES_JS@*/
 /*@FORM_JS@*/
 /* -- El fondo: laminas en un espacio con perspectiva ----------
    Proyeccion en perspectiva de toda la vida: una lamina a
@@ -917,11 +937,95 @@ def escribe_hoja(raiz):
     return destino
 
 
+
+# La etiqueta de Google y el aviso de cookies. Con nombre propio porque
+# la portada, que se escribe a mano, tiene que llevarlas iguales y las
+# coge de aqui en vez de tener su copia.
+JS_COOKIES = '''/* -- El aviso de cookies ------------------------------------
+   Sale solo si no hay respuesta guardada. Las dos opciones
+   valen lo mismo y la respuesta se recuerda en el navegador,
+   no en una cookie: para preguntar por cookies no hace falta
+   escribir una.                                            */
+(function () {
+  var caja = document.getElementById("cookies");
+  if (!caja) return;
+  var LLAVE = "contaes:cookies";
+  var guardado = null;
+  try { guardado = localStorage.getItem(LLAVE); } catch (e) {}
+  if (guardado) return;
+  caja.hidden = false;
+
+  caja.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cookies]");
+    if (!b) return;
+    var si = b.getAttribute("data-cookies") === "si";
+    try { localStorage.setItem(LLAVE, si ? "si" : "no"); } catch (e2) {}
+    if (si && typeof gtag === "function") {
+      gtag("consent", "update", {
+        ad_storage: "granted",
+        ad_user_data: "granted",
+        ad_personalization: "granted",
+        analytics_storage: "granted"
+      });
+    }
+    caja.hidden = true;
+  });
+})();
+'''
+
+TAG_GOOGLE = """<!-- El consentimiento va PRIMERO: hasta que alguien acepta, la etiqueta
+     de Google no puede escribir ni leer nada. Es lo que exige el
+     articulo 22.2 de la LSSI y lo que promete nuestra pagina de
+     cookies. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  try {
+    if (localStorage.getItem('contaes:cookies') === 'si') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18427533910"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'AW-18427533910');
+</script>
+"""
+
+AVISO_COOKIES = """<div class="cookies" id="cookies" hidden>
+  <div class="cookies-in">
+    <p class="cookies-txt"><b>Cookies de publicidad.</b> Medimos si nuestros anuncios
+      traen a alguien. Si dices que no, la web funciona igual y no se escribe nada.
+      El detalle esta en la <a href="/legal/cookies/">politica de cookies</a>.</p>
+    <div class="cookies-btns">
+      <button type="button" class="btn btn-tinte" data-cookies="no">Solo lo necesario</button>
+      <button type="button" class="btn btn-azul" data-cookies="si">Aceptar</button>
+    </div>
+  </div>
+</div>"""
+
+
 def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=False, extra_css=""):
     return '''<!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
+%(tag_google)s<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%(titulo)s</title>
 <meta name="description" content="%(desc)s">
@@ -949,6 +1053,8 @@ def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=Fal
 %(cuerpo)s
 </main>
 %(pie)s
+
+%(aviso_cookies)s
 %(js)s
 </body>
 </html>
@@ -960,3 +1066,8 @@ def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=Fal
         "estilos_extra": ("<style>%s</style>" % extra_css) if extra_css else "",
         "cabecera": cabecera(base), "cuerpo": cuerpo, "pie": pie(base), "js": PIE_JS,
     }
+
+
+# El aviso de cookies va en todas las paginas y la portada lo coge de
+# aqui, igual que la etiqueta de Google.
+PIE_JS = PIE_JS.replace("/*@COOKIES_JS@*/", JS_COOKIES.strip())

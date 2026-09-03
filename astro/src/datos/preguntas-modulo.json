@@ -1,0 +1,184 @@
+{
+ "contabilidad": [
+  [
+   "¿Puedo mirar el libro mayor sin saber contabilidad?",
+   "Puedes, y de hecho es media razón de que esté ahí. Cada apunte lleva enlazado el documento que lo originó, así que se lee al revés de como se aprende: pinchas una cifra que no reconoces y aparece la factura de la que sale. Lo que no entiendas por ese camino se lo preguntas a tu asesor, que está viendo la misma pantalla."
+  ],
+  [
+   "¿Los asientos los hago yo o los hacéis vosotros?",
+   "Los propone el programa a partir de lo que ya has emitido y recibido, y los revisa el asesor. Tú no tienes que picar asientos. Si quieres tocar alguno puedes, pero no es el funcionamiento normal ni hace falta para nada del día a día."
+  ],
+  [
+   "¿Puedo sacar los libros para un auditor o para otro programa?",
+   "Sí. Los libros, el balance de sumas y saldos y el detalle por cuenta salen en formato de hoja de cálculo, y el diario también en el formato normalizado que suele pedir un auditor. Tus datos contables son tuyos y salen cuando los pidas, también el día que quieras marcharte."
+  ]
+ ],
+ "facturacion": [
+  [
+   "¿Puedo poner mi logotipo y mi propio diseño en la factura?",
+   "Sí, con el logotipo, los colores y los textos legales que necesites, y con series distintas si facturas por varias líneas de negocio. Lo que no se toca es la numeración: va correlativa por serie y sin huecos, porque ahí no hay margen de personalización que valga."
+  ],
+  [
+   "¿Qué hago si me equivoco en una factura ya emitida?",
+   "Una rectificativa enlazada a la original, que es la forma correcta y la única que deja rastro. Editar el documento emitido no se puede, y eso es a propósito: un sistema que permite reescribir el pasado es justo lo que la normativa de facturación quiere impedir."
+  ],
+  [
+   "¿Se puede facturar por horas, por hitos o con cuotas periódicas?",
+   "Las tres cosas. Las horas salen de lo imputado en proyectos, los hitos se emiten cuando marcas la entrega y las cuotas se repiten solas hasta que las pares. En los tres casos la factura queda enlazada a lo que la justifica, que es lo que hace falta cuando alguien pregunta de dónde sale ese importe."
+  ]
+ ],
+ "inventario": [
+  [
+   "¿Me sirve si vendo en tienda y por internet a la vez?",
+   "El almacén es uno solo y las salidas descuentan de ahí, vengan del canal que vengan. Lo que hay que mirar caso por caso es cómo entra el pedido de la tienda online: eso depende de la plataforma que uses y se ve antes de empezar, no después."
+  ],
+  [
+   "¿Y si el recuento físico no cuadra con lo que dice el sistema?",
+   "Se registra la diferencia como lo que es, un ajuste con su fecha y su motivo, y el valor del almacén cambia en consecuencia. Lo importante no es tapar el descuadre sino que quede escrito: un almacén que siempre cuadra a la primera suele ser un almacén que nadie ha contado."
+  ],
+  [
+   "¿Puedo trabajar con lotes o con números de serie?",
+   "Sí, y conviene decirlo en la primera conversación porque cambia cómo se configura todo lo demás. Si vendes producto con caducidad o con trazabilidad obligatoria, el lote deja de ser un dato más y pasa a ser la columna por la que se busca."
+  ]
+ ],
+ "compras": [
+  [
+   "¿Tengo que teclear yo cada factura de proveedor?",
+   "No. Llegan por correo o se suben, se leen y se proponen ya clasificadas. Lo que haces tú es mirar la propuesta con el documento al lado y aprobarla o corregirla. Lo que corriges mejora la propuesta siguiente para ese proveedor, que casi siempre manda el mismo formato."
+  ],
+  [
+   "¿Qué pasa si recibo el albarán primero y la factura semanas después?",
+   "Es el caso normal y por eso van separados. El albarán entra la mercancía en almacén cuando llega, y la factura se casa después contra lo recibido. Si el proveedor factura más de lo que entregó, la diferencia salta ahí en vez de descubrirse cuadrando el ejercicio."
+  ],
+  [
+   "¿Puedo exigir que alguien apruebe un gasto antes de pagarlo?",
+   "Sí, con circuitos de aprobación por importe o por tipo de gasto. Es de lo primero que hace falta cuando dejas de comprar tú solo, porque el problema deja de ser el precio y pasa a ser saber quién dijo que sí."
+  ]
+ ],
+ "ventas": [
+  [
+   "¿Esto es un CRM?",
+   "Tiene la parte de un CRM que sirve para vender y facturar: la ficha del cliente, su histórico completo, los presupuestos y en qué estado están. No pretende sustituir a una herramienta comercial grande con automatizaciones de marketing. Si ya usas una y te funciona, lo sensato es verlo antes que cambiarla por cambiar."
+  ],
+  [
+   "¿Puedo saber qué clientes me dejan margen y cuáles no?",
+   "Sí, y suele ser la conversación más incómoda del primer trimestre. El margen sale de cruzar lo facturado con el coste imputado, y la respuesta rara vez coincide con la intuición: el cliente que más factura no siempre es el que más deja, sobre todo si además paga tarde."
+  ],
+  [
+   "¿Puedo traerme mi lista de clientes de donde la tenga ahora?",
+   "Sí, con su histórico de facturación si lo hay. Es parte de la migración y se hace antes de empezar a trabajar, no sobre la marcha. Lo que conviene traer no son solo los nombres: son los datos fiscales, las condiciones de pago y lo que cada uno debe."
+  ]
+ ],
+ "proyectos": [
+  [
+   "¿Me sirve si facturo por horas?",
+   "Es el caso para el que está pensado. Las horas imputadas se convierten en coste y en línea de factura sin pasar por una hoja aparte, así que lo que cobras y lo que has gastado se comparan sobre el mismo dato."
+  ],
+  [
+   "¿Tiene que imputar horas todo el mundo?",
+   "Solo quien trabaje en proyectos que quieras medir. Y conviene ser honesto con esto: si el equipo no imputa, el módulo no dice nada útil. No es un problema de software, es que la rentabilidad por proyecto no se puede calcular sin saber dónde va el tiempo."
+  ],
+  [
+   "¿Cuándo me entero de que un proyecto va a perder dinero?",
+   "Mientras se hace, que es el único momento en que sirve de algo. El coste imputado se compara con lo presupuestado según avanza, así que la desviación aparece cuando todavía puedes renegociar el alcance o parar. Enterarse al facturar es enterarse tarde."
+  ]
+ ],
+ "personal": [
+  [
+   "¿Esto sustituye a un programa de nóminas?",
+   "No, y no lo intenta. Lleva lo que la contabilidad necesita saber de las personas: contratos, vacaciones y ausencias, y el coste que cada uno supone. La nómina en sí la hace la parte laboral de la gestoría."
+  ],
+  [
+   "¿Quién hace entonces las nóminas y los contratos?",
+   "Un graduado social o el equipo laboral, que es quien firma. La diferencia respecto a tener la nómina en otro sitio es que el coste de personal aparece en tus números el mismo mes, no cuando alguien lo traspasa."
+  ],
+  [
+   "¿Entran mis empleados al sistema?",
+   "Pueden entrar a lo suyo: pedir vacaciones, mandar un gasto o imputar horas. No ven la contabilidad de la empresa ni los datos de sus compañeros. Quién ve qué se decide al configurarlo y se puede cambiar después."
+  ]
+ ],
+ "informes": [
+  [
+   "¿Tengo que pedir los informes o me los puedo hacer yo?",
+   "Te los haces tú. Los cuadros de mando están hechos sobre los datos vivos, así que entras y filtras por el periodo, el cliente o la línea que te interese. Pedir un informe y esperar a que alguien lo prepare es exactamente lo que esto viene a quitar."
+  ],
+  [
+   "¿Se puede sacar a hoja de cálculo?",
+   "Sí, todo lo que veas. Aunque la gracia está en necesitarlo menos: cuando el número vive en una hoja exportada, envejece desde el momento en que la abres y nadie sabe ya si es la última versión."
+  ],
+  [
+   "¿Cada cuánto se actualizan los datos?",
+   "No se actualizan: son los mismos datos. El informe consulta la contabilidad en el momento en que lo abres, así que no hay proceso nocturno ni una copia que pueda quedarse vieja."
+  ]
+ ],
+ "asesoria-fiscal": [
+  [
+   "¿Quién presenta el modelo, yo o vosotros?",
+   "Lo presenta un asesor colegiado, con su nombre. Tú confirmas desde tu panel cuando lo ves bien, y el justificante vuelve ahí. En ningún momento tienes que entrar en la sede electrónica ni pelearte con un certificado."
+  ],
+  [
+   "¿Hablo siempre con la misma persona?",
+   "Sí. Tener asesor asignado es media razón del servicio: alguien que ya sabe cómo facturas y por qué tienes ese gasto raro cada marzo no necesita que se lo cuentes otra vez cada trimestre."
+  ],
+  [
+   "¿Y si me llega un requerimiento de Hacienda?",
+   "Se contesta desde aquí, y con la documentación enlazada a cada apunte suele ser cuestión de reunir lo que ya está. Si el periodo requerido lo llevó otro despacho, lo miramos antes de comprometernos a nada y te decimos con franqueza qué se puede hacer y qué no."
+  ]
+ ],
+ "asistente-ia": [
+  [
+   "¿El asistente decide algo por su cuenta?",
+   "No. Propone y responde, pero no presenta, no paga y no modifica un asiento sin que alguien lo apruebe. Esa línea está puesta a propósito: la responsabilidad ante la Administración es de una persona, y una persona no puede responder de algo que no ha visto."
+  ],
+  [
+   "¿Le puedo preguntar cualquier cosa sobre mi contabilidad?",
+   "Preguntas en lenguaje normal y responde sobre tus datos, con el enlace al documento o al apunte del que sale la respuesta. Ese enlace importa más que la respuesta: una cifra que no puedes rastrear no te sirve para decidir nada."
+  ],
+  [
+   "¿Mis datos salen fuera para que esto funcione?",
+   "Es una pregunta justa y la respuesta está en la página de seguridad, con lo que hay y lo que todavía no. Ahí decimos también qué certificaciones no tenemos, porque presumir de una que no existe es la manera más rápida de perder la conversación."
+  ]
+ ],
+ "escaner-facturas": [
+  [
+   "¿Qué pasa cuando lee mal una factura?",
+   "Que lo ves antes de que entre, porque la lectura se propone al lado del documento original en vez de aplicarse sola. Lo que el sistema no tiene claro lo marca en lugar de rellenarlo a ojo, que es el fallo caro: el que nadie detecta."
+  ],
+  [
+   "¿Vale una foto hecha con el móvil?",
+   "Vale, y es como entran casi todos los tickets. Un documento torcido o con poca luz se lee peor, así que en esos casos hay más campos marcados para revisar. Sigue siendo más rápido que teclearlo."
+  ],
+  [
+   "¿Puedo reenviar las facturas por correo en vez de subirlas?",
+   "Sí, hay una dirección a la que reenviar y es como funciona la mayoría: el proveedor manda la factura, tú la reenvías y ya está dentro. Sin descargar el adjunto para volver a subirlo en otra pantalla."
+  ]
+ ],
+ "conciliacion-bancaria": [
+  [
+   "¿Se conecta solo con mi banco?",
+   "Depende del banco, y por eso no lo prometemos de entrada. Lo que funciona siempre es importar el extracto en el formato normalizado que usan las entidades españolas. Si además tu banco permite lectura automática, se ve en la primera conversación."
+  ],
+  [
+   "¿Qué hace con un cobro que paga tres facturas de golpe?",
+   "Lo reparte entre las tres y deja el resto pendiente si no llega a cubrirlas. Los cobros agrupados y los parciales son justo los que se pierden cuando se concilia a ojo, así que salen aparte en vez de quedar en el montón de lo que ya cuadra."
+  ],
+  [
+   "¿Concilio yo o lo hacéis vosotros?",
+   "Normalmente lo revisa el asesor, porque es lo que hace que los libros se parezcan a la realidad y no un trámite. Tú puedes entrar a mirarlo cuando quieras, y lo no conciliado está siempre a la vista en vez de escondido en un informe."
+  ]
+ ],
+ "verifactu": [
+  [
+   "¿Tengo que hacer algo yo para cumplir?",
+   "Del lado técnico, no: la obligación recae sobre el sistema con el que facturas, y eso es cosa nuestra. Lo tuyo es facturar dentro del programa y no por fuera, porque una factura hecha en un documento aparte se queda fuera del encadenamiento."
+  ],
+  [
+   "¿Y si ya estoy en el SII?",
+   "El reglamento contempla excepciones, y quien ya remite el registro de facturación por otra vía está entre los casos a mirar. No es una respuesta que debas sacar de una página web: es exactamente lo que tiene que confirmarte tu asesor para tu situación."
+  ],
+  [
+   "¿Puedo seguir haciendo alguna factura suelta en una hoja de cálculo?",
+   "Es justo lo que el reglamento quiere terminar. Una factura emitida fuera rompe la numeración correlativa y deja un hueco que después hay que explicar. Si tienes un caso raro que no encaja en el programa, mejor contárselo al asesor que resolverlo por fuera."
+  ]
+ ]
+}

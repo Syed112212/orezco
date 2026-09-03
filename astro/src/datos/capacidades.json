@@ -1,0 +1,227 @@
+{
+ "asesoria-fiscal": {
+  "titulo": "Asesoría fiscal incluida",
+  "lema": "La IA prepara los modelos; un asesor los revisa, los firma y los presenta",
+  "entradilla": "Esto es lo que separa a Contaes de un ERP normal. No es un programa que te ayuda a hacer la contabilidad: es un servicio en el que la contabilidad ya está hecha y los modelos se presentan por ti.",
+  "secciones": [
+   [
+    "Dos cosas que hoy están separadas",
+    [
+     "Hoy una pyme tiene un ERP donde mete los datos y una asesoría a la que se los manda. En medio hay un mes de correos, un Excel y la pregunta de siempre: «¿me pasas las facturas?».",
+     "Cuando el programa que lleva las facturas es el mismo que prepara los modelos, ese trasvase desaparece. Y con él desaparecen los errores que nacen en el trasvase, que son casi todos."
+    ]
+   ],
+   [
+    "Quién firma",
+    [
+     "La IA prepara. La responsabilidad ante la Administración es de una persona colegiada que revisa, firma y presenta. Esto no es un matiz: es la diferencia entre un servicio profesional y una herramienta que te deja solo ante un requerimiento.",
+     "Un modelo mal presentado no lo arregla un algoritmo. Lo arregla alguien que responde por él."
+    ]
+   ],
+   [
+    "Los modelos que suelen tocar",
+    [
+     "Trimestrales: 303 de IVA, 111 de retenciones de IRPF, 115 de retenciones por alquiler, 130 de pago fraccionado para autónomos en estimación directa y 349 de operaciones intracomunitarias.",
+     "Anuales: 390 como resumen de IVA, 190 como resumen de retenciones, 347 de operaciones con terceros por encima de 3.005,06 € y 200 del Impuesto de Sociedades.",
+     "Cuáles te tocan a ti depende de tu forma jurídica, tu actividad y tu volumen. Eso se determina en el diagnóstico, no en una tabla de una web."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Contabilidad mantenida al día sobre tus propios datos",
+   "Modelos calculados sobre los libros, no sobre una copia",
+   "Revisión, firma y presentación por una persona colegiada",
+   "Aviso de lo que descuadra antes de presentar",
+   "Conservación de los modelos presentados y sus justificantes",
+   "Atención ante requerimientos sobre lo presentado"
+  ],
+  "conecta": [
+   [
+    "contabilidad",
+    "los libros son el origen de cada casilla"
+   ],
+   [
+    "facturacion",
+    "el libro de emitidas es la mitad del 303"
+   ],
+   [
+    "compras",
+    "el de recibidas es la otra mitad"
+   ]
+  ],
+  "aviso": "El alcance concreto del servicio de asesoría, quién lo presta y qué incluye se define por contrato. Esta página describe cómo está pensado el producto, no sustituye a ese contrato."
+ },
+ "asistente-ia": {
+  "titulo": "Asistente con IA",
+  "lema": "Preguntar en tu idioma en vez de buscar por menús",
+  "entradilla": "La IA de un ERP no está para escribir textos bonitos. Está para que no tengas que aprenderte dónde vive cada informe, y para hacer el trabajo repetitivo que hoy hace una persona a mano.",
+  "secciones": [
+   [
+    "Qué hace",
+    [
+     "Responde preguntas sobre tus datos: qué facturas siguen sin cobrar, qué cliente ha bajado respecto al año pasado, cuánto llevamos gastado en un proyecto. La respuesta viene con el detalle detrás, para poder comprobarla.",
+     "Clasifica lo que entra: la factura del proveedor, el ticket del gasto, el movimiento del banco. Propone la cuenta y el tipo de IVA; la persona confirma.",
+     "Prepara trabajo: los recordatorios de cobro de lo que pasa de un plazo, el borrador de un modelo, la lista de lo que descuadra antes de un cierre."
+    ]
+   ],
+   [
+    "Qué no hace",
+    [
+     "No presenta nada por su cuenta. No manda correos sin que alguien los vea. No firma. Todo lo que sale de la empresa pasa por una persona.",
+     "No inventa cifras. Si un dato no está, lo dice; no lo estima. Un ERP que redondea al alza es peor que no tener ERP."
+    ]
+   ],
+   [
+    "Por qué importa que esté dentro",
+    [
+     "Una IA conectada por fuera solo ve lo que le dejan ver. Estando dentro, ve el libro mayor, el almacén y los documentos, y por eso puede responder con el detalle que permite comprobarla."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Preguntas en lenguaje natural sobre tus datos",
+   "Respuesta con el detalle que la compone",
+   "Clasificación propuesta de facturas, gastos y movimientos",
+   "Preparación de recordatorios de cobro",
+   "Aviso de descuadres antes de un cierre o un modelo",
+   "Nada se envía ni se presenta sin aprobación de una persona"
+  ],
+  "conecta": [
+   [
+    "informes",
+    "muchas veces preguntar es más rápido que buscar el informe"
+   ],
+   [
+    "escaner-facturas",
+    "la lectura del documento y su clasificación son el mismo trabajo"
+   ]
+  ]
+ },
+ "escaner-facturas": {
+  "titulo": "Escáner de facturas",
+  "lema": "La factura del proveedor entra sin teclearla",
+  "entradilla": "Teclear facturas de compra es el trabajo más repetitivo de una administración pequeña, y el que más errores de clasificación produce. Es exactamente el tipo de tarea que debe hacer una máquina y revisar una persona.",
+  "secciones": [
+   [
+    "Cómo funciona",
+    [
+     "La factura llega en PDF, en foto o por correo a una dirección del sistema. Se lee proveedor, fecha, número, base, tipo y cuota de IVA, retención si la hay, y las líneas de detalle.",
+     "Con eso se propone el asiento: cuenta de gasto, tipo de IVA y proveedor. Quien revisa ve el documento original al lado de la propuesta, así que comprobar cuesta segundos."
+    ]
+   ],
+   [
+    "Por qué la revisión no sobra",
+    [
+     "Una lectura automática acierta la mayoría de veces y falla algunas. El problema no es el fallo: es el fallo silencioso. Por eso lo leído se propone, no se aplica, y lo que el sistema no ve claro lo marca en vez de rellenarlo a ojo.",
+     "Lo que se corrige mejora la propuesta siguiente para ese mismo proveedor, que suele mandar siempre el mismo formato."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Lectura de PDF, imagen y correo entrante",
+   "Extracción de proveedor, fechas, importes, IVA y retención",
+   "Líneas de detalle cuando el documento las trae",
+   "Propuesta de cuenta contable y tipo de IVA",
+   "Documento original siempre visible junto a la propuesta",
+   "Marcado de lo dudoso en vez de relleno a ojo"
+  ],
+  "conecta": [
+   [
+    "compras",
+    "es donde más se usa, con las facturas de proveedor"
+   ],
+   [
+    "personal",
+    "los tickets de gasto entran por el mismo camino"
+   ],
+   [
+    "contabilidad",
+    "lo aprobado se convierte en apunte con su documento enlazado"
+   ]
+  ]
+ },
+ "conciliacion-bancaria": {
+  "titulo": "Conciliación bancaria",
+  "lema": "El extracto contra los apuntes, cuadrado",
+  "entradilla": "La conciliación es la prueba de que la contabilidad se parece a la realidad. Si el banco dice una cosa y los libros otra, uno de los dos está mal, y casi siempre son los libros.",
+  "secciones": [
+   [
+    "Casar movimientos",
+    [
+     "El movimiento del banco se propone contra el cobro o el pago que le corresponde. Lo evidente (importe y fecha que coinciden con una factura pendiente) se propone casado; lo demás se marca.",
+     "Los que no casan son los interesantes: cobros parciales, transferencias agrupadas, comisiones, devoluciones. Verlos aparte es lo que evita que se pierdan en el montón."
+    ]
+   ],
+   [
+    "Lo que aparece al conciliar de verdad",
+    [
+     "Facturas cobradas que seguían figurando como pendientes. Recibos domiciliados que nadie había contabilizado. Comisiones que llevaban meses sin registrarse. Cobros de un cliente aplicados a otro.",
+     "Ninguna de esas cosas se ve mirando solo el ERP ni mirando solo el banco."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Importación del extracto bancario",
+   "Propuesta automática de casación",
+   "Cobros parciales y agrupados",
+   "Comisiones y gastos bancarios",
+   "Saldo contable frente a saldo real, en todo momento",
+   "Lo no conciliado, siempre visible"
+  ],
+  "conecta": [
+   [
+    "contabilidad",
+    "el apunte de banco deja de teclearse a mano"
+   ],
+   [
+    "facturacion",
+    "el estado de cobro de la factura se actualiza al conciliar"
+   ]
+  ]
+ },
+ "verifactu": {
+  "titulo": "VeriFactu",
+  "lema": "Qué es y qué obliga",
+  "entradilla": "VeriFactu es el nombre corriente del sistema de emisión de facturas verificables que desarrolla el Reglamento de requisitos de los sistemas informáticos de facturación en España. Afecta al programa con el que facturas, no solo a la factura.",
+  "secciones": [
+   [
+    "Qué exige, en corto",
+    [
+     "Que el sistema de facturación genere un registro de cada factura con encadenamiento, de forma que alterar una factura pasada sea detectable. Que ese registro lleve huella y, en la modalidad verificable, se remita a la Agencia Tributaria. Que la factura incluya un código QR que permita comprobarla.",
+     "Y, sobre todo, que el sistema no permita llevar contabilidades paralelas ni borrar sin rastro. Buena parte del reglamento va de eso."
+    ]
+   ],
+   [
+    "A quién afecta y desde cuándo",
+    [
+     "Afecta a quienes emiten facturas usando sistemas informáticos, con excepciones (entre ellas, quienes ya están en el Suministro Inmediato de Información). Las fechas de entrada en vigor han cambiado varias veces desde que se aprobó el reglamento.",
+     "Por eso aquí no vas a encontrar una fecha con aire de certeza absoluta: consulta el calendario vigente en la sede de la Agencia Tributaria o pregunta a tu asesor por tu caso concreto. Lo que sí puedes dar por hecho es que el sistema con el que factures tendrá que cumplirlo."
+    ]
+   ],
+   [
+    "Qué significa para Contaes",
+    [
+     "Que la facturación se está construyendo con estos requisitos desde el principio y no como un parche: numeración sin huecos, imposibilidad de editar lo emitido, rectificativas enlazadas y conservación del documento tal como se envió."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Numeración correlativa sin huecos, por serie",
+   "Imposibilidad de modificar una factura ya emitida",
+   "Rectificativas enlazadas a la original",
+   "Registro de eventos sobre cada documento",
+   "Conservación del documento tal como se emitió"
+  ],
+  "conecta": [
+   [
+    "facturacion",
+    "es el módulo directamente afectado"
+   ],
+   [
+    "asesoria-fiscal",
+    "el asesor es quien sabe si a tu caso le aplica y desde cuándo"
+   ]
+  ],
+  "aviso": "Esta página explica el marco general y no es asesoramiento fiscal. Las fechas de aplicación y las excepciones han cambiado desde la aprobación del reglamento: confirma tu situación concreta con tu asesor o en la sede electrónica de la Agencia Tributaria."
+ }
+}

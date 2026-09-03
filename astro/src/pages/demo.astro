@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Formulario from "../componentes/Formulario.astro";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+
+const garantias: [string, string][] = [
+  ["Sobre vuestro caso", "no una presentación genérica: contadnos qué usáis y qué es lo que peor lleváis"],
+  ["Media hora", "y si en diez minutos vemos que no encajamos, se dice ahí"],
+  ["Sin compromiso", "no hay contrato que firmar para verlo"],
+];
+---
+
+<Base
+  titulo="Pedir una demo · Contaes"
+  descripcion="Una demo sobre vuestro caso concreto. Si no encajamos, se dice en la primera llamada."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Hablemos"]])]}
+>
+  <Encabezado
+    etiqueta="Hablemos"
+    titulo="¿Te enseñamos cómo funciona?"
+    entradilla="Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis."
+    migas={[["/", "Inicio"], [null, "Hablemos"]]}
+    corto={garantias.map(([a, b]) => [a, b] as [string, string])}
+  />
+
+  <section class="seccion">
+    <div class="wrap estrecho revela">
+      <Formulario asunto="Contaes: peticion desde /demo/" />
+    </div>
+  </section>
+</Base>

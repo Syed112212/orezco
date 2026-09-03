@@ -1,6 +1,39 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!-- El consentimiento va PRIMERO: hasta que alguien acepta, la etiqueta
+     de Google no puede escribir ni leer nada. Es lo que exige el
+     articulo 22.2 de la LSSI y lo que promete nuestra pagina de
+     cookies. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  try {
+    if (localStorage.getItem('contaes:cookies') === 'si') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18427533910"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'AW-18427533910');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aviso legal · Contaes</title>
@@ -20,7 +53,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=78698cce">
+<link rel="stylesheet" href="/assets/contaes.css?v=7ffea080">
 
 </head>
 <body>
@@ -220,6 +253,18 @@
   </div>
   </div>
 </footer>
+
+<div class="cookies" id="cookies" hidden>
+  <div class="cookies-in">
+    <p class="cookies-txt"><b>Cookies de publicidad.</b> Medimos si nuestros anuncios
+      traen a alguien. Si dices que no, la web funciona igual y no se escribe nada.
+      El detalle esta en la <a href="/legal/cookies/">politica de cookies</a>.</p>
+    <div class="cookies-btns">
+      <button type="button" class="btn btn-tinte" data-cookies="no">Solo lo necesario</button>
+      <button type="button" class="btn btn-azul" data-cookies="si">Aceptar</button>
+    </div>
+  </div>
+</div>
 <script>
 /* -- Entrada al aparecer -------------------------------------
    La hoja de estilos no esconde nada por su cuenta: solo se oculta
@@ -305,6 +350,37 @@
     if(!nav.contains(e.target)){cierraAreas(null);ponMovil(false);}
   });
 })();
+/* -- El aviso de cookies ------------------------------------
+   Sale solo si no hay respuesta guardada. Las dos opciones
+   valen lo mismo y la respuesta se recuerda en el navegador,
+   no en una cookie: para preguntar por cookies no hace falta
+   escribir una.                                            */
+(function () {
+  var caja = document.getElementById("cookies");
+  if (!caja) return;
+  var LLAVE = "contaes:cookies";
+  var guardado = null;
+  try { guardado = localStorage.getItem(LLAVE); } catch (e) {}
+  if (guardado) return;
+  caja.hidden = false;
+
+  caja.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cookies]");
+    if (!b) return;
+    var si = b.getAttribute("data-cookies") === "si";
+    try { localStorage.setItem(LLAVE, si ? "si" : "no"); } catch (e2) {}
+    if (si && typeof gtag === "function") {
+      gtag("consent", "update", {
+        ad_storage: "granted",
+        ad_user_data: "granted",
+        ad_personalization: "granted",
+        analytics_storage: "granted"
+      });
+    }
+    caja.hidden = true;
+  });
+})();
+
 /* -- El formulario ------------------------------------------
    Se envia solo, con su action y su method: sin JavaScript
    funciona igual. Esto solo desactiva el boton al enviar, para

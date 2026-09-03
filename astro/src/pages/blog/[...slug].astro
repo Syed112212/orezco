@@ -1,0 +1,113 @@
+---
+// Un articulo. El indice sale de los <h2> del propio cuerpo, asi que no
+// puede quedarse desfasado, y los enlaces del final llevan a las paginas
+// del mismo tema.
+import Base from "../../layouts/Base.astro";
+import Migas from "../../componentes/Migas.astro";
+import Cierre from "../../componentes/Cierre.astro";
+import { publicados, enEspanol } from "../../datos/calendario";
+import { ancla, fichaOrganizacion, fichaMigas } from "../../datos/util";
+import RELACIONADAS from "../../datos/relacionadas.json";
+
+export async function getStaticPaths() {
+  const arts = await publicados();
+  return arts.map((a) => ({ params: { slug: a.id }, props: { a } }));
+}
+
+const { a } = Astro.props;
+const d = a.data;
+
+const COLOR: Record<string, string> = {
+  marigold: "#ffb110",
+  coral: "#f64932",
+  cielo: "#62aef0",
+  azul: "#0075de",
+  verde: "#2FBF9B",
+};
+const color = COLOR[d.acento ?? ""] ?? "#0075de";
+
+// El cuerpo viene como HTML. Se le ponen anclas a los <h2> para que el
+// indice lleve a ellos, y se numeran para que dos titulos iguales no
+// choquen.
+let n = 0;
+const titulos: [string, string][] = [];
+const cuerpo = a.body!.replace(/<h2(?![^>]*\bid=)([^>]*)>([\s\S]*?)<\/h2>/g, (_m, attr, txt) => {
+  n += 1;
+  const limpio = String(txt).replace(/<[^>]+>/g, "").trim();
+  const id = `a${n}-${ancla(limpio)}`;
+  titulos.push([id, limpio]);
+  return `<h2 id="${id}"${attr}>${txt}</h2>`;
+});
+
+const migas: [string | null, string][] = [
+  ["/", "Inicio"],
+  ["/blog/", "Blog"],
+  [null, d.titulo],
+];
+
+const enlaces = (RELACIONADAS as Record<string, [string, string][]>)[d.tema] ?? [];
+
+const fichaArticulo = {
+  "@type": "Article",
+  headline: d.titulo,
+  description: d.descripcion,
+  datePublished: d.fecha.toISOString().slice(0, 10),
+  inLanguage: "es-ES",
+  author: { "@id": "https://contaes.com/#organizacion" },
+  publisher: { "@id": "https://contaes.com/#organizacion" },
+  mainEntityOfPage: `https://contaes.com/blog/${a.id}/`,
+};
+---
+
+<Base
+  titulo={`${d.titulo} · Contaes`}
+  descripcion={d.descripcion}
+  fichas={[fichaOrganizacion(), fichaArticulo, fichaMigas(migas)]}
+>
+  <article class="post">
+    <div class="wrap estrecho">
+      <Migas pasos={migas} />
+      <span class="tema" style={`background:${color}`}>{d.tema}</span>
+      <h1 style="margin-top:14px">{d.titulo}</h1>
+      <div class="meta">
+        <time datetime={d.fecha.toISOString().slice(0, 10)}>{enEspanol(d.fecha)}</time>
+        <span>·</span><span>{d.minutos} min de lectura</span>
+      </div>
+      <p class="entradilla">{d.entradilla}</p>
+
+      {
+        titulos.length >= 3 && (
+          <nav class="indice-art" aria-label="En este artículo">
+            <p class="indice-tit">En este artículo</p>
+            <ol>
+              {titulos.map(([id, t]) => (
+                <li>
+                  <a href={`#${id}`}>{t}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <div class="cuerpo" set:html={cuerpo} />
+
+      {
+        enlaces.length > 0 && (
+          <nav class="lee-mas" aria-label="Del mismo tema">
+            <p class="lee-tit">Si esto te toca de cerca</p>
+            <ul>
+              {enlaces.map(([ruta, nombre]) => (
+                <li>
+                  <a href={`/${ruta}`}>{nombre}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+    </div>
+  </article>
+
+  <Cierre />
+</Base>

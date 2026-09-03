@@ -1361,22 +1361,42 @@ def paginas_legales():
              ])]),
         "legal/cookies/": (
             "Política de cookies",
-            "Este sitio no usa cookies de seguimiento ni de publicidad.",
-            [("Qué cookies usa este sitio", [
-                "Ninguna propia. No hay analítica, ni píxeles de publicidad, ni cookies de seguimiento. "
-                "No hay banner de consentimiento porque no hay nada que consentir.",
+            "Qué cookies usa este sitio, cuáles necesitan tu permiso y cómo cambiar de opinión.",
+            [("Lo primero: no se instala nada hasta que dices que sí", [
+                "Las cookies de publicidad de este sitio arrancan <strong>denegadas</strong>. La etiqueta "
+                "de Google se carga con el modo de consentimiento activado y en estado denegado, lo que "
+                "significa que no puede escribir ni leer nada en tu navegador mientras no aceptes.",
+                "Si eliges «solo lo necesario», o si cierras el aviso sin responder, sigue sin escribirse "
+                "nada. La web funciona igual: no hay ninguna parte del sitio que dependa de haber "
+                "aceptado.",
             ]),
-             ("Servicios de terceros", [
-                 "El sitio se sirve desde GitHub Pages y carga las tipografías desde Google Fonts. Esas "
-                 "conexiones no instalan cookies de seguimiento en tu navegador, pero sí implican que esos "
-                 "servicios reciben datos técnicos de la conexión, como tu dirección IP.",
-                 "Tu navegador guarda además datos técnicos propios (caché, preferencias) que no son "
-                 "cookies nuestras y que puedes borrar desde su configuración.",
+             ("Las que necesitan tu permiso", [
+                 "<strong>Google Ads.</strong> Sirve para saber si un anuncio nuestro ha traído a alguien "
+                 "hasta aquí. Sin esto no podemos distinguir una visita que viene de un anuncio pagado de "
+                 "una que viene de una búsqueda normal, que es lo que decide si seguimos pagando ese "
+                 "anuncio.",
+                 "Es la única finalidad. No compartimos tu navegación con nadie más, no construimos "
+                 "perfiles y no vendemos datos.",
              ]),
-             ("Si esto cambia", [
-                 "Si en algún momento añadimos analítica o cualquier otra herramienta que use cookies, "
-                 "esta página se actualizará y aparecerá el aviso de consentimiento correspondiente antes "
-                 "de instalar nada.",
+             ("Las que no lo necesitan", [
+                 "Ninguna es una cookie, en realidad. Guardamos en el almacenamiento de tu propio "
+                 "navegador tu respuesta al aviso de cookies (para no volver a preguntarte) y, si "
+                 "rellenas el formulario, por qué página entraste. Eso no sale de tu navegador hasta que "
+                 "envías el formulario, y entonces llega con el resto de lo que nos cuentas.",
+                 "El sitio se sirve desde GitHub Pages y carga las tipografías desde Google Fonts. Esas "
+                 "conexiones no instalan cookies, pero sí implican que esos servicios reciben datos "
+                 "técnicos de la conexión, como tu dirección IP.",
+             ]),
+             ("Cómo cambiar de opinión", [
+                 "Borra los datos de este sitio desde la configuración de tu navegador y el aviso volverá "
+                 "a aparecer la próxima vez que entres. También puedes bloquear las cookies de terceros "
+                 "desde ahí, y este sitio seguirá funcionando.",
+                 "Si prefieres que lo hagamos nosotros, escríbenos y te decimos exactamente qué borrar.",
+             ]),
+             ("Transferencias internacionales", [
+                 "Google Ads implica transferencias internacionales de datos amparadas en los mecanismos "
+                 "previstos por el Reglamento General de Protección de Datos. Solo ocurren si has "
+                 "aceptado.",
              ])]),
     }
 

@@ -1,0 +1,70 @@
+---
+import Base from "../../layouts/Base.astro";
+import Encabezado from "../../componentes/Encabezado.astro";
+import Lectura from "../../componentes/Lectura.astro";
+import Tarjetas from "../../componentes/Tarjetas.astro";
+import Cierre from "../../componentes/Cierre.astro";
+import { MODULOS, CAPACIDADES } from "../../datos/mapa";
+import { fichaOrganizacion, fichaMigas } from "../../datos/util";
+
+const intro: [string, string[]][] = [
+  [
+    "El mismo programa para los dos",
+    [
+      "Una gestoría normal usa su programa y tú usas el tuyo. Entre los dos hay un traspaso: tú mandas facturas, ellos las meten, y cada traspaso es una oportunidad de que algo se pierda o llegue tarde. Aquí no hay traspaso porque no hay dos programas.",
+      "Eso tiene una consecuencia que se nota enseguida: tus libros están al día todos los días, no a final de trimestre. Puedes entrar a mirarlos sin pedírselos a nadie, y cuando toca presentar un modelo, los datos ya están donde tienen que estar.",
+    ],
+  ],
+  [
+    "Se activa lo que usas",
+    [
+      "Nadie necesita las ocho áreas. Un autónomo que factura servicios no quiere ver almacén; una empresa de distribución lo quiere lo primero. Se enciende lo que hace falta y lo demás no estorba en los menús.",
+      "Lo que no cambia es el fondo: todo escribe en el mismo libro mayor. Por eso una factura emitida ya es un asiento, una compra recibida ya es existencias, y un informe no necesita que nadie exporte nada.",
+    ],
+  ],
+];
+---
+
+<Base
+  titulo="Producto · Contaes"
+  descripcion="Contabilidad, facturación, almacén, compras, ventas, proyectos e informes sobre el mismo libro mayor, con asesoría fiscal incluida."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Software"]])]}
+>
+  <Encabezado
+    etiqueta="Software"
+    titulo="Un solo sitio para toda la gestión"
+    entradilla="El programa que usamos para llevarte la gestoría es el mismo al que tú entras. Cada hecho se registra una vez y aparece donde hace falta, sin exportar nada de un sitio a otro."
+    migas={[["/", "Inicio"], [null, "Software"]]}
+    corto={[
+      ["Áreas", `${MODULOS.length} para el día a día`],
+      ["Y además", `${CAPACIDADES.length} cosas que lo hacen distinto`],
+      ["Todo sobre", "el mismo libro mayor"],
+    ]}
+  />
+
+  <section class="seccion"><Lectura secciones={intro} /></section>
+
+  <section class="seccion">
+    <div class="wrap">
+      <h2 style="margin-top:0">La gestión del día a día</h2>
+      <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">
+        Todo sobre el mismo libro mayor: lo que se registra en un sitio está disponible en los
+        demás sin exportar nada. Se activa lo que necesites y se deja fuera lo que no.
+      </p>
+      <Tarjetas entradas={MODULOS.map(([s, n, d]) => [`/funcionalidades/${s}`, n, d])} />
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap">
+      <h2>Lo que lo hace distinto</h2>
+      <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">
+        Un ERP más no hacía falta. Lo que cambia el trabajo es que la contabilidad esté al día
+        sola y que los modelos los presente alguien por ti.
+      </p>
+      <Tarjetas entradas={CAPACIDADES.map(([s, n, d]) => [`/funcionalidades/${s}`, n, d])} />
+    </div>
+  </section>
+
+  <Cierre />
+</Base>

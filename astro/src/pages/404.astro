@@ -1,0 +1,34 @@
+---
+// La pagina que sale cuando no existe lo que se pedia. Con salidas de
+// verdad, no un "volver al inicio" y ya.
+import Base from "../layouts/Base.astro";
+import Tarjetas from "../componentes/Tarjetas.astro";
+---
+
+<Base titulo="Esta página no existe · Contaes" descripcion="La página que buscas no está aquí." noindex>
+  <section class="encabezado">
+    <div class="wrap estrecho" style="padding:70px 0 20px">
+      <p class="etiqueta">Error 404</p>
+      <h1 style="margin-top:10px">Esta página no existe</h1>
+      <p class="editorial" style="margin-top:18px;max-width:52ch">
+        O nunca existió, o la hemos movido. Las dos cosas son culpa nuestra, así que aquí
+        tienes por dónde seguir.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap">
+      <Tarjetas
+        entradas={[
+          ["/funcionalidades/", "El software", "Las ocho áreas y lo que las hace distintas."],
+          ["/gestoria/", "La gestoría", "Contabilidad, impuestos, nóminas y contratos."],
+          ["/blog/", "El blog", "Lo que preguntan los que llevan una empresa."],
+          ["/preguntas/", "Preguntas frecuentes", "Incluidas las incómodas."],
+          ["/precios/", "Precios", "De qué depende lo que pagas."],
+          ["/formulario/", "Cuéntanos tu caso", "El formulario, se rellena pinchando."],
+        ]}
+      />
+    </div>
+  </section>
+</Base>

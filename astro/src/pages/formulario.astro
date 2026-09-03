@@ -1,0 +1,68 @@
+---
+// El formulario con su enlace propio. La portada y /demo/ son paginas
+// para convencer a quien no ha decidido nada; cuando ya has hablado con
+// alguien y solo quieres que te cuente su caso, mandarle la portada es
+// hacerle bajar por diez secciones de venta antes del campo del nombre.
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Formulario from "../componentes/Formulario.astro";
+import datos from "../datos/formulario.json";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+
+const buzon = (datos as { buzon: string }).buzon;
+
+// Lo que pasa despues de darle a enviar. Es la duda que tiene todo el
+// que deja su telefono en una web, asi que va junto al boton y no tres
+// secciones mas abajo.
+const pasos: [string, string][] = [
+  ["Lo lee una persona", "no un formulario automático, así que la respuesta tarda lo que tarda alguien en leerlo."],
+  ["Te escribimos para hablar", "media hora, sobre lo que nos hayas contado. Sin presentación genérica."],
+  ["Te decimos si encajamos", "y si no, también. Es más barato para los dos saberlo en la primera llamada."],
+];
+---
+
+<Base
+  titulo="Cuéntanos tu caso · Contaes"
+  descripcion="Rellena el formulario pinchando: qué eres, cuántos sois y con qué te podemos ayudar. Lo lee una persona."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Formulario"]])]}
+>
+  <Encabezado
+    etiqueta="Formulario"
+    titulo="Cuéntanos tu caso"
+    entradilla="No hace falta escribir: casi todo se rellena pinchando. Lo que marques nos sirve para preparar la llamada, no para meterte en una lista."
+    migas={[["/", "Inicio"], [null, "Formulario"]]}
+    corto={[
+      ["Se tarda", "dos o tres minutos"],
+      ["Hay que escribir", "el nombre y el email, poco más"],
+      ["Lo lee", "una persona, no un robot"],
+    ]}
+  />
+
+  <section class="seccion">
+    <div class="wrap formulario-rejilla">
+      <div class="revela"><Formulario asunto="Contaes: peticion desde /formulario/" /></div>
+
+      <aside class="form-lado">
+        <div class="form-lado-caja">
+          <div class="form-avance" hidden>
+            <div class="form-avance-barra"><i></i></div>
+            <p class="form-avance-texto"></p>
+          </div>
+          <div class="form-resumen" hidden>
+            <p class="etiqueta">Lo que nos has contado</p>
+            <dl></dl>
+          </div>
+          <div class="form-luego">
+            <p class="etiqueta" style="margin-bottom:14px">Qué pasa después</p>
+            <ol class="pasos-lado">
+              {pasos.map(([t, d]) => (<li><b>{t}</b><span>{d}</span></li>))}
+            </ol>
+            <p class="form-lado-nota">
+              Si prefieres escribir sin rellenar nada, <a href={`mailto:${buzon}`}>{buzon}</a> también vale.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>

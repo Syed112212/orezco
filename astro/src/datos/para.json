@@ -1,0 +1,129 @@
+{
+ "autonomos": {
+  "titulo": "Autonomos",
+  "lema": "Tu gestoría para autónomos, sin sustos ni letra pequeña",
+  "entradilla": "Muchos autónomos viven con la duda de si lo están haciendo bien. Si no sabes qué gastos deduces o cuánto te queda, no es culpa tuya: nadie te lo explicó.",
+  "secciones": [
+   [
+    "Lo que realmente necesita un autónomo",
+    [
+     "Te damos de alta y nos encargamos de trámites y cuota. Te avisamos de cambios y de lo que te conviene.",
+     "Presentamos tus impuestos trimestrales y anuales: IVA, modelo 130 o módulos. Y calculamos tu renta de cada mes para que sepas lo que de verdad ganas."
+    ]
+   ],
+   [
+    "Sin miedo a dejar algo sin declarar",
+    [
+     "La mayoría de inspecciones nacen de errores por desconocimiento, no de mala fe. Ese gasto que creías deducible no lo es, o al revés. Nosotros revisamos tus facturas y te decimos qué se puede y qué no.",
+     "Te damos a ti las pautas, al día, para que sepas lo que entra y lo que no. Y si Hacienda llama, te acompañamos."
+    ]
+   ],
+   [
+    "¿Cuándo compensa pasar a sociedad?",
+    [
+     "No hay una regla mágica. Depende de lo que factures, de tus gastos y de lo que quieras hacer con el dinero. Te damos una opinión honesta cuando llega el momento.",
+     "Solemos recomendarlo cuando tu base imponible sube de forma estable, o si quieres deducir costes que como autónomo no puedes. Pero no empujamos a nadie a una sociedad si no aporta."
+    ]
+   ],
+   [
+    "Cómo te quitamos trabajo",
+    [
+     "Subes tus facturas o las hacemos nosotros. Te avisamos de cada plazo y lo dejamos todo presentado. Tú te dedicas a trabajar.",
+     "Y cuando algo no cuadre, te llamamos antes de que sea tarde."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Alta de autónomo y tramitación de la cuota.",
+   "Declaración trimestral de IVA.",
+   "Impuesto sobre la renta: modelo 130 o la opción por módulos.",
+   "Revisión de gastos deducibles y no deducibles, con criterio claro.",
+   "Emisión y control de facturas sencillo.",
+   "Informe mensual de lo que te queda de verdad.",
+   "Consejo sobre el momento de pasarte a sociedad."
+  ],
+  "limites": "Si tu situación es muy sencilla (pocas facturas, ningún empleado, ningún gasto que dudar) probablemente puedas apañarte solo, y te lo diremos. Esto tiene sentido cuando ya hay volumen suficiente para que un error cueste más que la cuota, o cuando el tiempo que dedicas a papeles es tiempo que no dedicas a facturar."
+ },
+ "startups": {
+  "titulo": "Startups",
+  "lema": "La contabilidad que no lastra tu ronda de inversión.",
+  "entradilla": "Tu startup no puede llevar la contabilidad como un trámite. El día que un inversor pida números, necesitas unos libros que aguanten una due diligence.",
+  "secciones": [
+   [
+    "El problema",
+    [
+     "Llevar la contabilidad como un trámite es el error más caro para una startup.",
+     "Cuando un inversor pide ver los números, los libros aparecen desordenados, sin clasificar y con gastos de I+D sin rastrear. Ese día no se puede improvisar."
+    ]
+   ],
+   [
+    "Qué hacemos",
+    [
+     "Acompañamos a la startup desde la constitución: creamos la sociedad, definimos el pacto de socios con tu abogado y montamos una contabilidad pensada para aguantar una due diligence.",
+     "Llevamos el día a día con control de caja y runway, y clasificamos cada gasto para que las deducciones de I+D y las ayudas públicas de innovación no se queden en el camino."
+    ]
+   ],
+   [
+    "Listos para la ronda",
+    [
+     "Preparamos la información financiera en el formato que espera un inversor: cuentas claras, métricas de gestión y una trazabilidad real de tus gastos.",
+     "No esperamos a que llegue la ronda: trabajamos cada mes para que la due diligence sea un proceso rápido y sin sustos."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Constitución de la sociedad y definición del pacto de socios con tu asesoría legal",
+   "Contabilidad y fiscalidad preparadas para una due diligence",
+   "Control de caja y cálculo del runway mes a mes",
+   "Registro de gastos de I+D y preparación de deducciones",
+   "Documentación financiera lista para inversores",
+   "Detección y gestión de ayudas públicas de innovación"
+  ],
+  "limites": "Dos avisos honestos. Ordenamos la casa para que una ronda sea posible, pero no buscamos inversores por ti ni negociamos las condiciones: eso lo hacéis vosotros, y hay quien se dedica solo a eso. Y si la empresa aún no tiene actividad, casi todo esto puede esperar; te lo diremos en la primera llamada en vez de venderte un paquete que no vas a usar."
+ },
+ "pymes": {
+  "titulo": "Pymes",
+  "lema": "Creciste. Ahora tu administración crece contigo.",
+  "entradilla": "Tener 50 empleados y administrar como cuando tenías 5 es un cuello de botella. Te montamos un sistema único, con gestores expertos, para que crezcas sin sustos ni freno.",
+  "secciones": [
+   [
+    "Cuando crecer desordena la gestión",
+    [
+     "Empiezas con cinco y todo cabe en una hoja de cálculo. Pero llegas a cuarenta, abres una segunda línea de negocio o empiezas a exportar, y esa forma de trabajar se cae.",
+     "El resultado es trabajar de más, pagar sanciones por retrasos que no viste venir y tomar decisiones de caja mirando solo lo que pasó ayer."
+    ]
+   ],
+   [
+    "Un solo sistema, con personas al otro lado",
+    [
+     "Sustituimos la maraña de programas sueltos y hojas de cálculo por una plataforma única de gestión. Contabilidad, facturas, nóminas y tesorería conviven en el mismo sitio, con una sola base de datos.",
+     "Nuestro equipo de gestores se encarga del día a día: revisa, presenta y te avisa con tiempo. Tú no necesitas saber contabilidad. Solo saber hacia dónde llevas la empresa."
+    ]
+   ],
+   [
+    "Control de márgenes y tesorería previsible",
+    [
+     "¿Sabes qué producto o servicio te da más margen? ¿Cuánto necesitas en caja para pagar las nóminas del próximo trimestre? Sin un sistema único, esas respuestas son corazonadas.",
+     "Con el cuadro de mando de Contaes ves la rentabilidad de cada línea de negocio, la previsión de tesorería y los impuestos que vienen. Se acabaron las sorpresas."
+    ]
+   ],
+   [
+    "Ayuda para crecer sin descontrolarte",
+    [
+     "Contratar, abrir una sede nueva o lanzar un producto requiere un soporte administrativo y financiero a la altura. Acompañamos ese crecimiento para que la estructura no te frene.",
+     "Y cuando necesites financiación o dar el salto fuera, lo montamos con nuestros Servicios de Crecimiento, con el mismo enfoque práctico."
+    ]
+   ]
+  ],
+  "incluye": [
+   "Contabilidad y fiscalidad presentadas por un gestor experto.",
+   "Nóminas y gestión laboral para equipos de 5 a 50 personas.",
+   "Plataforma propia: facturas, gastos y clientes centralizados.",
+   "Sustitución de la hoja de cálculo por informes de márgenes.",
+   "Previsión de tesorería e impuestos, sin sustos a fin de mes.",
+   "Cuadro de mando para ver la rentabilidad real del negocio.",
+   "Un equipo asesor que responde, no un portal sin voz."
+  ],
+  "limites": "Este servicio tiene sentido cuando consolidas un equipo de cinco o más personas. Si eres autónomo sin asalariados o tu facturación es muy sencilla, te servirá más nuestra asesoría de base. Y si solo buscas que te presenten los impuestos sin que nadie te opine sobre el negocio, no somos tu gestoría. Pero si quieres que la administración quede resuelta mientras tú diriges, esto es lo tuyo."
+ }
+}

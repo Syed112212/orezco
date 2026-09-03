@@ -1,0 +1,162 @@
+---
+// El formulario, que se rellena pinchando. Solo hay que escribir el
+// nombre y el email: lo demas son opciones, porque un formulario que
+// pide redactar es un formulario que la gente abandona.
+//
+// Los campos de rastro los rellena el navegador antes de enviar. Si el
+// JavaScript no corre van vacios y el formulario funciona igual: el
+// rastro es util, no imprescindible.
+import datos from "../datos/formulario.json";
+
+interface Props {
+  asunto: string;
+  clase?: string;
+}
+const { asunto, clase = "form" } = Astro.props;
+
+const d = datos as unknown as {
+  perfil: [string, string][];
+  equipo: string[];
+  necesito: [string, string[]][];
+  ahora: string[];
+  cuando: string[];
+  endpoint: string;
+  buzon: string;
+  gracias: string;
+  trampa: string;
+  rastro: [string, string][];
+};
+
+/** Un grupo de opciones que se marcan pinchando. */
+const grupos: { titulo: string; campo: string; opciones: string[]; pies?: string[] }[] = [
+  {
+    titulo: "¿Qué eres?",
+    campo: "Perfil",
+    opciones: d.perfil.map(([p]) => p),
+    pies: d.perfil.map(([, x]) => x),
+  },
+  { titulo: "¿Cuántos sois?", campo: "Equipo", opciones: d.equipo },
+];
+const grupos2 = [
+  { titulo: "¿Qué usas hoy?", campo: "Sistema actual", opciones: d.ahora },
+  { titulo: "¿Para cuándo?", campo: "Plazo", opciones: d.cuando },
+];
+---
+
+<form class={clase} id="form-contacto" action={d.endpoint} method="POST">
+  <input type="hidden" name="_subject" value={asunto} />
+  <input type="hidden" name="_next" value={d.gracias} />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  {/* La trampa: un campo que una persona no ve y un robot rellena. */}
+  <input
+    type="text"
+    name={d.trampa}
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"
+  />
+
+  {d.rastro.map(([nombre, clave]) => (
+    <input type="hidden" name={nombre} data-rastro={clave} value="" />
+  ))}
+
+  {
+    grupos.map((g) => (
+      <fieldset class="bloque">
+        <legend>{g.titulo}</legend>
+        {g.opciones.map((o, i) => (
+          <label class="op">
+            <input type="radio" name={g.campo} value={o} />
+            <span class="op-cuerpo">
+              <span class="op-tit">{o}</span>
+              {g.pies?.[i] && <span class="op-pie">{g.pies[i]}</span>}
+            </span>
+          </label>
+        ))}
+      </fieldset>
+    ))
+  }
+
+  {/* Las necesidades van por areas: marcar quince casillas seguidas
+      cansa, y agrupadas se leen de un vistazo. */}
+  <fieldset class="bloque">
+    <legend>¿Con qué te podemos ayudar?</legend>
+    <p class="bloque-pie">
+      Marca lo que te suene. No hace falta acertar: para eso está la llamada.
+    </p>
+    <div class="subs">
+      {
+        d.necesito.map(([area, opciones]) => (
+          <div class="sub">
+            <p class="sub-tit">{area}</p>
+            {opciones.map((o) => (
+              <label class="op op-chica">
+                <input type="checkbox" name={`Necesita: ${area}`} value={o} />
+                <span class="op-cuerpo">
+                  <span class="op-tit">{o}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  {
+    grupos2.map((g) => (
+      <fieldset class="bloque">
+        <legend>{g.titulo}</legend>
+        {g.opciones.map((o) => (
+          <label class="op">
+            <input type="radio" name={g.campo} value={o} />
+            <span class="op-cuerpo">
+              <span class="op-tit">{o}</span>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+    ))
+  }
+
+  <fieldset class="bloque">
+    <legend>¿Cómo te llamamos?</legend>
+    <div class="datos">
+      <label class="dato"
+        ><span>Nombre</span>
+        <input type="text" name="Nombre" autocomplete="name" required /></label
+      >
+      <label class="dato"
+        ><span>Empresa <i>(opcional)</i></span>
+        <input type="text" name="Empresa" autocomplete="organization" /></label
+      >
+      <label class="dato"
+        ><span>Email</span>
+        <input type="email" name="Email" autocomplete="email" required /></label
+      >
+      <label class="dato"
+        ><span>Teléfono <i>(opcional)</i></span>
+        <input type="tel" name="Teléfono" autocomplete="tel" /></label
+      >
+    </div>
+    <label class="dato dato-ancho"
+      ><span>¿Algo más que debamos saber? <i>(opcional)</i></span>
+      <textarea name="Mensaje" rows="3"></textarea></label
+    >
+  </fieldset>
+
+  <p class="form-nota">
+    Al enviar aceptas que usemos estos datos para responderte. Nada más. Puedes leer el detalle
+    en la <a href="/legal/privacidad/">política de privacidad</a>.
+  </p>
+  <div class="form-acciones">
+    <button class="btn btn-azul" type="submit">
+      Enviar <span class="flecha" aria-hidden="true">&rarr;</span>
+    </button>
+    <span class="form-alt">o escríbenos a <a href={`mailto:${d.buzon}`}>{d.buzon}</a></span>
+  </div>
+</form>
+
+<script src="../scripts/formulario.js"></script>

@@ -1,0 +1,45 @@
+---
+// El encabezado, a dos columnas. El titular ocupa su lado y la
+// entradilla el suyo. Una columna estrecha centrada en una pantalla
+// ancha deja media pagina vacia y parece un documento sin maquetar.
+import Migas from "./Migas.astro";
+
+interface Props {
+  etiqueta: string;
+  /** Puede llevar marcado: el lema va en gris dentro del titular. */
+  titulo: string;
+  entradilla: string;
+  migas?: [string | null, string][];
+  /** Resumen en corto: [etiqueta, valor]. Sale de lo que la pagina ya dice. */
+  corto?: [string, string][];
+}
+
+const { etiqueta, titulo, entradilla, migas = [], corto = [] } = Astro.props;
+---
+
+<section class="encabezado">
+  <div class="wrap">
+    {migas.length > 0 && <Migas pasos={migas} />}
+    <div class="enc-rejilla">
+      <div>
+        <p class="etiqueta">{etiqueta}</p>
+        <h1 set:html={titulo} />
+      </div>
+      <div class="enc-lado">
+        <p class="editorial">{entradilla}</p>
+        {
+          corto.length > 0 && (
+            <ul class="enc-corto">
+              {corto.map(([k, v]) => (
+                <li>
+                  <b>{k}</b>
+                  <span>{v}</span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -231,6 +231,25 @@ footer small{font-size:13.5px;color:#8b93b5}
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+/* ── El aviso de cookies ─────────────────────────────────────────────
+   Abajo y estrecho, no una cortina que tape la pagina. Las dos opciones
+   pesan lo mismo: un "rechazar" escondido no es un consentimiento. */
+.cookies{position:fixed;left:16px;right:16px;bottom:16px;z-index:80;
+  max-width:640px;margin:0 auto;background:var(--blanco);
+  border:1px solid var(--borde);border-radius:12px;
+  box-shadow:0 12px 32px rgba(0,0,0,.12);padding:18px 20px}
+.cookies[hidden]{display:none}
+.cookies-in{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.cookies-txt{margin:0;flex:1 1 260px;font-size:14px;line-height:1.5;
+  color:var(--grafito)}
+.cookies-txt b{color:var(--tinta-fuerte)}
+.cookies-btns{display:flex;gap:8px;flex:0 0 auto}
+.cookies-btns .btn{padding:9px 16px;font-size:14px}
+@media(max-width:560px){
+  .cookies-btns{width:100%;}
+  .cookies-btns .btn{flex:1}
+}
+
 /* ── El carril que contesta mientras rellenas ────────────────────── */
 .form-avance{margin-bottom:22px}
 .form-avance-barra{height:4px;border-radius:9999px;background:var(--borde);

@@ -1,0 +1,39 @@
+---
+// Donde aterriza quien acaba de enviar el formulario. Sin indexar: no
+// tiene sentido llegar aqui desde un buscador.
+import Base from "../layouts/Base.astro";
+import Tarjetas from "../componentes/Tarjetas.astro";
+---
+
+<Base titulo="Gracias · Contaes" descripcion="Hemos recibido tu mensaje. Te contestamos pronto." noindex>
+  <section class="encabezado">
+    <div class="wrap estrecho" style="text-align:center;padding:60px 0 20px">
+      <p class="etiqueta">Recibido</p>
+      <h1 style="margin-top:10px">Gracias. Te contestamos pronto.</h1>
+      <p class="editorial" style="margin:18px auto 0;max-width:52ch">
+        Hemos recibido lo que nos has contado. Lo leemos nosotros, no un formulario automático,
+        así que la respuesta tarda lo que tarda una persona en leerlo.
+      </p>
+      <div style="margin-top:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-azul" href="/">Volver al inicio <span class="flecha" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-tinte" href="/blog/">Leer el blog</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap estrecho revela">
+      <h2 style="margin-top:0">Mientras tanto</h2>
+      <p class="cuerpo" style="margin-bottom:22px">
+        Si quieres ir haciéndote una idea, estas tres páginas son las que más cuentan.
+      </p>
+      <Tarjetas
+        entradas={[
+          ["/funcionalidades/asesoria-fiscal/", "Asesoría fiscal incluida", "Lo que de verdad separa a Contaes de un ERP normal."],
+          ["/migracion/", "Migración", "Cómo se cambia de sistema sin parar la empresa."],
+          ["/preguntas/", "Preguntas", "Incluidas las incómodas."],
+        ]}
+      />
+    </div>
+  </section>
+</Base>

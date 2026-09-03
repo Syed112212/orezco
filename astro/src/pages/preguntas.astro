@@ -1,0 +1,40 @@
+---
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Cierre from "../componentes/Cierre.astro";
+import preguntas from "../datos/preguntas.json";
+import { fichaOrganizacion, fichaMigas, fichaFaq } from "../datos/util";
+
+const lista = preguntas as unknown as [string, string][];
+---
+
+<Base
+  titulo="Preguntas frecuentes · Contaes"
+  descripcion="Lo que suelen preguntarnos, incluidas las incómodas: si está disponible, cuánto cuesta y quién responde ante Hacienda."
+  fichas={[fichaOrganizacion(), fichaFaq(lista), fichaMigas([["/", "Inicio"], [null, "Preguntas"]])]}
+>
+  <Encabezado
+    etiqueta="Recursos"
+    titulo="Lo que suelen preguntarnos"
+    entradilla="Incluidas las incómodas: si está disponible, cuánto cuesta y quién responde ante Hacienda."
+    migas={[["/", "Inicio"], [null, "Preguntas"]]}
+    corto={[["Preguntas", `${lista.length} contestadas`], ["Incluidas", "las que no nos favorecen"]]}
+  />
+
+  <section class="seccion">
+    <div class="wrap estrecho">
+      {
+        lista.map(([q, r]) => (
+          <details class="tarjeta revela" style="margin-bottom:12px">
+            <summary style="cursor:pointer;font-weight:600;font-size:17px;color:var(--tinta-fuerte)">
+              {q}
+            </summary>
+            <p style="margin-top:12px" set:html={r} />
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <Cierre />
+</Base>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  titulo?: string;
+  texto?: string;
+}
+const {
+  titulo = "¿Te enseñamos cómo funciona?",
+  texto = "Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y qué es lo que peor lleváis.",
+} = Astro.props;
+---
+
+<section class="wrap estrecho">
+  <div class="cierre revela">
+    <h2>{titulo}</h2>
+    <p>{texto}</p>
+    <a class="btn btn-azul" href="/demo/"
+      >Pedir una demo <span class="flecha" aria-hidden="true">&rarr;</span></a
+    >
+  </div>
+</section>

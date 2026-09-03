@@ -1,0 +1,19 @@
+---
+// Siete puntos sueltos en columna se leen como un parrafo largo. En
+// rejilla se barren de un vistazo, que es para lo que estan.
+interface Props {
+  puntos: string[];
+}
+const { puntos } = Astro.props;
+---
+
+<ul class="incluye">
+  {
+    puntos.map((p) => (
+      <li>
+        <span class="tic" aria-hidden="true" />
+        <span>{p}</span>
+      </li>
+    ))
+  }
+</ul>

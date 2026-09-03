@@ -1,0 +1,60 @@
+---
+// El calendario fiscal, mes a mes. Sin fechas exactas a proposito: los
+// plazos cambian y una web con una fecha equivocada es peor que una web
+// sin fecha. Lo que se dice es que modelo toca cada mes.
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Cierre from "../componentes/Cierre.astro";
+import calendario from "../datos/calendario-fiscal.json";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+
+const { entradas, nota } = calendario as unknown as {
+  entradas: [string, [string, string][]][];
+  nota: string;
+};
+const mesAhora = new Date().toLocaleDateString("es-ES", { month: "long" });
+---
+
+<Base
+  titulo="Calendario fiscal · Contaes"
+  descripcion="Qué modelo toca cada mes: IVA, retenciones, pagos fraccionados y resúmenes anuales, mes a mes."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Calendario fiscal"]])]}
+>
+  <Encabezado
+    etiqueta="Recursos"
+    titulo="Qué modelo toca y cuándo"
+    entradilla="Mes a mes, lo que hay que presentar. Sin fechas exactas a propósito: los plazos cambian, y una web con una fecha vieja hace más daño que una sin fecha."
+    migas={[["/", "Inicio"], [null, "Calendario fiscal"]]}
+    corto={[
+      ["Cubre", "los doce meses"],
+      ["Quién lo presenta", "si eres cliente, nosotros"],
+    ]}
+  />
+
+  <section class="seccion">
+    <div class="wrap">
+      <div class="rejilla">
+        {
+          entradas.map(([mes, modelos]) => (
+            <div
+              class:list={["tarjeta", "revela", mes.toLowerCase() === mesAhora && "es-ahora"]}
+            >
+              <h2 class="tarjeta-tit">{mes}</h2>
+              <ul class="lista">
+                {modelos.map(([m, que]) => (
+                  <li>
+                    <b>{m}</b>
+                    <span>{que}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <div class="aviso" style="margin-top:26px" set:html={nota} />
+    </div>
+  </section>
+
+  <Cierre />
+</Base>

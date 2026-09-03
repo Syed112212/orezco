@@ -1,0 +1,22 @@
+---
+// El rastro de navegacion. El ultimo paso no es enlace: es donde estas.
+interface Props {
+  pasos: [string | null, string][];
+}
+const { pasos } = Astro.props;
+---
+
+<p class="migas">
+  {
+    pasos.map(([ruta, nombre], i) =>
+      ruta && i < pasos.length - 1 ? (
+        <>
+          <a href={ruta}>{nombre}</a>
+          <span aria-hidden="true"> &rsaquo; </span>
+        </>
+      ) : (
+        <span>{nombre}</span>
+      ),
+    )
+  }
+</p>

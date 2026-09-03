@@ -1,0 +1,42 @@
+[
+ [
+  "¿Qué se puede contratar?",
+  "Todo lo que hay en la web: la gestoría (contabilidad, fiscal, laboral y legal), el software, y los servicios de crecimiento por separado o juntos. Lo normal es empezar por la gestoría y añadir lo demás cuando hace falta, no al revés."
+ ],
+ [
+  "¿Qué es exactamente: un programa o una asesoría?",
+  "Las dos cosas, y por eso existe. El programa lleva la gestión y la contabilidad; el servicio de asesoría revisa, firma y presenta los modelos. Un ERP solo te deja los modelos hechos pero sin presentar. Una asesoría sola no tiene tus datos al día."
+ ],
+ [
+  "¿Qué hace la IA y qué no hace?",
+  "Hace lo repetitivo: leer facturas, proponer clasificación contable, responder preguntas sobre tus datos y preparar borradores. No presenta nada, no manda correos sin que alguien los apruebe y no firma. Y no inventa cifras: si un dato no está, lo dice."
+ ],
+ [
+  "¿Quién responde ante Hacienda?",
+  "Una persona colegiada. La IA prepara y una persona revisa, firma y presenta. Esa responsabilidad no se puede delegar en un algoritmo, y quien te diga lo contrario te está vendiendo un riesgo."
+ ],
+ [
+  "¿Se puede migrar desde Odoo, SAP o una hoja de cálculo?",
+  "Ese es el caso normal, no la excepción. La migración se plantea desde el primer día: qué datos se traen con su histórico, cuánto dura el periodo en que conviven los dos sistemas y cuál es el punto de retorno si algo sale mal. Por escrito, antes de empezar."
+ ],
+ [
+  "¿Qué pasa con nuestros datos durante el cambio?",
+  "El sistema antiguo sigue vivo en solo lectura durante la convivencia, para consultar y comparar. No se apaga nada hasta que lo nuevo está funcionando y cuadrado."
+ ],
+ [
+  "¿Cuánto cuesta?",
+  "Depende de cuánta gente sois, qué servicios contratáis, qué módulos del software usáis y cuántos documentos movéis al mes. No publicamos tarifa porque cobrar lo mismo a un autónomo con veinte facturas al año que a una empresa de treinta personas sería cobrarle de más a uno de los dos. En la primera llamada sale un número, no un rango."
+ ],
+ [
+  "¿Cómo empieza el proceso?",
+  "Con una llamada sobre lo que usáis hoy y qué es lo que peor lleváis. Si no encajamos, se dice en esa llamada y no en la tercera. Si encajamos, la siguiente es una demo sobre vuestro caso, no una presentación genérica."
+ ],
+ [
+  "¿Sirve para autónomos?",
+  "Depende del caso. Un autónomo sin empleados ni almacén probablemente necesite algo más ligero que un ERP completo. Un autónomo con equipo, stock y proyectos sí encaja. Es una de las cosas que se aclara en la primera llamada."
+ ],
+ [
+  "¿Y si necesitamos algo muy específico de nuestro sector?",
+  "Hay procesos muy particulares (fabricación compleja, normativa sectorial concreta) que hoy no cubrimos. Preferimos decirlo antes que después de la demo."
+ ]
+]

@@ -97,6 +97,35 @@ def main():
     t = t[:m.start()] + DP.flujo_modelo().replace(
         '<figure class="dibujo">', '<figure class="dibujo revela">') + t[m.end():]
 
+
+    # ── la etiqueta de Google y el aviso de cookies ──────────────────
+    # Las dos van en todas las paginas. La portada se escribe a mano, asi
+    # que se las ponemos aqui, cogidas de plantilla.py y no copiadas.
+    # Se quita lo que dejo la pasada anterior antes de poner lo nuevo. El
+    # patron llega hasta el gtag('config'), que es donde acaba de verdad
+    # la etiqueta: cortar en el primer </script> dejaba media dentro.
+    t = re.sub(r"<!-- El consentimiento va PRIMERO.*?gtag\('config'[^\n]*\n</script>\n",
+               "", t, flags=re.S)
+    assert "<head>" in t
+    t = t.replace("<head>", "<head>" + P.TAG_GOOGLE.rstrip("\n") + "\n", 1)
+
+    # El aviso va al final del body, no en el head: es marcado visible.
+    t = re.sub(r'\n?<div class="cookies" id="cookies" hidden>.*?\n</div>\n', "", t, flags=re.S)
+    assert "</body>" in t, "no encontrado el cierre del body en index.html"
+    t = t.replace("</body>", P.AVISO_COOKIES + "\n</body>", 1)
+
+    # Y su JavaScript. La portada lleva su propio bloque de scripts, asi
+    # que lo que se anade a PIE_JS no le llega solo: el aviso salia en
+    # las 74 paginas generadas y no en la portada, que es por donde entra
+    # casi todo el mundo.
+    # Va en su propio <script> al final del body. Buscar un <script> que
+    # ya exista para colgarse de el es fragil: el primero que encuentra
+    # esta en el <head>, y ahi el aviso no se ve.
+    t = re.sub(r"\n?<script>\n/\* -- El aviso de cookies.*?\n\}\)\(\);\n</script>\n",
+               "", t, flags=re.S)
+    t = t.replace("</body>",
+                  "<script>\n" + P.JS_COOKIES.strip() + "\n</script>\n</body>", 1)
+
     io.open(ruta, "w", encoding="utf-8").write(t)
     print("  index.html: barra, pie y su CSS al dia" + ("" if t != antes else " (ya estaban)"))
     return 0

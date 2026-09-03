@@ -1,0 +1,61 @@
+---
+// Las paginas sueltas: sobre, migracion y seguridad. Comparten forma
+// -encabezado, texto con su indice, dibujo y cierre- y su contenido es
+// dato, no codigo.
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Lectura from "../componentes/Lectura.astro";
+import Cierre from "../componentes/Cierre.astro";
+import simples from "../datos/simples.json";
+import * as DP from "../datos/diagramas";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+
+type Ficha = {
+  etiqueta: string;
+  titulo: string;
+  entradilla: string;
+  secciones: [string, string[]][];
+  meta: string;
+  rastro: string;
+  cierre: [string, string] | null;
+};
+
+export function getStaticPaths() {
+  return Object.entries(simples as unknown as Record<string, Ficha>).map(([slug, d]) => ({
+    params: { slug },
+    props: { d },
+  }));
+}
+
+const { slug } = Astro.params;
+const { d } = Astro.props as { d: Ficha };
+const migas: [string | null, string][] = [["/", "Inicio"], [null, d.rastro]];
+const dibujo = DP.para(slug!);
+---
+
+<Base
+  titulo={`${d.titulo} · Contaes`}
+  descripcion={d.meta}
+  fichas={[fichaOrganizacion(), fichaMigas(migas)]}
+>
+  <Encabezado
+    etiqueta={d.etiqueta}
+    titulo={d.titulo}
+    entradilla={d.entradilla}
+    migas={migas}
+  />
+
+  <section class="seccion">
+    <Lectura secciones={d.secciones} />
+  </section>
+
+  {
+    dibujo && (
+      <section class="seccion">
+        <div class="wrap estrecho" set:html={dibujo} />
+      </section>
+    )
+  }
+
+  {d.cierre ? <Cierre titulo={d.cierre[0]} texto={d.cierre[1]} /> : <Cierre />}
+</Base>

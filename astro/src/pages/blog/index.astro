@@ -1,0 +1,78 @@
+---
+// El listado del blog, con filtro por tema. El filtro es CSS puro: cada
+// tarjeta lleva la clase de su tema y el :target del ancla esconde el
+// resto. Sin JavaScript funciona igual.
+import Base from "../../layouts/Base.astro";
+import Migas from "../../componentes/Migas.astro";
+import Cierre from "../../componentes/Cierre.astro";
+import { publicados, temas, enEspanol } from "../../datos/calendario";
+import { ancla, fichaOrganizacion, fichaMigas } from "../../datos/util";
+
+const articulos = await publicados();
+const porTema = await temas();
+
+const COLOR: Record<string, string> = {
+  marigold: "#ffb110",
+  coral: "#f64932",
+  cielo: "#62aef0",
+  azul: "#0075de",
+  verde: "#2FBF9B",
+};
+const color = (a?: string) => COLOR[a ?? ""] ?? "#0075de";
+---
+
+<Base
+  titulo="Blog · Contaes"
+  descripcion="Impuestos, contabilidad, nóminas, contratos, financiación y salir fuera. Explicado sin dar por sabido nada."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Blog"]])]}
+>
+  <section style="padding:56px 0 80px">
+    <div class="wrap">
+      <Migas pasos={[["/", "Inicio"], [null, "Blog"]]} />
+      <h1 style="max-width:17ch">Lo que preguntan los que llevan una empresa</h1>
+      <p
+        class="entradilla"
+        style="max-width:62ch;margin-top:18px;font-family:var(--serif);font-size:20px;line-height:1.55;color:var(--grafito)"
+      >
+        Impuestos, contabilidad, nóminas, contratos, financiación y salir fuera. Explicado como
+        se lo explicaríamos a un cliente en la mesa de al lado, sin dar por sabido nada.
+      </p>
+
+      <nav class="filtros" aria-label="Filtrar por tema" id="todo">
+        <a class="filtro filtro-todo" href="#todo">Todo <span>{articulos.length}</span></a>
+        {
+          porTema.map(([t, n]) => (
+            <a class="filtro" href={`#t-${ancla(t)}`}>
+              {t} <span>{n}</span>
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="rejilla listado revela" style="margin-top:26px">
+        {
+          articulos.map((a) => (
+            <a class:list={["post-card", `t-${ancla(a.data.tema)}`]} href={`/blog/${a.id}/`}>
+              <span class="franja" style={`background:${color(a.data.acento)}`} />
+              <span class="dentro">
+                <span class="tema" style={`background:${color(a.data.acento)}`}>
+                  {a.data.tema}
+                </span>
+                <h2 class="post-tit">{a.data.titulo}</h2>
+                <p>{a.data.descripcion}</p>
+                <span class="post-pie">
+                  <time datetime={a.data.fecha.toISOString().slice(0, 10)}>
+                    {enEspanol(a.data.fecha)}
+                  </time>
+                  <span> · {a.data.minutos} min</span>
+                </span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Cierre />
+</Base>

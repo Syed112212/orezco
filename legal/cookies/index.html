@@ -1,16 +1,49 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!-- El consentimiento va PRIMERO: hasta que alguien acepta, la etiqueta
+     de Google no puede escribir ni leer nada. Es lo que exige el
+     articulo 22.2 de la LSSI y lo que promete nuestra pagina de
+     cookies. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+  try {
+    if (localStorage.getItem('contaes:cookies') === 'si') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
+        'analytics_storage': 'granted'
+      });
+    }
+  } catch (e) {}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18427533910"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'AW-18427533910');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Política de cookies · Contaes</title>
-<meta name="description" content="Este sitio no usa cookies de seguimiento ni de publicidad.">
+<meta name="description" content="Qué cookies usa este sitio, cuáles necesitan tu permiso y cómo cambiar de opinión.">
 <link rel="canonical" href="https://contaes.com/legal/cookies/">
 <meta name="theme-color" content="#f6f5f4">
 <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 <meta property="og:site_name" content="Contaes">
 <meta property="og:title" content="Política de cookies · Contaes">
-<meta property="og:description" content="Este sitio no usa cookies de seguimiento ni de publicidad.">
+<meta property="og:description" content="Qué cookies usa este sitio, cuáles necesitan tu permiso y cómo cambiar de opinión.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
 <meta property="og:url" content="https://contaes.com/legal/cookies/">
@@ -20,7 +53,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=78698cce">
+<link rel="stylesheet" href="/assets/contaes.css?v=7ffea080">
 
 </head>
 <body>
@@ -124,7 +157,7 @@
         <h1>Política de cookies</h1>
       </div>
       <div class="enc-lado">
-        <p class="editorial">Este sitio no usa cookies de seguimiento ni de publicidad.</p>
+        <p class="editorial">Qué cookies usa este sitio, cuáles necesitan tu permiso y cómo cambiar de opinión.</p>
       </div>
     </div>
   </div>
@@ -133,13 +166,20 @@
 <section class="seccion">
   <div class="wrap estrecho"></div>
   <div class="wrap estrecho prosa revela">
-<h2>Qué cookies usa este sitio</h2>
-<p>Ninguna propia. No hay analítica, ni píxeles de publicidad, ni cookies de seguimiento. No hay banner de consentimiento porque no hay nada que consentir.</p>
-<h2>Servicios de terceros</h2>
-<p>El sitio se sirve desde GitHub Pages y carga las tipografías desde Google Fonts. Esas conexiones no instalan cookies de seguimiento en tu navegador, pero sí implican que esos servicios reciben datos técnicos de la conexión, como tu dirección IP.</p>
-<p>Tu navegador guarda además datos técnicos propios (caché, preferencias) que no son cookies nuestras y que puedes borrar desde su configuración.</p>
-<h2>Si esto cambia</h2>
-<p>Si en algún momento añadimos analítica o cualquier otra herramienta que use cookies, esta página se actualizará y aparecerá el aviso de consentimiento correspondiente antes de instalar nada.</p>
+<h2>Lo primero: no se instala nada hasta que dices que sí</h2>
+<p>Las cookies de publicidad de este sitio arrancan <strong>denegadas</strong>. La etiqueta de Google se carga con el modo de consentimiento activado y en estado denegado, lo que significa que no puede escribir ni leer nada en tu navegador mientras no aceptes.</p>
+<p>Si eliges «solo lo necesario», o si cierras el aviso sin responder, sigue sin escribirse nada. La web funciona igual: no hay ninguna parte del sitio que dependa de haber aceptado.</p>
+<h2>Las que necesitan tu permiso</h2>
+<p><strong>Google Ads.</strong> Sirve para saber si un anuncio nuestro ha traído a alguien hasta aquí. Sin esto no podemos distinguir una visita que viene de un anuncio pagado de una que viene de una búsqueda normal, que es lo que decide si seguimos pagando ese anuncio.</p>
+<p>Es la única finalidad. No compartimos tu navegación con nadie más, no construimos perfiles y no vendemos datos.</p>
+<h2>Las que no lo necesitan</h2>
+<p>Ninguna es una cookie, en realidad. Guardamos en el almacenamiento de tu propio navegador tu respuesta al aviso de cookies (para no volver a preguntarte) y, si rellenas el formulario, por qué página entraste. Eso no sale de tu navegador hasta que envías el formulario, y entonces llega con el resto de lo que nos cuentas.</p>
+<p>El sitio se sirve desde GitHub Pages y carga las tipografías desde Google Fonts. Esas conexiones no instalan cookies, pero sí implican que esos servicios reciben datos técnicos de la conexión, como tu dirección IP.</p>
+<h2>Cómo cambiar de opinión</h2>
+<p>Borra los datos de este sitio desde la configuración de tu navegador y el aviso volverá a aparecer la próxima vez que entres. También puedes bloquear las cookies de terceros desde ahí, y este sitio seguirá funcionando.</p>
+<p>Si prefieres que lo hagamos nosotros, escríbenos y te decimos exactamente qué borrar.</p>
+<h2>Transferencias internacionales</h2>
+<p>Google Ads implica transferencias internacionales de datos amparadas en los mecanismos previstos por el Reglamento General de Protección de Datos. Solo ocurren si has aceptado.</p>
     <p style="font-size:14px;color:var(--piedra);margin-top:34px">Última revisión: septiembre de 2026.</p>
   </div>
 </section>
@@ -211,6 +251,18 @@
   </div>
   </div>
 </footer>
+
+<div class="cookies" id="cookies" hidden>
+  <div class="cookies-in">
+    <p class="cookies-txt"><b>Cookies de publicidad.</b> Medimos si nuestros anuncios
+      traen a alguien. Si dices que no, la web funciona igual y no se escribe nada.
+      El detalle esta en la <a href="/legal/cookies/">politica de cookies</a>.</p>
+    <div class="cookies-btns">
+      <button type="button" class="btn btn-tinte" data-cookies="no">Solo lo necesario</button>
+      <button type="button" class="btn btn-azul" data-cookies="si">Aceptar</button>
+    </div>
+  </div>
+</div>
 <script>
 /* -- Entrada al aparecer -------------------------------------
    La hoja de estilos no esconde nada por su cuenta: solo se oculta
@@ -296,6 +348,37 @@
     if(!nav.contains(e.target)){cierraAreas(null);ponMovil(false);}
   });
 })();
+/* -- El aviso de cookies ------------------------------------
+   Sale solo si no hay respuesta guardada. Las dos opciones
+   valen lo mismo y la respuesta se recuerda en el navegador,
+   no en una cookie: para preguntar por cookies no hace falta
+   escribir una.                                            */
+(function () {
+  var caja = document.getElementById("cookies");
+  if (!caja) return;
+  var LLAVE = "contaes:cookies";
+  var guardado = null;
+  try { guardado = localStorage.getItem(LLAVE); } catch (e) {}
+  if (guardado) return;
+  caja.hidden = false;
+
+  caja.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cookies]");
+    if (!b) return;
+    var si = b.getAttribute("data-cookies") === "si";
+    try { localStorage.setItem(LLAVE, si ? "si" : "no"); } catch (e2) {}
+    if (si && typeof gtag === "function") {
+      gtag("consent", "update", {
+        ad_storage: "granted",
+        ad_user_data: "granted",
+        ad_personalization: "granted",
+        analytics_storage: "granted"
+      });
+    }
+    caja.hidden = true;
+  });
+})();
+
 /* -- El formulario ------------------------------------------
    Se envia solo, con su action y su method: sin JavaScript
    funciona igual. Esto solo desactiva el boton al enviar, para

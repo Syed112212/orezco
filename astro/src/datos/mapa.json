@@ -1,0 +1,295 @@
+{
+ "modulos": [
+  [
+   "contabilidad",
+   "Contabilidad",
+   "Asientos, plan contable, conciliación y cierre"
+  ],
+  [
+   "facturacion",
+   "Facturación",
+   "Emisión, rectificativas y seguimiento de cobro"
+  ],
+  [
+   "inventario",
+   "Inventario",
+   "Existencias, lotes y movimientos entre almacenes"
+  ],
+  [
+   "compras",
+   "Compras",
+   "Proveedores, pedidos y recepciones"
+  ],
+  [
+   "ventas",
+   "Ventas y clientes",
+   "Presupuestos, pedidos y la ficha de cada cuenta"
+  ],
+  [
+   "proyectos",
+   "Proyectos",
+   "Tareas, horas imputadas y rentabilidad"
+  ],
+  [
+   "personal",
+   "Personal",
+   "Plantilla, ausencias y gastos"
+  ],
+  [
+   "informes",
+   "Informes",
+   "Cuadros de mando sobre los datos en vivo"
+  ]
+ ],
+ "capacidades": [
+  [
+   "asesoria-fiscal",
+   "Asesoría fiscal incluida",
+   "Los modelos, preparados y presentados por un asesor"
+  ],
+  [
+   "asistente-ia",
+   "Asistente con IA",
+   "Preguntar en tu idioma en vez de buscar por menús"
+  ],
+  [
+   "escaner-facturas",
+   "Escáner de facturas",
+   "La factura del proveedor entra sin teclearla"
+  ],
+  [
+   "conciliacion-bancaria",
+   "Conciliación bancaria",
+   "El extracto contra los apuntes, cuadrado"
+  ],
+  [
+   "verifactu",
+   "VeriFactu",
+   "Qué es y a qué obliga tu sistema de facturación"
+  ]
+ ],
+ "sectores": [
+  [
+   "fabricacion",
+   "Fabricación",
+   "Escandallos, órdenes y coste real de producción"
+  ],
+  [
+   "distribucion",
+   "Distribución y mayorista",
+   "Muchas referencias, márgenes finos y stock que se mueve"
+  ],
+  [
+   "construccion",
+   "Construcción",
+   "Obra a obra: certificaciones, coste y desvío"
+  ],
+  [
+   "comercio",
+   "Comercio y retail",
+   "Tienda, almacén y contabilidad en el mismo sitio"
+  ],
+  [
+   "logistica",
+   "Logística y transporte",
+   "Rutas, portes y lo que cuesta cada servicio"
+  ],
+  [
+   "servicios",
+   "Servicios profesionales",
+   "Horas facturables, proyectos y rentabilidad"
+  ],
+  [
+   "instalaciones",
+   "Instalaciones y mantenimiento",
+   "Partes de trabajo, materiales y garantías"
+  ],
+  [
+   "agroalimentario",
+   "Agroalimentario",
+   "Lotes, trazabilidad y campañas"
+  ]
+ ],
+ "gestoria": [
+  [
+   "contabilidad",
+   "Contabilidad",
+   "Los libros al día, no a final de trimestre"
+  ],
+  [
+   "fiscal",
+   "Fiscal y modelos",
+   "Preparados, firmados y presentados por un asesor"
+  ],
+  [
+   "laboral",
+   "Laboral y nóminas",
+   "Altas, contratos, nóminas y registro de jornada"
+  ],
+  [
+   "legal",
+   "Legal",
+   "Sociedades, contratos y protección de datos"
+  ]
+ ],
+ "crecimiento": [
+  [
+   "cfo",
+   "CFO a tu lado",
+   "Presupuesto, tesorería y márgenes, con criterio"
+  ],
+  [
+   "cmo",
+   "CMO a tu lado",
+   "Posicionamiento, captación y medir lo que trae clientes"
+  ],
+  [
+   "prospeccion",
+   "Prospección comercial",
+   "Encontrar clientes en vez de esperarlos"
+  ],
+  [
+   "bots",
+   "Bot de llamadas y WhatsApp",
+   "Atender cuando no hay nadie, y pasar a persona"
+  ],
+  [
+   "financiacion",
+   "Financiación pública y privada",
+   "Subvenciones, banca e inversión"
+  ],
+  [
+   "internacionalizacion",
+   "Internacionalización",
+   "Vender fuera con las cosas en orden"
+  ]
+ ],
+ "publico": [
+  [
+   "autonomos",
+   "Autónomos",
+   "Cuota, modelos, gastos y saber qué te queda"
+  ],
+  [
+   "startups",
+   "Startups",
+   "Libros que aguantan una due diligence"
+  ],
+  [
+   "pymes",
+   "Pymes",
+   "Cuando la empresa creció y la administración no"
+  ]
+ ],
+ "recursos": [
+  [
+   "blog/",
+   "Blog",
+   "Artículos sobre gestión, fiscalidad y sistemas"
+  ],
+  [
+   "herramientas/",
+   "Calculadoras",
+   "Coste de contratar, punto de equilibrio, IVA"
+  ],
+  [
+   "glosario/",
+   "Glosario",
+   "Los términos de contabilidad y fiscalidad, explicados"
+  ],
+  [
+   "calendario-fiscal/",
+   "Calendario fiscal",
+   "Qué modelo toca y cuándo"
+  ],
+  [
+   "preguntas/",
+   "Preguntas frecuentes",
+   "Lo que suelen preguntarnos"
+  ]
+ ],
+ "empresa": [
+  [
+   "sobre/",
+   "Sobre Contaes",
+   "Qué estamos construyendo y por qué"
+  ],
+  [
+   "comparativa/",
+   "Cómo se compara",
+   "Frente a una gestoría con programa aparte"
+  ],
+  [
+   "migracion/",
+   "Migración",
+   "Cómo se cambia de sistema sin parar"
+  ],
+  [
+   "seguridad/",
+   "Seguridad y datos",
+   "Dónde viven tus datos y qué derechos tienes"
+  ],
+  [
+   "precios/",
+   "Precios",
+   "Lo que sabemos hoy sobre el precio"
+  ],
+  [
+   "formulario/",
+   "Cuéntanos tu caso",
+   "El formulario, en una página aparte"
+  ],
+  [
+   "integraciones/",
+   "Integraciones",
+   "Con qué se conectará y con qué no"
+  ]
+ ],
+ "legal": [
+  [
+   "legal/aviso-legal/",
+   "Aviso legal"
+  ],
+  [
+   "legal/privacidad/",
+   "Política de privacidad"
+  ],
+  [
+   "legal/cookies/",
+   "Política de cookies"
+  ]
+ ],
+ "trazos": {
+  "contabilidad": "M4 5h16v14H4z M4 10h16 M9 10v9",
+  "fiscal": "M6 3h9l4 4v14H6z M14 3v5h5 M9 13h6 M9 17h4",
+  "laboral": "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 20a8 8 0 0 1 16 0",
+  "legal": "M12 3v18 M5 8h14 M5 8l-2 6a3 3 0 0 0 6 0z M19 8l2 6a3 3 0 0 1-6 0z",
+  "facturacion": "M6 3h12v18l-3-2-3 2-3-2-3 2z M9 8h6 M9 12h6",
+  "inventario": "M3 8l9-5 9 5v8l-9 5-9-5z M3 8l9 5 9-5 M12 13v8",
+  "compras": "M4 5h2l2 10h10l2-7H7 M9 19a1 1 0 1 0 0 2 1 1 0 0 0 0-2z M17 19a1 1 0 1 0 0 2 1 1 0 0 0 0-2z",
+  "ventas": "M4 19V9 M10 19V5 M16 19v-7 M4 19h16",
+  "proyectos": "M4 6h16 M4 11h10 M4 16h13 M18 14l2 2 3-4",
+  "personal": "M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M2 20a7 7 0 0 1 14 0 M17 6a3 3 0 0 1 0 6 M17 14a6 6 0 0 1 5 6",
+  "informes": "M4 20h16 M7 16v-5 M12 16V6 M17 16v-8",
+  "asesoria-fiscal": "M4 4h12l4 4v12H4z M14 4v5h5 M8 14l2.5 2.5L16 11",
+  "asistente-ia": "M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z",
+  "escaner-facturas": "M4 8V5h3 M20 8V5h-3 M4 16v3h3 M20 16v3h-3 M8 12h8",
+  "conciliacion-bancaria": "M4 7h7 M4 17h7 M13 7h7 M13 17h7 M9 5l2 2-2 2 M15 15l-2 2 2 2",
+  "verifactu": "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4",
+  "cfo": "M4 19h16 M7 16v-4 M12 16V7 M17 16v-6 M12 7l5-3",
+  "cmo": "M3 10v4h4l5 4V6L7 10z M16 9a4 4 0 0 1 0 6 M19 6a8 8 0 0 1 0 12",
+  "prospeccion": "M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z M15.5 15.5L21 21",
+  "bots": "M12 3v3 M6 6h12v10H6z M9 10h.01 M15 10h.01 M9 19l3-3 3 3",
+  "financiacion": "M12 3v18 M16 7a4 4 0 0 0-8 0c0 4 8 2 8 6a4 4 0 0 1-8 0",
+  "internacionalizacion": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18",
+  "autonomos": "M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M5 21a7 7 0 0 1 14 0",
+  "startups": "M12 3c3 2 5 5.5 5 9l-5 4-5-4c0-3.5 2-7 5-9z M12 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M9 17l-2 4 5-2 5 2-2-4",
+  "pymes": "M3 21h18 M5 21V8l7-5 7 5v13 M10 21v-6h4v6",
+  "blog/": "M5 4h14v16H5z M9 8h6 M9 12h6 M9 16h3",
+  "glosario/": "M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z M8 8h7 M8 12h5",
+  "calendario-fiscal/": "M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4 M9 14h2 M14 14h2",
+  "herramientas/": "M4 4h16v16H4z M8 8h8 M8 12h2 M12 12h2 M16 12h.01 M8 16h2 M12 16h2 M16 16h.01",
+  "preguntas/": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M9.5 9a2.6 2.6 0 0 1 5 1c0 1.7-2.5 2-2.5 3.5 M12 17h.01"
+ },
+ "dominio": "https://contaes.com"
+}
