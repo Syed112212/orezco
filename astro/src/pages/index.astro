@@ -1,0 +1,478 @@
+---
+// La portada. Es la unica pagina que no sale de datos: tiene piezas que
+// no comparte nadie (el lienzo del fondo, la maqueta del asistente, las
+// ocho losas 3D, la cinta de sectores), asi que se escribe a mano como
+// siempre se ha escrito. Lo que SI comparte -la barra, el pie, la hoja
+// comun- viene del mismo layout que el resto de paginas: por eso ya no
+// puede quedarse con un menu o una hoja de estilos vieja mientras el
+// resto del sitio avanza, que es justo lo que le paso a la version en
+// Python.
+import Base from "../layouts/Base.astro";
+import Formulario from "../componentes/Formulario.astro";
+import * as DP from "../datos/diagramas";
+import { fichaOrganizacion } from "../datos/util";
+import "../estilos/portada.css";
+
+const dibujoModelo = DP.flujoModelo().replace(
+  '<figure class="dibujo">',
+  '<figure class="dibujo revela">',
+);
+
+const sectores = [
+  "Fabricación", "Distribución", "Construcción", "Comercio", "Logística",
+  "Servicios", "Instalaciones", "Talleres", "Agroalimentario", "Importación",
+];
+
+const modulos: [string, string, string][] = [
+  ["01", "Contabilidad", "Plan contable, asientos, conciliación bancaria y cierre. El libro mayor como fuente única de verdad."],
+  ["02", "Facturación", "Emisión, rectificativas y seguimiento de cobro, con la trazabilidad que exige la administración."],
+  ["03", "Inventario", "Existencias, lotes y movimientos entre almacenes. Lo que hay, dónde está y desde cuándo."],
+  ["04", "Compras", "Proveedores, pedidos y recepciones. Del presupuesto a la factura sin volver a teclear nada."],
+  ["05", "Ventas", "Presupuestos, pedidos y clientes. El histórico completo de cada cuenta en una sola ficha."],
+  ["06", "Proyectos", "Tareas, imputación de horas y rentabilidad. Saber lo que cuesta un proyecto mientras se hace."],
+  ["07", "Personal", "Plantilla, ausencias y gastos. Lo imprescindible, sin convertirse en un software de RRHH aparte."],
+  ["08", "Informes", "Cuadros de mando sobre datos en vivo. Sin exportar a una hoja de cálculo para poder leerlos."],
+];
+
+const hitos: [string, string][] = [
+  ["Diagnóstico", "Una llamada sobre lo que usáis hoy y qué es lo que peor lleváis. Si no encajamos, se dice en esa llamada y no en la tercera."],
+  ["Demo sobre vuestro caso", "No una presentación genérica: lo que os afecta a vosotros, con ejemplos parecidos a los vuestros."],
+  ["Plan por escrito", "Qué datos se traen, cuánto dura la convivencia y cuál es el punto de retorno. Antes de empezar, no después."],
+];
+
+const encaje: [string, string, string?][] = [
+  ["Autónomos con volumen", "Cuando un error cuesta más que la cuota, o cuando el tiempo en papeles es tiempo sin facturar.", "/para/autonomos/"],
+  ["Startups", "Que necesitan unos libros capaces de aguantar la revisión de un inversor, y un pacto de socios firmado mientras todo va bien.", "/para/startups/"],
+  ["Pymes de cinco a cincuenta", "Que crecieron y tienen cuatro programas que no se hablan y un Excel crítico que lleva una sola persona.", "/para/pymes/"],
+];
+
+const preguntas: [string, string][] = [
+  ["¿Está disponible ya?", "No. Contaes está en desarrollo, y lo decimos en la portada a propósito. Si nos escribes, te avisamos cuando haya algo que enseñar y te contamos en qué punto estamos de verdad."],
+  ["¿Qué hace exactamente la IA?", "Dos cosas. Te enseña los datos: le preguntas en tu idioma y busca, cruza módulos y te lo pone delante, sin que tengas que saber por qué menú se llega. Y ejecuta gestiones rutinarias (recordatorios de cobro, conciliaciones, asientos repetitivos) enseñándote siempre qué va a hacer antes de hacerlo."],
+  ["¿Se puede migrar desde Odoo, SAP o una hoja de cálculo?", "Es el escenario del que partimos. La migración está pensada desde el traspaso de datos con su histórico, un periodo de convivencia con el sistema antiguo en solo lectura, y un punto de retorno definido antes de empezar."],
+  ["¿Cuánto cuesta?", "Todavía no hay precio publicado. Cuando lo haya estará aquí, en esta página. No damos cifras por correo que luego cambien."],
+  ["¿Qué pasa con nuestros datos durante el cambio?", "El sistema antiguo sigue vivo en solo lectura mientras dura el traspaso, para poder consultar y comparar. Y el equipo trabaja antes en un entorno de pruebas con datos reales, no en producción."],
+  ["¿Cómo empieza el proceso?", "Con una llamada de diagnóstico sobre lo que usáis hoy. De ahí sale una demo centrada en vuestro caso y, si tiene sentido, un plan de migración por escrito antes de tocar nada."],
+];
+
+const recursosPortada: [string, string, string][] = [
+  ["/herramientas/", "Calculadoras", "Cuánto cuesta de verdad contratar a alguien, tu punto de equilibrio, lo que te cuesta cobrar tarde y el IVA en los dos sentidos. Se calculan aquí mismo."],
+  ["/calendario-fiscal/", "Calendario fiscal", "Qué modelo toca en cada mes del año, de dónde salen sus datos y por qué casi todos los errores vienen del mismo sitio."],
+  ["/blog/", "El blog", "Impuestos, contabilidad, nóminas, contratos y financiación, explicados como se lo explicaríamos a un cliente en la mesa de al lado."],
+];
+---
+
+<Base
+  titulo="Contaes: la gestoría que además te ayuda a crecer"
+  descripcion="Gestoría online para autónomos, startups y pymes: contabilidad, impuestos, nóminas y contratos, con software propio incluido y servicios de crecimiento."
+  clase="portada"
+  fichas={[fichaOrganizacion()]}
+>
+  <!-- ══ Portada ══ -->
+  <section class="hero" style="position:relative">
+    <div class="wrap">
+      <h1 class="entra">La gestoría que además<br /><span class="resalte">te ayuda a crecer</span></h1>
+      <p class="editorial entra">
+        Contabilidad, impuestos, nóminas y contratos, con el software incluido en vez de aparte.
+        Y cuando toca crecer: dirección financiera, clientes nuevos, financiación y salir fuera.
+        La misma gente, que ya conoce tus números.
+      </p>
+      <div class="hero-acciones entra">
+        <a class="btn btn-azul" href="#contacto"
+          >Hablemos <span class="flecha" aria-hidden="true">&rarr;</span></a
+        >
+        <a class="btn btn-tinte" href="#tres">Qué hacemos exactamente</a>
+      </div>
+      <p class="hero-nota entra">Para autónomos, startups y pymes</p>
+
+      <div class="maqueta revela" aria-label="Ejemplo de conversación con la IA de Contaes">
+        <div class="maqueta-barra"><i></i><i></i><i></i><span>contaes · asistente</span></div>
+        <div class="maqueta-cuerpo">
+          <div class="chat">
+            <div class="burbuja tu">¿Qué facturas de agosto siguen sin cobrar?</div>
+            <div class="burbuja ia">
+              <b>Cuatro,</b> de tres clientes. Dos pasan de 60 días. Te las ordeno por antigüedad.
+            </div>
+            <div class="burbuja tu">Manda recordatorio a las de más de 60 días</div>
+            <div class="burbuja ia">
+              Voy a enviar 2 recordatorios. <b>¿Te los enseño antes de mandarlos?</b>
+            </div>
+            <div class="burbuja ia">
+              <span class="escribiendo" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
+          </div>
+          <div class="tabla" aria-hidden="true">
+            <div class="fila"><b>F-2026-0841</b><span class="pastilla mal">72 días</span></div>
+            <div class="fila"><b>F-2026-0855</b><span class="pastilla mal">64 días</span></div>
+            <div class="fila"><b>F-2026-0902</b><span class="pastilla pend">31 días</span></div>
+            <div class="fila"><b>F-2026-0917</b><span class="pastilla pend">18 días</span></div>
+            <div class="fila"><b>F-2026-0921</b><span class="pastilla ok">cobrada</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="hero-nota">Ejemplo ilustrativo de la interfaz. No son datos reales.</p>
+    </div>
+  </section>
+
+  {/* La lista va dos veces para que el bucle no tenga costura: al llegar
+      a la mitad vuelve a empezar identica. */}
+  <div class="cinta">
+    <button type="button" class="cinta-pausa" id="cinta-pausa" aria-pressed="false">
+      <span class="cp-icono" aria-hidden="true">II</span><span class="cp-texto">Pausar</span>
+    </button>
+    <div class="cinta-pista" aria-hidden="true">
+      {[...sectores, ...sectores].map((s) => <span>{s}</span>)}
+    </div>
+  </div>
+
+  <section id="tres">
+    <div class="wrap">
+      <p class="etiqueta">Qué hacemos</p>
+      <h2 style="margin-top:10px;max-width:20ch">Tres cosas que casi siempre están separadas</h2>
+      <p class="editorial" style="max-width:58ch;margin-top:14px">
+        Una gestoría por un lado, un programa de gestión por otro, y para crecer, cada consultor
+        su factura. En medio, tú haciendo de pegamento. Aquí las tres están del mismo lado.
+      </p>
+
+      <div class="rejilla-3 cascada" style="margin-top:32px">
+        <a class="tarjeta inclina" href="/gestoria/">
+          <h3>La gestoría</h3>
+          <p class="cuerpo">
+            Contabilidad, impuestos, nóminas y contratos. Los libros al día todos los días, no a
+            final de trimestre, y los modelos presentados por una persona colegiada que firma.
+          </p>
+          <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+        </a>
+        <a class="tarjeta inclina" href="/funcionalidades/">
+          <h3>El software</h3>
+          <p class="cuerpo">
+            Ocho módulos sobre el mismo libro mayor, con un asistente al que se le pregunta en tu
+            idioma. Incluido, no un extra que se factura aparte.
+          </p>
+          <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+        </a>
+        <a class="tarjeta inclina" href="/crecimiento/">
+          <h3>Lo que hace crecer</h3>
+          <p class="cuerpo">
+            Dirección financiera, marketing, prospección comercial, bots de atención, financiación
+            pública y privada, y salida a otros mercados con Filnet.
+          </p>
+          <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="problema" style="padding-top:0">
+    <div class="wrap">
+      <div class="panel marigold revela">
+        <h2 style="margin-bottom:16px;max-width:24ch">
+          Los ERP no fallan el primer año. Fallan al tercero.
+        </h2>
+        <p class="cuerpo" style="max-width:62ch;font-size:18px">
+          Cuando ya nadie sabe por qué está puesto lo que está puesto. Un módulo que se instaló
+          para un caso puntual y se quedó. Un campo que solo entiende quien ya no trabaja aquí.
+          Facturas que llevan meses sin salir y nadie se ha dado cuenta. El sistema sigue
+          funcionando, pero ha dejado de ser fiable.
+        </p>
+
+        <div class="cuenta">
+          <p class="cuenta-tit">Tres preguntas con tus propios números</p>
+          <ol class="cuenta-lista">
+            <li>¿Cuántas horas al mes se van en trabajo manual que el sistema debería hacer solo?</li>
+            <li>¿Cuánto se tarda hoy en responder una pregunta que debería ser inmediata?</li>
+            <li>
+              ¿Cuánto dinero tienes ahora mismo facturado y sin cobrar sin que nadie lo esté
+              vigilando?
+            </li>
+          </ol>
+          <p class="cuenta-pie">
+            No hace falta que nos las respondas. Multiplica la primera por doce y ya tienes el
+            coste anual de no hacer nada.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ia">
+    <div class="wrap">
+      <div class="panel medianoche revela">
+        <p class="etiqueta" style="color:#8b93b5;margin-bottom:14px">
+          El programa y la gestoría, juntos
+        </p>
+        <h2 style="margin-bottom:18px;max-width:24ch">
+          El programa y la <span class="resalte">asesoría</span>, en el mismo sitio
+        </h2>
+        <p class="cuerpo" style="max-width:62ch">
+          Hoy son dos cosas separadas: un programa donde metes los datos y una gestoría a la que
+          se los mandas. En medio, un mes de correos, Excel y «¿me pasas las facturas?». Contaes
+          junta las dos: la IA mantiene la contabilidad al día sobre tus propios datos, prepara
+          los modelos, y un asesor los revisa, los firma y los presenta.
+        </p>
+
+        <div class="rejilla-3 cascada" style="margin-top:28px">
+          <div class="tarjeta inclina">
+            <h3 style="margin-bottom:8px">La IA lleva el día a día</h3>
+            <p class="cuerpo">
+              Concilia, clasifica gastos, cuadra facturas y te enseña cualquier dato cuando se lo
+              preguntas en tu idioma.
+            </p>
+          </div>
+          <div class="tarjeta inclina">
+            <h3 style="margin-bottom:8px">Prepara los modelos</h3>
+            <p class="cuerpo">
+              303, 111, 130, 347 y los que toquen, montados sobre los datos que ya están dentro.
+              Sin volver a mandar nada.
+            </p>
+          </div>
+          <div class="tarjeta inclina">
+            <h3 style="margin-bottom:8px">Un asesor los presenta</h3>
+            <p class="cuerpo">
+              Una persona colegiada revisa, firma y presenta. La IA prepara; la responsabilidad
+              ante Hacienda es de un profesional.
+            </p>
+          </div>
+        </div>
+
+        <p class="cuerpo" style="max-width:62ch;margin-top:24px;color:#8b93b5">
+          Es la diferencia entre un programa que te ayuda a hacer la contabilidad y un servicio en
+          el que la contabilidad ya está hecha.
+        </p>
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top:30px" set:html={dibujoModelo} />
+  </section>
+
+  <section id="modulos">
+    <div class="wrap">
+      <div class="revela" style="max-width:42ch;margin-bottom:32px">
+        <p class="etiqueta" style="margin-bottom:12px">Módulos</p>
+        <h2 style="margin-bottom:16px">Un solo sitio para toda la gestión</h2>
+        <p class="editorial">
+          Todo lo que necesitas para llevar el día a día. Pasa por cualquiera para verlo.
+        </p>
+      </div>
+
+      <div class="modulos-marco revela">
+        <div>
+          <div class="losas-zona" aria-hidden="true"><div class="losas" id="losas"></div></div>
+          <p class="losas-pie" id="losas-pie">Todo sobre el mismo libro mayor</p>
+        </div>
+
+        <div class="mods cascada">
+          {
+            modulos.map(([n, tit, desc]) => (
+              <article class="mod" data-losa={parseInt(n, 10)} tabindex="0">
+                <span class="n">{n}</span>
+                <div>
+                  <h3>{tit}</h3>
+                  <p>{desc}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proceso">
+    <div class="wrap">
+      <div class="revela" style="max-width:42ch;margin-bottom:32px">
+        <p class="etiqueta" style="margin-bottom:12px">Cómo empieza</p>
+        <h2 style="margin-bottom:16px">Tres pasos antes de tocar nada</h2>
+        <p class="editorial">
+          Ninguno implica cambiar de sistema. Sirven para saber si tiene sentido hacerlo.
+        </p>
+      </div>
+      <ol class="hitos revela">
+        {
+          hitos.map(([tit, desc], i) => (
+            <li class="hito">
+              <span class="hito-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{tit}</h3>
+                <p>{desc}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section id="migracion">
+    <div class="wrap">
+      <div class="revela" style="max-width:42ch;margin-bottom:32px">
+        <p class="etiqueta" style="margin-bottom:12px">Venir de otro sitio</p>
+        <h2 style="margin-bottom:16px">Cambiar sin parar la empresa</h2>
+        <p class="editorial">
+          Nadie cambia de gestoría ni de programa porque le apetezca. Se cambia cuando lo que hay
+          cuesta más de mantener que de sustituir.
+        </p>
+      </div>
+      <div class="dos-col revela">
+        <div>
+          <p class="cuerpo" style="margin-bottom:14px">
+            Y aun así da vértigo, porque durante la migración la empresa tiene que seguir
+            facturando.
+          </p>
+          <p class="cuerpo">
+            Contaes se plantea desde ese día concreto: el traspaso de datos, el periodo en que
+            <strong>conviven los dos sistemas</strong> y la vuelta atrás si algo sale mal.
+          </p>
+
+          <div class="pila revela" aria-hidden="true">
+            <div class="pila-in">
+              <div class="plano viejo">
+                <span class="tit">Sistema antiguo</span>
+                <span class="pie">solo lectura</span>
+                <span class="barras"><i></i><i></i><i></i></span>
+              </div>
+              <div class="plano nuevo">
+                <span class="tit">Contaes</span>
+                <span class="pie">en producción</span>
+                <span class="barras"><i></i><i></i><i></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tarjeta inclina">
+          <ul class="lista">
+            <li>
+              <b>Datos</b><span
+                >Clientes, proveedores, artículos y saldos se traen con su histórico, no como
+                saldo inicial suelto.</span
+              >
+            </li>
+            <li>
+              <b>Convivencia</b><span
+                >Un periodo en que el sistema antiguo sigue vivo en solo lectura, para consultar y
+                comparar.</span
+              >
+            </li>
+            <li>
+              <b>Reversión</b><span
+                >Un punto de retorno definido antes de empezar, no improvisado a mitad.</span
+              >
+            </li>
+            <li>
+              <b>Formación</b><span
+                >El equipo trabaja en un entorno de pruebas con datos reales antes del cambio.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="para-quien">
+    <div class="wrap">
+      <div class="revela" style="max-width:44ch;margin-bottom:30px">
+        <p class="etiqueta" style="margin-bottom:12px">Para quién es</p>
+        <h2 style="margin-bottom:16px">Y para quién no</h2>
+        <p class="editorial">Preferimos decirlo antes que después de la demo.</p>
+      </div>
+
+      <dl class="encaje revela">
+        {
+          encaje.map(([t, d, href]) => (
+            <div class="encaje-fila">
+              <dt>{t}</dt>
+              <dd>
+                {d} {href && <a href={href}>Ver</a>}
+              </dd>
+            </div>
+          ))
+        }
+        <div class="encaje-fila encaje-no">
+          <dt>Para quién no</dt>
+          <dd>
+            Si dependéis de un proceso muy particular, como fabricación compleja o la normativa de
+            un sector concreto, hoy no lo cubrimos. Y si tu actividad es muy sencilla,
+            probablemente puedas apañarte solo: también te lo diremos.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="preguntas">
+    <div class="wrap">
+      <div class="revela" style="max-width:42ch;margin-bottom:28px">
+        <p class="etiqueta" style="margin-bottom:12px">Preguntas</p>
+        <h2>Lo que suelen preguntarnos</h2>
+      </div>
+      <div class="faq revela">
+        {
+          preguntas.map(([q, r]) => (
+            <details>
+              <summary>{q}</summary>
+              <p class="resp">{r}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Va antes del formulario porque mucha gente no esta lista para
+      llamar, y perderla ahi es tonto teniendo mas de ciento noventa
+      articulos escritos. */}
+  <section id="recursos-portada">
+    <div class="wrap">
+      <div class="revela" style="max-width:44ch;margin-bottom:28px">
+        <p class="etiqueta" style="margin-bottom:12px">Antes de hablar con nadie</p>
+        <h2 style="margin-bottom:16px">Léelo tú primero</h2>
+        <p class="editorial">
+          Todo abierto y sin pedirte el correo a cambio. Si con eso lo resuelves solo, tampoco
+          pasa nada.
+        </p>
+      </div>
+      <div class="rejilla-3 cascada">
+        {
+          recursosPortada.map(([href, tit, desc]) => (
+            <a class="tarjeta inclina" href={href}>
+              <h3>{tit}</h3>
+              <p class="cuerpo">{desc}</p>
+              <span class="tarjeta-mas" aria-hidden="true">Ver</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cierre" id="contacto">
+    <div class="wrap revela">
+      <p class="etiqueta" style="margin-bottom:12px">Hablemos</p>
+      <h2>¿Te enseñamos cómo funciona?</h2>
+      <p class="editorial">
+        Una demo sobre tu caso concreto, no una presentación genérica. Cuéntanos qué usáis ahora y
+        qué es lo que peor lleváis.
+      </p>
+
+      <div class="garantias revela">
+        <div class="garantia">
+          <span class="gicono" aria-hidden="true">✕</span>
+          <p><strong>Si no encajamos, te lo decimos</strong> en la primera llamada. No en la tercera.</p>
+        </div>
+        <div class="garantia">
+          <span class="gicono" aria-hidden="true">↩</span>
+          <p><strong>Punto de retorno por escrito</strong> antes de tocar nada. Definido, no improvisado.</p>
+        </div>
+        <div class="garantia">
+          <span class="gicono" aria-hidden="true">€</span>
+          <p><strong>La llamada no cuesta nada</strong> y no hay nada que firmar para tenerla.</p>
+        </div>
+      </div>
+
+      <Formulario asunto="Contaes: peticion desde la portada" />
+    </div>
+  </section>
+
+  <script is:inline src="/js/portada.js"></script>
+</Base>

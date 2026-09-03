@@ -1,0 +1,75 @@
+---
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Cierre from "../componentes/Cierre.astro";
+import * as DP from "../datos/diagramas";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+
+const factores: [string, string][] = [
+  ["Cuánta gente lo usa", "no es lo mismo una administración de dos personas que un equipo de treinta con acceso desde obra o desde tienda."],
+  ["Qué módulos del software usas", "quien solo necesita contabilidad y facturación no debería pagar por inventario y proyectos."],
+  ["Qué servicios contratas", "no es lo mismo la gestoría sola que sumarle dirección financiera, captación de clientes o la búsqueda de financiación. Se contrata por partes."],
+  ["El volumen de documentos", "leer y clasificar facturas tiene un coste por documento; una empresa con cien facturas al mes no es como una con tres mil."],
+  ["La migración", "traerse el histórico de otro sistema es un trabajo con principio y final, y se presupuesta aparte."],
+];
+const dibujo = DP.para("precios");
+---
+
+<Base
+  titulo="Precios · Contaes"
+  descripcion="De qué depende el presupuesto de una gestoría online: personas, servicios contratados, volumen de documentos y migración. Y lo que no vamos a hacer."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Precios"]])]}
+>
+  <Encabezado
+    etiqueta="Precios"
+    titulo="De qué depende lo que pagas"
+    entradilla="Cada empresa paga por lo que usa. Aquí está de qué depende el presupuesto, para que sepas qué te van a preguntar antes de la llamada."
+    migas={[["/", "Inicio"], [null, "Precios"]]}
+  />
+
+  <section class="seccion">
+    <div class="wrap estrecho">
+      <div class="aviso">
+        <strong>No publicamos tarifa, y te decimos por qué.</strong> Una gestoría que cobra lo
+        mismo a un autónomo con veinte facturas al año que a una empresa de treinta personas con
+        almacén está cobrando de más a uno de los dos. El presupuesto sale de cinco cosas
+        concretas, y las tienes aquí abajo.
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap estrecho revela">
+      <h2 style="margin-top:0">Las cinco cosas que mueven el precio</h2>
+      <p class="cuerpo" style="margin-bottom:8px">
+        Ninguna sorpresa: son las mismas que te preguntaría cualquier gestoría seria antes de
+        darte un número.
+      </p>
+      <ul class="lista">
+        {factores.map(([t, d]) => (<li><b>{t}</b><span>{d}</span></li>))}
+      </ul>
+    </div>
+  </section>
+
+  {dibujo && <section class="seccion"><div class="wrap estrecho" set:html={dibujo} /></section>}
+
+  <section class="seccion">
+    <div class="wrap estrecho prosa revela">
+      <h2>Lo que no vamos a hacer</h2>
+      <p>
+        No hay plan gratuito que sirva de poco para que acabes pagando el de arriba. No hay
+        precio de entrada que suba al año siguiente sin avisar. Y el presupuesto de migración se
+        cierra antes de firmar, no después.
+      </p>
+      <p>
+        Tampoco hay permanencia escondida en una cláusula. Si un día te vas, te llevas tus datos
+        en un formato que se abre sin nuestro programa.
+      </p>
+    </div>
+  </section>
+
+  <Cierre
+    titulo="¿Cuánto te saldría a ti?"
+    texto="Cuéntanos cuánta gente sois, qué usáis hoy y cuántas facturas movéis al mes. Con eso te damos un número, no un rango."
+  />
+</Base>

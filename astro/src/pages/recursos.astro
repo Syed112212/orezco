@@ -1,0 +1,58 @@
+---
+// La entrada a todo lo que se puede leer sin hablar con nadie.
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Tarjetas from "../componentes/Tarjetas.astro";
+import Cierre from "../componentes/Cierre.astro";
+import { RECURSOS } from "../datos/mapa";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+---
+
+<Base
+  titulo="Recursos · Contaes"
+  descripcion="Blog, glosario de contabilidad y fiscalidad, calendario de modelos, calculadoras y preguntas frecuentes. Abierto y sin registro."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Recursos"]])]}
+>
+  <Encabezado
+    etiqueta="Recursos"
+    titulo="Para leer antes de llamar a nadie"
+    entradilla="Artículos, un glosario, el calendario de modelos, calculadoras y las preguntas que más nos hacen. Todo abierto, sin pedir el correo a cambio."
+    migas={[["/", "Inicio"], [null, "Recursos"]]}
+  />
+
+  <section class="seccion">
+    <div class="wrap">
+      <Tarjetas entradas={RECURSOS.map(([s, n, d]) => [`/${s}`, n, d])} />
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap estrecho prosa revela">
+      <h2>Por qué publicamos esto</h2>
+      <p>
+        Una gestoría vive de que sus clientes no tengan que entender de contabilidad. Publicar
+        cómo funciona parece ir en contra de eso, y no lo va: quien entiende lo que le estamos
+        haciendo pregunta mejor, decide antes y discute los números en vez de asentir.
+      </p>
+      <p>
+        Además hay una parte egoísta que conviene decir: si algo de lo que lees aquí te sirve
+        para arreglarlo tú solo, tampoco pasa nada. Preferimos que nos llames cuando de verdad
+        haga falta a que nos llames por algo que podías resolver leyendo diez minutos.
+      </p>
+
+      <h2>Lo que no vas a encontrar</h2>
+      <p>
+        Ni plantillas descargables a cambio de tu correo, ni informes con cifras de sector que
+        nadie puede comprobar, ni artículos escritos para colocar una palabra en un buscador.
+        Cada pieza responde una pregunta entera o no está.
+      </p>
+      <p>
+        Tampoco cifras concretas de tipos, plazos ni umbrales: la normativa cambia y un número
+        mal puesto en una web hace daño meses después. Cuando hace falta un número, el artículo
+        te dice dónde mirarlo.
+      </p>
+    </div>
+  </section>
+
+  <Cierre />
+</Base>

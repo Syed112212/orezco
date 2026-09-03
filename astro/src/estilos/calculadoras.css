@@ -1,0 +1,40 @@
+/* ── Calculadoras ────────────────────────────────────────────
+   Se calcula al teclear y no se envia nada a ninguna parte: la
+   cuenta ocurre en el navegador de quien la hace.              */
+.calc{
+  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
+  padding:24px;display:grid;gap:22px;
+}
+.calc-campos{display:grid;gap:14px}
+.calc-campo{display:grid;gap:7px;font-size:14.5px;color:var(--grafito)}
+.calc-caja{display:flex;align-items:stretch;border:1px solid var(--borde);
+  border-radius:var(--r-btn);overflow:hidden;background:var(--papel);max-width:22rem}
+.calc-caja:focus-within{border-color:var(--azul);box-shadow:0 0 0 3px var(--azul-tinte)}
+.calc-caja input{
+  flex:1 1 auto;min-width:0;font:inherit;font-size:16px;font-variant-numeric:tabular-nums;
+  color:var(--tinta);background:var(--blanco);border:0;padding:11px 13px;
+}
+.calc-caja input:focus{outline:0}
+.calc-u{
+  flex:0 0 auto;display:grid;place-items:center;padding:0 13px;
+  font-size:14px;color:var(--piedra);border-left:1px solid var(--borde);
+}
+.calc-salida{display:grid;gap:0;border-top:1px solid var(--borde);padding-top:4px}
+.calc-fila{
+  display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+  padding:11px 0;border-bottom:1px solid var(--borde);font-size:15.5px;color:var(--grafito);
+}
+.calc-fila:last-child{border-bottom:0}
+.calc-fila b{
+  font-size:17px;font-weight:600;color:var(--tinta-fuerte);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.calc-fila.fuerte{background:var(--azul-tinte);margin:0 -12px;padding:13px 12px;
+  border-radius:var(--r-btn);border-bottom:0}
+.calc-fila.fuerte b{color:#004a91}
+.calc-fila.raya{border-bottom:0;padding:4px 0}
+.calc-indice{margin:26px 0 8px}
+.calc-indice ol{margin:0;padding-left:20px;display:grid;gap:8px;color:var(--piedra)}
+.calc-indice a{color:var(--azul);text-decoration:none;font-weight:500}
+.calc-indice a:hover{text-decoration:underline}
+@media(min-width:720px){.calc-campos{grid-template-columns:1fr 1fr;gap:14px 20px}}

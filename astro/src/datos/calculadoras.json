@@ -1,0 +1,145 @@
+[
+ {
+  "id": "contratar",
+  "titulo": "Cuánto cuesta de verdad contratar a alguien",
+  "entradilla": "El salario bruto no es el coste. A eso se le suma lo que la empresa cotiza por esa persona, y es la cifra que sale de la cuenta cada mes.",
+  "campos": [
+   [
+    "bruto",
+    "Salario bruto anual",
+    "€",
+    24000,
+    1000
+   ],
+   [
+    "pagas",
+    "Número de pagas",
+    "",
+    14,
+    1
+   ],
+   [
+    "cotiza",
+    "Tipo de cotización a cargo de la empresa",
+    "%",
+    32,
+    0.1
+   ],
+   [
+    "extras",
+    "Otros costes anuales (formación, equipo, seguro…)",
+    "€",
+    600,
+    100
+   ]
+  ],
+  "formula": "\n      var bruto = v('bruto'), cotiza = v('cotiza'), extras = v('extras'), pagas = v('pagas') || 12;\n      var seguridad = bruto * cotiza / 100;\n      var total = bruto + seguridad + extras;\n      salida([\n        ['Salario bruto anual', bruto],\n        ['Cotización de la empresa', seguridad],\n        ['Otros costes', extras],\n        ['Coste total anual', total, true],\n        ['Coste medio al mes', total / 12],\n        ['Lo que cobra en cada paga (bruto)', bruto / pagas]\n      ]);",
+  "nota": "El tipo de cotización a cargo de la empresa depende del grupo, del contrato y de la actividad, y cambia cada año. Ponlo tú o pregúntanoslo: el que traiga esta casilla por defecto es solo un punto de partida para ver la mecánica.",
+  "explica": [
+   "El error habitual es negociar sobre el bruto y descubrir después que la nómina cuesta a la empresa bastante más. La cotización a cargo de la empresa no aparece en la nómina que ve el trabajador, pero sale de la misma cuenta.",
+   "Y falta lo que no es dinero: el tiempo hasta que la persona es productiva. Eso no se calcula, pero conviene contarlo antes de decidir."
+  ]
+ },
+ {
+  "id": "equilibrio",
+  "titulo": "Tu punto de equilibrio",
+  "entradilla": "Cuánto tienes que vender para no perder dinero. Es la primera cifra que debería saber cualquiera que tenga costes fijos.",
+  "campos": [
+   [
+    "fijos",
+    "Costes fijos al mes (alquiler, sueldos, cuotas…)",
+    "€",
+    6000,
+    100
+   ],
+   [
+    "precio",
+    "Precio medio de venta por unidad",
+    "€",
+    100,
+    5
+   ],
+   [
+    "variable",
+    "Coste variable por unidad",
+    "€",
+    60,
+    5
+   ]
+  ],
+  "formula": "\n      var fijos = v('fijos'), precio = v('precio'), variable = v('variable');\n      var margen = precio - variable;\n      if (margen <= 0) {\n        salida([['Con ese precio pierdes dinero en cada venta', 0, true]]);\n        return;\n      }\n      var unidades = Math.ceil(fijos / margen);\n      salida([\n        ['Margen de contribución por unidad', margen],\n        ['Porcentaje sobre el precio', margen / precio * 100, false, '%'],\n        ['Unidades al mes para no perder', unidades, true, 'ud'],\n        ['Facturación al mes para no perder', unidades * precio],\n        ['Cada unidad de más aporta', margen]\n      ]);",
+  "nota": "Los costes fijos son los que no cambian aunque vendas más o menos, dentro de un rango normal. Si dudas de si algo es fijo o variable, pregúntate qué pasaría con esa factura si el mes que viene no vendieras nada.",
+  "explica": [
+   "El margen de contribución es lo que queda de cada venta después de pagar lo que esa venta consume. Es lo que va cubriendo los costes fijos, y cuando los cubre entero, empieza el beneficio.",
+   "Subir precios mueve esta cifra mucho más rápido que vender más unidades, porque el precio afecta al margen y las unidades solo al volumen."
+  ]
+ },
+ {
+  "id": "cobro",
+  "titulo": "Lo que te cuesta cobrar tarde",
+  "entradilla": "El dinero que está en una factura sin cobrar no es tuyo todavía, y mientras esperas te cuesta algo. Esto pone número a ese algo.",
+  "campos": [
+   [
+    "importe",
+    "Importe pendiente de cobro",
+    "€",
+    20000,
+    500
+   ],
+   [
+    "dias",
+    "Días que tardan en pagarte de media",
+    "días",
+    75,
+    5
+   ],
+   [
+    "coste",
+    "Coste de tu financiación al año",
+    "%",
+    7,
+    0.5
+   ]
+  ],
+  "formula": "\n      var importe = v('importe'), dias = v('dias'), coste = v('coste');\n      var alDia = importe * (coste / 100) / 365;\n      salida([\n        ['Coste por cada día de retraso', alDia],\n        ['Coste de esos ' + Math.round(dias) + ' días', alDia * dias, true],\n        ['Al año, si siempre cobras así', alDia * dias * (365 / Math.max(dias, 1))],\n        ['Si adelantaras el cobro 15 días, ahorrarías', alDia * 15]\n      ]);",
+  "nota": "El coste de tu financiación es el interés de tu póliza de crédito, o lo que te costaría pedir ese dinero. Si no tienes financiación, sigue habiendo un coste: es lo que no puedes hacer con ese dinero mientras no lo tienes.",
+  "explica": [
+   "Con este número en la mano, un descuento por pronto pago deja de ser una pérdida y se convierte en una cuenta: si el descuento cuesta menos que la espera, sale a cuenta ofrecerlo.",
+   "Y sirve para lo contrario: saber cuánto te está costando de verdad ese cliente grande que paga a noventa días."
+  ]
+ },
+ {
+  "id": "iva",
+  "titulo": "IVA de una factura, al revés y del derecho",
+  "entradilla": "Del importe sin IVA al total, o del total al importe sin IVA. La segunda es la que se hace mal: no se resta el porcentaje, se divide.",
+  "campos": [
+   [
+    "base",
+    "Importe sin IVA",
+    "€",
+    1000,
+    50
+   ],
+   [
+    "tipo",
+    "Tipo de IVA",
+    "%",
+    21,
+    1
+   ],
+   [
+    "total",
+    "O al revés: importe total con IVA",
+    "€",
+    1210,
+    50
+   ]
+  ],
+  "formula": "\n      var base = v('base'), tipo = v('tipo'), total = v('total');\n      var cuota = base * tipo / 100;\n      var baseDesdeTotal = total / (1 + tipo / 100);\n      salida([\n        ['Cuota de IVA sobre ' + eur(base), cuota],\n        ['Total con IVA', base + cuota, true],\n        ['— — —', null],\n        ['Base de ' + eur(total) + ' con IVA incluido', baseDesdeTotal, true],\n        ['IVA contenido en ese total', total - baseDesdeTotal]\n      ]);",
+  "nota": "El tipo lo pones tú porque depende de lo que vendas. Y hay operaciones exentas, otras con inversión del sujeto pasivo y comercios en recargo de equivalencia: si tu caso no es el normal, esta cuenta no basta.",
+  "explica": [
+   "Sacar la base de un total con IVA no es restar el porcentaje. A un total de 121 con IVA del 21 % no se le quita el 21 % de 121: se divide entre 1,21. La diferencia son casi cinco euros en ese ejemplo, y crece con el importe.",
+   "El IVA no es ni ingreso ni gasto: lo recaudas o lo soportas por cuenta de la Administración, y la diferencia entre los dos es lo que se liquida."
+  ]
+ }
+]

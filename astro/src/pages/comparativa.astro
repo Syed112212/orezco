@@ -1,0 +1,129 @@
+---
+// Las tres maneras de llevar esto, comparadas sin maquillar. La columna
+// propia se marca pero no se disfraza: si las otras dos salieran bien en
+// todas las filas, nadie se creeria la tabla.
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Cierre from "../componentes/Cierre.astro";
+import * as DP from "../datos/diagramas";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+import "../estilos/comparativa.css";
+
+const filas: [string, string, string, string][] = [
+  ["Quién lleva los libros", "Tu gestoría, con lo que le mandas cada trimestre", "Tú o alguien de tu equipo, en el programa", "Nosotros, en el mismo programa al que tú entras"],
+  ["Cuándo están al día", "A trimestre vencido, cuando se cierra", "Depende de lo constante que seas", "Todos los días, porque el apunte nace con el hecho"],
+  ["Quién presenta los modelos", "Tu gestoría, con su firma", "Tú, o los pasas a una gestoría", "Un asesor colegiado, con su firma"],
+  ["Qué pasa si algo descuadra", "Se ve al cerrar el trimestre", "Se ve si lo miras", "Se avisa antes de presentar"],
+  ["Coste", "Cuota de gestoría más licencia del programa", "Solo licencia, más tu tiempo", "Una cuota, según lo que uses"],
+  ["Dónde está el riesgo", "En el traspaso: lo que no mandas, no se contabiliza", "En que la responsabilidad fiscal acaba siendo tuya", "En depender de un solo proveedor para las dos cosas"],
+];
+
+const cuando: [string, string, string][] = [
+  ["Gestoría de siempre y programa aparte",
+   "Cuando ya tienes una relación buena con tu gestoría y un sistema que os funciona a los dos. Si el traspaso trimestral no te duele, cambiarlo por cambiarlo no tiene sentido.",
+   "Deja de encajar cuando empiezas a tomar decisiones que necesitan datos de este mes y los que tienes son de hace tres."],
+  ["Solo software, tú lo llevas",
+   "Cuando tienes a alguien dentro que sabe contabilidad y prefieres el control. Sale más barato en cuota y da más autonomía.",
+   "Deja de encajar cuando esa persona se va de vacaciones, o cuando llega un requerimiento y descubres que la responsabilidad ante Hacienda es tuya."],
+  ["Las dos cosas juntas",
+   "Cuando quieres los libros al día sin llevarlos tú, y que quien los lleva sea quien firma lo que se presenta. No hay traspaso porque no hay dos sistemas.",
+   "No encaja si prefieres tener la contabilidad y el software con proveedores distintos para no depender de uno solo. Es una preferencia legítima y no vamos a discutirla."],
+];
+
+const dibujo = DP.para("comparativa");
+---
+
+<Base
+  titulo="Gestoría online, software o las dos cosas · Contaes"
+  descripcion="Gestoría de siempre con programa aparte, software que llevas tú, o las dos juntas. Qué cambia, cuándo encaja cada una y cuándo no."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Cómo se compara"]])]}
+>
+  <Encabezado
+    etiqueta="Cómo se compara"
+    titulo="Tres maneras de llevar la gestión"
+    entradilla="Gestoría de siempre con un programa aparte, software que llevas tú, o las dos cosas juntas. Qué cambia en cada una y cuándo conviene, también cuándo no conviene la nuestra."
+    migas={[["/", "Inicio"], [null, "Cómo se compara"]]}
+  />
+
+  <section class="seccion">
+    <div class="wrap estrecho prosa revela">
+      <h2 style="margin-top:0">La decisión no es entre marcas</h2>
+      <p>
+        Quien busca gestoría no compara empresas: compara maneras de llevarlo. O sigues con la
+        gestoría de siempre y un programa aparte, o te compras un software y lo lleva alguien de
+        tu equipo, o juntas las dos cosas. Esa es la decisión.
+      </p>
+      <p>
+        Ninguna de las tres es mala en abstracto. Cada una tiene un caso en el que es la
+        correcta, y esta página dice cuál es, incluida la nuestra y cuándo no lo es.
+      </p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap">
+      <div class="tabla-caja">
+        <table class="tabla comparativa">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Gestoría y programa aparte</th>
+              <th scope="col">Solo software</th>
+              <th scope="col" class="col-nuestra">Las dos juntas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              filas.map(([t, a, b, c]) => (
+                <tr>
+                  <th scope="row">{t}</th>
+                  <td>{a}</td>
+                  <td>{b}</td>
+                  <td>{c}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap estrecho">
+      <h2 style="margin-top:0">Cuándo encaja cada una</h2>
+      {
+        cuando.map(([t, si, no]) => (
+          <div class="cuando">
+            <h3>{t}</h3>
+            <p><b>Encaja</b> {si}</p>
+            <p class="cuando-no"><b>No encaja</b> {no}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {dibujo && <section class="seccion"><div class="wrap estrecho" set:html={dibujo} /></section>}
+
+  <section class="seccion">
+    <div class="wrap estrecho prosa revela">
+      <h2>Lo que no cambia elijas lo que elijas</h2>
+      <p>
+        Los libros tienen que estar bien, los modelos hay que presentarlos en plazo y alguien
+        tiene que responder si Hacienda pregunta. Las tres opciones resuelven eso; lo que cambia
+        es quién carga con qué y cuándo te enteras de las cosas.
+      </p>
+      <p>
+        Y una cosa que conviene mirar en cualquiera de las tres: cómo se sale. Pregunta en qué
+        formato te devuelven tus datos si algún día te vas. Si la respuesta es vaga, ya sabes
+        cómo será la salida.
+      </p>
+    </div>
+  </section>
+
+  <Cierre
+    titulo="¿Cuál te encaja a ti?"
+    texto="En la primera llamada te decimos cuál de las tres tiene más sentido en tu caso, aunque no sea la nuestra."
+  />
+</Base>

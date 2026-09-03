@@ -1,0 +1,90 @@
+---
+// Cuatro cuentas que se hacen mal en una servilleta. Se calculan en el
+// navegador de quien las usa: nada se envia a ninguna parte, y ninguna
+// trae tipos ni porcentajes puestos por nosotros porque cambian.
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Cierre from "../componentes/Cierre.astro";
+import calculadoras from "../datos/calculadoras.json";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+import "../estilos/calculadoras.css";
+
+type Campo = [string, string, string, number, number];
+type Calc = {
+  id: string;
+  titulo: string;
+  entradilla: string;
+  campos: Campo[];
+  nota: string;
+  explica: string[];
+};
+const lista = calculadoras as unknown as Calc[];
+---
+
+<Base
+  titulo="Calculadoras para tu empresa · Contaes"
+  descripcion="Coste real de una contratación, punto de equilibrio, lo que cuesta cobrar tarde y el IVA de una factura. Se calculan en tu navegador."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], ["/recursos/", "Recursos"], [null, "Herramientas"]])]}
+>
+  <Encabezado
+    etiqueta="Recursos"
+    titulo="Cuatro cuentas que conviene hacer bien"
+    entradilla="Se calculan en tu navegador y no se envía nada a ninguna parte. Ninguna trae tipos ni porcentajes puestos por nosotros: los pones tú, porque cambian y dependen de tu caso."
+    migas={[["/", "Inicio"], ["/recursos/", "Recursos"], [null, "Herramientas"]]}
+  />
+
+  <section class="seccion">
+    <div class="wrap estrecho">
+      <nav class="calc-indice" aria-label="Las calculadoras">
+        <ol>
+          {lista.map((c) => (<li><a href={`#${c.id}`}>{c.titulo}</a></li>))}
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  {
+    lista.map((c) => (
+      <section class="seccion" id={c.id}>
+        <div class="wrap estrecho">
+          <h2 style="margin-top:0">{c.titulo}</h2>
+          <p class="cuerpo" style="margin:8px 0 22px;max-width:62ch">{c.entradilla}</p>
+
+          <div class="calc" data-calc={c.id}>
+            <div class="calc-campos">
+              {c.campos.map(([nombre, etiqueta, unidad, defecto, paso]) => (
+                <label class="calc-campo">
+                  <span>{etiqueta}</span>
+                  <span class="calc-caja">
+                    <input
+                      type="number"
+                      inputmode="decimal"
+                      id={`${c.id}-${nombre}`}
+                      value={defecto}
+                      step={paso}
+                      min="0"
+                    />
+                    {unidad && <span class="calc-u">{unidad}</span>}
+                  </span>
+                </label>
+              ))}
+            </div>
+            <output class="calc-salida" aria-live="polite" />
+          </div>
+
+          <div class="aviso">{c.nota}</div>
+          <div class="prosa" style="margin-top:22px">
+            {c.explica.map((p) => <p>{p}</p>)}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <Cierre
+    titulo="¿Y si lo miramos con tus números?"
+    texto="Estas cuentas son la versión rápida. La de verdad sale de tus libros, y para eso hace falta media hora de conversación."
+  />
+</Base>
+
+<script is:inline src="/js/calculadoras.js"></script>

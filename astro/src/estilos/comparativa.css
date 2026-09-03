@@ -1,0 +1,16 @@
+/* ── Comparativa ─────────────────────────────────────────────
+   La columna propia se marca, pero no se maquilla: si las otras
+   dos salieran mal en todas las filas, nadie se creeria la tabla. */
+.comparativa th[scope="col"]{font-size:13px;color:var(--tinta-fuerte);text-transform:none;
+  letter-spacing:0;font-weight:600;vertical-align:bottom}
+.comparativa th[scope="row"]{font-size:14px;font-weight:600;color:var(--tinta-fuerte);
+  white-space:normal;width:9rem;text-transform:none;letter-spacing:0}
+.comparativa td{font-size:14.5px;color:var(--grafito);vertical-align:top}
+.comparativa .col-nuestra{color:var(--azul)}
+.comparativa tbody td:last-child{background:var(--azul-tinte)}
+.comparativa thead th:last-child{background:var(--azul-tinte)}
+.cuando{padding:22px 0;border-top:1px solid var(--borde)}
+.cuando h3{margin-bottom:10px}
+.cuando p{color:var(--grafito);margin-bottom:8px;max-width:66ch}
+.cuando b{color:var(--tinta-fuerte);font-weight:600}
+.cuando-no b{color:var(--piedra)}

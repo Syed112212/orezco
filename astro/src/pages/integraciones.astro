@@ -1,0 +1,70 @@
+---
+import Base from "../layouts/Base.astro";
+import Encabezado from "../componentes/Encabezado.astro";
+import Cierre from "../componentes/Cierre.astro";
+import * as DP from "../datos/diagramas";
+import { fichaOrganizacion, fichaMigas } from "../datos/util";
+
+const previstas: [string, string][] = [
+  ["Tu banco", "el extracto entra para conciliar. Formato estándar Norma 43, que exporta cualquier banco español, y las conexiones abiertas por PSD2 donde están disponibles."],
+  ["La Agencia Tributaria", "por ahí pasan los modelos. Es la parte del servicio que hace una persona colegiada con su firma."],
+  ["Tu correo", "una dirección a la que reenviar las facturas de proveedor. Entran por el escáner y salen clasificadas."],
+  ["Tu tienda o tu TPV", "si vendes online o en local, los pedidos pueden entrar sin teclearse. Se monta caso por caso según con qué vendas."],
+  ["Tus pasarelas de cobro", "para cuadrar lo cobrado con lo liquidado, que es donde se pierden las comisiones sin que nadie las registre."],
+  ["La puerta de salida", "poder sacar tus datos en formatos estándar. No es una integración: es la condición para poder irte, y por tanto para poder confiar."],
+];
+const dibujo = DP.para("integraciones");
+---
+
+<Base
+  titulo="Integraciones · Contaes"
+  descripcion="Con qué trabaja Contaes: tu banco por Norma 43, la sede de la Agencia Tributaria, el correo de facturas, tu tienda y tus pasarelas de cobro."
+  fichas={[fichaOrganizacion(), fichaMigas([["/", "Inicio"], [null, "Integraciones"]])]}
+>
+  <Encabezado
+    etiqueta="Integraciones"
+    titulo="Con qué trabajamos, y qué te vamos a preguntar"
+    entradilla="Lo que hace falta para llevar una gestoría entra por aquí: el banco, la sede de la Agencia Tributaria y el correo por el que llegan las facturas."
+    migas={[["/", "Inicio"], [null, "Integraciones"]]}
+  />
+
+  <section class="seccion">
+    <div class="wrap estrecho">
+      <div class="aviso">
+        <strong>Aquí no vas a ver un muro de logotipos.</strong> Un catálogo largo de conectores
+        suele esconder que la mayoría hacen poco: mueven un dato de un sitio a otro y dejan el
+        trabajo de cuadrar para una persona. Preferimos contarte con qué trabajamos de verdad y
+        preguntarte qué necesitas tú.
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="wrap estrecho revela">
+      <h2 style="margin-top:0">Lo que entra y sale del sistema</h2>
+      <ul class="lista">
+        {previstas.map(([t, d]) => (<li><b>{t}</b><span>{d}</span></li>))}
+      </ul>
+    </div>
+  </section>
+
+  {dibujo && <section class="seccion"><div class="wrap estrecho" set:html={dibujo} /></section>}
+
+  <section class="seccion">
+    <div class="wrap estrecho prosa revela">
+      <h2>Por qué no hay cien integraciones</h2>
+      <p>
+        La razón de ser de Contaes es que las cosas estén dentro y no conectadas por fuera. Cada
+        integración que montamos es una que no ha hecho falta construir dentro, y eso es una
+        decisión, no una victoria.
+      </p>
+      <h2>Si necesitas una concreta</h2>
+      <p>
+        Dínoslo en la primera llamada. Saber con qué tenéis que hablar los sistemas es parte de
+        decidir si encajamos, y a veces la respuesta honesta es que hoy no llegamos.
+      </p>
+    </div>
+  </section>
+
+  <Cierre />
+</Base>
