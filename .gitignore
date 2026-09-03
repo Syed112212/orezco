@@ -6,3 +6,8 @@ Thumbs.db
 # El cache de Python no va al repositorio
 __pycache__/
 *.pyc
+
+# El trabajo de Astro vive en su propia rama (astro-migracion), no en
+# main: main es lo que sirve produccion, y no queremos que un commit
+# ahi pueda volver a tocar el build de Pages mientras esta a medias.
+astro/
