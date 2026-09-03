@@ -59,6 +59,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap">
 
+<link rel="stylesheet" href="/assets/contaes.css?v=9646ace5">
+
 <style>
 /* ═══════════════════════════════════════════════════════════
    CONTAES
@@ -173,7 +175,6 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 .btn-tinte:hover,.btn-tinte:focus-visible{background:#d5eafd;transform:translateY(-1px)}
 .btn-texto{background:transparent;color:var(--tinta)}
 .btn-texto:hover,.btn-texto:focus-visible{background:rgba(0,0,0,.05)}
-
 
 /* ── La marca de la barra, animada ───────────────────────────
    Las tres barras entran en cascada al cargar y vuelven a salir
@@ -487,7 +488,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 .form-nota a{color:var(--azul)}
 .form-alt a{color:var(--azul)}
 
-
 /* ── Aversion a la perdida: el coste de no hacer nada ─────────
    Preguntas, no cifras nuestras. Los numeros del lector son
    creibles; unos inventados por nosotros no lo serian.          */
@@ -506,7 +506,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 .garantia strong{color:var(--tinta-fuerte);font-weight:600;display:block}
 .form-acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
 @media(max-width:760px){.garantias{grid-template-columns:1fr}}
-
 
 /* ── Los sectores, de fondo ───────────────────────────────────
    Fabrica, obra, almacen, tienda, oficinas, puerto: a quien sirve
@@ -547,9 +546,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 @keyframes deriva{0%,100%{transform:translateX(0)}50%{transform:translateX(34px)}}
 
 @media(max-width:700px){.escena{margin-top:36px}.escena svg{opacity:.75}}
-
-
-
 
 /* las secciones sin color propio dejan ver el fondo; las que lo
    tienen lo tapan, y eso da el ritmo */
@@ -698,7 +694,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 
 <body class="portada">
 
-
 <!-- simbolos de marca, generados por scripts/build-logo.py -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="mark" viewBox="0 0 200 200">
@@ -717,32 +712,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 
 <a class="skip" href="#contenido">Saltar al contenido</a>
 
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
-     perspectiva. Aqui va mas tenue, porque en una pagina interior se
-     viene a leer. -->
 <!-- El mismo fondo que la portada: laminas flotando en un espacio con
      perspectiva. Aqui va mas tenue, porque en una pagina interior se
      viene a leer. -->
@@ -872,7 +841,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 
   </section>
 
-
   <!-- Cinta de sectores. La lista va dos veces para que el bucle no
        tenga costura: al llegar a la mitad vuelve a empezar identica. -->
   <div class="cinta">
@@ -881,7 +849,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
     </button>
     <div class="cinta-pista" aria-hidden="true"><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span><span>Fabricación</span><span>Distribución</span><span>Construcción</span><span>Comercio</span><span>Logística</span><span>Servicios</span><span>Instalaciones</span><span>Talleres</span><span>Agroalimentario</span><span>Importación</span></div>
   </div>
-
 
   <!-- Las tres patas del servicio. Va justo despues de la portada porque
        es lo primero que hay que entender: no vendemos un programa. -->
@@ -1491,8 +1458,6 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   }, 2500);
 })();
 
-
-
 /* -- Pausa de la cinta, tambien con teclado ------------------- */
 (function () {
   var cinta = document.querySelector(".cinta");
@@ -1505,7 +1470,6 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
     boton.querySelector(".cp-icono").textContent = parada ? "\u25B6" : "II";
   });
 })();
-
 
 /* -- El menu: por areas en escritorio, plegable en movil ------
    Un solo mecanismo para los dos: el atributo data-abierta en el
@@ -1598,7 +1562,6 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
     })(piezas[i]);
   }
 })();
-
 
 /* -- La conversacion de la maqueta se representa sola ----------
    Es una maqueta, no una conversacion real: la etiqueta bajo el

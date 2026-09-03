@@ -28,6 +28,21 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # sobre preserve-3d que nadie estaba mirando.
 PAGINAS = ["index.html", "404.html", "scripts/og-template.html"]
 
+# Lo que tiene que seguir vivo despues de quitar los comentarios. La
+# portada se escribe a mano y un comentario mal cerrado se llevo por
+# delante la barra entera sin que nada se quejara.
+IMPRESCINDIBLES = {
+    "index.html": [
+        ('<nav class="nav"', "la barra"),
+        ('id="fondo"', "el lienzo del fondo"),
+        ('id="contenido"', "el ancla de contenido"),
+        ("<footer>", "el pie"),
+        ("assets/contaes.css", "la hoja de estilos"),
+        
+    ],
+    "404.html": [('<nav class="nav"', "la barra"), ("<footer>", "el pie")],
+}
+
 fallos = []
 avisos = []
 
@@ -342,12 +357,94 @@ def regla_clases_del_menu(nombre, css):
                   "la segunda gana y descoloca el menu sin dar ningun error"
                   % (nombre, clase, veces))
 
+def regla_comentarios_cerrados(nombre, html):
+    """Ningun comentario puede quedarse abierto.
+
+    Nace de un fallo que estuvo semanas en produccion sin que ninguna de
+    las otras comprobaciones lo viera. El sincronizador de la portada
+    borraba el comentario del fondo con un patron que moria en el primer
+    salto de linea; como el comentario ocupa tres, cada pasada dejaba dos
+    lineas sueltas y, al final, un <!-- sin cerrar. El navegador se trago
+    la barra entera dentro de ese comentario y escribio el resto en mitad
+    de la pagina.
+
+    Esto no lo caza el CSS ni el navegador sin ojos: la pagina responde
+    200, tiene su hoja y no lanza ningun error. Solo se ve contando.
+    """
+    # No basta con contar <!-- y -->. Un comentario sin cerrar acaba
+    # cerrandose en el --> del comentario siguiente, asi que las cuentas
+    # cuadran mientras el navegador se ha comido todo lo que habia en
+    # medio. Lo que hay que comprobar es lo que queda vivo despues de
+    # quitar los comentarios.
+    vivo = re.sub(r"<!--.*?-->", " ", html, flags=re.S)
+    resto = vivo.find("<!--")
+    if resto >= 0:
+        fallo("comentarios-cerrados",
+              "%s: hay un <!-- sin cerrar en la linea %d. Todo lo que venga "
+              "detras se lo traga el navegador."
+              % (nombre, html.count(chr(10), 0, resto) + 1))
+
+    for pieza, que in IMPRESCINDIBLES.get(nombre, ()):
+        if pieza in html and pieza not in vivo:
+            fallo("comentarios-cerrados",
+                  "%s: %s esta dentro de un comentario. Esta en el fichero, "
+                  "pero el navegador no lo ve." % (nombre, que))
+
+
+def regla_portada_sin_copia(html):
+    """La portada enlaza la hoja comun y no lleva una copia suya dentro.
+
+    El fallo mas caro que ha tenido este sitio, y estuvo dias en
+    produccion. La portada no enlazaba assets/contaes.css: llevaba dentro
+    una copia que se quedo congelada antes de que existieran el menu por
+    areas y el formulario. A esos trozos no les llegaba ninguna regla, y
+    el navegador pinto los iconos del menu a su tamano natural. La barra
+    media cincuenta mil pixeles de alto.
+
+    Nada de esto se ve leyendo el CSS, porque el CSS estaba bien. Se ve
+    preguntando si la portada lo enlaza y si repite lo que ya esta ahi.
+    """
+    if not re.search(r'href="/assets/contaes\.css', html):
+        fallo("portada-sin-copia",
+              "index.html no enlaza /assets/contaes.css. Sin ese enlace se "
+              "queda con lo que lleve dentro, que envejece sola.")
+        return
+
+    comun = hoja_comun()
+    if not comun:
+        return
+
+    def selectores(css):
+        # Los pasos de un @keyframes (0%, 100%, from, to) no son selectores.
+        fuera = set()
+        css = re.sub(r"@keyframes[^{]*\{(?:[^{}]|\{[^{}]*\})*\}", "", css, flags=re.S)
+        for b in re.findall(r"([^{}@]+)\{", css):
+            for s in b.split(","):
+                s = " ".join(s.split()).lstrip("}").strip()
+                if s and not s.endswith("%") and s not in ("from", "to"):
+                    fuera.add(s)
+        return fuera
+
+    repetidos = sorted(selectores(css_de(html)) & selectores(comun))
+    if repetidos:
+        # Aviso y no fallo: con el enlace puesto la pagina se ve bien, pero
+        # cada selector repetido es una regla vieja pisando a la buena, y
+        # eso solo se nota cuando alguien cambia la hoja comun y la portada
+        # se queda como estaba.
+        aviso("portada-sin-copia",
+              "index.html repite %d selector(es) que ya estan en la hoja comun "
+              "(%s...). Cada uno pisa a la version buena."
+              % (len(repetidos), ", ".join(repetidos[:4])))
+
+
 def main():
     index = leer("index.html")
+    regla_portada_sin_copia(index)
     css_index = css_de(index)
 
     for nombre in PAGINAS:
         html = leer(nombre)
+        regla_comentarios_cerrados(nombre, html)
         css = css_de(html) + chr(10) + hoja_comun()
         regla_3d_sin_filtros(nombre, css)
         regla_un_solo_azul(nombre, css)

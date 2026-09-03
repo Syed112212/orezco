@@ -44,7 +44,13 @@ def main():
     # El lienzo del fondo viene dentro de la cabecera comun. Si ya hay uno
     # de una pasada anterior hay que quitarlo antes: dos elementos con el
     # mismo id son HTML invalido, y el JavaScript solo encuentra el primero.
-    t = re.sub(r"<!-- El mismo fondo que la portada.*?\n", "", t, flags=re.S)
+    #
+    # El patron tiene que llegar hasta el cierre del comentario. Antes moria
+    # en el primer salto de linea, y como el comentario ocupa tres, cada
+    # pasada se llevaba una linea y dejaba las otras dos sueltas en mitad de
+    # la portada, ya sin nada que las marcara como comentario. Catorce
+    # pasadas, veintiocho lineas de basura visible.
+    t = re.sub(r"<!-- El mismo fondo que la portada.*?-->\s*", "", t, flags=re.S)
     t = t.replace('<canvas class="fondo" id="fondo" aria-hidden="true"></canvas>\n', "")
 
     m = re.search(r'<nav class="nav" aria-label="Principal">.*?\n</nav>', t, re.S)
@@ -58,8 +64,20 @@ def main():
     # El CSS ya no se copia: la portada enlaza assets/contaes.css como
     # el resto del sitio. Copiarlo es lo que provoco tres veces el mismo
     # fallo mudo, una clase declarada dos veces.
+    #
+    # Y hay que comprobar que el enlace esta, no solo ponerle la version.
+    # Estuvo ausente y esto no dijo nada: se limitaba a actualizar un
+    # href que no existia. La portada se quedo con una copia congelada
+    # antes del menu por areas, y el navegador pinto los iconos del menu
+    # a tamano natural, mil doscientos pixeles cada uno.
     version = 'href="/assets/contaes.css?v=%s"' % P.version_hoja()
-    t = re.sub(r'href="/assets/contaes\.css\?v=[a-f0-9]*"', version, t)
+    if re.search(r'href="/assets/contaes\.css\?v=[a-f0-9]*"', t):
+        t = re.sub(r'href="/assets/contaes\.css\?v=[a-f0-9]*"', version, t)
+    else:
+        m = re.search(r"\n<style>", t)
+        assert m, "no encontrado donde enganchar la hoja comun en index.html"
+        t = t[:m.start()] + '\n<link rel="stylesheet" ' + version + ">\n" + t[m.start():]
+        print("  index.html: faltaba el enlace a la hoja comun, puesto")
 
     # ── el JS del menu ───────────────────────────────────────────────
     nuevo_js = re.search(r"(/\* -- El menu: por areas en escritorio.*?\n\}\)\(\);\n)", P.PIE_JS, re.S).group(1)
