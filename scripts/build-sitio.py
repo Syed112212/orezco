@@ -1186,6 +1186,24 @@ def main():
              "Que el dato se registre una vez, donde ocurre el hecho. Que cualquier cifra se pueda seguir hasta el documento que la origina. Que lo que sale de la empresa (un correo, un modelo) lo apruebe una persona. Y que la responsabilidad ante la Administración sea de alguien colegiado, no de un algoritmo.",
              "También hay un criterio sobre lo que no se hace: no competir en número de funciones, no llenar el catálogo de integraciones que hacen poco y no prometer autonomía donde debería haber criterio profesional.",
          ]),
+         ("Cómo se cobra y por qué importa decirlo", [
+             "Una gestoría cobra una cuota y, cuando pasa algo fuera de lo normal, un extra. El "
+             "problema no es el extra: es enterarse del extra después. Nosotros preferimos "
+             "decir el precio de lo excepcional antes de que ocurra, aunque eso obligue a tener "
+             "conversaciones incómodas el primer día.",
+             "Y no cobramos por cosas que no cuestan trabajo. Enviarte tus propios datos no es "
+             "un servicio: es tuyo. Que puedas sacarlos en un formato que se abre sin nuestro "
+             "programa es la condición para poder irte, y por tanto la condición para confiar.",
+         ]),
+         ("Qué pasa cuando nos equivocamos", [
+             "Va a pasar. Una gestoría que lleva cientos de empresas comete errores, y quien "
+             "diga lo contrario no ha llevado ninguna. Lo que se puede prometer no es la "
+             "perfección: es que el error se cuente en cuanto se detecta, que se diga qué "
+             "consecuencias tiene y que se arregle sin cobrar por arreglarlo.",
+             "El seguro de responsabilidad civil profesional cubre lo que tiene que cubrir. "
+             "Pero lo que de verdad marca la diferencia es enterarse por nosotros y no por una "
+             "carta de Hacienda.",
+         ]),
          ("Qué encontrarás y qué no", [
              "Esta web no tiene testimonios, ni logotipos de clientes, ni cifras de usuarios. No porque no haya trabajo detrás, sino porque esas tres cosas son las más fáciles de inflar y las que menos dicen. Una gestoría que empieza la relación exagerando empieza mal.",
              "Lo que sí encontrarás es lo que hacemos, lo que no hacemos y de qué depende el precio. Con eso se puede decidir.",
