@@ -1433,7 +1433,7 @@ def main():
              "programa es la condición para poder irte, y por tanto la condición para confiar.",
          ]),
          ("Qué pasa cuando nos equivocamos", [
-             "Va a pasar. Una gestoría que lleva cientos de empresas comete errores, y quien "
+             "Va a pasar. Cualquier despacho que lleve contabilidad comete errores, y quien "
              "diga lo contrario no ha llevado ninguna. Lo que se puede prometer no es la "
              "perfección: es que el error se cuente en cuanto se detecta, que se diga qué "
              "consecuencias tiene y que se arregle sin cobrar por arreglarlo.",

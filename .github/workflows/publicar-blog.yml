@@ -37,6 +37,7 @@ jobs:
           python scripts/check-design.py
           python scripts/check-voz.py
           python scripts/check-render.py --muestra
+          python scripts/check-promesas.py
 
       - name: Subir lo que haya salido hoy
         run: |

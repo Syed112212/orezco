@@ -214,7 +214,7 @@ CRECIMIENTO = {
             "Informe de resultados con aperturas, respuestas y reuniones",
             "IA para investigar, ordenar y preparar mensajes que luego revisa una persona",
         ],
-        "limites": "Este servicio no es para quien quiere llegar a miles de empresas sin criterio. Prospección masiva sin segmentación quema la imagen de la marca y, con el tiempo, tu base de datos. Tampoco hacemos telemarketing de cierre: nos centramos en generar y cualificar oportunidades, no en negociar el contrato final. Si tu mercado es tan pequeño que ya conoces a todos los posibles clientes, quizá no lo necesitas.",
+        "limites": "Este servicio no es para quien quiere escribir a media base de datos sin criterio. Prospección masiva sin segmentación quema la imagen de la marca y, con el tiempo, tu base de datos. Tampoco hacemos telemarketing de cierre: nos centramos en generar y cualificar oportunidades, no en negociar el contrato final. Si tu mercado es tan pequeño que ya conoces a todos los posibles clientes, quizá no lo necesitas.",
     },
     "bots": {
         "titulo": "Bot de llamadas y WhatsApp",
