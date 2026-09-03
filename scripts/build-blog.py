@@ -2144,17 +2144,58 @@ def construir_indice():
 
 
 def construir_404():
-    cuerpo = '''<section style="padding:96px 0 120px;text-align:center">
+    """Una pagina de error que sirve de algo.
+
+    La de fabrica dice que la pagina no existe y ofrece volver al inicio,
+    o sea: devuelve al visitante al punto de partida y que se busque la
+    vida. Aqui se le ofrece lo que probablemente venia a buscar."""
+    cuerpo = '''<section style="padding:80px 0 30px">
   <div class="wrap estrecho">
     <p class="etiqueta" style="margin-bottom:14px">Error 404</p>
     <h1>Esta página no existe</h1>
-    <p style="margin:20px auto 28px;max-width:44ch;color:var(--grafito);font-size:17px">El enlace está roto o la página se movió de sitio.</p>
-    <a class="btn btn-azul" href="/">Volver al inicio</a>
+    <p class="editorial" style="margin-top:18px;max-width:52ch">El enlace está roto, la
+      página cambió de sitio o hay una errata en la dirección. Nos ha pasado a todos.</p>
+  </div>
+</section>
+
+<section style="padding:20px 0 40px">
+  <div class="wrap">
+    <h2 style="margin-top:0">¿Qué buscabas?</h2>
+    <div class="rejilla" style="margin-top:22px">
+      <a class="post-card" href="/gestoria/"><span class="dentro">
+        <h2 class="post-tit">La gestoría</h2>
+        <p>Contabilidad, impuestos, nóminas y contratos, con los libros al día todos los días.</p>
+      </span></a>
+      <a class="post-card" href="/funcionalidades/"><span class="dentro">
+        <h2 class="post-tit">El software</h2>
+        <p>El mismo programa que usamos nosotros para llevarte la gestoría.</p>
+      </span></a>
+      <a class="post-card" href="/crecimiento/"><span class="dentro">
+        <h2 class="post-tit">Crecimiento</h2>
+        <p>Dirección financiera, captación de clientes, financiación y salir fuera.</p>
+      </span></a>
+      <a class="post-card" href="/blog/"><span class="dentro">
+        <h2 class="post-tit">El blog</h2>
+        <p>Impuestos, contabilidad, nóminas y contratos, explicados sin dar por sabido nada.</p>
+      </span></a>
+      <a class="post-card" href="/herramientas/"><span class="dentro">
+        <h2 class="post-tit">Calculadoras</h2>
+        <p>Coste de contratar, punto de equilibrio, coste de cobrar tarde y el IVA.</p>
+      </span></a>
+      <a class="post-card" href="/demo/"><span class="dentro">
+        <h2 class="post-tit">Hablemos</h2>
+        <p>Cuéntanos qué necesitas. Si no encajamos, se dice en la primera llamada.</p>
+      </span></a>
+    </div>
+    <p style="margin-top:30px;color:var(--piedra);font-size:15px">Si has llegado aquí desde un
+      enlace nuestro, escríbenos a <a href="mailto:info@contaes.com" style="color:var(--azul)">info@contaes.com</a>
+      y lo arreglamos.</p>
   </div>
 </section>'''
     return pagina("Página no encontrada · Contaes", "La página que buscas no existe.",
                   "%s/404.html" % DOMINIO, cuerpo,
                   '<meta name="robots" content="noindex">', base="")
+
 
 
 def main():
