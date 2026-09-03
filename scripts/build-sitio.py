@@ -450,6 +450,52 @@ def pagina_sectores():
 # ─────────────────────────────────────────────────────────────────────
 # Glosario, calendario, preguntas
 # ─────────────────────────────────────────────────────────────────────
+def pagina_recursos():
+    """La entrada a todo lo que se puede leer sin hablar con nadie."""
+    rastro = migas(("/", "Inicio"), (None, "Recursos"))
+    tarjetas = rejilla_tarjetas([(r, n, d) for r, n, d in P.RECURSOS], "/")
+    cuerpo = '''%(enc)s
+
+<section class="seccion">
+  <div class="wrap">
+    %(tarjetas)s
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="wrap estrecho prosa revela">
+    <h2>Por qué publicamos esto</h2>
+    <p>Una gestoría vive de que sus clientes no tengan que entender de contabilidad. Publicar
+      cómo funciona parece ir en contra de eso, y no lo va: quien entiende lo que le estamos
+      haciendo pregunta mejor, decide antes y discute los números en vez de asentir.</p>
+    <p>Además hay una parte egoísta que conviene decir: si algo de lo que lees aquí te sirve
+      para arreglarlo tú solo, tampoco pasa nada. Preferimos que nos llames cuando de verdad
+      haga falta a que nos llames por algo que podías resolver leyendo diez minutos.</p>
+
+    <h2>Lo que no vas a encontrar</h2>
+    <p>Ni plantillas descargables a cambio de tu correo, ni informes con cifras de sector que
+      nadie puede comprobar, ni artículos escritos para colocar una palabra en un buscador.
+      Cada pieza responde una pregunta entera o no está.</p>
+    <p>Tampoco cifras concretas de tipos, plazos ni umbrales: la normativa cambia y un número
+      mal puesto en una web hace daño meses después. Cuando hace falta un número, el artículo
+      te dice dónde mirarlo.</p>
+  </div>
+</section>
+
+%(cierre)s''' % {
+        "enc": encabezado("Recursos", "Para leer antes de llamar a nadie",
+                          "Artículos, un glosario, el calendario de modelos, calculadoras y "
+                          "las preguntas que más nos hacen. Todo abierto, sin pedir el correo "
+                          "a cambio.", rastro),
+        "tarjetas": tarjetas,
+        "cierre": cierre(),
+    }
+    return P.pagina("Recursos · Contaes",
+                    "Blog, glosario de contabilidad y fiscalidad, calendario de modelos, "
+                    "calculadoras y preguntas frecuentes. Abierto y sin registro.",
+                    "%s/recursos/" % DOMINIO, cuerpo)
+
+
 def pagina_herramientas():
     """Cuatro cuentas que se hacen mal en una servilleta."""
     rastro = migas(("/", "Inicio"), ("/#", "Recursos"), (None, "Herramientas"))
@@ -1085,6 +1131,7 @@ def main():
 
     salidas["glosario/index.html"] = pagina_glosario()
     salidas["herramientas/index.html"] = pagina_herramientas()
+    salidas["recursos/index.html"] = pagina_recursos()
     salidas["calendario-fiscal/index.html"] = pagina_calendario()
     salidas["preguntas/index.html"] = pagina_preguntas()
     salidas["precios/index.html"] = pagina_precios()
@@ -1161,7 +1208,7 @@ def main():
     for area in ("gestoria", "crecimiento", "para"):
         rutas += ["%s/" % area] + ["%s/%s/" % (area, s) for s, _n, _p in AREAS[area][3]]
     rutas += ["sectores/"] + ["sectores/%s/" % s for s in C.SECTORES]
-    rutas += ["herramientas/", "glosario/", "calendario-fiscal/", "preguntas/", "precios/",
+    rutas += ["recursos/", "herramientas/", "glosario/", "calendario-fiscal/", "preguntas/", "precios/",
               "integraciones/", "demo/", "sobre/", "migracion/", "seguridad/"]
     rutas += [r for r, _ in P.LEGAL]
     rutas += ["blog/"] + ["blog/%s.html" % s for s in articulos_del_blog()]

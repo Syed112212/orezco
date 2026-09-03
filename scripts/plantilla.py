@@ -688,7 +688,8 @@ def pie(base=""):
         "sectores": col("Crecimiento", [("crecimiento/%s/" % s, n) for s, n, _ in CRECIMIENTO]),
         "recursos": col("Para quién", [("para/%s/" % s, n) for s, n, _ in PUBLICO]
                         + [("sectores/", "Por sector")]),
-        "recursos2": col("Recursos", [(r, n) for r, n, _ in RECURSOS]),
+        "recursos2": col("Recursos", [(r, n) for r, n, _ in RECURSOS]
+                         + [("recursos/", "Ver todo")]),
         "empresa": col("Empresa", [(r, n) for r, n, _ in EMPRESA]),
         "legal": "".join('      <a href="%s/%s">%s</a>\n' % (base, r, n) for r, n in LEGAL),
     }

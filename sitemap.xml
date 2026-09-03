@@ -201,6 +201,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://contaes.com/recursos/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://contaes.com/herramientas/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
