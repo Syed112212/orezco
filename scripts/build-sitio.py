@@ -1131,6 +1131,67 @@ def pagina_integraciones():
                     "%s/integraciones/" % DOMINIO, cuerpo)
 
 
+def pagina_formulario():
+    """El formulario con su enlace propio.
+
+    A dos columnas: el formulario a la izquierda y, a la derecha, lo que
+    pasa despues. Eso ultimo no es relleno; es la duda que tiene todo el
+    que va a dejar su telefono en una web, y contestarla al lado del
+    boton de enviar es donde sirve.
+    """
+    pasos = [
+        ("Lo lee una persona",
+         "no un formulario automático, así que la respuesta tarda lo que "
+         "tarda alguien en leerlo."),
+        ("Te escribimos para hablar",
+         "media hora, sobre lo que nos hayas contado. Sin presentación "
+         "genérica."),
+        ("Te decimos si encajamos",
+         "y si no, también. Es más barato para los dos saberlo en la "
+         "primera llamada."),
+    ]
+    lista = "".join(
+        '      <li><b>%s</b><span>%s</span></li>\n' % (t, d) for t, d in pasos)
+
+    cuerpo = '''%(enc)s
+
+<section class="seccion">
+  <div class="wrap formulario-rejilla">
+    <div class="revela">
+%(form)s
+    </div>
+    <aside class="form-lado">
+      <div class="form-lado-caja">
+        <p class="etiqueta" style="margin-bottom:14px">Qué pasa después</p>
+        <ol class="pasos-lado">
+%(pasos)s        </ol>
+        <p class="form-lado-nota">Si prefieres escribir sin rellenar nada,
+          <a href="mailto:%(buzon)s">%(buzon)s</a> también vale.</p>
+      </div>
+    </aside>
+  </div>
+</section>''' % {
+        "enc": encabezado(
+            "Formulario",
+            "Cuéntanos tu caso",
+            "No hace falta escribir: casi todo se rellena pinchando. Lo que "
+            "marques nos sirve para preparar la llamada, no para meterte en "
+            "una lista.",
+            migas(("/", "Inicio"), (None, "Formulario")),
+            [("Se tarda", "dos o tres minutos"),
+             ("Hay que escribir", "el nombre y el email, poco más"),
+             ("Lo lee", "una persona, no un robot")]),
+        "form": F.form("Contaes: peticion desde /formulario/"),
+        "pasos": lista,
+        "buzon": F.BUZON,
+    }
+    return P.pagina(
+        "Cuéntanos tu caso · Contaes",
+        "Rellena el formulario pinchando: qué eres, cuántos sois y con qué te "
+        "podemos ayudar. Lo lee una persona.",
+        "%s/formulario/" % DOMINIO, cuerpo)
+
+
 def pagina_demo():
     rastro = migas(("/", "Inicio"), (None, "Pedir una demo"))
     garantias = [
@@ -1520,6 +1581,7 @@ def main():
     salidas["precios/index.html"] = pagina_precios()
     salidas["integraciones/index.html"] = pagina_integraciones()
     salidas["demo/index.html"] = pagina_demo()
+    salidas["formulario/index.html"] = pagina_formulario()
     salidas["gracias/index.html"] = pagina_gracias()
 
     salidas["sobre/index.html"] = pagina_simple(
@@ -1610,7 +1672,7 @@ def main():
         rutas += ["%s/" % area] + ["%s/%s/" % (area, s) for s, _n, _p in AREAS[area][3]]
     rutas += ["sectores/"] + ["sectores/%s/" % s for s in C.SECTORES]
     rutas += ["comparativa/", "recursos/", "herramientas/", "glosario/", "calendario-fiscal/", "preguntas/", "precios/",
-              "integraciones/", "demo/", "sobre/", "migracion/", "seguridad/"]
+              "integraciones/", "demo/", "formulario/", "sobre/", "migracion/", "seguridad/"]
     rutas += [r for r, _ in P.LEGAL]
     rutas += ["blog/"] + ["blog/%s.html" % s for s in articulos_del_blog()]
     salidas["sitemap.xml"] = construir_sitemap(rutas)

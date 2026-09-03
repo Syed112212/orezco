@@ -84,6 +84,7 @@ EMPRESA = [
     ("migracion/", "Migración", "Cómo se cambia de sistema sin parar"),
     ("seguridad/", "Seguridad y datos", "Dónde viven tus datos y qué derechos tienes"),
     ("precios/", "Precios", "Lo que sabemos hoy sobre el precio"),
+    ("formulario/", "Cuéntanos tu caso", "El formulario, en una página aparte"),
     ("integraciones/", "Integraciones", "Con qué se conectará y con qué no"),
 ]
 
@@ -146,6 +147,28 @@ h3{font-size:19px;font-weight:700;line-height:1.3;margin:0;color:var(--tinta-fue
 .seccion > .wrap.estrecho > *{max-width:76ch}
 .seccion > .wrap.estrecho > .dibujo,
 .seccion > .wrap.estrecho > .incluye{max-width:none}
+
+/* ── La pagina del formulario ────────────────────────────────────────
+   El formulario a la izquierda y, al lado, lo que pasa despues de darle
+   a enviar. Es la duda que tiene todo el que deja su telefono en una
+   web, asi que va junto al boton y no tres secciones mas abajo. */
+.formulario-rejilla{display:grid;grid-template-columns:minmax(0,1fr) 300px;
+  gap:clamp(24px,4vw,56px);align-items:start}
+.form-lado{position:sticky;top:92px}
+.form-lado-caja{background:var(--blanco);border:1px solid var(--borde);
+  border-radius:12px;padding:24px}
+.pasos-lado{margin:0;padding:0;list-style:none;counter-reset:paso}
+.pasos-lado li{position:relative;padding:0 0 18px 0;font-size:14px;
+  line-height:1.5;color:var(--grafito)}
+.pasos-lado li:last-child{padding-bottom:0}
+.pasos-lado b{display:block;color:var(--tinta-fuerte);font-weight:600;
+  font-size:15px;margin-bottom:3px}
+.form-lado-nota{margin:20px 0 0;padding-top:16px;font-size:13px;
+  line-height:1.5;color:var(--piedra);border-top:1px solid var(--borde)}
+@media(max-width:900px){
+  .formulario-rejilla{grid-template-columns:1fr;gap:22px}
+  .form-lado{position:static;order:-1}
+}
 
 /* ── Encabezado y lectura a dos columnas ─────────────────────────────
    Una columna de 760px centrada en una pantalla de 1400 deja media
