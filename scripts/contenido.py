@@ -426,6 +426,14 @@ CAPACIDADES = {
 # ═════════════════════════════════════════════════════════════════════
 SECTORES = {
     "fabricacion": {
+        "preguntas": [
+            ("¿El escandallo está actualizado o es el del año pasado?",
+             "Es la primera. Un escandallo con precios de materia prima antiguos convierte el margen en una cifra inventada, y casi nadie los revisa hasta que algo duele."),
+            ("¿Las horas de taller se imputan a la orden?",
+             "Si no, el coste de mano de obra se reparte a ojo entre todo lo que se fabrica, y los productos que dan más trabajo salen baratos en los papeles."),
+            ("¿Qué se hace con las mermas y los destríos?",
+             "Si aparecen solo en el recuento anual, durante doce meses el almacén ha estado diciendo que hay más de lo que hay."),
+        ],
         "titulo": "Fabricación",
         "lema": "Escandallos, órdenes y coste real de producción",
         "entradilla": "Fabricar es transformar materiales y horas en producto. Si el coste de esa transformación se estima en lugar de medirse, el margen es una opinión.",
@@ -445,6 +453,14 @@ SECTORES = {
         "modulos": ["inventario", "compras", "proyectos", "contabilidad", "informes"],
     },
     "distribucion": {
+        "preguntas": [
+            ("¿Cuántas tarifas distintas manejáis?",
+             "Y sobre todo: ¿están en el sistema o en la cabeza de quien vende? Es de donde salen la mitad de las facturas mal hechas."),
+            ("¿Los rappeles del proveedor bajan el coste del artículo?",
+             "Si el rappel entra como un ingreso suelto a final de año, el margen por línea que estáis mirando durante todo el año está mal."),
+            ("¿Con qué antigüedad miráis lo que os deben?",
+             "Ordenar la deuda por importe es lo natural y es el orden equivocado. Lo que dice de verdad quién va a dejar de pagar es la antigüedad."),
+        ],
         "titulo": "Distribución y mayorista",
         "lema": "Muchas referencias, márgenes finos y stock que se mueve",
         "entradilla": "En distribución el margen por línea es pequeño, así que un error de precio o una rotura de stock se comen el beneficio de varias operaciones buenas.",
@@ -464,6 +480,14 @@ SECTORES = {
         "modulos": ["inventario", "ventas", "compras", "facturacion", "informes"],
     },
     "construccion": {
+        "preguntas": [
+            ("¿Sabéis el desvío de cada obra mientras está en marcha?",
+             "O se sabe al certificar. Es la diferencia entre corregir y enterarse."),
+            ("¿El material comprado para una obra acaba imputado a esa obra?",
+             "Cuando se mueve entre obras y nadie lo ajusta, una sale barata y otra cara sin que ninguna de las dos sea verdad."),
+            ("¿Los partes llegan en papel?",
+             "El coste de las horas no es el problema. El problema es que llegan tarde, y para entonces la decisión ya está tomada."),
+        ],
         "titulo": "Construcción",
         "lema": "Obra a obra: certificaciones, coste y desvío",
         "entradilla": "En obra el resultado no es de la empresa: es de cada obra. Una empresa con cinco obras puede tener beneficio y estar perdiendo dinero en tres de ellas.",
@@ -483,6 +507,14 @@ SECTORES = {
         "modulos": ["proyectos", "compras", "personal", "facturacion", "contabilidad"],
     },
     "comercio": {
+        "preguntas": [
+            ("¿Cuadra lo que dice el sistema con lo que hay en la estantería?",
+             "Si hace falta un recuento para saberlo, el margen que estáis viendo es una estimación con nombre de dato."),
+            ("¿Sabéis el margen por producto o solo la caja del día?",
+             "La caja dice cuánto ha entrado. No dice qué productos os están dando de comer y cuáles ocupan sitio."),
+            ("¿Las devoluciones y los cambios dejan rastro contable?",
+             "Es donde se cuela la mayor parte del descuadre entre lo que se vendió y lo que se declaró."),
+        ],
         "titulo": "Comercio y retail",
         "lema": "Tienda, almacén y contabilidad en el mismo sitio",
         "entradilla": "El comercio pequeño suele tener un TPV que vende, un almacén en la cabeza del encargado y una gestoría que lo contabiliza tres meses después. Tres verdades distintas del mismo negocio.",
@@ -502,6 +534,14 @@ SECTORES = {
         "modulos": ["inventario", "ventas", "facturacion", "contabilidad", "informes"],
     },
     "logistica": {
+        "preguntas": [
+            ("¿Cómo repartís el coste entre servicios que comparten viaje?",
+             "Si es por kilómetro medio, hay rutas que llevan años perdiendo dinero sin que nadie lo sepa."),
+            ("¿Los portes de terceros se imputan al servicio que los genera?",
+             "Cuando van a un cajón general, los servicios que subcontratáis parecen los más rentables."),
+            ("¿El mantenimiento del vehículo entra en el coste?",
+             "Suele quedarse fuera, y es de los pocos costes que crecen justo con los servicios que más margen parecen dar."),
+        ],
         "titulo": "Logística y transporte",
         "lema": "Rutas, portes y lo que cuesta cada servicio",
         "entradilla": "En transporte el coste se reparte entre servicios que comparten vehículo, combustible y conductor. Si el reparto se hace por intuición, hay rutas que se mantienen porque nadie ha calculado que pierden dinero.",
@@ -521,6 +561,14 @@ SECTORES = {
         "modulos": ["proyectos", "compras", "facturacion", "personal", "informes"],
     },
     "servicios": {
+        "preguntas": [
+            ("¿Cuándo se apuntan las horas?",
+             "Si es a fin de mes y de memoria, el número que sale es siempre menor que el real. Nadie exagera sus propias horas hacia arriba."),
+            ("¿Qué pasa con el trabajo fuera de alcance?",
+             "Se hace, no se factura y no se registra. Después nadie entiende por qué ese proyecto salió mal."),
+            ("¿Sabéis qué cliente es rentable?",
+             "No cuál factura más: cuál deja más después de contar las horas dedicadas y los días que tarda en pagar."),
+        ],
         "titulo": "Servicios profesionales",
         "lema": "Horas facturables, proyectos y rentabilidad",
         "entradilla": "Cuando lo que vendes es tiempo, la rentabilidad es la diferencia entre las horas que cobras y las que dedicas. Muchos despachos y estudios solo miden la primera mitad.",
@@ -540,6 +588,14 @@ SECTORES = {
         "modulos": ["proyectos", "personal", "facturacion", "ventas", "informes"],
     },
     "instalaciones": {
+        "preguntas": [
+            ("¿El material de la furgoneta está en algún almacén del sistema?",
+             "Casi nunca. Y es donde desaparece la diferencia entre lo que se compró y lo que se facturó."),
+            ("¿El parte se firma en destino?",
+             "Firmado allí, con las horas y el material, no hay conversación posterior sobre qué se hizo."),
+            ("¿Sabéis si un contrato de mantenimiento es rentable?",
+             "Se cobra la cuota y se atienden avisos. Cruzar las dos cosas es lo que dice si ese contrato conviene renovarlo."),
+        ],
         "titulo": "Instalaciones y mantenimiento",
         "lema": "Partes de trabajo, materiales y garantías",
         "entradilla": "El técnico que sale a una avería consume horas, kilómetros y material de la furgoneta. Si nada de eso se registra donde ocurre, el parte se convierte en una factura aproximada.",
@@ -559,6 +615,14 @@ SECTORES = {
         "modulos": ["proyectos", "inventario", "personal", "facturacion", "ventas"],
     },
     "agroalimentario": {
+        "preguntas": [
+            ("¿Cuánto tardaríais en saber a qué clientes fue un lote?",
+             "Es la pregunta que hay que poder responder en minutos, no en días. Y la que decide si una retirada es quirúrgica o total."),
+            ("¿La campaña se liquida al final?",
+             "Si el coste y el ingreso solo cuadran en la liquidación, durante toda la campaña se ha ido a ciegas."),
+            ("¿Los envases retornables están controlados?",
+             "Suelen tratarse como si no valieran nada, y en volumen son una partida que se nota."),
+        ],
         "titulo": "Agroalimentario",
         "lema": "Lotes, trazabilidad y campañas",
         "entradilla": "En alimentación la trazabilidad no es una mejora: es una obligación legal y la diferencia entre retirar un lote y retirar una marca.",

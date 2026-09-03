@@ -178,6 +178,26 @@ def pagina_funcionalidades():
     cuerpo = '''%(enc)s
 
 <section class="seccion">
+  <div class="wrap estrecho prosa revela">
+    <h2 style="margin-top:0">El mismo programa para los dos</h2>
+    <p>Una gestoría normal usa su programa y tú usas el tuyo. Entre los dos hay un traspaso:
+      tú mandas facturas, ellos las meten, y cada traspaso es una oportunidad de que algo se
+      pierda o llegue tarde. Aquí no hay traspaso porque no hay dos programas.</p>
+    <p>Eso tiene una consecuencia que se nota enseguida: tus libros están al día todos los
+      días, no a final de trimestre. Puedes entrar a mirarlos sin pedírselos a nadie, y
+      cuando toca presentar un modelo, los datos ya están donde tienen que estar.</p>
+
+    <h2>Se activa lo que usas</h2>
+    <p>Nadie necesita las ocho áreas. Un autónomo que factura servicios no quiere ver
+      almacén; una empresa de distribución lo quiere lo primero. Se enciende lo que hace
+      falta y lo demás no estorba en los menús.</p>
+    <p>Lo que no cambia es el fondo: todo escribe en el mismo libro mayor. Por eso una
+      factura emitida ya es un asiento, una compra recibida ya es existencias, y un informe
+      no necesita que nadie exporte nada.</p>
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap">
     <h2 style="margin-top:0">La gestión del día a día</h2>
     <p class="cuerpo" style="margin-bottom:22px;max-width:60ch">Todo sobre el mismo libro mayor: lo que se registra en un sitio está disponible en los demás sin exportar nada. Se activa lo que necesites y se deja fuera lo que no.</p>
@@ -376,6 +396,15 @@ def pagina_sector(slug, d):
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+    <h2 style="margin-top:0">Lo que preguntamos en la primera llamada</h2>
+    <p class="cuerpo" style="margin-bottom:18px">Tres preguntas de este sector. Si las
+      respuestas te incomodan, probablemente tengamos de qué hablar.</p>
+%(preguntas)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap revela">
     <h2>Los módulos que más se usan aquí</h2>
     <p class="cuerpo" style="margin-bottom:22px">Están todos disponibles; estos son los que llevan el peso en este sector.</p>
@@ -388,6 +417,12 @@ def pagina_sector(slug, d):
                           d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">" + d["lema"] + "</span>",
                           d["entradilla"], rastro),
         "duele": duele, "aporta": aporta, "modulos": modulos,
+        "preguntas": "".join(
+            '    <details class="tarjeta revela" style="margin-bottom:12px">\n'
+            '      <summary style="cursor:pointer;font-weight:600;font-size:17px;'
+            'color:var(--tinta-fuerte)">%s</summary>\n'
+            '      <p style="margin-top:12px;color:var(--grafito)">%s</p>\n    </details>\n'
+            % (q, r) for q, r in d.get("preguntas", [])),
         "dibujo": DP.para("sectores/%s" % slug),
         "cierre": cierre("¿Se parece a lo vuestro?",
                          "En la primera llamada preferimos escuchar cómo trabajáis antes que enseñar pantallas. "
