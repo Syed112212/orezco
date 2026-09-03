@@ -637,8 +637,8 @@ def pagina_sectores():
 <section class="seccion">
   <div class="wrap estrecho prosa revela">
     <h2>Por qué el sector cambia tanto las cosas</h2>
-    <p>Un ERP no se elige por la lista de funciones: se elige por si entiende cómo trabaja tu
-      negocio. Y lo que hace difícil a cada negocio no es lo mismo.</p>
+    <p>Un sistema no se elige por la lista de funciones: se elige por si entiende cómo trabaja
+      tu negocio. Y lo que hace difícil a cada negocio no es lo mismo.</p>
     <p>En fabricación el problema es el coste: transformar materiales y horas en producto sin
       saber cuánto cuesta esa transformación convierte el margen en una opinión. En
       distribución es el volumen: márgenes finos donde un error de precio se come el beneficio
@@ -663,13 +663,13 @@ def pagina_sectores():
 
 %(cierre)s''' % {
         "enc": encabezado("Sectores", "El mismo sistema, contado desde tu problema",
-                          "Un ERP no se elige por la lista de funciones: se elige por si entiende cómo "
+                          "Un sistema no se elige por la lista de funciones: se elige por si entiende cómo "
                           "trabaja tu negocio. Estas son las ocho formas de trabajar que tenemos más presentes.", rastro),
         "rejilla": rejilla_tarjetas([("sectores/%s/" % s, n, d) for s, n, d in P.SECTORES], "/"),
         "cierre": cierre(),
     }
     return P.pagina("Sectores · Contaes",
-                    "Fabricación, distribución, construcción, comercio, logística, servicios, instalaciones y agroalimentario: el mismo ERP contado desde el problema de cada sector.",
+                    "Fabricación, distribución, construcción, comercio, logística, servicios, instalaciones y agroalimentario: el mismo sistema contado desde el problema de cada sector.",
                     "%s/sectores/" % DOMINIO, cuerpo)
 
 

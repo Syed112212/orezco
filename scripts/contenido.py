@@ -373,7 +373,7 @@ CAPACIDADES = {
             ]),
             ("Lo que aparece al conciliar de verdad", [
                 "Facturas cobradas que seguían figurando como pendientes. Recibos domiciliados que nadie había contabilizado. Comisiones que llevaban meses sin registrarse. Cobros de un cliente aplicados a otro.",
-                "Ninguna de esas cosas se ve mirando solo el ERP ni mirando solo el banco.",
+                "Ninguna de esas cosas se ve mirando solo la contabilidad ni mirando solo el banco.",
             ]),
         ],
         "incluye": [
