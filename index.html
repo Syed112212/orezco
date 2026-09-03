@@ -434,15 +434,6 @@ footer small{font-size:13.5px;color:#8b93b5}
 
 /* ── 7. Motas decorativas de la portada ──────────────────────
    Puntuacion visual, no contenido: no enlazan ni informan.      */
-.mota{
-  position:absolute;width:46px;height:46px;border-radius:50%;
-  background:var(--blanco);border:2px solid var(--cielo);
-  display:grid;place-items:center;font-size:20px;z-index:3;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-.mota.m1{left:7%;top:16%;border-color:var(--coral);animation:flotaA 6.5s ease-in-out infinite}
-.mota.m2{right:9%;top:24%;border-color:var(--marigold);animation:flotaB 7.5s ease-in-out infinite}
-.mota.m3{left:15%;bottom:16%;border-color:var(--verde);animation:flotaB 8.5s ease-in-out infinite}
 @keyframes flotaA{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -14px;rotate:6deg}}
 @keyframes flotaB{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 12px;rotate:-6deg}}
 
@@ -814,7 +805,6 @@ main,footer{position:relative;z-index:1}
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .losas,.mota,.escribiendo i,.marca-svg .mc-b,.avion,.camion,.humo,.pluma,.nubes{animation:none}
   .entra{opacity:1;transform:none;animation:none}
   .revela{opacity:1;transform:none;transition:none}
   *{transition-duration:.01ms!important}
@@ -846,8 +836,7 @@ main,footer{position:relative;z-index:1}
   .despliegue.doble{grid-template-columns:1fr;min-width:0}
   .area[data-abierta] .despliegue{display:grid}
   .despliegue a span{display:none}
-  .mota{display:none}
-}
+  }
 @media(max-width:560px){
   .nav-in{padding:10px 20px}
   .losas-zona{min-height:250px}
@@ -970,9 +959,6 @@ main,footer{position:relative;z-index:1}
 
   <!-- ══ Portada ══ -->
   <section class="hero" style="position:relative">
-    <div class="mota m1" aria-hidden="true">📊</div>
-    <div class="mota m2" aria-hidden="true">🧾</div>
-    <div class="mota m3" aria-hidden="true">📦</div>
 
     <div class="wrap">
       <h1 class="entra">La gestoría que además<br><span class="resalte">te ayuda a crecer</span></h1>
