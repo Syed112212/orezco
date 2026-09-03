@@ -88,6 +88,31 @@ def ld_servicio(nombre, descripcion, ruta, tipo="Service"):
     }
 
 
+def bloque_faq(preguntas, titulo="Lo que suelen preguntarnos de esto"):
+    """El acordeon de preguntas y su ficha para el buscador.
+
+    Devuelve las dos cosas juntas a proposito. El acordeon estaba escrito
+    por separado en tres sitios y en dos de ellos se puso el HTML pero no
+    la ficha, asi que el buscador no veia unas preguntas que el lector si.
+    """
+    if not preguntas:
+        return "", None
+    items = "".join(
+        '    <details class="tarjeta revela" style="margin-bottom:12px">\n'
+        '      <summary style="cursor:pointer;font-weight:600;font-size:17px;'
+        'color:var(--tinta-fuerte)">%s</summary>\n'
+        '      <p style="margin-top:12px;color:var(--grafito)">%s</p>\n    </details>\n'
+        % (q, r) for q, r in preguntas)
+    html = ('<section class="seccion">\n  <div class="wrap estrecho">\n'
+            '    <h2 style="margin-top:0">%s</h2>\n%s  </div>\n</section>\n\n'
+            % (titulo, items))
+    ficha = {"@type": "FAQPage",
+             "mainEntity": [{"@type": "Question", "name": q,
+                             "acceptedAnswer": {"@type": "Answer", "text": r}}
+                            for q, r in preguntas]}
+    return html, ficha
+
+
 def ld_pagina(*bloques):
     return _ld({"@context": "https://schema.org", "@graph": list(bloques)})
 
@@ -181,6 +206,7 @@ def pagina_funcionalidad(slug, d, es_modulo):
         for s, por in d.get("conecta", []))
 
     aviso = ('<div class="aviso">%s</div>' % d["aviso"]) if d.get("aviso") else ""
+    faq_html, faq_ficha = bloque_faq(C.PREGUNTAS_MODULO.get(slug, ()))
 
     cuerpo = '''%(enc)s
 
@@ -213,7 +239,7 @@ def pagina_funcionalidad(slug, d, es_modulo):
   </div>
 </section>
 
-%(cierre)s''' % {
+%(preguntas)s%(cierre)s''' % {
         "enc": encabezado("Software" if es_modulo else "Lo que lo hace distinto",
                           d["titulo"] + ". <span style=\"color:var(--grafito);font-weight:500\">" + d["lema"] + "</span>",
                           d["entradilla"], rastro),
@@ -222,13 +248,17 @@ def pagina_funcionalidad(slug, d, es_modulo):
         "dibujo": DP.para("funcionalidades/" + slug),
         "incluye": lista_incluye(d["incluye"]),
         "conecta": conecta,
+        "preguntas": faq_html,
         "cierre": cierre(),
     }
-    ld = ld_pagina(
-        ld_organizacion(),
-        ld_servicio(d["titulo"], d["entradilla"], "/funcionalidades/%s/" % slug,
-                    tipo="SoftwareApplication" if es_modulo else "Service"),
-        ld_migas([("/", "Inicio"), ("/funcionalidades/", "Software"), (None, d["titulo"])]))
+    fichas = [ld_organizacion(),
+              ld_servicio(d["titulo"], d["entradilla"], "/funcionalidades/%s/" % slug,
+                          tipo="SoftwareApplication" if es_modulo else "Service"),
+              ld_migas([("/", "Inicio"), ("/funcionalidades/", "Software"),
+                        (None, d["titulo"])])]
+    if faq_ficha:
+        fichas.append(faq_ficha)
+    ld = ld_pagina(*fichas)
     return P.pagina(
         "%s · El software · Contaes" % d["titulo"],
         d["entradilla"][:158],
@@ -394,21 +424,7 @@ def pagina_area(area, titulo, entradilla, intro=(), dibujo="", preguntas=()):
 
 ''' % dibujo)
 
-    bloque_preguntas = ""
-    if preguntas:
-        items = "".join(
-            '    <details class="tarjeta revela" style="margin-bottom:12px">\n'
-            '      <summary style="cursor:pointer;font-weight:600;font-size:17px;'
-            'color:var(--tinta-fuerte)">%s</summary>\n'
-            '      <p style="margin-top:12px;color:var(--grafito)">%s</p>\n    </details>\n'
-            % (q, r) for q, r in preguntas)
-        bloque_preguntas = ('''<section class="seccion">
-  <div class="wrap estrecho">
-    <h2 style="margin-top:0">Lo que suelen preguntarnos de esto</h2>
-%s  </div>
-</section>
-
-''' % items)
+    bloque_preguntas, faq_ficha = bloque_faq(preguntas)
 
     cuerpo = '''%(enc)s
 
@@ -426,9 +442,13 @@ def pagina_area(area, titulo, entradilla, intro=(), dibujo="", preguntas=()):
         "preguntas": bloque_preguntas,
         "cierre": cierre(),
     }
+    fichas = [ld_organizacion(), ld_migas([("/", "Inicio"), (None, nombre_area)])]
+    if faq_ficha:
+        fichas.append(faq_ficha)
     return P.pagina("%s · Contaes" % titulo,
                     " ".join(entradilla.split())[:158],
-                    "%s/%s/" % (DOMINIO, area), cuerpo)
+                    "%s/%s/" % (DOMINIO, area), cuerpo,
+                    extra_head=ld_pagina(*fichas))
 
 
 # ─────────────────────────────────────────────────────────────────────
