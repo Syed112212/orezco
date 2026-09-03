@@ -329,6 +329,19 @@ footer small{font-size:13.5px;color:#8b93b5}
   .datos{grid-template-columns:1fr}
   .bloque:has(.op:not(.op-chica)){grid-template-columns:1fr}
 }
+/* -- El fondo -------------------------------------------------
+   Un lienzo pegado a la ventana; el contenido pasa por encima. La
+   barra NO entra en la regla de apilado: ya es sticky con z-index
+   60 en su bloque, y repetir 'position' aqui se lo quitaba.      */
+.fondo{
+  position:fixed;inset:0;z-index:0;pointer-events:none;display:block;
+  width:100%;height:100%;
+}
+main,footer{position:relative;z-index:1}
+/* En una pagina interior el fondo se aparta mas: ahi se viene a leer,
+   y un fondo que compite con un parrafo largo cansa. */
+body:not(.portada) .fondo{opacity:.55}
+
 /* ── Diagramas ───────────────────────────────────────────── */
 .dibujo{
   background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
@@ -544,6 +557,241 @@ PIE_JS = '''<script>
     if (b) { b.disabled = true; b.textContent = "Enviando..."; }
   });
 })();
+/* -- El fondo: laminas en un espacio con perspectiva ----------
+   Proyeccion en perspectiva de toda la vida: una lamina a
+   distancia z se ve a escala f/(f+z). Se pintan de la mas lejana
+   a la mas cercana para que se tapen bien, y el desenfoque y la
+   transparencia crecen con la distancia, que es lo que el ojo lee
+   como profundidad.
+
+   Las laminas se dibujan una vez en imagenes fuera de pantalla,
+   con el desenfoque ya aplicado. Cada cuadro solo las coloca con
+   su giro y su escala: repintar el desenfoque a cada cuadro
+   costaria mas que todo lo demas junto.                          */
+(function () {
+  var lienzo = document.getElementById("fondo");
+  if (!lienzo || !lienzo.getContext) return;
+  var ctx = lienzo.getContext("2d");
+  if (!ctx) return;
+
+  var FOCO = 900;            // distancia focal, en pixeles del mundo
+  var CERCA = 340;           // ninguna se acerca mas que esto
+  var HONDO = 1700;          // la lamina mas lejana
+  var CAPAS = 3;             // tres grados de desenfoque
+  var TINTAS = [
+    ["#2FBF9B", "#1F9EC4", "#eaf7f2"],   // el degradado de las barras del logo
+    ["#1F9EC4", "#1E6FB8", "#e9f4f9"],
+    ["#1E6FB8", "#1E3A5F", "#eaf1fa"],
+    ["#ffb110", "#f2a10a", "#fff5e2"],   // el acento, en una de cada cinco
+    ["#62aef0", "#1E6FB8", "#ecf4fd"]
+  ];
+  var ANCHO_L = 168, ALTO_L = 116, MARGEN = 26;  // la lamina, en su imagen
+
+  var MINIMO_ENTRE_CUADROS = 1000 / 30;   // 30 por segundo basta para algo tan lento
+  var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var estrecho = window.matchMedia("(max-width: 760px)").matches;
+  var CUANTAS = estrecho ? 8 : 18;
+
+  /* ---- las imagenes de las laminas, dibujadas una sola vez ---- */
+  var sellos = [];
+  function dibujaLamina(tinta, tipo, desenfoque) {
+    var d = document.createElement("canvas");
+    d.width = ANCHO_L + MARGEN * 2;
+    d.height = ALTO_L + MARGEN * 2;
+    var c = d.getContext("2d");
+    var x = MARGEN, y = MARGEN, r = 11;
+
+    function silueta() {
+      c.beginPath();
+      c.moveTo(x + r, y);
+      c.arcTo(x + ANCHO_L, y, x + ANCHO_L, y + ALTO_L, r);
+      c.arcTo(x + ANCHO_L, y + ALTO_L, x, y + ALTO_L, r);
+      c.arcTo(x, y + ALTO_L, x, y, r);
+      c.arcTo(x, y, x + ANCHO_L, y, r);
+      c.closePath();
+    }
+
+    c.save();
+    if (desenfoque > 0 && typeof c.filter === "string") c.filter = "blur(" + desenfoque + "px)";
+
+    // sombra baja y muy abierta: separa el panel sin ensuciarlo
+    c.shadowColor = "rgba(30,58,95,.13)";
+    c.shadowBlur = 22;
+    c.shadowOffsetY = 9;
+
+    // el cristal: blanco arriba, tenido abajo
+    var g = c.createLinearGradient(x, y, x + ANCHO_L * .5, y + ALTO_L);
+    g.addColorStop(0, "rgba(255,255,255,.97)");
+    g.addColorStop(1, tinta[2]);
+    c.fillStyle = g;
+    silueta();
+    c.fill();
+    c.shadowColor = "transparent";
+
+    // el canto encendido: es lo que hace que parezca vidrio y no papel
+    var bg = c.createLinearGradient(x, y, x + ANCHO_L, y + ALTO_L);
+    bg.addColorStop(0, tinta[0]);
+    bg.addColorStop(1, tinta[1]);
+    c.strokeStyle = bg;
+    c.globalAlpha = .42;
+    c.lineWidth = 1.4;
+    silueta();
+    c.stroke();
+    c.globalAlpha = 1;
+
+    // el reflejo que cruza la esquina de arriba
+    c.save();
+    silueta();
+    c.clip();
+    var rf = c.createLinearGradient(x, y, x + ANCHO_L * .8, y + ALTO_L * .8);
+    rf.addColorStop(0, "rgba(255,255,255,.85)");
+    rf.addColorStop(.45, "rgba(255,255,255,0)");
+    c.fillStyle = rf;
+    c.fillRect(x, y, ANCHO_L, ALTO_L);
+    c.restore();
+
+    // el contenido, siempre en color de marca: nada de gris
+    function barra(bx, by, an, al, alfa) {
+      var b = c.createLinearGradient(bx, by, bx + an, by);
+      b.addColorStop(0, tinta[0]);
+      b.addColorStop(1, tinta[1]);
+      c.fillStyle = b;
+      c.globalAlpha = alfa;
+      c.beginPath();
+      var rr = Math.min(al / 2, 3);
+      c.moveTo(bx + rr, by);
+      c.arcTo(bx + an, by, bx + an, by + al, rr);
+      c.arcTo(bx + an, by + al, bx, by + al, rr);
+      c.arcTo(bx, by + al, bx, by, rr);
+      c.arcTo(bx, by, bx + an, by, rr);
+      c.closePath();
+      c.fill();
+      c.globalAlpha = 1;
+    }
+
+    if (tipo === 0) {                 // las tres barras del logo
+      barra(x + 18, y + 26, 96, 9, .78);
+      barra(x + 18, y + 46, 96, 9, .58);
+      barra(x + 18, y + 66, 74, 9, .40);
+      barra(x + 18, y + 88, 46, 6, .22);
+    } else if (tipo === 1) {          // una tabla
+      barra(x + 18, y + 20, 54, 7, .72);
+      for (var j = 0; j < 4; j++) {
+        barra(x + 18, y + 40 + j * 16, 78, 6, .30 - j * .05);
+        barra(x + 106, y + 40 + j * 16, 44, 6, .18 - j * .03);
+      }
+    } else {                          // un cuadro de mando
+      barra(x + 18, y + 20, 54, 7, .72);
+      var altos = [20, 34, 27, 44, 37];
+      for (var k = 0; k < altos.length; k++)
+        barra(x + 20 + k * 26, y + ALTO_L - 18 - altos[k], 17, altos[k], .40 + k * .06);
+    }
+    c.restore();
+    return d;
+  }
+
+  for (var capa = 0; capa < CAPAS; capa++) {
+    var fila = [];
+    for (var ti = 0; ti < TINTAS.length; ti++)
+      for (var tipo = 0; tipo < 3; tipo++)
+        fila.push(dibujaLamina(TINTAS[ti], tipo, capa * 1.6));
+    sellos.push(fila);
+  }
+
+  /* ---- las laminas, repartidas por el espacio ---- */
+  var laminas = [];
+  for (var n = 0; n < CUANTAS; n++) {
+    laminas.push({
+      x: (Math.random() - .5) * 3000,
+      y: (Math.random() - .5) * 1900,
+      z: CERCA + Math.random() * HONDO,
+      giro: Math.random() * Math.PI * 2,          // sobre su eje vertical
+      vgiro: (.05 + Math.random() * .07) * (Math.random() < .5 ? -1 : 1),
+      ladeo: (Math.random() - .5) * .34,          // inclinacion en el plano
+      vladeo: (Math.random() - .5) * .05,
+      sube: 9 + Math.random() * 13,               // pixeles por segundo
+      sello: (Math.random() * 15) | 0
+    });
+  }
+  laminas.sort(function (a, b) { return b.z - a.z; });
+
+  /* ---- el bucle ---- */
+  var an = 0, al = 0, dpr = 1;
+  function mide() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    an = lienzo.clientWidth;
+    al = lienzo.clientHeight;
+    lienzo.width = Math.round(an * dpr);
+    lienzo.height = Math.round(al * dpr);
+  }
+  mide();
+  var remide;
+  window.addEventListener("resize", function () {
+    clearTimeout(remide);
+    remide = setTimeout(mide, 180);
+  }, { passive: true });
+
+  function pinta(dt) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, an, al);
+    var cx = an / 2, cy = al / 2;
+
+    for (var i = 0; i < laminas.length; i++) {
+      var l = laminas[i];
+      if (dt) {
+        l.y -= l.sube * dt;
+        if (l.y < -1100) l.y = 1100;
+        l.giro += l.vgiro * dt;
+        l.ladeo += l.vladeo * dt * .12;
+      }
+      var k = FOCO / (FOCO + l.z);              // la escala por perspectiva
+      var px = cx + l.x * k, py = cy + l.y * k;
+      var tam = k * 1.05;
+      if (px < -300 || px > an + 300 || py < -260 || py > al + 260) continue;
+
+      // el giro sobre el eje vertical: la lamina se estrecha al ponerse de canto
+      var canto = Math.cos(l.giro);
+      var estrecha = Math.abs(canto);
+      if (estrecha < .08) continue;             // de perfil no se ve
+
+      var capa = l.z < 480 ? 0 : (l.z < 1000 ? 1 : 2);
+      var img = sellos[capa][l.sello];
+      // El texto vive en la columna central. Los paneles no se quitan de
+      // enmedio -eso se notaria-, se apagan al acercarse a ella.
+      var centrado = Math.abs(px - cx) / (an * .5);
+      var paso = Math.min(1, Math.max(0, (centrado - .18) / .34));
+      var aire = .22 + .78 * paso * paso;
+      ctx.globalAlpha = (.42 - capa * .09) * Math.min(1, .35 + estrecha) * aire;
+      ctx.setTransform(
+        dpr * tam * estrecha * Math.cos(l.ladeo), dpr * tam * estrecha * Math.sin(l.ladeo),
+        dpr * tam * -Math.sin(l.ladeo), dpr * tam * Math.cos(l.ladeo),
+        dpr * px, dpr * py
+      );
+      ctx.drawImage(img, -img.width / 2, -img.height / 2);
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+  }
+
+  if (quieto) { pinta(0); return; }             // un cuadro y quieta
+
+  var antes = 0, vivo = true;
+  document.addEventListener("visibilitychange", function () {
+    vivo = !document.hidden;
+    if (vivo) { antes = 0; requestAnimationFrame(cuadro); }
+  });
+  function cuadro(ahora) {
+    if (!vivo) return;
+    requestAnimationFrame(cuadro);
+    // A treinta por segundo no se nota y se deja libre la mitad del hilo
+    // principal, que es el que dibuja el texto.
+    if (antes && ahora - antes < MINIMO_ENTRE_CUADROS) return;
+    var dt = antes ? Math.min((ahora - antes) / 1000, .08) : 0;
+    antes = ahora;
+    pinta(dt);
+  }
+  requestAnimationFrame(cuadro);
+})();
 document.getElementById("anio").textContent=new Date().getFullYear();
 </script>'''
 
@@ -610,6 +858,10 @@ def cabecera(base=""):
     modulos = [("funcionalidades/%s/" % s, n, d) for s, n, d in MODULOS]
     capacidades = [("funcionalidades/%s/" % s, n, d) for s, n, d in CAPACIDADES]
     return '''<a class="skip" href="#contenido">Saltar al contenido</a>
+<!-- El mismo fondo que la portada: laminas flotando en un espacio con
+     perspectiva. Aqui va mas tenue, porque en una pagina interior se
+     viene a leer. -->
+<canvas class="fondo" id="fondo" aria-hidden="true"></canvas>
 <nav class="nav" aria-label="Principal">
   <div class="nav-in">
     <a class="marca" href="%(base)s/">%(marca)s<span class="wordmark">cont<i>aes</i></span></a>
@@ -696,6 +948,26 @@ def pie(base=""):
     }
 
 
+def version_hoja():
+    """Huella corta de la hoja comun, para el parametro de cache.
+
+    Sin ella, un cambio de estilos no le llegaria a quien ya tuvo la
+    pagina abierta: el navegador seguiria sirviendo la hoja vieja."""
+    import hashlib
+    return hashlib.sha1(ESTILOS.encode("utf-8")).hexdigest()[:8]
+
+
+def escribe_hoja(raiz):
+    """Deja la hoja comun en assets/contaes.css."""
+    import os
+    destino = os.path.join(raiz, "assets", "contaes.css")
+    os.makedirs(os.path.dirname(destino), exist_ok=True)
+    with open(destino, "w", encoding="utf-8") as f:
+        f.write("/* La hoja comun del sitio. La genera plantilla.py: no se edita a mano. */" + chr(10))
+        f.write(ESTILOS)
+    return destino
+
+
 def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=False, extra_css=""):
     return '''<!doctype html>
 <html lang="es">
@@ -719,7 +991,8 @@ def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=Fal
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<style>%(estilos)s</style>
+<link rel="stylesheet" href="%(base)s/assets/contaes.css?v=%(version)s">
+%(estilos_extra)s
 </head>
 <body>
 %(cabecera)s
@@ -733,6 +1006,8 @@ def pagina(titulo, descripcion, url, cuerpo, extra_head="", base="", noindex=Fal
 ''' % {
         "titulo": titulo, "desc": descripcion, "url": url, "base": base,
         "robots": '<meta name="robots" content="noindex, follow">\n' if noindex else "",
-        "dominio": DOMINIO, "extra": extra_head, "estilos": ESTILOS + extra_css,
+        "dominio": DOMINIO, "extra": extra_head,
+        "version": version_hoja(),
+        "estilos_extra": ("<style>%s</style>" % extra_css) if extra_css else "",
         "cabecera": cabecera(base), "cuerpo": cuerpo, "pie": pie(base), "js": PIE_JS,
     }

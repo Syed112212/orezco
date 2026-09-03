@@ -49,24 +49,11 @@ def main():
     assert m, "no encontrado el pie en index.html"
     t = t[:m.start()] + P.pie("") + t[m.end():]
 
-    # ── el CSS, entre marcas ─────────────────────────────────────────
-    barra = trozo_de_estilos("/* ── La barra, con el menu por areas", "\n\n/* la marca animada")
-    pie_css = re.search(r"footer\{background:var\(--medianoche\).*?footer small\{[^\n]*\}", P.ESTILOS, re.S).group(0)
-    bloque = "%s\n%s\n\n%s\n%s\n" % (ABRE_CSS, barra, pie_css, CIERRA_CSS)
-
-    if ABRE_CSS in t:
-        i = t.index(ABRE_CSS)
-        j = t.index(CIERRA_CSS) + len(CIERRA_CSS) + 1
-        t = t[:i] + bloque + t[j:]
-    else:
-        # primera vez: se coloca donde estaba el CSS de la barra copiado
-        m = re.search(r"/\* La barra y su menu por areas:.*?\n(?=/\* la marca animada)", t, re.S)
-        assert m, "no encontrado el CSS de la barra en index.html"
-        t = t[:m.start()] + bloque + "\n" + t[m.end():]
-        # y el del pie, que estaba en otro sitio
-        m = re.search(r"footer\{background:var\(--medianoche\).*?footer small\{[^\n]*\}\n", t, re.S)
-        if m and m.start() > t.index(ABRE_CSS) + len(bloque):
-            t = t[:m.start()] + t[m.end():]
+    # El CSS ya no se copia: la portada enlaza assets/contaes.css como
+    # el resto del sitio. Copiarlo es lo que provoco tres veces el mismo
+    # fallo mudo, una clase declarada dos veces.
+    version = 'href="/assets/contaes.css?v=%s"' % P.version_hoja()
+    t = re.sub(r'href="/assets/contaes\.css\?v=[a-f0-9]*"', version, t)
 
     # ── el JS del menu ───────────────────────────────────────────────
     nuevo_js = re.search(r"(/\* -- El menu: por areas en escritorio.*?\n\}\)\(\);\n)", P.PIE_JS, re.S).group(1)

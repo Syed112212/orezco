@@ -1218,6 +1218,7 @@ def construir_sitemap(rutas):
 
 # ─────────────────────────────────────────────────────────────────────
 def main():
+    P.escribe_hoja(RAIZ)
     salidas = {}
 
     salidas["funcionalidades/index.html"] = pagina_funcionalidades()

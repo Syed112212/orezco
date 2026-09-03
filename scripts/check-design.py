@@ -45,6 +45,18 @@ def leer(nombre):
         return f.read()
 
 
+def hoja_comun():
+    """La hoja que ahora vive en assets/contaes.css.
+
+    Antes iba dentro de cada pagina. Al sacarla a un fichero, el
+    verificador dejo de verla y empezo a decir que faltaba medio sistema:
+    las reglas seguian ahi, solo que en otro sitio."""
+    ruta = os.path.join(RAIZ, "assets", "contaes.css")
+    if os.path.exists(ruta):
+        return io.open(ruta, encoding="utf-8").read()
+    return ""
+
+
 def css_de(html):
     m = re.search(r"<style>(.*?)</style>", html, re.S)
     css = m.group(1) if m else ""
@@ -336,7 +348,7 @@ def main():
 
     for nombre in PAGINAS:
         html = leer(nombre)
-        css = css_de(html)
+        css = css_de(html) + chr(10) + hoja_comun()
         regla_3d_sin_filtros(nombre, css)
         regla_un_solo_azul(nombre, css)
         regla_sombra_solo_flotantes(nombre, css)

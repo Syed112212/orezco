@@ -202,91 +202,7 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
 @keyframes parpadeo{50%{opacity:.35}}
 
 /* ── 5. Navegacion ───────────────────────────────────────── */
-/* ── El formulario que se rellena pinchando ──────────────── */
-.form{display:grid;gap:26px;max-width:720px;margin:0 auto;text-align:left}
-.bloque{border:0;padding:0;margin:0;display:grid;gap:10px}
-.bloque legend{font-size:17px;font-weight:600;color:var(--tinta-fuerte);padding:0;margin-bottom:2px}
-.bloque-pie{font-size:14px;color:var(--piedra);margin:-4px 0 6px}
-.bloque > .op,.bloque > label.op{margin:0}
-.bloque{grid-auto-flow:row}
-.bloque:has(.op:not(.op-chica)){grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-.bloque legend,.bloque-pie,.subs{grid-column:1/-1}
-
-/* La opcion: una superficie que se pincha. Sin sombra, sin color de
-   relleno hasta que se elige, y con la marca de elegido a la izquierda
-   para que se lea de un vistazo cual esta activa. */
-.op{
-  position:relative;display:flex;gap:10px;align-items:flex-start;
-  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-btn);
-  padding:12px 14px;cursor:pointer;
-  transition:border-color .16s ease,background .16s ease,transform .16s ease;
 }
-.op:hover{border-color:rgba(0,0,0,.2)}
-.op input{position:absolute;opacity:0;width:0;height:0}
-.op-cuerpo{display:grid;gap:2px;min-width:0}
-.op-tit{font-size:15px;font-weight:500;color:var(--tinta-fuerte);line-height:1.3}
-.op-pie{font-size:13px;color:var(--piedra);line-height:1.35}
-.op::before{
-  content:"";flex:0 0 auto;width:17px;height:17px;margin-top:1px;
-  border:1.5px solid rgba(0,0,0,.22);border-radius:50%;
-  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease;
-}
-.op:has(input[type=checkbox])::before{border-radius:var(--r-sm)}
-.op:has(input:checked){border-color:var(--azul);background:var(--azul-tinte)}
-.op:has(input:checked)::before{border-color:var(--azul);background:var(--azul)}
-/* El punto del boton de opcion: hueco blanco por fuera, azul dentro. */
-.op:has(input[type=radio]:checked)::before{box-shadow:inset 0 0 0 3px var(--blanco)}
-/* La casilla marcada lleva su marca de verificacion, que se lee mucho
-   mejor que un cuadrado de color a 17px. */
-.op:has(input[type=checkbox]:checked)::before{
-  background:var(--azul) no-repeat center/11px 11px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.4 4.6 9 10 3.2' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-.op:has(input:focus-visible){outline:2px solid var(--azul);outline-offset:2px}
-.op-chica{padding:10px 12px}
-.op-chica .op-tit{font-size:14.5px}
-
-.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.sub{display:grid;gap:7px;align-content:start}
-.sub-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra);margin:0}
-
-.datos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.dato{display:grid;gap:6px;font-size:14px;color:var(--piedra)}
-.dato i{font-style:normal;color:rgba(0,0,0,.34)}
-.dato-ancho{margin-top:14px}
-.dato input,.dato textarea{
-  font:inherit;font-size:15px;color:var(--tinta);
-  padding:11px 13px;background:var(--blanco);
-  border:1px solid var(--borde);border-radius:var(--r-btn);resize:vertical;
-  transition:border-color .16s ease,box-shadow .16s ease;
-}
-.dato input:focus,.dato textarea:focus{outline:0;border-color:var(--azul);box-shadow:0 0 0 3px var(--azul-tinte)}
-.form-nota{font-size:13px;color:var(--piedra);line-height:1.5}
-.form-nota a{color:var(--azul)}
-.form-acciones{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.form-alt{font-size:14px;color:var(--piedra)}
-.form-alt a{color:var(--azul)}
-@media(max-width:640px){
-  .datos{grid-template-columns:1fr}
-  .bloque:has(.op:not(.op-chica)){grid-template-columns:1fr}
-}
-
-/* ── Diagramas ───────────────────────────────────────────── */
-.dibujo{
-  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
-  padding:26px 24px 20px;margin:0;overflow:hidden;
-}
-.dibujo svg{width:100%;height:auto;display:block}
-.dibujo figcaption{
-  margin-top:16px;font-size:14px;color:var(--piedra);line-height:1.5;
-  padding-top:14px;border-top:1px solid var(--borde);
-}
-.dibujo .et{font:500 13px/1 var(--sans);fill:var(--tinta-fuerte)}
-.dibujo .et-p{font:400 11px/1 var(--sans);fill:var(--piedra)}
-.dibujo .caja{fill:var(--papel);stroke:var(--borde)}
-.dibujo .caja-viva{fill:var(--azul-tinte);stroke:rgba(0,117,222,.3)}
-.dibujo .linea{stroke:var(--borde);stroke-width:1.5;fill:none}
-.dibujo .barra{fill:var(--azul)}
 
 /* el punto que recorre el flujo: es lo que convierte cuatro cajas en un
    proceso con direccion */
@@ -345,70 +261,9 @@ h3{font-size:22px;font-weight:700;line-height:1.27;letter-spacing:-.011em;margin
   .viaja{opacity:1;transform:translateX(var(--p3))}
 }
 
-/* === barra y pie: los reescribe scripts/sync-portada.py === */
-/* ── La barra, con el menu por areas ─────────────────────── */
-.nav{position:sticky;top:0;z-index:60;background:rgba(246,245,244,.86);backdrop-filter:blur(12px);box-shadow:0 .7px 1.462px rgba(0,0,0,.015),0 3px 9px rgba(0,0,0,.03)}
-.nav-in{max-width:var(--ancho);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:12px;min-height:64px}
-.marca{display:flex;align-items:center;gap:9px;text-decoration:none}
-.marca svg{width:32px;height:32px}
-.marca span{font-size:21px}
-.nav-links{display:flex;gap:2px;align-items:center;margin:0 auto}
-.nav-links > a,.area > button{
-  display:inline-flex;align-items:center;gap:6px;
-  color:var(--apagado);font-family:var(--sans);font-size:15px;font-weight:500;text-decoration:none;
-  padding:10px 13px;border-radius:var(--r-btn);border:0;background:none;cursor:pointer;
-  transition:color .2s ease,background .2s ease;
-}
-.nav-links > a:hover,.nav-links > a:focus-visible,.area > button:hover,.area[data-abierta] > button{color:var(--tinta-fuerte);background:rgba(0,0,0,.04)}
-.area{position:relative}
-.area .punta{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .24s cubic-bezier(.22,1,.36,1)}
-.area[data-abierta] .punta{transform:rotate(-135deg) translateY(-2px)}
-.despliegue{
-  position:absolute;top:calc(100% + 8px);left:50%;translate:-50% 0;z-index:70;
-  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
-  box-shadow:0 18px 44px rgba(18,32,54,.14);padding:12px;
-  display:grid;gap:2px;min-width:320px;
-  visibility:hidden;opacity:0;transform:translateY(-8px) scale(.985);
-  transition:opacity .18s ease,transform .24s cubic-bezier(.22,1,.36,1),visibility 0s .18s;
-}
-.area[data-abierta] .despliegue{visibility:visible;opacity:1;transform:none;transition-delay:0s}
-.despliegue.doble{grid-template-columns:repeat(2,minmax(0,1fr));min-width:600px}
-.despliegue a{display:flex;gap:11px;align-items:flex-start;padding:9px 12px;border-radius:var(--r-btn);text-decoration:none;transition:background .16s ease}
-.op-ico{flex:0 0 auto;width:19px;height:19px;margin-top:1px;fill:none;stroke:var(--piedra);
-  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .16s ease}
-.despliegue a:hover .op-ico,.despliegue a:focus-visible .op-ico{stroke:var(--azul)}
-.ml-texto{display:grid;gap:2px;min-width:0}
-/* La linea entre grupos dice donde acaba un area y empieza otra, que en
-   un panel de veinte enlaces no se ve solo con el espacio. */
-.despliegue.doble .titulo-grupo:not(:first-child){
-  border-top:1px solid var(--borde);margin-top:8px;padding-top:14px;
-}
-.despliegue a:hover,.despliegue a:focus-visible{background:var(--niebla)}
-.despliegue a b{font-size:14.5px;font-weight:600;color:var(--tinta-fuerte)}
-.despliegue a span{font-size:13px;color:var(--piedra);line-height:1.4}
-.despliegue .titulo-grupo{grid-column:1/-1;padding:8px 12px 4px;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra)}
-.menu-btn{display:none;margin-left:auto;width:40px;height:40px;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:none;border:1px solid var(--borde);border-radius:var(--r-btn);cursor:pointer}
-.mb-linea{display:block;width:17px;height:1.5px;background:var(--tinta-fuerte);transition:transform .26s cubic-bezier(.22,1,.36,1),opacity .18s ease}
-.nav.abierta .mb-linea:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.nav.abierta .mb-linea:nth-child(2){opacity:0}
-.nav.abierta .mb-linea:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
-footer{background:var(--medianoche);color:#c6cbe0;padding:52px 0 34px}
-.foot-rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:28px 24px;margin-bottom:34px}
-.foot-rejilla > :first-child{grid-column:span 2;min-width:0}
-.foot-titulo{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#8b93b5;margin:0 0 12px;font-weight:600}
-.foot-col a{display:block;font-size:14px;color:#c6cbe0;text-decoration:none;padding:4px 0;transition:color .2s ease}
-.foot-col a:hover{color:#fff}
-.foot-marca{display:flex;align-items:center;gap:9px;margin-bottom:12px}
-.foot-marca svg{width:26px;height:26px}
-.foot-marca .wordmark{font-size:18px;color:#fff}
-.foot-marca .wordmark i{color:var(--verde)}
-.foot-nota{font-size:14px;color:#8b93b5;max-width:34ch;line-height:1.55}
-.foot-bajo{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center}
-.foot-bajo a{font-size:13.5px;color:#8b93b5;text-decoration:none}
-.foot-bajo a:hover{color:#fff}
-footer small{font-size:13.5px;color:#8b93b5}
-/* === fin de barra y pie === */
+/* La barra, el pie, el formulario y los diagramas vienen de
+   assets/contaes.css, que se enlaza arriba. Aqui solo va lo que
+   es propio de la portada. */
 
 /* ── 6. Portada ──────────────────────────────────────────── */
 .hero{padding:clamp(36px,6vw,72px) 0 var(--seccion);text-align:center}
@@ -695,15 +550,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 
 
 
-/* -- El fondo -------------------------------------------------
-   Un lienzo pegado a la ventana; el contenido pasa por encima. La
-   barra NO entra en la regla de apilado: ya es sticky con z-index
-   60 en su bloque, y repetir 'position' aqui se lo quitaba.      */
-.fondo{
-  position:fixed;inset:0;z-index:0;pointer-events:none;display:block;
-  width:100%;height:100%;
-}
-main,footer{position:relative;z-index:1}
 
 /* las secciones sin color propio dejan ver el fondo; las que lo
    tienen lo tapan, y eso da el ritmo */
@@ -850,12 +696,8 @@ main,footer{position:relative;z-index:1}
 </style>
 </head>
 
-<body>
+<body class="portada">
 
-<!-- El fondo: laminas flotando en un espacio con perspectiva. Es
-     decorativo, no informa ni enlaza, y va detras de todo. Se pinta en
-     canvas porque son decenas de piezas por cuadro. -->
-<canvas class="fondo" id="fondo" aria-hidden="true"></canvas>
 
 <!-- simbolos de marca, generados por scripts/build-logo.py -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -875,6 +717,10 @@ main,footer{position:relative;z-index:1}
 
 <a class="skip" href="#contenido">Saltar al contenido</a>
 
+<!-- El mismo fondo que la portada: laminas flotando en un espacio con
+     perspectiva. Aqui va mas tenue, porque en una pagina interior se
+     viene a leer. -->
+<canvas class="fondo" id="fondo" aria-hidden="true"></canvas>
 <nav class="nav" aria-label="Principal">
   <div class="nav-in">
     <a class="marca" href="/"><svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
@@ -1634,241 +1480,6 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   });
 })();
 
-/* -- El fondo: laminas en un espacio con perspectiva ----------
-   Proyeccion en perspectiva de toda la vida: una lamina a
-   distancia z se ve a escala f/(f+z). Se pintan de la mas lejana
-   a la mas cercana para que se tapen bien, y el desenfoque y la
-   transparencia crecen con la distancia, que es lo que el ojo lee
-   como profundidad.
-
-   Las laminas se dibujan una vez en imagenes fuera de pantalla,
-   con el desenfoque ya aplicado. Cada cuadro solo las coloca con
-   su giro y su escala: repintar el desenfoque a cada cuadro
-   costaria mas que todo lo demas junto.                          */
-(function () {
-  var lienzo = document.getElementById("fondo");
-  if (!lienzo || !lienzo.getContext) return;
-  var ctx = lienzo.getContext("2d");
-  if (!ctx) return;
-
-  var FOCO = 900;            // distancia focal, en pixeles del mundo
-  var CERCA = 340;           // ninguna se acerca mas que esto
-  var HONDO = 1700;          // la lamina mas lejana
-  var CAPAS = 3;             // tres grados de desenfoque
-  var TINTAS = [
-    ["#2FBF9B", "#1F9EC4", "#eaf7f2"],   // el degradado de las barras del logo
-    ["#1F9EC4", "#1E6FB8", "#e9f4f9"],
-    ["#1E6FB8", "#1E3A5F", "#eaf1fa"],
-    ["#ffb110", "#f2a10a", "#fff5e2"],   // el acento, en una de cada cinco
-    ["#62aef0", "#1E6FB8", "#ecf4fd"]
-  ];
-  var ANCHO_L = 168, ALTO_L = 116, MARGEN = 26;  // la lamina, en su imagen
-
-  var MINIMO_ENTRE_CUADROS = 1000 / 30;   // 30 por segundo basta para algo tan lento
-  var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var estrecho = window.matchMedia("(max-width: 760px)").matches;
-  var CUANTAS = estrecho ? 8 : 18;
-
-  /* ---- las imagenes de las laminas, dibujadas una sola vez ---- */
-  var sellos = [];
-  function dibujaLamina(tinta, tipo, desenfoque) {
-    var d = document.createElement("canvas");
-    d.width = ANCHO_L + MARGEN * 2;
-    d.height = ALTO_L + MARGEN * 2;
-    var c = d.getContext("2d");
-    var x = MARGEN, y = MARGEN, r = 11;
-
-    function silueta() {
-      c.beginPath();
-      c.moveTo(x + r, y);
-      c.arcTo(x + ANCHO_L, y, x + ANCHO_L, y + ALTO_L, r);
-      c.arcTo(x + ANCHO_L, y + ALTO_L, x, y + ALTO_L, r);
-      c.arcTo(x, y + ALTO_L, x, y, r);
-      c.arcTo(x, y, x + ANCHO_L, y, r);
-      c.closePath();
-    }
-
-    c.save();
-    if (desenfoque > 0 && typeof c.filter === "string") c.filter = "blur(" + desenfoque + "px)";
-
-    // sombra baja y muy abierta: separa el panel sin ensuciarlo
-    c.shadowColor = "rgba(30,58,95,.13)";
-    c.shadowBlur = 22;
-    c.shadowOffsetY = 9;
-
-    // el cristal: blanco arriba, tenido abajo
-    var g = c.createLinearGradient(x, y, x + ANCHO_L * .5, y + ALTO_L);
-    g.addColorStop(0, "rgba(255,255,255,.97)");
-    g.addColorStop(1, tinta[2]);
-    c.fillStyle = g;
-    silueta();
-    c.fill();
-    c.shadowColor = "transparent";
-
-    // el canto encendido: es lo que hace que parezca vidrio y no papel
-    var bg = c.createLinearGradient(x, y, x + ANCHO_L, y + ALTO_L);
-    bg.addColorStop(0, tinta[0]);
-    bg.addColorStop(1, tinta[1]);
-    c.strokeStyle = bg;
-    c.globalAlpha = .42;
-    c.lineWidth = 1.4;
-    silueta();
-    c.stroke();
-    c.globalAlpha = 1;
-
-    // el reflejo que cruza la esquina de arriba
-    c.save();
-    silueta();
-    c.clip();
-    var rf = c.createLinearGradient(x, y, x + ANCHO_L * .8, y + ALTO_L * .8);
-    rf.addColorStop(0, "rgba(255,255,255,.85)");
-    rf.addColorStop(.45, "rgba(255,255,255,0)");
-    c.fillStyle = rf;
-    c.fillRect(x, y, ANCHO_L, ALTO_L);
-    c.restore();
-
-    // el contenido, siempre en color de marca: nada de gris
-    function barra(bx, by, an, al, alfa) {
-      var b = c.createLinearGradient(bx, by, bx + an, by);
-      b.addColorStop(0, tinta[0]);
-      b.addColorStop(1, tinta[1]);
-      c.fillStyle = b;
-      c.globalAlpha = alfa;
-      c.beginPath();
-      var rr = Math.min(al / 2, 3);
-      c.moveTo(bx + rr, by);
-      c.arcTo(bx + an, by, bx + an, by + al, rr);
-      c.arcTo(bx + an, by + al, bx, by + al, rr);
-      c.arcTo(bx, by + al, bx, by, rr);
-      c.arcTo(bx, by, bx + an, by, rr);
-      c.closePath();
-      c.fill();
-      c.globalAlpha = 1;
-    }
-
-    if (tipo === 0) {                 // las tres barras del logo
-      barra(x + 18, y + 26, 96, 9, .78);
-      barra(x + 18, y + 46, 96, 9, .58);
-      barra(x + 18, y + 66, 74, 9, .40);
-      barra(x + 18, y + 88, 46, 6, .22);
-    } else if (tipo === 1) {          // una tabla
-      barra(x + 18, y + 20, 54, 7, .72);
-      for (var j = 0; j < 4; j++) {
-        barra(x + 18, y + 40 + j * 16, 78, 6, .30 - j * .05);
-        barra(x + 106, y + 40 + j * 16, 44, 6, .18 - j * .03);
-      }
-    } else {                          // un cuadro de mando
-      barra(x + 18, y + 20, 54, 7, .72);
-      var altos = [20, 34, 27, 44, 37];
-      for (var k = 0; k < altos.length; k++)
-        barra(x + 20 + k * 26, y + ALTO_L - 18 - altos[k], 17, altos[k], .40 + k * .06);
-    }
-    c.restore();
-    return d;
-  }
-
-  for (var capa = 0; capa < CAPAS; capa++) {
-    var fila = [];
-    for (var ti = 0; ti < TINTAS.length; ti++)
-      for (var tipo = 0; tipo < 3; tipo++)
-        fila.push(dibujaLamina(TINTAS[ti], tipo, capa * 1.6));
-    sellos.push(fila);
-  }
-
-  /* ---- las laminas, repartidas por el espacio ---- */
-  var laminas = [];
-  for (var n = 0; n < CUANTAS; n++) {
-    laminas.push({
-      x: (Math.random() - .5) * 3000,
-      y: (Math.random() - .5) * 1900,
-      z: CERCA + Math.random() * HONDO,
-      giro: Math.random() * Math.PI * 2,          // sobre su eje vertical
-      vgiro: (.05 + Math.random() * .07) * (Math.random() < .5 ? -1 : 1),
-      ladeo: (Math.random() - .5) * .34,          // inclinacion en el plano
-      vladeo: (Math.random() - .5) * .05,
-      sube: 9 + Math.random() * 13,               // pixeles por segundo
-      sello: (Math.random() * 15) | 0
-    });
-  }
-  laminas.sort(function (a, b) { return b.z - a.z; });
-
-  /* ---- el bucle ---- */
-  var an = 0, al = 0, dpr = 1;
-  function mide() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    an = lienzo.clientWidth;
-    al = lienzo.clientHeight;
-    lienzo.width = Math.round(an * dpr);
-    lienzo.height = Math.round(al * dpr);
-  }
-  mide();
-  var remide;
-  window.addEventListener("resize", function () {
-    clearTimeout(remide);
-    remide = setTimeout(mide, 180);
-  }, { passive: true });
-
-  function pinta(dt) {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, an, al);
-    var cx = an / 2, cy = al / 2;
-
-    for (var i = 0; i < laminas.length; i++) {
-      var l = laminas[i];
-      if (dt) {
-        l.y -= l.sube * dt;
-        if (l.y < -1100) l.y = 1100;
-        l.giro += l.vgiro * dt;
-        l.ladeo += l.vladeo * dt * .12;
-      }
-      var k = FOCO / (FOCO + l.z);              // la escala por perspectiva
-      var px = cx + l.x * k, py = cy + l.y * k;
-      var tam = k * 1.05;
-      if (px < -300 || px > an + 300 || py < -260 || py > al + 260) continue;
-
-      // el giro sobre el eje vertical: la lamina se estrecha al ponerse de canto
-      var canto = Math.cos(l.giro);
-      var estrecha = Math.abs(canto);
-      if (estrecha < .08) continue;             // de perfil no se ve
-
-      var capa = l.z < 480 ? 0 : (l.z < 1000 ? 1 : 2);
-      var img = sellos[capa][l.sello];
-      // El texto vive en la columna central. Los paneles no se quitan de
-      // enmedio -eso se notaria-, se apagan al acercarse a ella.
-      var centrado = Math.abs(px - cx) / (an * .5);
-      var paso = Math.min(1, Math.max(0, (centrado - .18) / .34));
-      var aire = .22 + .78 * paso * paso;
-      ctx.globalAlpha = (.42 - capa * .09) * Math.min(1, .35 + estrecha) * aire;
-      ctx.setTransform(
-        dpr * tam * estrecha * Math.cos(l.ladeo), dpr * tam * estrecha * Math.sin(l.ladeo),
-        dpr * tam * -Math.sin(l.ladeo), dpr * tam * Math.cos(l.ladeo),
-        dpr * px, dpr * py
-      );
-      ctx.drawImage(img, -img.width / 2, -img.height / 2);
-    }
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.globalAlpha = 1;
-  }
-
-  if (quieto) { pinta(0); return; }             // un cuadro y quieta
-
-  var antes = 0, vivo = true;
-  document.addEventListener("visibilitychange", function () {
-    vivo = !document.hidden;
-    if (vivo) { antes = 0; requestAnimationFrame(cuadro); }
-  });
-  function cuadro(ahora) {
-    if (!vivo) return;
-    requestAnimationFrame(cuadro);
-    // A treinta por segundo no se nota y se deja libre la mitad del hilo
-    // principal, que es el que dibuja el texto.
-    if (antes && ahora - antes < MINIMO_ENTRE_CUADROS) return;
-    var dt = antes ? Math.min((ahora - antes) / 1000, .08) : 0;
-    antes = ahora;
-    pinta(dt);
-  }
-  requestAnimationFrame(cuadro);
-})();
 
 /* -- El menu: por areas en escritorio, plegable en movil ------
    Un solo mecanismo para los dos: el atributo data-abierta en el
