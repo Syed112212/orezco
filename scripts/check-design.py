@@ -196,7 +196,7 @@ def regla_variables(nombre, css):
     # Las que se declaran en linea, sobre cada elemento, y por tanto no
     # aparecen en la hoja: los saltos del punto que recorre un diagrama
     # y el largo del trazo que se dibuja solo.
-    EN_LINEA = {"--i", "--mark-bg", "--l", "--lado", "--largo", "--p1", "--p2", "--p3"}
+    EN_LINEA = {"--i", "--mark-bg", "--l", "--lado", "--largo", "--p1", "--p2", "--p3", "--r"}
     huerfanas = usadas - declaradas - con_defecto - EN_LINEA
     for v in sorted(huerfanas):
         fallo("variables", "%s: se usa var(%s) pero no esta declarada." % (nombre, v))
