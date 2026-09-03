@@ -17,7 +17,8 @@ def flujo_modelo():
          ("Tú lo confirmas", "un botón, cuando lo veas bien"),
          ("Un asesor lo revisa", "y lo firma con su nombre"),
          ("Presentado", "el justificante, en tu panel")],
-        "Así se presenta un modelo 303. El programa lo calcula sobre los libros que ya "
+        actores=("El programa", "Tú", "Un asesor colegiado", "Hacienda"),
+        pie="Así se presenta un modelo 303. El programa lo calcula sobre los libros que ya "
         "están al día, tú confirmas, y una persona colegiada lo revisa, lo firma y lo "
         "presenta. El justificante vuelve a tu panel. Tú no entras en la sede de Hacienda.")
 

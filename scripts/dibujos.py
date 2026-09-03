@@ -38,24 +38,79 @@ ESTILOS = '''
 .dibujo .linea{stroke:var(--borde);stroke-width:1.5;fill:none}
 .dibujo .barra{fill:var(--azul)}
 
-/* el punto que recorre el flujo: es lo que convierte cuatro cajas en un
-   proceso con direccion */
-.viaja{animation:viaja 5.2s cubic-bezier(.5,0,.5,1) infinite}
-@keyframes viaja{
-  0%,6%    {transform:translateX(0);opacity:0}
-  10%      {opacity:1}
-  28%,34%  {transform:translateX(var(--p1))}
-  52%,58%  {transform:translateX(var(--p2))}
-  76%,88%  {transform:translateX(var(--p3));opacity:1}
-  96%,100% {transform:translateX(var(--p3));opacity:0}
+/* ── El flujo: quien hace cada paso ──────────────────────────────────
+   Era un SVG con cuatro cajas grises identicas y un punto azul flotando
+   encima de la tercera. Dos problemas: no se veia quien hace que, que es
+   lo unico que este dibujo tiene que contar, y en el movil el texto
+   acababa en seis pixeles porque el SVG se escalaba entero. */
+.flujo-caja{position:relative}
+.flujo{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.flujo-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.flujo-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* El carril con el punto que lo recorre. Pasa por debajo de los nodos,
+   asi que el punto va por la linea y no por encima de una caja. */
+.fl-carril{position:absolute;left:6px;top:7px;height:2px;
+  background:var(--borde);border-radius:2px}
+.flujo-caja:has(.flujo-4) .fl-carril{right:calc((100% - 42px) / 4 - 6px)}
+.flujo-caja:has(.flujo-3) .fl-carril{right:calc((100% - 28px) / 3 - 6px)}
+.fl-carril i{position:absolute;top:-4px;left:-5px;width:10px;height:10px;
+  border-radius:50%;background:var(--azul);
+  animation:fl-viaja 6s cubic-bezier(.55,0,.45,1) infinite}
+@keyframes fl-viaja{
+  0%,4%{left:-5px;opacity:0}
+  8%{opacity:1}
+  26%,32%{left:calc(33.333% - 5px)}
+  52%,58%{left:calc(66.666% - 5px)}
+  78%,92%{left:calc(100% - 5px);opacity:1}
+  98%,100%{left:calc(100% - 5px);opacity:0}
 }
-/* cada caja se enciende cuando el punto llega a ella */
-.enciende{animation:enciende-caja 5.2s linear infinite}
-@keyframes enciende-caja{0%,100%{opacity:0}}
-.paso-1 .enciende{animation-delay:0s}
-.paso-2 .enciende{animation-delay:1.35s}
-.paso-3 .enciende{animation-delay:2.7s}
-.paso-4 .enciende{animation-delay:4s}
+.flujo-3 .fl-carril i{animation-name:fl-viaja-3}
+@keyframes fl-viaja-3{
+  0%,4%{left:-5px;opacity:0}
+  8%{opacity:1}
+  34%,42%{left:calc(50% - 5px)}
+  70%,92%{left:calc(100% - 5px);opacity:1}
+  98%,100%{left:calc(100% - 5px);opacity:0}
+}
+
+.fl-paso{position:relative;padding-top:26px;display:flex;flex-direction:column}
+.fl-nodo{position:absolute;top:2px;left:0;width:12px;height:12px;
+  border-radius:50%;background:var(--blanco);
+  border:2px solid var(--borde)}
+.fl-paso:nth-child(1) .fl-nodo{border-color:var(--azul)}
+.fl-paso:nth-child(2) .fl-nodo{border-color:var(--marigold)}
+.fl-paso:nth-child(3) .fl-nodo{border-color:var(--medianoche)}
+.fl-paso.es-final .fl-nodo{background:var(--medianoche);
+  border-color:var(--medianoche)}
+.fl-actor{margin:0 0 6px;font:600 11px/1.2 var(--sans);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--piedra)}
+.fl-paso:nth-child(1) .fl-actor{color:var(--azul)}
+.fl-paso:nth-child(2) .fl-actor{color:#a06c00}
+.fl-paso:nth-child(3) .fl-actor{color:var(--medianoche)}
+.fl-paso:nth-child(4) .fl-actor{color:var(--medianoche)}
+
+.fl-tarjeta{flex:1;background:var(--papel);border:1px solid var(--borde);
+  border-radius:12px;padding:14px 16px 16px}
+.fl-paso.es-final .fl-tarjeta{background:var(--medianoche);
+  border-color:var(--medianoche)}
+.fl-tit{margin:0;font:600 15px/1.3 var(--sans);color:var(--tinta-fuerte)}
+.fl-sub{margin:5px 0 0;font:400 13px/1.45 var(--sans);color:var(--piedra)}
+.fl-paso.es-final .fl-tit{color:var(--blanco)}
+.fl-paso.es-final .fl-sub{color:rgba(255,255,255,.72)}
+
+@media(max-width:760px){
+  .flujo,.flujo-3,.flujo-4{grid-template-columns:1fr;gap:10px}
+  .fl-carril{left:5px;right:auto;top:8px;bottom:8px;width:2px;height:auto}
+  .fl-carril i{animation:none;top:0;left:-4px}
+  .flujo-caja:has(.flujo-4) .fl-carril,
+  .flujo-caja:has(.flujo-3) .fl-carril{right:auto}
+  .fl-paso{padding:0 0 0 26px}
+  .fl-nodo{top:16px;left:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .fl-carril i{animation:none;left:calc(100% - 5px)}
+}
 
 /* la linea que se dibuja sola */
 .traza{stroke-dasharray:var(--largo);stroke-dashoffset:var(--largo);
@@ -107,38 +162,47 @@ def _marco(svg, pie, alto=200, ancho=860):
 # ─────────────────────────────────────────────────────────────────────
 # 1. Un flujo de tres o cuatro pasos
 # ─────────────────────────────────────────────────────────────────────
-def flujo(pasos, pie):
-    """pasos: [(titulo, linea corta)] de 3 o 4."""
-    n = len(pasos)
-    ancho_caja = 178 if n == 4 else 220
-    hueco = (860 - 40 - ancho_caja * n) / (n - 1)
-    piezas, centros = [], []
-    for i, (titulo, sub) in enumerate(pasos):
-        x = 20 + i * (ancho_caja + hueco)
-        centros.append(x + ancho_caja / 2)
-        piezas.append(
-            '    <g class="paso-%d">\n'
-            '      <rect class="caja" x="%.0f" y="52" width="%d" height="72" rx="10"/>\n'
-            '      <rect class="caja-viva enciende" x="%.0f" y="52" width="%d" height="72" rx="10"/>\n'
-            '      <text class="et" x="%.0f" y="84">%s</text>\n'
-            '      <text class="et-p" x="%.0f" y="102">%s</text>\n'
-            '    </g>' % (i + 1, x, ancho_caja, x, ancho_caja,
-                          x + 16, titulo, x + 16, sub))
-        if i < n - 1:
-            x2 = x + ancho_caja
-            piezas.append(
-                '    <path class="linea" d="M%.0f 88 H%.0f" marker-end="url(#punta)"/>'
-                % (x2 + 6, x2 + hueco - 8))
+def flujo(pasos, pie, actores=None):
+    """pasos: [(titulo, linea corta)] de 3 o 4. actores: quien hace cada uno.
 
-    saltos = "".join("--p%d:%.0fpx;" % (j, centros[j] - centros[0]) for j in range(1, n))
-    piezas.append(
-        '    <g class="viaja" style="%s">\n'
-        '      <circle cx="%.0f" cy="30" r="7" fill="var(--azul)"/>\n'
-        '    </g>' % (saltos, centros[0]))
-    defs = ('    <defs><marker id="punta" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" '
-            'markerHeight="6" orient="auto"><path d="M0 1 L7 4 L0 7" fill="none" '
-            'stroke="var(--borde)" stroke-width="1.5"/></marker></defs>')
-    return _marco(defs + "\n" + "\n".join(piezas), pie, alto=150)
+    Va en HTML y no en SVG a proposito. Estaba en SVG con las cajas
+    puestas a mano en pixeles, y en el movil se escalaba entero: el texto
+    acababa en seis pixeles. En HTML se apila solo.
+
+    Cuando se pasan los actores, cada paso dice encima quien lo hace. En
+    el flujo del modelo 303 eso es justo lo que hay que ver, porque lo
+    que separa esto de un programa suelto es que en medio hay una persona
+    colegiada que firma. Cuatro cajas iguales no lo cuentan.
+    """
+    n = len(pasos)
+    actores = list(actores or [])
+    piezas = []
+    for i, (titulo, sub) in enumerate(pasos):
+        quien = actores[i] if i < len(actores) else ""
+        ultimo = " es-final" if i == n - 1 else ""
+        piezas.append(
+            '    <li class="fl-paso%s">\n'
+            '      <span class="fl-nodo" aria-hidden="true"></span>\n'
+            '%s'
+            '      <div class="fl-tarjeta">\n'
+            '        <p class="fl-tit">%s</p>\n'
+            '        <p class="fl-sub">%s</p>\n'
+            '      </div>\n'
+            '    </li>'
+            % (ultimo,
+               ('      <p class="fl-actor">%s</p>\n' % quien) if quien else "",
+               titulo, sub))
+
+    # El carril va fuera de la lista. Un <span> suelto dentro de un <ol>
+    # no es HTML valido, y ademas obligaba a contar los pasos desde el
+    # segundo, que es como se descuadraron los colores.
+    return ('<figure class="dibujo">\n'
+            '  <div class="flujo-caja">\n'
+            '    <span class="fl-carril" aria-hidden="true"><i></i></span>\n'
+            '    <ol class="flujo flujo-%d">\n%s\n    </ol>\n'
+            '  </div>\n'
+            '  <figcaption>%s</figcaption>\n</figure>'
+            % (n, "\n".join(piezas), pie))
 
 
 # ─────────────────────────────────────────────────────────────────────

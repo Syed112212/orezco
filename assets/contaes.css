@@ -231,6 +231,22 @@ footer small{font-size:13.5px;color:#8b93b5}
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+/* ── El carril que contesta mientras rellenas ────────────────────── */
+.form-avance{margin-bottom:22px}
+.form-avance-barra{height:4px;border-radius:9999px;background:var(--borde);
+  overflow:hidden}
+.form-avance-barra i{display:block;height:100%;width:0;border-radius:9999px;
+  background:var(--azul);transition:width .35s cubic-bezier(.4,0,.2,1)}
+.form-avance-texto{margin:10px 0 0;font-size:13px;color:var(--piedra)}
+.form-resumen{margin-bottom:22px;padding-bottom:20px;
+  border-bottom:1px solid var(--borde)}
+.form-resumen .etiqueta{margin-bottom:12px}
+.form-resumen dl{margin:0;display:grid;gap:10px}
+.form-resumen dt{font-size:12px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);font-weight:600;margin-bottom:2px}
+.form-resumen dd{margin:0;font-size:14px;line-height:1.45;
+  color:var(--tinta-fuerte)}
+.form-luego .pasos-lado li{padding-bottom:14px}
 /* ── El formulario que se rellena pinchando ──────────────── */
 .form{display:grid;gap:26px;max-width:720px;margin:0 auto;text-align:left}
 .bloque{border:0;padding:0;margin:0;display:grid;gap:10px}
@@ -299,6 +315,7 @@ footer small{font-size:13.5px;color:#8b93b5}
   .datos{grid-template-columns:1fr}
   .bloque:has(.op:not(.op-chica)){grid-template-columns:1fr}
 }
+
 /* -- El fondo -------------------------------------------------
    Un lienzo pegado a la ventana; el contenido pasa por encima. La
    barra NO entra en la regla de apilado: ya es sticky con z-index
@@ -311,7 +328,6 @@ main,footer{position:relative;z-index:1}
 /* En una pagina interior el fondo se aparta mas: ahi se viene a leer,
    y un fondo que compite con un parrafo largo cansa. */
 body:not(.portada) .fondo{opacity:.55}
-
 /* ── Que incluye ─────────────────────────────────────────────
    En rejilla y no en columna: siete puntos sueltos apilados se
    leen como un parrafo largo, que es justo lo que no son.      */
@@ -351,30 +367,85 @@ body:not(.portada) .fondo{opacity:.55}
   padding-top:14px;border-top:1px solid var(--borde);
 }
 .dibujo .et{font:500 13px/1 var(--sans);fill:var(--tinta-fuerte)}
-.dibujo .et-p{font:400 11.5px/1 var(--sans);fill:var(--piedra)}
+.dibujo .et-p{font:400 11px/1 var(--sans);fill:var(--piedra)}
 .dibujo .caja{fill:var(--papel);stroke:var(--borde)}
 .dibujo .caja-viva{fill:var(--azul-tinte);stroke:rgba(0,117,222,.3)}
 .dibujo .linea{stroke:var(--borde);stroke-width:1.5;fill:none}
 .dibujo .barra{fill:var(--azul)}
 
-/* el punto que recorre el flujo: es lo que convierte cuatro cajas en un
-   proceso con direccion */
-.viaja{animation:viaja 5.2s cubic-bezier(.5,0,.5,1) infinite}
-@keyframes viaja{
-  0%,6%    {transform:translateX(0);opacity:0}
-  10%      {opacity:1}
-  28%,34%  {transform:translateX(var(--p1))}
-  52%,58%  {transform:translateX(var(--p2))}
-  76%,88%  {transform:translateX(var(--p3));opacity:1}
-  96%,100% {transform:translateX(var(--p3));opacity:0}
+/* ── El flujo: quien hace cada paso ──────────────────────────────────
+   Era un SVG con cuatro cajas grises identicas y un punto azul flotando
+   encima de la tercera. Dos problemas: no se veia quien hace que, que es
+   lo unico que este dibujo tiene que contar, y en el movil el texto
+   acababa en seis pixeles porque el SVG se escalaba entero. */
+.flujo-caja{position:relative}
+.flujo{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.flujo-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.flujo-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* El carril con el punto que lo recorre. Pasa por debajo de los nodos,
+   asi que el punto va por la linea y no por encima de una caja. */
+.fl-carril{position:absolute;left:6px;top:7px;height:2px;
+  background:var(--borde);border-radius:2px}
+.flujo-caja:has(.flujo-4) .fl-carril{right:calc((100% - 42px) / 4 - 6px)}
+.flujo-caja:has(.flujo-3) .fl-carril{right:calc((100% - 28px) / 3 - 6px)}
+.fl-carril i{position:absolute;top:-4px;left:-5px;width:10px;height:10px;
+  border-radius:50%;background:var(--azul);
+  animation:fl-viaja 6s cubic-bezier(.55,0,.45,1) infinite}
+@keyframes fl-viaja{
+  0%,4%{left:-5px;opacity:0}
+  8%{opacity:1}
+  26%,32%{left:calc(33.333% - 5px)}
+  52%,58%{left:calc(66.666% - 5px)}
+  78%,92%{left:calc(100% - 5px);opacity:1}
+  98%,100%{left:calc(100% - 5px);opacity:0}
 }
-/* cada caja se enciende cuando el punto llega a ella */
-.enciende{animation:enciende-caja 5.2s linear infinite}
-@keyframes enciende-caja{0%,100%{opacity:0}}
-.paso-1 .enciende{animation-delay:0s}
-.paso-2 .enciende{animation-delay:1.35s}
-.paso-3 .enciende{animation-delay:2.7s}
-.paso-4 .enciende{animation-delay:4s}
+.flujo-3 .fl-carril i{animation-name:fl-viaja-3}
+@keyframes fl-viaja-3{
+  0%,4%{left:-5px;opacity:0}
+  8%{opacity:1}
+  34%,42%{left:calc(50% - 5px)}
+  70%,92%{left:calc(100% - 5px);opacity:1}
+  98%,100%{left:calc(100% - 5px);opacity:0}
+}
+
+.fl-paso{position:relative;padding-top:26px;display:flex;flex-direction:column}
+.fl-nodo{position:absolute;top:2px;left:0;width:12px;height:12px;
+  border-radius:50%;background:var(--blanco);
+  border:2px solid var(--borde)}
+.fl-paso:nth-child(1) .fl-nodo{border-color:var(--azul)}
+.fl-paso:nth-child(2) .fl-nodo{border-color:var(--marigold)}
+.fl-paso:nth-child(3) .fl-nodo{border-color:var(--medianoche)}
+.fl-paso.es-final .fl-nodo{background:var(--medianoche);
+  border-color:var(--medianoche)}
+.fl-actor{margin:0 0 6px;font:600 11px/1.2 var(--sans);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--piedra)}
+.fl-paso:nth-child(1) .fl-actor{color:var(--azul)}
+.fl-paso:nth-child(2) .fl-actor{color:#a06c00}
+.fl-paso:nth-child(3) .fl-actor{color:var(--medianoche)}
+.fl-paso:nth-child(4) .fl-actor{color:var(--medianoche)}
+
+.fl-tarjeta{flex:1;background:var(--papel);border:1px solid var(--borde);
+  border-radius:12px;padding:14px 16px 16px}
+.fl-paso.es-final .fl-tarjeta{background:var(--medianoche);
+  border-color:var(--medianoche)}
+.fl-tit{margin:0;font:600 15px/1.3 var(--sans);color:var(--tinta-fuerte)}
+.fl-sub{margin:5px 0 0;font:400 13px/1.45 var(--sans);color:var(--piedra)}
+.fl-paso.es-final .fl-tit{color:var(--blanco)}
+.fl-paso.es-final .fl-sub{color:rgba(255,255,255,.72)}
+
+@media(max-width:760px){
+  .flujo,.flujo-3,.flujo-4{grid-template-columns:1fr;gap:10px}
+  .fl-carril{left:5px;right:auto;top:8px;bottom:8px;width:2px;height:auto}
+  .fl-carril i{animation:none;top:0;left:-4px}
+  .flujo-caja:has(.flujo-4) .fl-carril,
+  .flujo-caja:has(.flujo-3) .fl-carril{right:auto}
+  .fl-paso{padding:0 0 0 26px}
+  .fl-nodo{top:16px;left:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .fl-carril i{animation:none;left:calc(100% - 5px)}
+}
 
 /* la linea que se dibuja sola */
 .traza{stroke-dasharray:var(--largo);stroke-dashoffset:var(--largo);
@@ -413,6 +484,7 @@ body:not(.portada) .fondo{opacity:.55}
   .traza{stroke-dashoffset:0}
   .viaja{opacity:1;transform:translateX(var(--p3))}
 }
+
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
 @media(max-width:980px){
   .rejilla,.rejilla-2{grid-template-columns:1fr}

@@ -104,6 +104,9 @@ MARCA_SVG = '''<svg class="marca-svg" viewBox="0 0 200 200" aria-hidden="true">
 MARCA_BLANCA = (MARCA_SVG.replace("#1E3A5F", "#ffffff").replace("#2FBF9B", "#ffffff")
                 .replace("#1F9EC4", "#ffffff").replace("#1E6FB8", "#ffffff"))
 
+import dibujos as _D
+import formulario as _F
+
 ESTILOS = '''
 :root{
   color-scheme:light;
@@ -336,74 +339,8 @@ footer small{font-size:13.5px;color:#8b93b5}
 .skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--tinta-fuerte);color:#fff;padding:12px 18px;border-radius:0 0 var(--r-btn) 0;text-decoration:none}
 .skip:focus{left:0}
 :focus-visible{outline:2px solid var(--azul);outline-offset:3px}
-/* ── El formulario que se rellena pinchando ──────────────── */
-.form{display:grid;gap:26px;max-width:720px;margin:0 auto;text-align:left}
-.bloque{border:0;padding:0;margin:0;display:grid;gap:10px}
-.bloque legend{font-size:17px;font-weight:600;color:var(--tinta-fuerte);padding:0;margin-bottom:2px}
-.bloque-pie{font-size:14px;color:var(--piedra);margin:-4px 0 6px}
-.bloque > .op,.bloque > label.op{margin:0}
-.bloque{grid-auto-flow:row}
-.bloque:has(.op:not(.op-chica)){grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-.bloque legend,.bloque-pie,.subs{grid-column:1/-1}
+/*@FORM_CSS@*/
 
-/* La opcion: una superficie que se pincha. Sin sombra, sin color de
-   relleno hasta que se elige, y con la marca de elegido a la izquierda
-   para que se lea de un vistazo cual esta activa. */
-.op{
-  position:relative;display:flex;gap:10px;align-items:flex-start;
-  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-btn);
-  padding:12px 14px;cursor:pointer;
-  transition:border-color .16s ease,background .16s ease,transform .16s ease;
-}
-.op:hover{border-color:rgba(0,0,0,.2)}
-.op input{position:absolute;opacity:0;width:0;height:0}
-.op-cuerpo{display:grid;gap:2px;min-width:0}
-.op-tit{font-size:15px;font-weight:500;color:var(--tinta-fuerte);line-height:1.3}
-.op-pie{font-size:13px;color:var(--piedra);line-height:1.35}
-.op::before{
-  content:"";flex:0 0 auto;width:17px;height:17px;margin-top:1px;
-  border:1.5px solid rgba(0,0,0,.22);border-radius:50%;
-  transition:border-color .16s ease,background .16s ease,box-shadow .16s ease;
-}
-.op:has(input[type=checkbox])::before{border-radius:var(--r-sm)}
-.op:has(input:checked){border-color:var(--azul);background:var(--azul-tinte)}
-.op:has(input:checked)::before{border-color:var(--azul);background:var(--azul)}
-/* El punto del boton de opcion: hueco blanco por fuera, azul dentro. */
-.op:has(input[type=radio]:checked)::before{box-shadow:inset 0 0 0 3px var(--blanco)}
-/* La casilla marcada lleva su marca de verificacion, que se lee mucho
-   mejor que un cuadrado de color a 17px. */
-.op:has(input[type=checkbox]:checked)::before{
-  background:var(--azul) no-repeat center/11px 11px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.4 4.6 9 10 3.2' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-}
-.op:has(input:focus-visible){outline:2px solid var(--azul);outline-offset:2px}
-.op-chica{padding:10px 12px}
-.op-chica .op-tit{font-size:14.5px}
-
-.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.sub{display:grid;gap:7px;align-content:start}
-.sub-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra);margin:0}
-
-.datos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.dato{display:grid;gap:6px;font-size:14px;color:var(--piedra)}
-.dato i{font-style:normal;color:rgba(0,0,0,.34)}
-.dato-ancho{margin-top:14px}
-.dato input,.dato textarea{
-  font:inherit;font-size:15px;color:var(--tinta);
-  padding:11px 13px;background:var(--blanco);
-  border:1px solid var(--borde);border-radius:var(--r-btn);resize:vertical;
-  transition:border-color .16s ease,box-shadow .16s ease;
-}
-.dato input:focus,.dato textarea:focus{outline:0;border-color:var(--azul);box-shadow:0 0 0 3px var(--azul-tinte)}
-.form-nota{font-size:13px;color:var(--piedra);line-height:1.5}
-.form-nota a{color:var(--azul)}
-.form-acciones{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.form-alt{font-size:14px;color:var(--piedra)}
-.form-alt a{color:var(--azul)}
-@media(max-width:640px){
-  .datos{grid-template-columns:1fr}
-  .bloque:has(.op:not(.op-chica)){grid-template-columns:1fr}
-}
 /* -- El fondo -------------------------------------------------
    Un lienzo pegado a la ventana; el contenido pasa por encima. La
    barra NO entra en la regla de apilado: ya es sticky con z-index
@@ -416,7 +353,6 @@ main,footer{position:relative;z-index:1}
 /* En una pagina interior el fondo se aparta mas: ahi se viene a leer,
    y un fondo que compite con un parrafo largo cansa. */
 body:not(.portada) .fondo{opacity:.55}
-
 /* ── Que incluye ─────────────────────────────────────────────
    En rejilla y no en columna: siete puntos sueltos apilados se
    leen como un parrafo largo, que es justo lo que no son.      */
@@ -445,79 +381,8 @@ body:not(.portada) .fondo{opacity:.55}
 .panel .tarjeta,.panel .tarjeta h3{color:var(--tinta-fuerte)}
 .panel .tarjeta .cuerpo,.panel .tarjeta p{color:var(--grafito)}
 
-/* ── Diagramas ───────────────────────────────────────────── */
-.dibujo{
-  background:var(--blanco);border:1px solid var(--borde);border-radius:var(--r-card);
-  padding:26px 24px 20px;margin:0;overflow:hidden;
-}
-.dibujo svg{width:100%;height:auto;display:block}
-.dibujo figcaption{
-  margin-top:16px;font-size:14px;color:var(--piedra);line-height:1.5;
-  padding-top:14px;border-top:1px solid var(--borde);
-}
-.dibujo .et{font:500 13px/1 var(--sans);fill:var(--tinta-fuerte)}
-.dibujo .et-p{font:400 11.5px/1 var(--sans);fill:var(--piedra)}
-.dibujo .caja{fill:var(--papel);stroke:var(--borde)}
-.dibujo .caja-viva{fill:var(--azul-tinte);stroke:rgba(0,117,222,.3)}
-.dibujo .linea{stroke:var(--borde);stroke-width:1.5;fill:none}
-.dibujo .barra{fill:var(--azul)}
+/*@DIBUJO_CSS@*/
 
-/* el punto que recorre el flujo: es lo que convierte cuatro cajas en un
-   proceso con direccion */
-.viaja{animation:viaja 5.2s cubic-bezier(.5,0,.5,1) infinite}
-@keyframes viaja{
-  0%,6%    {transform:translateX(0);opacity:0}
-  10%      {opacity:1}
-  28%,34%  {transform:translateX(var(--p1))}
-  52%,58%  {transform:translateX(var(--p2))}
-  76%,88%  {transform:translateX(var(--p3));opacity:1}
-  96%,100% {transform:translateX(var(--p3));opacity:0}
-}
-/* cada caja se enciende cuando el punto llega a ella */
-.enciende{animation:enciende-caja 5.2s linear infinite}
-@keyframes enciende-caja{0%,100%{opacity:0}}
-.paso-1 .enciende{animation-delay:0s}
-.paso-2 .enciende{animation-delay:1.35s}
-.paso-3 .enciende{animation-delay:2.7s}
-.paso-4 .enciende{animation-delay:4s}
-
-/* la linea que se dibuja sola */
-.traza{stroke-dasharray:var(--largo);stroke-dashoffset:var(--largo);
-       animation:traza 3.4s cubic-bezier(.4,0,.2,1) infinite}
-@keyframes traza{0%{stroke-dashoffset:var(--largo)}45%,80%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
-
-/* algo que cae en su sitio */
-.cae{animation:cae 4.4s cubic-bezier(.3,1.3,.5,1) infinite}
-@keyframes cae{0%,10%{transform:translateY(-22px);opacity:0}24%,86%{transform:none;opacity:1}96%,100%{opacity:0}}
-.cae-2{animation-delay:.5s}
-.cae-3{animation-delay:1s}
-.cae-4{animation-delay:1.5s}
-
-/* el sello que aparece al final */
-.sella{animation:sella 4.4s cubic-bezier(.2,1.6,.4,1) infinite;transform-origin:center}
-@keyframes sella{0%,54%{transform:scale(1.7) rotate(-8deg);opacity:0}64%,88%{transform:none;opacity:1}96%,100%{opacity:0}}
-
-/* la barra que crece */
-.crece{transform-origin:center bottom;animation:crece 3.8s cubic-bezier(.3,1,.4,1) infinite}
-@keyframes crece{0%,8%{transform:scaleY(.06)}40%,84%{transform:scaleY(1)}96%,100%{transform:scaleY(1);opacity:.35}}
-.crece-2{animation-delay:.12s}
-.crece-3{animation-delay:.24s}
-.crece-4{animation-delay:.36s}
-.crece-5{animation-delay:.48s}
-.crece-6{animation-delay:.6s}
-
-/* dos columnas que se emparejan */
-.casa{animation:casa 4.6s ease-in-out infinite}
-@keyframes casa{0%,14%{opacity:0}26%,86%{opacity:1}96%,100%{opacity:0}}
-.casa-2{animation-delay:.55s}
-.casa-3{animation-delay:1.1s}
-
-@media(prefers-reduced-motion:reduce){
-  .viaja,.enciende,.traza,.cae,.sella,.crece,.casa{animation:none}
-  .enciende{opacity:1}
-  .traza{stroke-dashoffset:0}
-  .viaja{opacity:1;transform:translateX(var(--p3))}
-}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.revela{opacity:1;transform:none;transition:none}.marca-svg .mc-b{animation:none}*{transition-duration:.01ms!important}}
 @media(max-width:980px){
   .rejilla,.rejilla-2{grid-template-columns:1fr}
@@ -630,36 +495,7 @@ PIE_JS = '''<script>
     if(!nav.contains(e.target)){cierraAreas(null);ponMovil(false);}
   });
 })();
-/* -- El formulario ------------------------------------------
-   Se envia solo, con su action y su method: sin JavaScript
-   funciona igual. Esto solo desactiva el boton al enviar, para
-   que nadie pulse dos veces, y avisa si no se ha marcado nada
-   en las necesidades, que es lo unico que de verdad hace falta
-   para preparar la llamada.                                 */
-(function () {
-  var f = document.getElementById("form-contacto");
-  if (!f) return;
-  f.addEventListener("submit", function (e) {
-    var marcadas = f.querySelectorAll('input[type=checkbox]:checked').length;
-    var aviso = f.querySelector(".form-aviso");
-    if (!marcadas) {
-      e.preventDefault();
-      if (!aviso) {
-        aviso = document.createElement("p");
-        aviso.className = "form-aviso form-nota";
-        aviso.style.color = "#b3261e";
-        f.querySelector(".form-acciones").insertAdjacentElement("beforebegin", aviso);
-      }
-      aviso.textContent = "Marca al menos una cosa en la que podamos ayudarte.";
-      var primera = f.querySelector('input[type=checkbox]');
-      if (primera) primera.closest(".bloque").scrollIntoView({block: "center", behavior: "smooth"});
-      return;
-    }
-    if (aviso) aviso.remove();
-    var b = f.querySelector('button[type="submit"]');
-    if (b) { b.disabled = true; b.textContent = "Enviando..."; }
-  });
-})();
+/*@FORM_JS@*/
 /* -- El fondo: laminas en un espacio con perspectiva ----------
    Proyeccion en perspectiva de toda la vida: una lamina a
    distancia z se ve a escala f/(f+z). Se pintan de la mas lejana
@@ -936,6 +772,16 @@ TRAZOS = {
     "preguntas/": "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M9.5 9a2.6 2.6 0 0 1 5 1c0 1.7-2.5 2-2.5 3.5 M12 17h.01",
 }
 
+
+
+# El CSS y el JS del formulario viven en formulario.py y solo ahi. Aqui
+# se sustituye una marca: interpolar con % reventaria en el primer 50%
+# del CSS, que esta lleno de ellos.
+ESTILOS = ESTILOS.replace("/*@FORM_CSS@*/", _F.ESTILOS.strip())
+ESTILOS = ESTILOS.replace("/*@DIBUJO_CSS@*/", _D.ESTILOS.strip())
+_PIE_FORM = "\n\n".join(
+    x.strip() for x in (_F.JS, _F.JS_LADO, _F.JS_RASTRO))
+PIE_JS = PIE_JS.replace("/*@FORM_JS@*/", _PIE_FORM)
 
 def _icono(ruta):
     clave = ruta.rstrip("/").split("/")[-1]

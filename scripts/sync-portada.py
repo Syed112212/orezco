@@ -20,6 +20,7 @@ import sys
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, AQUI)
+import diagramas_pagina as DP
 import plantilla as P
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -84,6 +85,17 @@ def main():
     m = re.search(r"/\* -- El menu: por areas en escritorio.*?\n\}\)\(\);\n", t, re.S)
     assert m, "no encontrado el JS del menu en index.html"
     t = t[:m.start()] + nuevo_js + t[m.end():]
+
+
+    # ── el diagrama del 303 ──────────────────────────────────────────
+    # La portada llevaba su propia copia en SVG. Al rehacer el diagrama,
+    # las otras dos paginas que lo usan se actualizaron y la portada se
+    # quedo con la version vieja. Una copia se separa: se coge de donde
+    # sale para todos.
+    m = re.search(r'<figure class="dibujo[^"]*">.*?</figure>', t, re.S)
+    assert m, "no encontrado el diagrama del 303 en index.html"
+    t = t[:m.start()] + DP.flujo_modelo().replace(
+        '<figure class="dibujo">', '<figure class="dibujo revela">') + t[m.end():]
 
     io.open(ruta, "w", encoding="utf-8").write(t)
     print("  index.html: barra, pie y su CSS al dia" + ("" if t != antes else " (ya estaban)"))

@@ -1162,11 +1162,21 @@ def pagina_formulario():
     </div>
     <aside class="form-lado">
       <div class="form-lado-caja">
-        <p class="etiqueta" style="margin-bottom:14px">Qué pasa después</p>
-        <ol class="pasos-lado">
+        <div class="form-avance" hidden>
+          <div class="form-avance-barra"><i></i></div>
+          <p class="form-avance-texto"></p>
+        </div>
+        <div class="form-resumen" hidden>
+          <p class="etiqueta">Lo que nos has contado</p>
+          <dl></dl>
+        </div>
+        <div class="form-luego">
+          <p class="etiqueta" style="margin-bottom:14px">Qué pasa después</p>
+          <ol class="pasos-lado">
 %(pasos)s        </ol>
-        <p class="form-lado-nota">Si prefieres escribir sin rellenar nada,
-          <a href="mailto:%(buzon)s">%(buzon)s</a> también vale.</p>
+          <p class="form-lado-nota">Si prefieres escribir sin rellenar nada,
+            <a href="mailto:%(buzon)s">%(buzon)s</a> también vale.</p>
+        </div>
       </div>
     </aside>
   </div>

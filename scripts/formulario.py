@@ -98,9 +98,41 @@ def campos_ocultos(asunto):
     )
 
 
+
+# ═════════════════════════════════════════════════════════════════════
+# De donde sale cada envio
+# ═════════════════════════════════════════════════════════════════════
+# Los rellena el navegador antes de enviar. Si el visitante lleva el
+# JavaScript apagado se quedan vacios y el formulario funciona igual:
+# el rastro es util, no imprescindible.
+RASTRO = [
+    ("Origen: primera pagina", "origen_primera"),
+    ("Origen: quien le trajo", "origen_referente"),
+    ("Origen: primera visita", "origen_fecha"),
+    ("Campana: source", "utm_source"),
+    ("Campana: medium", "utm_medium"),
+    ("Campana: campaign", "utm_campaign"),
+    ("Campana: term", "utm_term"),
+    ("Campana: content", "utm_content"),
+    ("Campana: gclid", "gclid"),
+    ("Envio: pagina", "envio_pagina"),
+    ("Envio: fecha", "envio_fecha"),
+    ("Envio: paginas vistas", "envio_vistas"),
+    ("Contexto: aparato", "ctx_aparato"),
+    ("Contexto: pantalla", "ctx_pantalla"),
+    ("Contexto: idioma", "ctx_idioma"),
+    ("Contexto: tiempo de relleno", "ctx_tiempo"),
+]
+
+
+def campos_rastro():
+    return "".join(
+        '      <input type="hidden" name="%s" data-rastro="%s" value="">\n' % (n, clave)
+        for n, clave in RASTRO)
+
 def cuerpo(asunto):
     """El formulario entero, sin la etiqueta <form>."""
-    partes = [campos_ocultos(asunto)]
+    partes = [campos_ocultos(asunto), campos_rastro()]
 
     partes.append(_grupo("¿Qué eres?", "Perfil", [p for p, _d in PERFIL],
                          pies=[d for _p, d in PERFIL]))
@@ -162,6 +194,22 @@ def form(asunto, clase="form"):
 
 
 ESTILOS = '''
+/* ── El carril que contesta mientras rellenas ────────────────────── */
+.form-avance{margin-bottom:22px}
+.form-avance-barra{height:4px;border-radius:9999px;background:var(--borde);
+  overflow:hidden}
+.form-avance-barra i{display:block;height:100%;width:0;border-radius:9999px;
+  background:var(--azul);transition:width .35s cubic-bezier(.4,0,.2,1)}
+.form-avance-texto{margin:10px 0 0;font-size:13px;color:var(--piedra)}
+.form-resumen{margin-bottom:22px;padding-bottom:20px;
+  border-bottom:1px solid var(--borde)}
+.form-resumen .etiqueta{margin-bottom:12px}
+.form-resumen dl{margin:0;display:grid;gap:10px}
+.form-resumen dt{font-size:12px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--piedra);font-weight:600;margin-bottom:2px}
+.form-resumen dd{margin:0;font-size:14px;line-height:1.45;
+  color:var(--tinta-fuerte)}
+.form-luego .pasos-lado li{padding-bottom:14px}
 /* ── El formulario que se rellena pinchando ──────────────── */
 .form{display:grid;gap:26px;max-width:720px;margin:0 auto;text-align:left}
 .bloque{border:0;padding:0;margin:0;display:grid;gap:10px}
@@ -261,6 +309,175 @@ JS = '''
     if (aviso) aviso.remove();
     var b = f.querySelector('button[type="submit"]');
     if (b) { b.disabled = true; b.textContent = "Enviando..."; }
+  });
+})();
+'''
+
+JS_LADO = '''
+/* -- El carril del formulario -------------------------------
+   Escribe al lado lo que se va marcando y cuanto queda. No es
+   adorno: el formulario es largo y sin esto no sabes ni por
+   donde vas ni que llevas dicho. Si esto no corre, el
+   formulario sigue funcionando igual que siempre.          */
+(function () {
+  var f = document.getElementById("form-contacto");
+  var caja = document.querySelector(".form-lado-caja");
+  if (!f || !caja) return;
+
+  var avance = caja.querySelector(".form-avance");
+  var barra = caja.querySelector(".form-avance-barra i");
+  var texto = caja.querySelector(".form-avance-texto");
+  var resumen = caja.querySelector(".form-resumen");
+  var lista = resumen ? resumen.querySelector("dl") : null;
+  if (!avance || !resumen || !lista) return;
+
+  /* Lo que se considera contestado, en el orden en que se pregunta. */
+  var PASOS = [
+    ["Perfil", "Qué eres"],
+    ["Equipo", "Cuántos sois"],
+    ["_necesita", "Te ayudamos con"],
+    ["Sistema actual", "Usas hoy"],
+    ["Plazo", "Para cuándo"],
+    ["Nombre", "Nombre"],
+    ["Email", "Email"]
+  ];
+
+  function marcado(nombre) {
+    var e = f.querySelector('[name="' + nombre + '"]:checked');
+    return e ? e.value : "";
+  }
+
+  function necesidades() {
+    var v = [];
+    f.querySelectorAll('input[type=checkbox]:checked').forEach(function (c) {
+      if (c.name.indexOf("Necesita:") === 0) v.push(c.value);
+    });
+    return v;
+  }
+
+  function valor(clave) {
+    if (clave === "_necesita") {
+      var n = necesidades();
+      if (!n.length) return "";
+      return n.length > 3 ? n.slice(0, 3).join(", ") + " y " + (n.length - 3) + " más"
+                          : n.join(", ");
+    }
+    var campo = f.querySelector('input[name="' + clave + '"]:not([type=radio])');
+    if (campo) return campo.value.trim();
+    return marcado(clave);
+  }
+
+  function pinta() {
+    var hechos = 0, filas = "";
+    PASOS.forEach(function (p) {
+      var v = valor(p[0]);
+      if (!v) return;
+      hechos++;
+      filas += "<div><dt>" + p[1] + "</dt><dd></dd></div>";
+    });
+    /* El texto se pone despues, con textContent, para que nada de lo
+       que escriba el visitante llegue a interpretarse como HTML. */
+    lista.innerHTML = filas;
+    var dds = lista.querySelectorAll("dd"), i = 0;
+    PASOS.forEach(function (p) {
+      var v = valor(p[0]);
+      if (v) dds[i++].textContent = v;
+    });
+
+    avance.hidden = false;
+    barra.style.width = Math.round(hechos / PASOS.length * 100) + "%";
+    texto.textContent = hechos === PASOS.length
+      ? "Ya está: puedes enviarlo."
+      : hechos + " de " + PASOS.length + " contestadas";
+    resumen.hidden = hechos === 0;
+  }
+
+  f.addEventListener("change", pinta);
+  f.addEventListener("input", pinta);
+  pinta();
+})();
+'''
+
+JS_RASTRO = '''
+/* -- De donde sale cada envio -------------------------------
+   Rellena los campos ocultos del formulario antes de mandarlo.
+   El primer contacto se guarda la primera vez que alguien
+   entra y se conserva aunque despues navegue diez paginas: sin
+   eso, todo lead parece venir de la pagina del formulario.
+   Si esto no corre, los campos van vacios y el formulario
+   funciona igual.                                          */
+(function () {
+  var LLAVE = "contaes:origen";
+  var PROPIAS = /(^|\.)contaes\.com$/i;
+
+  function guardado() {
+    try { return JSON.parse(localStorage.getItem(LLAVE) || "null"); }
+    catch (e) { return null; }
+  }
+
+  function deQuien() {
+    var r = document.referrer;
+    if (!r) return "directo o guardado en favoritos";
+    try {
+      var h = new URL(r).hostname;
+      return PROPIAS.test(h) ? "" : h;
+    } catch (e) { return ""; }
+  }
+
+  /* El primer contacto: se escribe una vez y no se toca mas. */
+  var o = guardado();
+  if (!o) {
+    var q = new URLSearchParams(location.search), campana = {};
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
+     "gclid"].forEach(function (k) { if (q.get(k)) campana[k] = q.get(k); });
+    o = {
+      primera: location.pathname,
+      referente: deQuien(),
+      fecha: new Date().toISOString().slice(0, 16).replace("T", " "),
+      campana: campana,
+      vistas: 0
+    };
+  }
+  o.vistas = (o.vistas || 0) + 1;
+  try { localStorage.setItem(LLAVE, JSON.stringify(o)); } catch (e) {}
+
+  var f = document.getElementById("form-contacto");
+  if (!f) return;
+  var arranque = Date.now();
+
+  function aparato() {
+    var a = navigator.userAgent;
+    var tipo = /Mobi|Android/i.test(a) ? "movil"
+             : /iPad|Tablet/i.test(a) ? "tableta" : "ordenador";
+    var so = /Windows/.test(a) ? "Windows" : /Mac OS X/.test(a) ? "Mac"
+           : /Android/.test(a) ? "Android"
+           : /iPhone|iPad|iPod/.test(a) ? "iOS"
+           : /Linux/.test(a) ? "Linux" : "otro";
+    return tipo + " \u00b7 " + so;
+  }
+
+  function minutos(ms) {
+    var s = Math.round(ms / 1000);
+    return s < 90 ? s + " s" : Math.round(s / 60) + " min";
+  }
+
+  f.addEventListener("submit", function () {
+    var v = {
+      origen_primera: o.primera,
+      origen_referente: o.referente,
+      origen_fecha: o.fecha,
+      envio_pagina: location.pathname,
+      envio_fecha: new Date().toLocaleString("es-ES", {timeZone: "Europe/Madrid"}),
+      envio_vistas: String(o.vistas),
+      ctx_aparato: aparato(),
+      ctx_pantalla: window.innerWidth + "\u00d7" + window.innerHeight,
+      ctx_idioma: navigator.language || "",
+      ctx_tiempo: minutos(Date.now() - arranque)
+    };
+    Object.keys(o.campana || {}).forEach(function (k) { v[k] = o.campana[k]; });
+    f.querySelectorAll("[data-rastro]").forEach(function (c) {
+      c.value = v[c.getAttribute("data-rastro")] || "";
+    });
   });
 })();
 '''
