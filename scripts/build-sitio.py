@@ -641,6 +641,12 @@ def pagina_comparativa():
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+%(dibujo)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap estrecho prosa revela">
     <h2>Lo que no cambia elijas lo que elijas</h2>
     <p>Los libros tienen que estar bien, los modelos hay que presentarlos en plazo y alguien
@@ -661,6 +667,7 @@ def pagina_comparativa():
                           "también cuándo no conviene la nuestra.", rastro),
         "tabla": TABLA_COMPARATIVA,
         "cuando": CUANDO_COMPARATIVA,
+        "dibujo": DP.para("comparativa"),
         "cierre": cierre("¿Cuál te encaja a ti?",
                          "En la primera llamada te decimos cuál de las tres tiene más sentido "
                          "en tu caso, aunque no sea la nuestra."),
@@ -859,8 +866,22 @@ def pagina_preguntas():
 # ─────────────────────────────────────────────────────────────────────
 # Empresa: sobre, migracion, seguridad, precios, integraciones
 # ─────────────────────────────────────────────────────────────────────
+def envuelve_dibujo(dibujo):
+    """El dibujo en su seccion, o nada si esa pagina no lleva.
+
+    Un dibujo de relleno estorba mas que la falta de dibujo, asi que las
+    paginas legales y las de agradecimiento no llevan ninguno."""
+    if not dibujo:
+        return ""
+    return ('<section class="seccion">' + chr(10)
+            + '  <div class="wrap estrecho">' + chr(10)
+            + dibujo + chr(10)
+            + '  </div>' + chr(10) + '</section>' + chr(10) + chr(10))
+
+
 def pagina_simple(slug, etiqueta, titulo, entradilla, secciones, meta,
                   rastro_nombre=None, extra="", cierre_txt=None):
+    dibujo = DP.para(slug.rstrip("/"))
     rastro = migas(("/", "Inicio"), (None, rastro_nombre or titulo))
     cuerpo = '''%(enc)s
 
@@ -869,10 +890,13 @@ def pagina_simple(slug, etiqueta, titulo, entradilla, secciones, meta,
 %(prosa)s
   </div>
 </section>
-%(extra)s
+
+%(dibujo)s%(extra)s
 %(cierre)s''' % {
         "enc": encabezado(etiqueta, titulo, entradilla, rastro),
-        "prosa": prosa(secciones), "extra": extra,
+        "prosa": prosa(secciones),
+        "dibujo": envuelve_dibujo(dibujo),
+        "extra": extra,
         "cierre": cierre(*cierre_txt) if cierre_txt else cierre(),
     }
     return P.pagina("%s · Contaes" % titulo, meta, "%s/%s" % (DOMINIO, slug), cuerpo)
@@ -911,6 +935,12 @@ def pagina_precios():
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+%(dibujo)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap estrecho prosa revela">
     <h2>Lo que no vamos a hacer</h2>
     <p>No hay plan gratuito que sirva de poco para que acabes pagando el de arriba. No hay precio de entrada que suba al año siguiente sin avisar. Y el presupuesto de migración se cierra antes de firmar, no después.</p>
@@ -923,6 +953,7 @@ def pagina_precios():
                           "Cada empresa paga por lo que usa. Aquí está de qué depende el presupuesto, "
                           "para que sepas qué te van a preguntar antes de la llamada.", rastro),
         "filas": filas,
+        "dibujo": DP.para("precios"),
         "cierre": cierre("¿Cuánto te saldría a ti?",
                          "Cuéntanos cuánta gente sois, qué usáis hoy y cuántas facturas movéis al mes. "
                          "Con eso te damos un número, no un rango."),
@@ -965,6 +996,12 @@ def pagina_integraciones():
 </section>
 
 <section class="seccion">
+  <div class="wrap estrecho">
+%(dibujo)s
+  </div>
+</section>
+
+<section class="seccion">
   <div class="wrap estrecho prosa revela">
     <h2>Por qué no hay cien integraciones</h2>
     <p>La razón de ser de Contaes es que las cosas estén dentro y no conectadas por fuera. Cada integración que montamos es una que no ha hecho falta construir dentro, y eso es una decisión, no una victoria.</p>
@@ -976,7 +1013,7 @@ def pagina_integraciones():
 %(cierre)s''' % {
         "enc": encabezado("Integraciones", "Con qué trabajamos, y qué te vamos a preguntar",
                           "Lo que hace falta para llevar una gestoría entra por aquí: el banco, la sede de la Agencia Tributaria y el correo por el que llegan las facturas.", rastro),
-        "filas": filas, "cierre": cierre(),
+        "filas": filas, "dibujo": DP.para("integraciones"), "cierre": cierre(),
     }
     return P.pagina("Integraciones · Contaes",
                     "Con qué trabaja Contaes: tu banco por Norma 43, la sede de la Agencia Tributaria, el correo de facturas, tu tienda y tus pasarelas de cobro.",

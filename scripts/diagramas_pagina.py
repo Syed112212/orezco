@@ -193,6 +193,48 @@ DIBUJOS = {
         "Esta parte la trabajamos con Filnet, una empresa hermana especializada en abrir "
         "mercados."),
 
+    # ── Paginas sueltas ──────────────────────────────────────────
+    "migracion": lambda: D.flujo(
+        [("Se acuerda por escrito", "datos, plazos y vuelta atrás"),
+         ("Se traen los datos", "con su histórico, no un saldo"),
+         ("Conviven los dos", "el viejo, en solo lectura"),
+         ("Se apaga el antiguo", "cuando lo nuevo cuadra")],
+        "Los cuatro puntos se cierran antes de tocar nada. El tercero es el que más se salta "
+        "y el que más caro sale: sin convivencia, los primeros meses son un agujero."),
+    "precios": lambda: D.barras(
+        [.3, .5, .68, .84, .95],
+        ["Personas", "Servicios", "Módulos", "Documentos", "Migración"],
+        "Las cinco cosas que mueven el presupuesto, en el orden en que suelen pesar. No hay "
+        "tarifa publicada porque cobrar lo mismo a un autónomo con veinte facturas al año que "
+        "a una empresa de treinta personas sería cobrarle de más a uno de los dos."),
+    "seguridad": lambda: D.comparacion(
+        ["Certificaciones que no tenemos",
+         "Promesas de disponibilidad sin medir",
+         "«Cifrado de nivel bancario»",
+         "Y una página que no dice nada"],
+        ["Cada apunte, con quién y cuándo",
+         "Una factura emitida no se edita",
+         "Tus datos, en formato estándar",
+         "Y lo que falta, dicho por su nombre"],
+        "Lo de la izquierda es lo que suele poner una página de seguridad. Lo de la derecha es "
+        "lo que podemos sostener hoy, que es menos y es verdad."),
+    "integraciones": lambda: D.flujo(
+        [("Tu banco", "extracto, Norma 43"),
+         ("Tu correo", "las facturas del proveedor"),
+         ("Contaes", "todo en el mismo libro"),
+         ("La Agencia Tributaria", "por donde salen los modelos")],
+        "Lo que de verdad hace falta para llevar una gestoría entra y sale por aquí. El resto "
+        "de conexiones se montan caso por caso, según con qué vendas y cobres."),
+    "comparativa": lambda: D.comparacion(
+        ["Tú haces de pegamento entre los dos",
+         "Los datos viajan por correo",
+         "Y lo que no mandas no se contabiliza"],
+        ["No hay traspaso porque no hay dos",
+         "El apunte nace donde ocurre el hecho",
+         "Y quien lleva los libros los firma"],
+        "La diferencia entre tener gestoría y programa por separado o juntos no está en las "
+        "funciones: está en quién carga con el traspaso y qué se pierde por el camino."),
+
     # ── Sectores ─────────────────────────────────────────────────
     "sectores/fabricacion": lambda: D.flujo(
         [("Escandallo", "con el coste de hoy"),
