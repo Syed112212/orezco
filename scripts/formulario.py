@@ -9,9 +9,9 @@ Dos decisiones que lo gobiernan:
    contacto. Todo lo demas son opciones.
 
 2. Lo que se pregunta sirve para preparar la llamada, no para rellenar un
-   informe. Que eres, que necesitas, cuantos sois, que usas hoy y cuando
-   quieres empezar. Con eso ya se puede hablar de un numero concreto en
-   vez de un rango.
+   informe. Que eres, que necesitas, que usas hoy y cuando quieres
+   empezar: cuatro bloques, no cinco. El tamaño del equipo y el detalle
+   de cada servicio se preguntan en la llamada, no aqui.
 
 Un sitio estatico no puede guardar nada: hace falta algo que reciba el
 envio. Se usa FormSubmit, que lo reenvia al buzon sin cuenta ni servidor
@@ -40,31 +40,14 @@ PERFIL = [
     ("Aún no tengo empresa", "Quiero montarla"),
 ]
 
-EQUIPO = ["Solo yo", "2 a 5", "6 a 15", "16 a 50", "Más de 50"]
+# El tamaño del equipo se pregunta en la llamada, no aqui: no cambia si
+# alguien deberia enviar el formulario, solo alarga el camino hasta el
+# boton de enviar.
 
 NECESITO = [
-    ("La gestoría", [
-        "Contabilidad",
-        "Impuestos y modelos",
-        "Nóminas y laboral",
-        "Legal y contratos",
-    ]),
-    ("El software", [
-        "Facturación",
-        "Inventario y almacén",
-        "Compras y proveedores",
-        "Ventas y clientes",
-        "Proyectos y horas",
-        "Informes",
-    ]),
-    ("Crecer", [
-        "Dirección financiera",
-        "Marketing",
-        "Captación de clientes",
-        "Bot de llamadas y WhatsApp",
-        "Financiación y subvenciones",
-        "Vender fuera de España",
-    ]),
+    ("La gestoría", "Contabilidad, impuestos, nóminas y contratos"),
+    ("El software", "Facturación, inventario, compras, ventas, proyectos"),
+    ("Crecer", "Dirección financiera, marketing, financiación, salir fuera"),
 ]
 
 AHORA = ["Una gestoría", "Hojas de cálculo", "Un ERP (Odoo, SAP, Sage...)",
@@ -138,24 +121,15 @@ def cuerpo(asunto):
 
     partes.append(_grupo("¿Qué eres?", "Perfil", [p for p, _d in PERFIL],
                          pies=[d for _p, d in PERFIL]))
-    partes.append(_grupo("¿Cuántos sois?", "Equipo", EQUIPO))
 
-    # las necesidades van por areas, porque marcar quince casillas seguidas
-    # cansa y agrupadas se leen de un vistazo
-    bloques = []
-    for area, opciones in NECESITO:
-        filas = "\n".join(
-            '          <label class="op op-chica"><input type="checkbox" name="Necesita: %s" '
-            'value="%s"><span class="op-cuerpo"><span class="op-tit">%s</span></span></label>'
-            % (area, o, o) for o in opciones)
-        bloques.append('        <div class="sub">\n'
-                       '          <p class="sub-tit">%s</p>\n%s\n        </div>' % (area, filas))
-    partes.append('      <fieldset class="bloque">\n'
-                  '        <legend>¿Con qué te podemos ayudar?</legend>\n'
-                  '        <p class="bloque-pie">Marca lo que te suene. No hace falta acertar: '
-                  'para eso está la llamada.</p>\n'
-                  '        <div class="subs">\n%s\n        </div>\n      </fieldset>\n'
-                  % "\n".join(bloques))
+    # Antes eran dieciseis casillas en tres grupos: una por cada modulo y
+    # cada servicio de crecimiento. Marcarlas todas cansaba, y ninguna
+    # cambiaba lo que pasa despues, porque el detalle se aclara en la
+    # llamada. Se quedan las tres patas, con lo que cubre cada una en el
+    # propio pie de la opcion.
+    partes.append(_grupo("¿Con qué te podemos ayudar?", "Necesita",
+                         [n for n, _d in NECESITO], tipo="checkbox",
+                         pies=[d for _n, d in NECESITO]))
 
     partes.append(_grupo("¿Qué usas hoy?", "Sistema actual", AHORA))
     partes.append(_grupo("¿Para cuándo?", "Plazo", CUANDO))
@@ -217,11 +191,10 @@ ESTILOS = '''
 .form{display:grid;gap:26px;max-width:720px;margin:0 auto;text-align:left}
 .bloque{border:0;padding:0;margin:0;display:grid;gap:10px}
 .bloque legend{font-size:17px;font-weight:600;color:var(--tinta-fuerte);padding:0;margin-bottom:2px}
-.bloque-pie{font-size:14px;color:var(--piedra);margin:-4px 0 6px}
 .bloque > .op,.bloque > label.op{margin:0}
 .bloque{grid-auto-flow:row}
 .bloque:has(.op:not(.op-chica)){grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-.bloque legend,.bloque-pie,.subs{grid-column:1/-1}
+.bloque legend{grid-column:1/-1}
 
 /* La opcion: una superficie que se pincha. Sin sombra, sin color de
    relleno hasta que se elige, y con la marca de elegido a la izquierda
@@ -254,13 +227,6 @@ ESTILOS = '''
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.4 4.6 9 10 3.2' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .op:has(input:focus-visible){outline:2px solid var(--azul);outline-offset:2px}
-.op-chica{padding:10px 12px}
-.op-chica .op-tit{font-size:14.5px}
-
-.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.sub{display:grid;gap:7px;align-content:start}
-.sub-tit{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--piedra);margin:0}
-
 .datos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .dato{display:grid;gap:6px;font-size:14px;color:var(--piedra)}
 .dato i{font-style:normal;color:rgba(0,0,0,.34)}
@@ -337,7 +303,6 @@ JS_LADO = '''
   /* Lo que se considera contestado, en el orden en que se pregunta. */
   var PASOS = [
     ["Perfil", "Qué eres"],
-    ["Equipo", "Cuántos sois"],
     ["_necesita", "Te ayudamos con"],
     ["Sistema actual", "Usas hoy"],
     ["Plazo", "Para cuándo"],
@@ -353,7 +318,7 @@ JS_LADO = '''
   function necesidades() {
     var v = [];
     f.querySelectorAll('input[type=checkbox]:checked').forEach(function (c) {
-      if (c.name.indexOf("Necesita:") === 0) v.push(c.value);
+      if (c.name === "Necesita") v.push(c.value);
     });
     return v;
   }

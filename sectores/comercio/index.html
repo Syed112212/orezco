@@ -53,7 +53,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Quicksand:wght@600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<link rel="stylesheet" href="/assets/contaes.css?v=81498e50">
+<link rel="stylesheet" href="/assets/contaes.css?v=357edb31">
 
 </head>
 <body>
@@ -537,7 +537,6 @@
   /* Lo que se considera contestado, en el orden en que se pregunta. */
   var PASOS = [
     ["Perfil", "Qué eres"],
-    ["Equipo", "Cuántos sois"],
     ["_necesita", "Te ayudamos con"],
     ["Sistema actual", "Usas hoy"],
     ["Plazo", "Para cuándo"],
@@ -553,7 +552,7 @@
   function necesidades() {
     var v = [];
     f.querySelectorAll('input[type=checkbox]:checked').forEach(function (c) {
-      if (c.name.indexOf("Necesita:") === 0) v.push(c.value);
+      if (c.name === "Necesita") v.push(c.value);
     });
     return v;
   }
