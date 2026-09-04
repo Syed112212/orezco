@@ -674,30 +674,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 
 .escena svg{will-change:transform}
 
-/* cinta de sectores */
-.cinta{position:relative}
-/* WCAG 2.2.2: todo movimiento automatico de mas de cinco segundos
-   necesita un mecanismo de pausa que funcione tambien con teclado.
-   El hover solo no basta.                                          */
-.cinta-pausa{
-  position:absolute;right:10px;top:50%;translate:0 -50%;z-index:2;
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--papel);border:1px solid var(--borde);border-radius:var(--r-pill);
-  padding:5px 12px;font-family:var(--sans);font-size:12px;font-weight:500;
-  color:var(--piedra);cursor:pointer;opacity:0;transition:opacity .2s ease,color .2s ease;
-}
-.cinta:hover .cinta-pausa,.cinta-pausa:focus-visible{opacity:1}
-.cinta-pausa:hover{color:var(--tinta-fuerte)}
-.cp-icono{font-size:10px;letter-spacing:-1px}
-.cinta.parada .cinta-pista{animation-play-state:paused}
-@media(max-width:700px){.cinta-pausa{display:none}}
-.cinta{overflow:hidden;border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);background:var(--blanco);padding:14px 0}
-.cinta-pista{display:flex;width:max-content;animation:desfila 42s linear infinite}
-.cinta-pista span{display:inline-flex;align-items:center;gap:10px;padding:0 26px;white-space:nowrap;font-size:15px;font-weight:500;color:var(--piedra)}
-.cinta-pista span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--borde)}
-@keyframes desfila{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.cinta:hover .cinta-pista{animation-play-state:paused}
-
 /* la flecha del boton se desplaza al pasar */
 .btn .flecha{display:inline-block;transition:transform .22s cubic-bezier(.22,1,.36,1)}
 .btn:hover .flecha,.btn:focus-visible .flecha{transform:translateX(4px)}
@@ -716,7 +692,6 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
   .resalte::before{transform:none;animation:none}
   .cascada > *{opacity:1;transform:none;animation:none}
   .plano.nuevo .barras i{transform:none;animation:none}
-  .cinta-pista{animation:none}
   .inclina{transform:none!important}
   .faq details[open] .resp,.garantias .gicono{animation:none}
 }
@@ -1640,18 +1615,6 @@ var SIN_MOVIMIENTO = window.matchMedia("(prefers-reduced-motion: reduce)").match
   }, 2500);
 })();
 
-/* -- Pausa de la cinta, tambien con teclado ------------------- */
-(function () {
-  var cinta = document.querySelector(".cinta");
-  var boton = document.getElementById("cinta-pausa");
-  if (!cinta || !boton) return;
-  boton.addEventListener("click", function () {
-    var parada = cinta.classList.toggle("parada");
-    boton.setAttribute("aria-pressed", parada ? "true" : "false");
-    boton.querySelector(".cp-texto").textContent = parada ? "Reanudar" : "Pausar";
-    boton.querySelector(".cp-icono").textContent = parada ? "\u25B6" : "II";
-  });
-})();
 
 /* -- El menu: por areas en escritorio, plegable en movil ------
    Un solo mecanismo para los dos: el atributo data-abierta en el
