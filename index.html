@@ -430,8 +430,11 @@ a.tarjeta:hover .tarjeta-mas,a.tarjeta:focus-visible .tarjeta-mas{opacity:1;tran
 .mc-software{background:var(--marigold)}
 .mc-crecer{background:var(--medianoche)}
 @media(max-width:760px){
-  .mosaico-3d{perspective:600px}
-  .mosaico{grid-template-columns:repeat(2,minmax(0,1fr));transform:none}
+  /* el transform vive en .mosaico-3d, no en .mosaico: esta linea
+     apuntaba mal y nunca quitaba la inclinacion en movil. Con el
+     perspective tan corto ahi abajo, mejor tumbarla del todo. */
+  .mosaico-3d{transform:none}
+  .mosaico{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(prefers-reduced-motion:reduce){
   .mosaico-celda{opacity:1;transform:none;animation:none}
