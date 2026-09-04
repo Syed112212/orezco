@@ -147,7 +147,8 @@ def regla_serifa_400_sin_uso(nombre, css):
 # El menu desplegable flota sobre el contenido, como la barra: la sombra
 # es lo que lo separa de lo que tapa.
 PERMITIDOS_SOMBRA = {".nav", ".nav-links", ".despliegue", ".maqueta", ".plano", ".btn-azul",
-                     "input", "textarea", "input:focus", "textarea:focus"}
+                     ".mosaico-cara", ".mosaico-celda", "input", "textarea",
+                     "input:focus", "textarea:focus"}
 
 
 def regla_sombra_solo_flotantes(nombre, css):
